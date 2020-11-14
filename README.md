@@ -1,6 +1,7 @@
 <div align="center">
-    <img alt="Community Cleanup Logo" width="100" src="https://github.com/grey-software/garbage-collector/raw/main/community-cleanup-logo.png">
+    <img alt="Community Cleanup Logo" width="100" src="https://github.com/grey-software/community-cleanup/raw/main/community-cleanup-logo.svg">
 </div>
+
 
 # Community Cleanup
 
