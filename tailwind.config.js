@@ -11,11 +11,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primarycolor: {
-          300: "#CCF5E9",
-          500: "#7AE7C7",
+        primaryColor: {
+          300: "#B8F2B5",
+          500: "#46A941",
         },
-        secondarycolor: {
+        headingColor: {
           400: "#182F35",
           500: "#112429",
         },
