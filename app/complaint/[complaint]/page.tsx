@@ -2,13 +2,15 @@
 import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { validationSchema } from "./ComplainForm.schema";
-import { ComplainForm } from "../../@types/complainForm.types";
+import { validationSchema } from "../../../Schema_validation/ComplainForm.schema";
+import { ComplainForm } from "../../../@types/complainForm.types";
 import Image from "next/image";
 import { BsImage } from "react-icons/bs";
 import { BiVideo } from "react-icons/bi";
 
-const Form: React.FC = () => {
+const Form: React.FC = ({ params }: any) => {
+  const complaint = params.complaint;
+  console.log(complaint)
   const {
     register,
     handleSubmit,
@@ -47,29 +49,16 @@ const Form: React.FC = () => {
 
   // ---------- JSX SECTION STARTED ---------
   return (
-    <div className="md:w-[20%] w-[100%] h-[100vh] bg-secondarycolor-500">
-      
-      <div className="flex justify-between w-[100%] items-center px-2 py-[14px] text-brand-500 bg-secondarycolor-400">
-        <div className="flex items-center gap-1">
-          <Image
-            src="/community-cleanup-logo.svg"
-            width={50}
-            height={50}
-            alt="previewImage"
-          />
-          <Image src="/back.svg" width={20} height={20} alt="previewImage" />
-        </div>
-        <Image src="/Account.svg" width={40} height={40} alt="useraccount" />
-      </div>
+    <div className="md:w-[20%] mt-20 w-full">
       <div className="w-full flex justify-center items-center py-[14px] text-[24px]">
-        <h3 className="text-[24px] font-bold text-primarycolor-500">
-          Complaint
+        <h3 className="text-lg font-bold text-primaryColor-500">
+          <span className="text-green-700 opacity-50">Complaint:</span> {complaint}
         </h3>
       </div>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-2 mx-[14px] mb-2 rounded-3xl bg-white px-[20px] py-[22px]"
+        className="flex flex-col gap-2 mx-[14px] mb-2 rounded-3xl px-[20px] py-[22px] bg-gray-50 border-2 border-gray-200"
       >
         <div className="flex flex-col">
           <label className="text-[#333] text-[18px]">
@@ -108,7 +97,7 @@ const Form: React.FC = () => {
             rows={3}
             cols={4}
             {...register("desc")}
-            className="py-2 px-2 bg-transparent rounded-lg border-2 border-primarycolor-500 outline-none"
+            className="py-2 px-2 bg-transparent rounded-lg border-2 border-primaryColor-500 outline-none"
           />
         </div>
 
@@ -118,7 +107,7 @@ const Form: React.FC = () => {
             Attachment<span className="text-red-500">*</span>
           </label>
           <div
-            className={`flex gap-3 w-full h-[6rem] p-[3px] overflow-hidden border-2 rounded-lg border-primarycolor-500 outline-none
+            className={`flex gap-3 w-full h-[6rem] p-[3px] overflow-hidden border-2 rounded-lg border-primaryColor-500 outline-none
           `}
           >
             {image && (
@@ -149,7 +138,7 @@ const Form: React.FC = () => {
         <div className="flex justify-between mt-1">
           {/* for image to upload */}
           <div
-            className="bg-primarycolor-300 rounded-md hover:bg-primarycolor-500 transition-all cursor-pointer py-1 px-2 text-[18px] text-secondarycolor-500 font-bold"
+            className="bg-primaryColor-300 rounded-md hover:bg-primaryColor-500 transition-all cursor-pointer py-1 px-2 text-[18px] text-secondarycolor-500 font-bold"
             onClick={() => imageRef.current!.click()}
           >
             <div className="flex justify-center items-center gap-1 text-[20px]">
@@ -161,7 +150,7 @@ const Form: React.FC = () => {
           </div>
           {/* for video to upload */}
           <div
-            className="bg-primarycolor-300 rounded-md active:bg-primarycolor-500 hover:bg-primarycolor-500 transition-all cursor-pointer py-1 px-2 text-[18px] text-secondarycolor-500 font-bold"
+            className="bg-primaryColor-300 rounded-md active:bg-primarycolor-500 hover:bg-primaryColor-500 transition-all cursor-pointer py-1 px-2 text-[18px] text-secondarycolor-500 font-bold"
             onClick={() => videoRef.current!.click()}
           >
             <div className="flex justify-center items-center gap-1 text-[20px]">
@@ -200,9 +189,9 @@ const Form: React.FC = () => {
         <div className="flex justify-center mt-2 w-[100%]">
           <button
             type="submit"
-            className="flex items-center justify-center gap-3 mt-4 w-[100%] uppercase bg-primarycolor-500 rounded-lg hover:bg-[#63efc5] transition-all outline-none cursor-pointer py-2 px-4 text-[18px] text-secondarycolor-500 font-bold"
+            className="flex items-center justify-center gap-3 mt-4 w-[100%] uppercase bg-primaryColor-500 rounded-lg hover:bg-[#63efc5] transition-all outline-none cursor-pointer py-2 px-4 text-[18px] text-secondaryColr font-bold"
           >
-            <Image src="/submit.svg" width={15} height={15} alt="submit icon" />
+            <Image src="/submit.svg" width={15} height={15} alt="submit icon"/>
             <span>Submit</span>
           </button>
         </div>

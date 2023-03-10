@@ -23,8 +23,8 @@ const Signup: React.FC = () => {
 
   return (
     <>
-      <div className="border-2 shadow-md shadow-gray-200 rounded-3xl border-gray-200 mx-3 p-6 mt-28 w-[90%]">
-        <div className="w-full flex justify-between items-center  text-2xl font-bold text-gray-500">
+      <div className="border-2 shadow-md shadow-gray-200 rounded-3xl border-gray-200 mx-3 p-6 mt-24 md:mt-28 md:w-[50%] w-[90%]">
+        <div className="w-full flex justify-between items-center  text-xl font-bold text-gray-500">
           <h3>Sign In</h3>
           <span>|</span>
           <h3>Sign Up</h3>
