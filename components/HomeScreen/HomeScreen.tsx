@@ -1,8 +1,7 @@
-import Image from 'next/image';
-import { IoIosArrowForward } from 'react-icons/io'
-import { complaints_types } from '@/public/Data/data';
-import Link from 'next/link';
-
+import Image from "next/image";
+import { IoIosArrowForward } from "react-icons/io";
+import { complaints_types } from "@/public/Data/data";
+import Link from "next/link";
 
 const HomeScreen = () => {
   return (
@@ -33,26 +32,28 @@ const HomeScreen = () => {
           {complaints_types.map((complaint, index) => (
             <div
               key={index}
-              className="wrapper overflow-hidden cursor-pointer mt-4 w-[42%] border-2 border-gray-200 rounded-lg shadow-lg shadow-gray-400 flex flex-col justify-center items-center"
+              className="wrapper overflow-hidden cursor-pointer mt-4 w-[42%] border-1 border-gray-200 rounded-lg shadow-md shadow-gray-400 flex flex-col justify-center items-center"
             >
-              <Link href={`/complaint/${complaint.complaintType}`}>
+              <Link
+                className="h-[60%] w-[100%]"
+                href={`/complaint/${complaint.complaintType}`}
+              >
                 <Image
-                  
                   src={complaint.img}
-                  height={100}
-                  width={120}
                   alt="water Supply"
                   className="h-[100%] w-[100%]"
                 />
               </Link>
-              <p className="mt-2 font-bold">{complaint.name}</p>
-              <p className="font-bold mb-3">{complaint.urdu}</p>
+              <div className="flex items-center justify-center flex-col">
+                <p className="mt-2 font-bold">{complaint.name}</p>
+                <p className="font-bold mb-3">{complaint.urdu}</p>
+              </div>
             </div>
           ))}
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default HomeScreen
+export default HomeScreen;

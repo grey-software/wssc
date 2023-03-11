@@ -1,4 +1,7 @@
+"use client";
+import Authentication from "@/components/Auth/Authentication";
 import Header from "@/components/Header";
+import { useState } from "react";
 import "./globals.css";
 
 export const metadata = {
@@ -11,11 +14,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [session, setSession] = useState(false);
   return (
     <html lang="en">
       <body>
-        <Header />
-
+        {/* {!session ? (
+          <Authentication />
+        ) : (
+          <>
+            <Header />
+            {children}
+          </>
+        )} */}
         {children}
       </body>
     </html>
