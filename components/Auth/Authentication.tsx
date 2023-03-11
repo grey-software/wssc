@@ -50,7 +50,7 @@ const Authentication: React.FC = () => {
               />
               <label
                 htmlFor="floating_standard"
-                className="absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="absolute text-md text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 User Name | صارف نام
               </label>
@@ -62,16 +62,16 @@ const Authentication: React.FC = () => {
             <div className="relative z-0 mt-10 mb-6">
               <input
                 type="number"
-                id="floating_standard"
+                id="username"
                 {...register("phone")}
                 className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
-                  errors.username ? "focus:border-red-500" : ""
+                  errors.phone ? "focus:border-red-500" : ""
                 }`}
                 placeholder=" "
               />
               <label
-                htmlFor="floating_standard"
-                className="absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                htmlFor="username"
+                className="absolute text-md text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 Mobile Number | فون نمبر
               </label>
@@ -83,16 +83,16 @@ const Authentication: React.FC = () => {
             <div className="relative z-0 mt-10 mb-6">
               <input
                 type="text"
-                id="floating_standard"
+                id="password"
                 {...register("password")}
                 className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
-                  errors.username ? "focus:border-red-500" : ""
+                  errors.password ? "focus:border-red-500" : ""
                 }`}
                 placeholder=" "
               />
               <label
-                htmlFor="floating_standard"
-                className="absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                htmlFor="password"
+                className="absolute text-md text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 Create Password | پاس ورڈ بنائیں
               </label>
@@ -104,18 +104,21 @@ const Authentication: React.FC = () => {
             <div className="relative z-0 mt-10 mb-6">
               <input
                 type="text"
-                id="floating_standard"
+                id="confirm password"
                 {...register("confirmPassword")}
                 className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
-                  errors.username ? "focus:border-red-500" : ""
+                  errors.confirmPassword ? "focus:border-red-500" : ""
                 }`}
                 placeholder=" "
               />
               <label
-                htmlFor="floating_standard"
-                className="absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                htmlFor="confirm password"
+                className="absolute text-md text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                Confirm Password | تصدیق کریں
+                <p>
+                  
+                  <span>Confirm Password</span> |<span className="font-serif"> تصدیق کریں </span>
+                </p>
               </label>
               <div className="text-sm text-red-500">
                 {errors.confirmPassword?.message}
@@ -149,7 +152,7 @@ const Authentication: React.FC = () => {
                 id="floating_standard"
                 {...register("phone")}
                 className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
-                  errors.username ? "focus:border-red-500" : ""
+                  errors.phone ? "focus:border-red-500" : ""
                 }`}
                 placeholder=" "
               />
@@ -157,7 +160,7 @@ const Authentication: React.FC = () => {
                 htmlFor="floating_standard"
                 className="absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                Mobile Number | فون کانمبر
+                Mobile Number | فون نمبر
               </label>
               <div className="text-sm text-red-500">
                 {errors.phone?.message}
@@ -170,7 +173,7 @@ const Authentication: React.FC = () => {
                 id="floating_standard"
                 {...register("password")}
                 className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
-                  errors.username ? "focus:border-red-500" : ""
+                  errors.password ? "focus:border-red-500" : ""
                 }`}
                 placeholder=" "
               />
