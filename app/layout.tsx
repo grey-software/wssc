@@ -1,3 +1,5 @@
+
+import Authentication from "@/components/Auth/Authentication";
 import Header from "@/components/Header";
 import "./globals.css";
 
@@ -14,8 +16,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-
+        {/* {!session ? (
+          <Authentication />
+        ) : (
+          <>
+            <Header />
+            {children}
+          </>
+        )} */}
         {children}
       </body>
     </html>
