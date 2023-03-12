@@ -4,15 +4,13 @@ import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   SignupvalidationSchema,
-  SigninvalidationSchema,
 } from "./validation_schema";
 import { UserSubmitForm } from "../../@types/signup.types";
 import logo from "../../public/wsscmlogo.png"
-import Link from "next/link";
 import Image from "next/image";
 
 const Authentication: React.FC = () => {
-  const [authStatus, setAuthStates] = useState("signup");
+  const [authStatus, setAuthStates] = useState("signin");
   const {
     register,
     handleSubmit,
@@ -129,7 +127,7 @@ const Authentication: React.FC = () => {
             <div className="flex justify-center mt-12">
               <button
                 type="submit"
-                className="w-[100%] text-lg hover:bg-primaryColor-400 rounded-xl bg-primaryColor-500 text-white py-3 font-bold mb-3"
+                className=" w-[100%] text-lg hover:bg-primaryColor-400 rounded-xl bg-primaryColor-500 text-white py-3 font-bold mb-3"
               >
                 Sign Up
               </button>

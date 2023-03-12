@@ -5,8 +5,8 @@ import Link from "next/link";
 
 const HomeScreen = () => {
   return (
-    <div className="container w-[90%] py-3">
-      <div className="complaints-record bg-gray-50 flex justify-center items-center overflow-hidden  w-full border border-green-500 shadow-lg shadow-gray-200 rounded-3xl p-1 mt-20">
+    <div className="container py-3">
+      <div className="complaints-record bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-lg shadow-gray-200 rounded-full p-2 mt-20">
         <div className="pending cursor-pointer hover:bg-gray-100 flex flex-col justify-center items-center border-r border-gray-300  flex-1 ">
           <h3 className="font-bold">02</h3>
           <p className="">Pending</p>
@@ -32,7 +32,7 @@ const HomeScreen = () => {
           {complaints_types.map((complaint, index) => (
             <div
               key={index}
-              className="wrapper overflow-hidden cursor-pointer mt-4 w-[42%] border-1 border-gray-200 rounded-lg shadow-md shadow-gray-400 flex flex-col justify-center items-center"
+              className="wrapper overflow-hidden cursor-pointer mt-5 w-[38%] border-1 border-gray-300 rounded-lg shadow-md shadow-gray-400 flex flex-col justify-center items-center"
             >
               <Link
                 className="h-[60%] w-[100%]"
