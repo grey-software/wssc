@@ -1,4 +1,3 @@
-
 import Authentication from "@/components/Auth/Authentication";
 import Header from "@/components/Header";
 import "./globals.css";

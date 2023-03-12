@@ -4,17 +4,19 @@ import HomeScreen from "@/components/HomeScreen/HomeScreen";
 import Header from "@/components/Header";
 import Timeline from "@/components/Complaint-Timeline/Timeline";
 import { Inter } from "next/font/google";
-import styles from "./page.module.css";
 import Authentication from "@/components/Auth/Authentication";
+import Complaints from "@/components/Complaints";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <Authentication/>
+    <main>
+      {/* <Authentication /> */}
+      <Header />
       {/* <Signup /> */}
+      {/* <HomeScreen /> */}
       {/* <Form /> */}
+      <Complaints />
       {/* <Timeline/> */}
-      {/* <HomeScreen/> */}
     </main>
   );
 }
