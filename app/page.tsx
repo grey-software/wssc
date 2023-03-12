@@ -1,4 +1,3 @@
-import Signup from "@/components/Auth/Signup";
 import Form from "@/app/complaint/[complaint]/page";
 import HomeScreen from "@/components/HomeScreen/HomeScreen";
 import Header from "@/components/Header";
@@ -11,12 +10,11 @@ export default function Home() {
   return (
     <main>
       {/* <Authentication /> */}
-      <Header />
       {/* <Signup /> */}
-      {/* <HomeScreen /> */}
       {/* <Form /> */}
       <Complaints />
       {/* <Timeline/> */}
+      {/* <HomeScreen/> */}
     </main>
   );
 }
