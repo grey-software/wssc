@@ -16,14 +16,24 @@ const Header = () => {
         <BsFillBellFill className="text-[28px] text-primaryColor-500" />
         <FaUserCircle
           className="text-[28px] text-primaryColor-500"
-          onClick={() => setMenuActive(true)}
+          onClick={() => setMenuActive(!menuActive)}
         />
       </div>
       <div
-        className={`absolute top-12 right-4 ${menuActive ? "flex " : "hidden"}`}
+        className={`z-50 absolute top-0 left-0 transform transition-transform ${
+          menuActive ? "translate-x-0" : "-translate-x-72"
+        }`}
       >
         <ProfileMenu />
       </div>
+      {menuActive ? (
+        <div
+          onClick={() => setMenuActive(false)}
+          className="absolute top-0 left-0 bottom-0 right-0 h-[100vh] w-[100vw] bg-white-/50 backdrop-blur-sm z-30"
+        ></div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
