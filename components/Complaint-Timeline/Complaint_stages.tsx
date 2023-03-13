@@ -1,5 +1,5 @@
-'use client';
-import React from 'react'
+"use client";
+import React from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -8,9 +8,9 @@ import "react-vertical-timeline-component/style.min.css";
 import { IoIosGitCompare } from "react-icons/io";
 import { FaStarOfLife } from "react-icons/fa";
 
-type Props = {}
+type Props = {};
 
-function Complaint_stages({ }: Props) {
+function Complaint_stages({}: Props) {
   const date = "Mar 08 2023";
   return (
     <>
@@ -100,4 +100,4 @@ function Complaint_stages({ }: Props) {
   );
 }
 
-export default Complaint_stages
+export default Complaint_stages;

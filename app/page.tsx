@@ -12,8 +12,8 @@ export default function Home() {
       {/* <Authentication /> */}
       {/* <Signup /> */}
       {/* <Form /> */}
-      <Complaints />
-      {/* <Timeline/> */}
+      {/* <Complaints /> */}
+      <Timeline />
       {/* <HomeScreen/> */}
     </main>
   );

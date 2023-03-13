@@ -1,35 +1,37 @@
 // 'use client'
-
+import garbage from "../../public/garbage.png";
+import Image from "next/image";
 import Complaint_stages from "./Complaint_stages";
 
 const Timeline = () => {
   return (
     <>
-    <div className="md:w-[40%] w-[100%] h-[100vh] bg-secondarycolor-500">
-      
-      <div className="complaint-status w-full flex flex-col p-2 bg-gray-300">
-        <div className="type flex flex-col justify-center items-center">
-          <h2 className="font-bold text-lg text-gray-800">Complaint Type</h2>
-          <h6 className="text-green-700 font-bold">Status: intiated</h6>
-        </div>
-
-        <div className="complaint-detail flex flex-col items-center">
-          <h4 className="text-gray-800">
-            Complaint ID: <span className="text-gray-500 ">wsscm-05623</span>
-          </h4>
-          <div className="text-gray-800">
-            Submitted on: <span className="text-gray-500">march 7, 2023</span>
-            <h4 className="text-gray-800">
-              Address:
-              <span className="text-gray-500">charsadda chowk, UETM</span>
-            </h4>
+      <div className="md:w-[40%] w-[90%] h-[100vh] bg-secondarycolor-500 mt-20 mx-3">
+        <div className="flex items-center justify-between rounded-lg border-2 border-gray-100 p-4 shadow-lg relative overflow-hidden">
+          <div className="flex flex-col justify-center ml-1">
+            <h3 className="text-lg font-bold text-gray-600">Solid waste</h3>
+            <div className="flex items-center gap-3 text-sm text-gray-600 mb-2">
+              <p>Status:</p>
+              <span className="text-initiatedColor">Initiated</span>
+            </div>
+            <div className="flex items-center gap-3 text-sm text-gray-600">
+              <p>Compliant ID:</p>
+              <span>uwe1238</span>
+            </div>
+            <div className="flex items-center gap-3 text-sm text-gray-600">
+              <p>Submited On:</p>
+              <span>24-jan-2023</span>
+            </div>
+            <div className="flex items-center gap-3 text-sm text-gray-600">
+              <p>Address:</p>
+              <span>Mardan</span>
+            </div>
           </div>
+          <Image src={garbage} className="h-70% w-[30%]" alt="" />
+          <div className="h-[100%] w-2 bg-initiatedColor top-0 left-0 absolute"></div>
         </div>
-
+        <Complaint_stages />
       </div>
-      {/* Complaint stages */}
-    <Complaint_stages/>
-     </div>
     </>
   );
 };
