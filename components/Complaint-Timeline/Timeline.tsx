@@ -2,11 +2,18 @@
 import garbage from "../../public/garbage.png";
 import Image from "next/image";
 import Complaint_stages from "./Complaint_stages";
+import { HiArrowLeft } from "react-icons/hi";
 
 const Timeline = () => {
   return (
     <>
       <div className="md:w-[40%] w-[90%] h-[100vh] bg-secondarycolor-500 mt-20 mx-3">
+        <div className="flex items-center gap-24 mb-4">
+          <HiArrowLeft className="text-[28px] text-primaryColor-500" />
+          <span className="text-[25px] font-bold text-headingColor-400">
+            Tracking
+          </span>
+        </div>
         <div className="flex items-center justify-between rounded-lg border-2 border-gray-100 p-4 shadow-lg relative overflow-hidden">
           <div className="flex flex-col justify-center ml-1">
             <h3 className="text-lg font-bold text-gray-600">Solid waste</h3>

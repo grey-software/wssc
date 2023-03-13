@@ -2,14 +2,13 @@
 import React, { useState } from "react";
 import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  SignupvalidationSchema,
-} from "./validation_schema";
+import { SignupvalidationSchema } from "./validation_schema";
 import { UserSubmitForm } from "../../@types/signup.types";
-import logo from "../../public/wsscmlogo.png"
+import logo from "../../public/wsscmlogo.png";
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 const Authentication: React.FC = () => {
+  const router = useRouter();
   const [authStatus, setAuthStates] = useState("signin");
   const {
     register,
@@ -23,13 +22,14 @@ const Authentication: React.FC = () => {
   const onSubmit = (data: UserSubmitForm) => {
     console.log(JSON.stringify(data, null, 2));
     alert("form submitted successfully");
+    // router.push("/domryinh");
     reset();
   };
   return (
     <div className="flex items-center justify-center h-screen w-full">
       <div className="flex justify-center flex-col w-[80%] sm:w-[40%] ">
         <div className="flex flex-col items-center justify-center gap-4">
-          <Image src={logo} className="w-40" alt="Wsscm-logo" />
+          <Image src={logo} className="w-40" alt="Wsscm-logo" priority />
           <p className="text-md text-gray-500 font-semibold text-center">
             Commited to clean and Green Mardan
           </p>
@@ -114,8 +114,8 @@ const Authentication: React.FC = () => {
                 className="absolute text-md text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 <p>
-                  
-                  <span>Confirm Password</span> |<span className="font-serif"> تصدیق کریں </span>
+                  <span>Confirm Password</span> |
+                  <span className="font-serif"> تصدیق کریں </span>
                 </p>
               </label>
               <div className="text-sm text-red-500">
@@ -135,7 +135,7 @@ const Authentication: React.FC = () => {
             <div className="text-lg text-gray-600 text-center mt-6">
               <span>Already Registered?</span>
               <span
-                className="text-blue-700 underline ml-4 font-bold"
+                className="text-blue-700 ml-4 font-bold"
                 onClick={() => setAuthStates("signin")}
               >
                 Sign In
@@ -156,7 +156,7 @@ const Authentication: React.FC = () => {
               />
               <label
                 htmlFor="floating_standard"
-                className="absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="absolute text-md text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 Mobile Number | فون نمبر
               </label>
@@ -177,7 +177,7 @@ const Authentication: React.FC = () => {
               />
               <label
                 htmlFor="floating_standard"
-                className="absolute text-lg text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="absolute text-md text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 Enter Password | پاس ورڈ
               </label>
@@ -198,7 +198,7 @@ const Authentication: React.FC = () => {
             <div className="text-lg text-gray-600 text-center mt-6">
               <span>New user?</span>
               <span
-                className="text-blue-700 underline ml-4 font-bold"
+                className="text-blue-700 ml-4 font-bold"
                 onClick={() => setAuthStates("signup")}
               >
                 Sign Up

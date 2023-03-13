@@ -7,7 +7,7 @@ export const SignupvalidationSchema = Yup.object().shape({
     .max(20, "username must not exceed 20 characters"),
 
   phone: Yup.string()
-    .required("Mobile no is required")
+    .required("Mobile number is required")
     .min(11, "Mobile number must be at least 11 numbers long")
     .max(14, "Mobile number must not exceed 14 numbers"),
 
@@ -20,5 +20,3 @@ export const SignupvalidationSchema = Yup.object().shape({
     .required("Confirm Password is required")
     .oneOf([Yup.ref("password")], "Confirm Password does not match"),
 });
-
-
