@@ -9,10 +9,12 @@ import { BsImage } from "react-icons/bs";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { HiArrowLeft } from "react-icons/hi";
 import { BiVideo } from "react-icons/bi";
+import { useRouter } from "next/navigation";
+
 
 const Form: React.FC = ({ params }: any) => {
   const complaint = params.complaint;
-  console.log(complaint);
+  const Navigate = useRouter();
   const {
     register,
     handleSubmit,
@@ -27,15 +29,23 @@ const Form: React.FC = ({ params }: any) => {
   const videoRef = useRef<HTMLInputElement>(null);
   const [video, setvideo] = useState<string>();
 
+  // Submit Form
   const onSubmit = (data: ComplainForm) => {
+    
     console.log(JSON.stringify(data, null, 2));
-    alert("form submitted successfully");
+
+    // alert("form submitted successfully");
+    Navigate.push("/complaint/timeline/slfsldfsdf")
     reset();
   };
 
+  const GoHomePage = () => {
+    Navigate.push('/');
+  }
+
   // upload media
   const UploadAttachments = (event: any) => {
-    console.log(event.target.name);
+    // console.log(event.target.name);
     if (event.target.files && event.target.files[0]) {
       if (event.target.name == "image") {
         let img: any = event.target.files[0];
@@ -53,7 +63,7 @@ const Form: React.FC = ({ params }: any) => {
   return (
     <div className="md:w-[20%] mt-20 w-[93%] mx-3">
       <div className="flex items-center gap-14">
-        <HiArrowLeft className="text-[28px] text-primaryColor-500" />
+        <HiArrowLeft onClick={GoHomePage} className="text-[28px] text-primaryColor-500" />
         <h3 className="text-lg font-bold text-primaryColor-500">
           <span className="text-green-700 opacity-50">Complaint: </span>
           {complaint}
@@ -68,12 +78,13 @@ const Form: React.FC = ({ params }: any) => {
           <label className="text-[#333] text-[18px]">
             Address<span className="text-red-500">*</span>
           </label>
-          <input
-            type="text"
-            placeholder="Contact number"
+          <textarea
+            rows={2}
+            cols={2}
+            placeholder="Complaint address"
             {...register("phone")}
-            className={`py-2 px-2 rounded-lg outline-none border-2 bg-transparent focus:border-primaryColor-300 ${
-              errors.phone ? "border-red-500" : "border-primarycolor-500"
+            className={`block py-1 px-2 w-full text-md text-black bg-transparent border-2 border-gray-300 focus:outline-none f focus:border-primaryColor-500 peer ${
+              errors.phone ? "focus:border-red-500" : ""
             }`}
           />
           <div className="text-sm text-red-500">{errors.phone?.message}</div>
@@ -86,7 +97,7 @@ const Form: React.FC = ({ params }: any) => {
             rows={3}
             cols={4}
             {...register("desc")}
-            className="py-2 px-2 bg-transparent rounded-lg border-2 focus:border-primaryColor-300 border-gray-300 outline-none"
+            className="py-2 px-2 bg-transparent rounded-lg border-2 border-gray-300 outline-none"
           />
         </div>
 
@@ -178,7 +189,7 @@ const Form: React.FC = ({ params }: any) => {
         <div className="flex justify-center mt-2 w-[100%]">
           <button
             type="submit"
-            className="flex items-center justify-center gap-3 text-white mt-4 w-[100%] uppercase bg-primaryColor-500 rounded-lg hover:bg-primaryColor-300 transition-all outline-none cursor-pointer py-2 px-4 text-[18px] text-secondaryColr font-bold shadow-md"
+            className="flex items-center justify-center gap-3 text-white mt-4 w-[100%] uppercase bg-primaryColor-500 rounded-lg transition-all outline-none cursor-pointer py-2 px-4 text-[18px] font-bold shadow-md"
           >
             <AiOutlineFileAdd className="text-lg text-white" />
             <span>Submit</span>

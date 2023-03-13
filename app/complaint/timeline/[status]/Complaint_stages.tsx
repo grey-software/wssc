@@ -10,7 +10,11 @@ import { FaStarOfLife } from "react-icons/fa";
 
 type Props = {};
 
-function Complaint_stages({}: Props) {
+function Complaint_stages({ }: Props) {
+  
+  const Feedback = () => {
+    alert("This feature is in progress!")
+  }
   const date = "Mar 08 2023";
   return (
     <>
@@ -148,7 +152,7 @@ function Complaint_stages({}: Props) {
               <span className="text-gray-500 mb-1">
                 Are you satisfied with:
               </span>
-              <button className="w-1/2 py-1 px-2 bg-[#1A5980] text-white text-sm rounded-lg shadow-md">
+              <button onClick={Feedback} className="w-1/2 py-1 px-2 bg-[#1A5980] text-white text-sm rounded-lg shadow-md">
                 Feedback
               </button>
             </div>

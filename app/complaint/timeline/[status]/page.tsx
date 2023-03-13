@@ -1,15 +1,22 @@
-// "use client";
-import garbage from "../../public/garbage.png";
+"use client";
+import garbage from "./garbage.png";
 import Image from "next/image";
 import Complaint_stages from "./Complaint_stages";
 import { HiArrowLeft } from "react-icons/hi";
+import { useRouter } from "next/navigation";
 
 const Timeline = () => {
+const navigate = useRouter();
+
+  const backTohome = () => {
+    navigate.push('/')
+  }
+
   return (
     <>
       <div className="md:w-[40%] w-[90%] h-[100vh] bg-secondarycolor-500 mt-20 mx-3 relative">
         <div className="flex items-center gap-24 mb-4">
-          <HiArrowLeft className="text-[28px] text-primaryColor-500" />
+          <HiArrowLeft onClick={backTohome} className="text-[28px] text-primaryColor-500" />
           <span className="text-[25px] font-bold text-headingColor-400">
             Tracking
           </span>
@@ -34,7 +41,11 @@ const Timeline = () => {
               <span>Mardan</span>
             </div>
           </div>
-          <Image src={garbage} className="h-70% w-[30%]" alt="" />
+          <Image
+            src='/garbage.png' width={80} height={50}
+            className="h-70% w-[30%]"
+            alt=""
+          />
           <div className="h-[100%] w-2 bg-initiatedColor top-0 left-0 absolute"></div>
         </div>
         <Complaint_stages />

@@ -18,13 +18,17 @@ const Authentication: React.FC = () => {
   } = useForm<UserSubmitForm>({
     resolver: yupResolver(SignupvalidationSchema),
   });
-
+// sign up for submission
   const onSubmit = (data: UserSubmitForm) => {
     console.log(JSON.stringify(data, null, 2));
+    const user = JSON.stringify(data, null, 2);
+    localStorage.setItem("user",user)
     alert("form submitted successfully");
     // router.push("/domryinh");
     reset();
   };
+
+  // JSX Section
   return (
     <div className="flex items-center justify-center h-screen w-full">
       <div className="flex justify-center flex-col w-[80%] sm:w-[40%] ">
@@ -149,7 +153,7 @@ const Authentication: React.FC = () => {
                 type="number"
                 id="floating_standard"
                 {...register("phone")}
-                className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
+                className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 ${
                   errors.phone ? "focus:border-red-500" : ""
                 }`}
                 placeholder=" "
@@ -195,6 +199,7 @@ const Authentication: React.FC = () => {
                 Sign In
               </button>
             </div>
+
             <div className="text-lg text-gray-600 text-center mt-6">
               <span>New user?</span>
               <span
@@ -206,6 +211,7 @@ const Authentication: React.FC = () => {
             </div>
           </form>
         )}
+        
       </div>
     </div>
   );

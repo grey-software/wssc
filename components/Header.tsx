@@ -15,10 +15,16 @@ const Header = () => {
         <h2 className="text-lg text-primaryColor-500 font-bold">WSSCM</h2>
       </div>
       <div className="flex items-center justify-center gap-4">
-        <BsFillBellFill
-          className="text-[28px] text-primaryColor-500"
-          onClick={() => setWindowActive(!windowActive)}
-        />
+        <div className="notification flex relative">
+          <BsFillBellFill
+            className="text-[28px] text-primaryColor-500"
+            onClick={() => setWindowActive(!windowActive)}
+          />
+          {/* notification indicator */}
+          <div className="indicator absolute right-0 bg-red-600 rounded-full w-3 h-3 animate-pulse duration-50">
+
+          </div>
+        </div>
         <FaUserCircle
           className="text-[28px] text-primaryColor-500"
           onClick={() => setMenuActive(!menuActive)}
