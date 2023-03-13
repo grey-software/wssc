@@ -13,8 +13,8 @@ export default function Home() {
       {/* <Signup /> */}
       {/* <Form /> */}
       {/* <Complaints /> */}
-      <Timeline />
-      {/* <HomeScreen /> */}
+      {/* <Timeline /> */}
+      <HomeScreen />
     </main>
   );
 }

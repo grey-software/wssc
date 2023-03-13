@@ -89,7 +89,7 @@ const Header = () => {
             setMenuActive(false);
             setWindowActive(false);
           }}
-          className="absolute top-0 left-0 bottom-0 right-0 h-[100vh] w-[100vw] bg-gray-/120 backdrop-blur-sm z-30"
+          className="absolute top-0 left-0 bottom-0 right-0 h-[100vh] w-[100vw] bg-gray-500 opacity-25 z-30"
         ></div>
       ) : (
         ""

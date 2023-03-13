@@ -48,7 +48,7 @@ function Complaint_stages({}: Props) {
             </div>
           </div>
 
-          <div className="h-[103%] w-2 bg-initiatedColor top-0 right-0 rounded-tr-md rounded-br-md absolute"></div>
+          <div className="h-[103%] w-1 bg-initiatedColor top-0 right-0 rounded-tr-md rounded-br-md absolute"></div>
         </VerticalTimelineElement>
 
         <VerticalTimelineElement
@@ -82,7 +82,7 @@ function Complaint_stages({}: Props) {
             </div>
           </div>
 
-          <div className="h-[103%] w-2 bg-inprogessColor top-0 right-0 rounded-tr-md rounded-br-md absolute"></div>
+          <div className="h-[103%] w-1 bg-inprogessColor top-0 right-0 rounded-tr-md rounded-br-md absolute"></div>
         </VerticalTimelineElement>
 
         <VerticalTimelineElement
@@ -116,7 +116,7 @@ function Complaint_stages({}: Props) {
             </div>
           </div>
 
-          <div className="h-[103%] w-2 bg-completedColor top-0 right-0 rounded-tr-md rounded-br-md absolute"></div>
+          <div className="h-[103%] w-1 bg-completedColor top-0 right-0 rounded-tr-md rounded-br-md absolute"></div>
         </VerticalTimelineElement>
 
         <VerticalTimelineElement
@@ -154,7 +154,7 @@ function Complaint_stages({}: Props) {
             </div>
           </div>
 
-          <div className="h-[103%] w-2 bg-[#1A5980] top-0 right-0 rounded-tr-md rounded-br-md absolute"></div>
+          <div className="h-[103%] w-1 bg-[#1A5980] top-0 right-0 rounded-tr-md rounded-br-md absolute"></div>
         </VerticalTimelineElement>
 
         <VerticalTimelineElement
@@ -188,7 +188,7 @@ function Complaint_stages({}: Props) {
             </div>
           </div>
 
-          <div className="h-[103%] w-2 bg-[#D43434] top-0 right-0 rounded-tr-md rounded-br-md absolute"></div>
+          <div className="h-[103%] w-1 bg-[#D43434] top-0 right-0 rounded-tr-md rounded-br-md absolute"></div>
         </VerticalTimelineElement>
       </VerticalTimeline>
     </>

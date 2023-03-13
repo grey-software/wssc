@@ -1,4 +1,4 @@
-// 'use client'
+// "use client";
 import garbage from "../../public/garbage.png";
 import Image from "next/image";
 import Complaint_stages from "./Complaint_stages";
@@ -7,7 +7,7 @@ import { HiArrowLeft } from "react-icons/hi";
 const Timeline = () => {
   return (
     <>
-      <div className="md:w-[40%] w-[90%] h-[100vh] bg-secondarycolor-500 mt-20 mx-3">
+      <div className="md:w-[40%] w-[90%] h-[100vh] bg-secondarycolor-500 mt-20 mx-3 relative">
         <div className="flex items-center gap-24 mb-4">
           <HiArrowLeft className="text-[28px] text-primaryColor-500" />
           <span className="text-[25px] font-bold text-headingColor-400">
