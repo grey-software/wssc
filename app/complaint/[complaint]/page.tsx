@@ -10,10 +10,12 @@ import { AiOutlineFileAdd } from "react-icons/ai";
 import { HiArrowLeft } from "react-icons/hi";
 import { BiVideo } from "react-icons/bi";
 import { useRouter } from "next/navigation";
-
+import Loading from "@/app/loading";
+import { setCookie } from "cookies-next";
 
 const Form: React.FC = ({ params }: any) => {
   const complaint = params.complaint;
+ 
   const Navigate = useRouter();
   const {
     register,
@@ -29,13 +31,15 @@ const Form: React.FC = ({ params }: any) => {
   const videoRef = useRef<HTMLInputElement>(null);
   const [video, setvideo] = useState<string>();
 
+  const [load, setloading] = useState(false)
   // Submit Form
   const onSubmit = (data: ComplainForm) => {
-    
+    setloading(!load)
     console.log(JSON.stringify(data, null, 2));
 
     // alert("form submitted successfully");
     Navigate.push("/complaint/timeline/slfsldfsdf")
+    setloading(!load)
     reset();
   };
 
@@ -61,142 +65,153 @@ const Form: React.FC = ({ params }: any) => {
 
   // ---------- JSX SECTION STARTED ---------
   return (
-    <div className="md:w-[20%] mt-20 w-[93%] mx-3">
-      <div className="flex items-center gap-14">
-        <HiArrowLeft onClick={GoHomePage} className="text-[28px] text-primaryColor-500" />
-        <h3 className="text-lg font-bold text-primaryColor-500">
-          <span className="text-green-700 opacity-50">Complaint: </span>
-          {complaint}
-        </h3>
-      </div>
+    <>
+      {load ? (
+        <Loading />
+      ) : (
+        <div className="md:w-[20%] mt-20 w-[93%] mx-3">
+          <div className="flex items-center gap-14">
+            <HiArrowLeft
+              onClick={GoHomePage}
+              className="text-[28px] text-primaryColor-500"
+            />
+            <h3 className="text-lg font-bold text-primaryColor-500">
+              <span className="text-green-700 opacity-50">Complaint: </span>
+              {complaint}
+            </h3>
+          </div>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 mt-6 rounded-3xl px-[20px] pt-6 pb-8 shadow-lg border-[2px] border-gray-200"
-      >
-        <div className="flex flex-col">
-          <label className="text-[#333] text-[18px]">
-            Address<span className="text-red-500">*</span>
-          </label>
-          <textarea
-            rows={2}
-            cols={2}
-            placeholder="Complaint address"
-            {...register("phone")}
-            className={`block py-1 px-2 w-full text-md text-black bg-transparent border-2 border-gray-300 focus:outline-none f focus:border-primaryColor-500 peer ${
-              errors.phone ? "focus:border-red-500" : ""
-            }`}
-          />
-          <div className="text-sm text-red-500">{errors.phone?.message}</div>
-        </div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-4 mt-6 rounded-3xl px-[20px] pt-6 pb-8 shadow-lg border-[2px] border-gray-200"
+          >
+            <div className="flex flex-col">
+              <label className="text-[#333] text-[18px]">
+                Address<span className="text-red-500">*</span>
+              </label>
+              <textarea
+                rows={2}
+                cols={2}
+                placeholder="Complaint address"
+                {...register("phone")}
+                className={`block py-1 px-2 w-full text-md text-black bg-transparent border-2 border-gray-300 focus:outline-none f focus:border-primaryColor-500 peer ${
+                  errors.phone ? "focus:border-red-500" : ""
+                }`}
+              />
+              <div className="text-sm text-red-500">
+                {errors.phone?.message}
+              </div>
+            </div>
 
-        <div className="flex flex-col">
-          <label className="text-[#333] text-[18px]">Description</label>
-          <textarea
-            placeholder="Describe issue"
-            rows={3}
-            cols={4}
-            {...register("desc")}
-            className="py-2 px-2 bg-transparent rounded-lg border-2 border-gray-300 outline-none"
-          />
-        </div>
+            <div className="flex flex-col">
+              <label className="text-[#333] text-[18px]">Description</label>
+              <textarea
+                placeholder="Describe issue"
+                rows={3}
+                cols={4}
+                {...register("desc")}
+                className="py-2 px-2 bg-transparent rounded-lg border-2 border-gray-300 outline-none"
+              />
+            </div>
 
-        {/*uploading media  */}
-        <div className="flex flex-col mt-2 mb-2">
-          <label className="text-[#333] text-[18px]">
-            Attachment<span className="text-red-500">*</span>
-          </label>
-          <div
-            className={`flex gap-3 w-full h-[6rem] p-[3px] overflow-hidden border-2 rounded-lg border-gray-300 outline-none
+            {/*uploading media  */}
+            <div className="flex flex-col mt-2 mb-2">
+              <label className="text-[#333] text-[18px]">
+                Attachment<span className="text-red-500">*</span>
+              </label>
+              <div
+                className={`flex gap-3 w-full h-[6rem] p-[3px] overflow-hidden border-2 rounded-lg border-gray-300 outline-none
           `}
-          >
-            {image && (
-              <div className="w-[120px] h-[120px] object-cover">
-                <Image
-                  className="rounded-md"
-                  src={image}
-                  width={100}
-                  height={100}
-                  alt="previewImage"
+              >
+                {image && (
+                  <div className="w-[120px] h-[120px] object-cover">
+                    <Image
+                      className="rounded-md"
+                      src={image}
+                      width={100}
+                      height={100}
+                      alt="previewImage"
+                    />
+                  </div>
+                )}
+
+                {video && (
+                  <div className="w-[120px] h-[120px] object-cover">
+                    <video
+                      src={video}
+                      controls
+                      style={{ width: "120px", height: "120px" }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* buttons */}
+            <div className="flex justify-between mt-1">
+              {/* for image to upload */}
+              <div
+                className="border-2 border-primaryColor-300 rounded-md hover:bg-primaryColor-300 transition-all cursor-pointer py-1 px-3 text-[18px] text-secondarycolor-500 font-bold"
+                onClick={() => imageRef.current!.click()}
+              >
+                <div className="flex justify-center items-center gap-1 text-[20px]">
+                  <span>
+                    <BsImage />
+                  </span>
+                  <span>Picture</span>
+                </div>
+              </div>
+              {/* for video to upload */}
+              <div
+                className="border-2 border-primaryColor-300 rounded-md active:bg-primarycolor-500 hover:bg-primaryColor-300 transition-all cursor-pointer py-1 px-3 text-[18px] text-secondarycolor-500 font-bold"
+                onClick={() => videoRef.current!.click()}
+              >
+                <div className="flex justify-center items-center gap-1 text-[20px]">
+                  <span>
+                    <BiVideo />
+                  </span>
+                  <span>Video</span>
+                </div>
+              </div>
+
+              {/* ---------------------- input sectons ------------------ */}
+              <div className="hidden">
+                <input
+                  accept="image/*"
+                  ref={imageRef}
+                  onChange={UploadAttachments}
+                  type="file"
+                  capture="environment"
+                  name="image"
                 />
               </div>
-            )}
 
-            {video && (
-              <div className="w-[120px] h-[120px] object-cover">
-                <video
-                  src={video}
-                  controls
-                  style={{ width: "120px", height: "120px" }}
+              <div className="hidden">
+                <input
+                  accept="video/*"
+                  ref={videoRef}
+                  onChange={UploadAttachments}
+                  type="file"
+                  capture="environment"
+                  name="video"
                 />
               </div>
-            )}
-          </div>
-        </div>
-
-        {/* buttons */}
-        <div className="flex justify-between mt-1">
-          {/* for image to upload */}
-          <div
-            className="border-2 border-primaryColor-300 rounded-md hover:bg-primaryColor-300 transition-all cursor-pointer py-1 px-3 text-[18px] text-secondarycolor-500 font-bold"
-            onClick={() => imageRef.current!.click()}
-          >
-            <div className="flex justify-center items-center gap-1 text-[20px]">
-              <span>
-                <BsImage />
-              </span>
-              <span>Picture</span>
+              {/* ---------------------- END input sectons ------------------ */}
             </div>
-          </div>
-          {/* for video to upload */}
-          <div
-            className="border-2 border-primaryColor-300 rounded-md active:bg-primarycolor-500 hover:bg-primaryColor-300 transition-all cursor-pointer py-1 px-3 text-[18px] text-secondarycolor-500 font-bold"
-            onClick={() => videoRef.current!.click()}
-          >
-            <div className="flex justify-center items-center gap-1 text-[20px]">
-              <span>
-                <BiVideo />
-              </span>
-              <span>Video</span>
+            {/* ------------- Submit button -------------- */}
+            <div className="flex justify-center mt-2 w-[100%]">
+              <button
+                type="submit"
+                className="flex items-center justify-center gap-3 text-white mt-4 w-[100%] uppercase bg-primaryColor-500 rounded-lg transition-all outline-none cursor-pointer py-2 px-4 text-[18px] font-bold shadow-md"
+              >
+                <AiOutlineFileAdd className="text-lg text-white" />
+                <span>Submit</span>
+              </button>
             </div>
-          </div>
-
-          {/* ---------------------- input sectons ------------------ */}
-          <div className="hidden">
-            <input
-              accept="image/*"
-              ref={imageRef}
-              onChange={UploadAttachments}
-              type="file"
-              capture="environment"
-              name="image"
-            />
-          </div>
-
-          <div className="hidden">
-            <input
-              accept="video/*"
-              ref={videoRef}
-              onChange={UploadAttachments}
-              type="file"
-              capture="environment"
-              name="video"
-            />
-          </div>
-          {/* ---------------------- END input sectons ------------------ */}
+          </form>
         </div>
-        {/* ------------- Submit button -------------- */}
-        <div className="flex justify-center mt-2 w-[100%]">
-          <button
-            type="submit"
-            className="flex items-center justify-center gap-3 text-white mt-4 w-[100%] uppercase bg-primaryColor-500 rounded-lg transition-all outline-none cursor-pointer py-2 px-4 text-[18px] font-bold shadow-md"
-          >
-            <AiOutlineFileAdd className="text-lg text-white" />
-            <span>Submit</span>
-          </button>
-        </div>
-      </form>
-    </div>
+      )}
+    </>
   );
 };
 

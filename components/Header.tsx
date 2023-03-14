@@ -5,7 +5,12 @@ import { FaUserCircle } from "react-icons/fa";
 import { BsFillBellFill } from "react-icons/bs";
 import { GrFormClose } from "react-icons/gr";
 import ProfileMenu from "./ProfileMenu";
+
+
+
 const Header = () => {
+
+
   const [menuActive, setMenuActive] = useState(false);
   const [windowActive, setWindowActive] = useState(false);
   return (
@@ -21,8 +26,10 @@ const Header = () => {
             onClick={() => setWindowActive(!windowActive)}
           />
           {/* notification indicator */}
-          <div className="indicator absolute right-0 bg-red-600 rounded-full w-3 h-3 animate-pulse duration-50">
 
+          <div className="absolute right-0 flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-800"></span>
           </div>
         </div>
         <FaUserCircle
