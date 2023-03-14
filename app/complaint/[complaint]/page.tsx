@@ -94,7 +94,7 @@ const Form: React.FC = ({ params }: any) => {
                 cols={2}
                 placeholder="Complaint address"
                 {...register("phone")}
-                className={`block py-1 px-2 w-full text-md text-black bg-transparent border-2 border-gray-300 focus:outline-none f focus:border-primaryColor-500 peer ${
+                className={`block py-1 px-2 w-full rounded-lg text-md text-black bg-transparent border-2 border-gray-300 focus:outline-none f focus:border-primaryColor-500 peer ${
                   errors.phone ? "focus:border-red-500" : ""
                 }`}
               />
