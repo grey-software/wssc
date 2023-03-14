@@ -6,6 +6,7 @@ import { BsFillBellFill } from "react-icons/bs";
 import { GrFormClose } from "react-icons/gr";
 import ProfileMenu from "./ProfileMenu";
 import Link from "next/link";
+import user from '../public/user.jpg'
 
 
 
@@ -17,28 +18,36 @@ const Header = () => {
   return (
     <div className="flex items-center justify-between bg-gray-50 w-full px-3 py-2 border-1 shadow-md md:shadow-lg fixed top-0 border z-30">
       <div className="flex items-center justify-center gap-2">
-        <Link href='/'>
-        <Image src="/wsscmlogo.png" height={40} width={40} alt="" />
+        <Link href="/">
+          <Image src="/wsscmlogo.png" height={40} width={40} alt="" />
         </Link>
         <h2 className="text-lg text-primaryColor-500 font-bold">WSSCM</h2>
       </div>
       <div className="flex items-center justify-center gap-4">
         <div className="notification flex relative">
           <BsFillBellFill
-            className="text-[28px] text-primaryColor-500"
+            className="text-[26px] text-primaryColor-500"
             onClick={() => setWindowActive(!windowActive)}
           />
           {/* notification indicator */}
 
           <div className="absolute right-0 flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-800"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-600 opacity-95"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-600"></span>
           </div>
         </div>
-        <FaUserCircle
-          className="text-[28px] text-primaryColor-500"
+
+        <Image
+          src={user}
+          className="w-8 rounded-full"
+          alt="profileIcon"
           onClick={() => setMenuActive(!menuActive)}
         />
+        
+        {/* <FaUserCircle
+          className="text-[28px] text-primaryColor-500"
+          onClick={() => setMenuActive(!menuActive)}
+        /> */}
       </div>
       {/* Notification window */}
       <div

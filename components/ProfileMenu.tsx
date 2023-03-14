@@ -12,7 +12,7 @@ import user from "../public/user.jpg";
 
 const ProfileMenu = () => {
   return (
-    <div className="flex flex-col justify-around gap-2 h-[100vh] w-[70vw] px-6 border-r-2 border-gray-100 shadow-lg bg-primaryColor-100">
+    <div className="flex flex-col justify-around gap-2 h-[100vh] w-[70vw] px-6 border-r-2 border-gray-100 shadow-lg bg-primaryColor-100 ">
       <div className="flex flex-col gap-2 items-center -mt-6">
         <Image src={user} className="h-36 w-36 rounded-full" alt="" />
         <h1 className="text-xl text-headingColor-400 font-bold">John Doe</h1>
