@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 // import Authentication from "@/components/auth/Authentication";
 import Complaints from "@/app/complaint/page";
 import Loading from "./loading";
-import Authentication from "@/components/auth/Authentication";
+// import Authentication from "@/components/auth/Authentication";
 
 //  const session = JSON.parse(localStorage.getItem("user") || "");
 //  console.log(session);
