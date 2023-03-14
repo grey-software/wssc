@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import "./globals.css";
-import { session } from "@/Session";
 
 export const metadata = {
   title: "Create Next App",
@@ -15,8 +14,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const session = window.localStorage.getItem("user")
-   console.log(session)
+  
   return (
     <html lang="en">
       <body>

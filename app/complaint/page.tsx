@@ -1,13 +1,18 @@
 import React from "react";
 import Image from "next/image";
-import garbage from "../public/garbage.png";
+// import garbage from "./garbage.png";
+import garbage from '../../public/garbage.png';
 import { HiArrowLeft } from "react-icons/hi";
+import Link from "next/link";
+// import { useRouter } from "next/router";
 
 const Complaints = () => {
   return (
     <div className="mt-20 mx-3">
       <div className="flex items-center gap-24">
+        <Link href='/'>
         <HiArrowLeft className="text-[28px] text-primaryColor-500" />
+        </Link>
         <span className="text-[25px] font-bold text-headingColor-400">
           Complaints
         </span>

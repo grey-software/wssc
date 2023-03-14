@@ -5,6 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { BsFillBellFill } from "react-icons/bs";
 import { GrFormClose } from "react-icons/gr";
 import ProfileMenu from "./ProfileMenu";
+import Link from "next/link";
 
 
 
@@ -16,7 +17,9 @@ const Header = () => {
   return (
     <div className="flex items-center justify-between bg-gray-50 w-full px-3 py-2 border-1 shadow-md md:shadow-lg fixed top-0 border z-30">
       <div className="flex items-center justify-center gap-2">
+        <Link href='/'>
         <Image src="/wsscmlogo.png" height={40} width={40} alt="" />
+        </Link>
         <h2 className="text-lg text-primaryColor-500 font-bold">WSSCM</h2>
       </div>
       <div className="flex items-center justify-center gap-4">
