@@ -11,7 +11,6 @@ import { HiArrowLeft } from "react-icons/hi";
 import { BiVideo } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
-import { setCookie } from "cookies-next";
 
 const Form: React.FC = ({ params }: any) => {
   const complaint = params.complaint;
@@ -86,15 +85,20 @@ const Form: React.FC = ({ params }: any) => {
             className="flex flex-col gap-4 mt-6 rounded-3xl px-[20px] pt-6 pb-8 shadow-lg border-[2px] border-gray-200"
           >
             <div className="flex flex-col">
-              <label className="text-[#333] text-[18px]">
-                Address<span className="text-red-500">*</span>
+              <label className="text-gray-500 text-[18px]">
+                <span>
+                  Address<span className="text-red-500">*</span>
+                </span>
+                <span className="text-gray-500 ml-2 font-serif">
+                  شکایت کا پتہ
+                </span>
               </label>
               <textarea
                 rows={2}
                 cols={2}
                 placeholder="Complaint address"
                 {...register("phone")}
-                className={`block py-1 px-2 w-full rounded-lg text-md text-black bg-transparent border-2 border-gray-300 focus:outline-none f focus:border-primaryColor-500 peer ${
+                className={`block py-1 px-2 w-full rounded-lg text-md text-black bg-transparent border-2 border-gray-300 focus:outline-none focus:border-primaryColor-500 peer ${
                   errors.phone ? "focus:border-red-500" : ""
                 }`}
               />
@@ -104,20 +108,26 @@ const Form: React.FC = ({ params }: any) => {
             </div>
 
             <div className="flex flex-col">
-              <label className="text-[#333] text-[18px]">Description</label>
+              <label className="text-[#333] text-[18px]">
+                <span className="text-gray-500">Description</span>
+                <span className="text-gray-500 ml-2 font-serif">تفصیل</span>
+              </label>
               <textarea
                 placeholder="Describe issue"
                 rows={3}
                 cols={4}
                 {...register("desc")}
-                className="py-2 px-2 bg-transparent rounded-lg border-2 border-gray-300 outline-none"
+                className="py-2 px-2 bg-transparent rounded-lg border-2 border-gray-300 focus:border-primaryColor-500 outline-none"
               />
             </div>
 
             {/*uploading media  */}
             <div className="flex flex-col mt-2 mb-2">
-              <label className="text-[#333] text-[18px]">
-                Attachment<span className="text-red-500">*</span>
+              <label className="text-gray-500 text-[18px]">
+                <span>
+                  Attachment<span className="text-red-500">*</span>
+                </span>
+                <span className=" ml-2 font-serif">تصویر / ویڈیو</span>
               </label>
               <div
                 className={`flex gap-3 w-full h-[6rem] p-[3px] overflow-hidden border-2 rounded-lg border-gray-300 outline-none
