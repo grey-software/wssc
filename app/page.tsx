@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 // import Authentication from "@/components/auth/Authentication";
 import Complaints from "@/app/complaint/page";
 import Loading from "./loading";
+import ProfileCard from "@/components/ProfileCard";
 // import Authentication from "@/components/auth/Authentication";
 
 //  const session = JSON.parse(localStorage.getItem("user") || "");
@@ -19,7 +20,8 @@ export default function Home() {
       {/* <Form /> */}
       {/* <Complaints /> */}
       {/* <Timeline /> */}
-      <HomeScreen />
+      {/* <HomeScreen /> */}
+     <ProfileCard/>
       {/* <Loading/> */}
     </main>
   );
