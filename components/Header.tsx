@@ -6,13 +6,9 @@ import { BsFillBellFill } from "react-icons/bs";
 import { GrFormClose } from "react-icons/gr";
 import ProfileMenu from "./ProfileMenu";
 import Link from "next/link";
-import user from '../public/user.jpg'
-
-
+import user from "../public/user.jpg";
 
 const Header = () => {
-
-
   const [menuActive, setMenuActive] = useState(false);
   const [windowActive, setWindowActive] = useState(false);
   return (
@@ -31,9 +27,11 @@ const Header = () => {
           />
           {/* notification indicator */}
 
+
           <div className="absolute right-1 flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-95"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+
           </div>
         </div>
 
@@ -43,7 +41,6 @@ const Header = () => {
           alt="profileIcon"
           onClick={() => setMenuActive(!menuActive)}
         />
-      
       </div>
       {/* Notification window */}
       <div
