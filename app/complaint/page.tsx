@@ -29,7 +29,7 @@ const Complaints = () => {
               <p>Compliant ID:</p>
               <span>uwe1238</span>
             </div>
-            <div className="flex items-center gap-3 text-sm ">
+            <div className="flex items-center gap-3 text-sm text-gray-600">
               <p>Submited On:</p>
               <span>24-jan-2023</span>
             </div>
