@@ -7,21 +7,22 @@ import { Inter } from "next/font/google";
 import Complaints from "@/app/complaint/page";
 import Loading from "./loading";
 import ProfileCard from "@/components/ProfileCard";
+import Authentication from "@/components/auth/Authentication";
 // import Authentication from "@/components/auth/Authentication";
 
-//  const session = JSON.parse(localStorage.getItem("user") || "");
-//  console.log(session);
+
 export default function Home() {
   
   return (
     <main>
-      {/* <Authentication /> */}
+      {/* <Authentication/> */}
       {/* <Signup /> */}
       {/* <Form /> */}
       {/* <Complaints /> */}
       {/* <Timeline /> */}
-      {/* <HomeScreen /> */}
-     <ProfileCard/>
+      
+      <HomeScreen />
+     {/* <ProfileCard/> */} 
       {/* <Loading/> */}
     </main>
   );
