@@ -13,14 +13,13 @@ export default function Home() {
   
   return (
     <main>
-      {/* <Authentication/> */}
+      {/* <Authentication /> */}
       {/* <Signup /> */}
       {/* <Form /> */}
       {/* <Complaints /> */}
       {/* <Timeline /> */}
-      
       <HomeScreen />
-     {/* <ProfileCard/> */} 
+     {/* <ProfileCard/> */}
       {/* <Loading/> */}
     </main>
   );
