@@ -153,7 +153,7 @@ const Authentication: React.FC = () => {
                 type="number"
                 id="floating_standard"
                 {...register("phone")}
-                className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 ${
+                className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
                   errors.phone ? "focus:border-red-500" : ""
                 }`}
                 placeholder=" "
@@ -211,7 +211,6 @@ const Authentication: React.FC = () => {
             </div>
           </form>
         )}
-        
       </div>
     </div>
   );
