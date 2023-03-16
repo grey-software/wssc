@@ -7,9 +7,7 @@ import { Inter } from "next/font/google";
 import Complaints from "@/app/complaint/page";
 import Loading from "./loading";
 import ProfileCard from "@/components/ProfileCard";
-import Authentication from "@/components/auth/Authentication";
 // import Authentication from "@/components/auth/Authentication";
-
 
 export default function Home() {
   
