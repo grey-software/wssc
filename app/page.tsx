@@ -7,6 +7,7 @@ import { Inter } from "next/font/google";
 import Complaints from "@/app/complaint/page";
 import Loading from "./loading";
 import ProfileCard from "@/components/ProfileCard";
+import ShareApp from "@/components/ShareApp";
 // import Authentication from "@/components/auth/Authentication";
 
 export default function Home() {
@@ -18,9 +19,10 @@ export default function Home() {
       {/* <Form /> */}
       {/* <Complaints /> */}
       {/* <Timeline /> */}
-      <HomeScreen />
+      {/* <HomeScreen /> */}
      {/* <ProfileCard/> */}
       {/* <Loading/> */}
+      <ShareApp/>
     </main>
   );
 }
