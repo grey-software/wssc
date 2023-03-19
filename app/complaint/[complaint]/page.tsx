@@ -13,8 +13,9 @@ import { BiVideo } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 // import { useRouter } from "next/router";
 import Loading from "@/app/loading";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { RootState } from "@/Redux-toolkit/store";
+import { FileComplaint } from "@/Redux-toolkit/complaintSlice";
 
 const Form: React.FC = ({ params }: any) => {
   const complaint = params.complaint;
