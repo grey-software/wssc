@@ -8,7 +8,6 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Redux-toolkit/store";
 import { useRouter } from "next/navigation";
-// import { useRouter } from "next/router";
 
 const Complaints = () => {
   const navigate = useRouter();

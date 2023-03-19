@@ -10,6 +10,7 @@ import { AiOutlineFileAdd } from "react-icons/ai";
 import { HiArrowLeft } from "react-icons/hi";
 import { BiVideo } from "react-icons/bi";
 import { useRouter } from "next/navigation";
+// import { useRouter } from "next/router";
 import Loading from "@/app/loading";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Redux-toolkit/store";
@@ -17,9 +18,9 @@ import { RootState } from "@/Redux-toolkit/store";
 const Form: React.FC = ({ params }: any) => {
   const complaint = params.complaint;
   const phone = useSelector((state: RootState) => state.wsscm.phone);
-  
+
   const Navigate = useRouter();
-  if (!phone) Navigate.push("/");
+  // if (!phone) Navigate.push("/");
 
 
   const {
