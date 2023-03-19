@@ -10,7 +10,6 @@ import Loading from "./loading";
 import ProfileCard from "@/components/ProfileCard";
 import ShareApp from "@/components/ShareApp";
 import Authentication from "@/components/Auth/Authentication";
-import Testing from "./Testing";
 import { Provider } from "react-redux";
 import { store } from "@/Redux-toolkit/store";
 // import Authentication from "@/components/auth/Authentication";

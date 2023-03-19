@@ -6,7 +6,7 @@ import Link from "next/link";
 const HomeScreen = () => {
   return (
     <div className="container py-3">
-      <div className="complaints-record bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-lg shadow-gray-200 rounded-full p-2 mt-20">
+      <div className="complaints-record bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-md shadow-gray-200 rounded-full p-2 mt-20">
         <Link
           href="/complaint"
           className="pending cursor-pointer hover:bg-gray-100 flex flex-col justify-center items-center border-r border-gray-300  flex-1 "
@@ -32,7 +32,7 @@ const HomeScreen = () => {
       </div>
 
       <div className="complaints-types mt-4">
-        <h2 className="text-lg text-center font-semibold">
+        <h2 className="text-lg text-center font-semibold text-gray-600">
           Please Choose the complaint type
         </h2>
 
@@ -41,7 +41,7 @@ const HomeScreen = () => {
           {complaints_types.map((complaint, index) => (
             <div
               key={index}
-              className="wrapper overflow-hidden cursor-pointer mt-5 w-[38%] border-1 border-gray-300 rounded-lg shadow-md shadow-gray-400 flex flex-col justify-center items-center"
+              className="wrapper overflow-hidden cursor-pointer mt-5 w-[38%] border-1 border-gray-300 rounded-lg shadow-sm shadow-gray-400 flex flex-col justify-center items-center"
             >
               <Link
                 className="h-[60%] w-[100%]"

@@ -31,7 +31,7 @@ const navigate = useRouter();
             <h3 className="text-lg font-bold text-gray-600">Solid waste</h3>
             <div className="flex items-center gap-3 text-sm text-gray-600 mb-2">
               <p>Status:</p>
-              <span className="text-initiatedColor">Initiated</span>
+              <span className="text-initiatedColor font-bold">Initiated</span>
             </div>
             <div className="flex items-center gap-3 text-sm text-gray-600">
               <p>Compliant ID:</p>
