@@ -9,9 +9,9 @@ import { RootState } from "@/Redux-toolkit/store";
 
 const Timeline = () => {
 const navigate = useRouter();
-  const phone = useSelector((state: RootState) => state.wsscm.phone);
+  // const phone = useSelector((state: RootState) => state.wsscm.phone);
   
-  if (!phone) navigate.push("/");
+  // if (!phone) navigate.push("/");
 
   const backTohome = () => {
     navigate.push('/')

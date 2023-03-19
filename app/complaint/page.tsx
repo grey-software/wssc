@@ -10,10 +10,9 @@ import { RootState } from "@/Redux-toolkit/store";
 import { useRouter } from "next/navigation";
 
 const Complaints = () => {
-  const navigate = useRouter();
-  const phone = useSelector((state: RootState) => state.wsscm.phone);
-
-  if (!phone) navigate.push("/");
+  // const navigate = useRouter();
+  // const phone = useSelector((state: RootState) => state.wsscm.phone);
+  // if (!phone) navigate.push("/");
 
   return (
     <>

@@ -17,9 +17,9 @@ import { RootState } from "@/Redux-toolkit/store";
 
 const Form: React.FC = ({ params }: any) => {
   const complaint = params.complaint;
-  const phone = useSelector((state: RootState) => state.wsscm.phone);
-
+  
   const Navigate = useRouter();
+  // const phone = useSelector((state: RootState) => state.wsscm.phone);
   // if (!phone) Navigate.push("/");
 
 
