@@ -7,6 +7,7 @@ import { ComplainForm } from "../../../@types/complainForm.types";
 import Image from "next/image";
 import { BsImage } from "react-icons/bs";
 import { AiOutlineFileAdd } from "react-icons/ai";
+import { TbFilePlus } from "react-icons/tb";
 import { HiArrowLeft } from "react-icons/hi";
 import { BiVideo } from "react-icons/bi";
 import { useRouter } from "next/navigation";
@@ -18,7 +19,6 @@ import { FileComplaint } from "@/Redux-toolkit/complaintSlice";
 
 const Form: React.FC = ({ params }: any) => {
   const complaint = params.complaint;
-  const dispatch = useDispatch();
 
   const Navigate = useRouter();
   // const phone = useSelector((state: RootState) => state.wsscm.phone);
@@ -42,10 +42,6 @@ const Form: React.FC = ({ params }: any) => {
   // Submit Form
   const onSubmit = (data: ComplainForm) => {
     setloading(!load);
-
-    // updating state
-    dispatch(FileComplaint(data));
-
     console.log(JSON.stringify(data, null, 2));
 
     // alert("form submitted successfully");
@@ -81,20 +77,24 @@ const Form: React.FC = ({ params }: any) => {
         <Loading />
       ) : (
         <div className="md:w-[20%] mt-20 w-[93%] mx-3">
-          <div className="flex items-center gap-14">
+          <div className="flex items-center gap-8">
             <HiArrowLeft
               onClick={GoHomePage}
               className="text-[28px] text-primaryColor-500"
             />
-            <h3 className="text-lg font-bold text-primaryColor-500">
-              <span className="text-green-700 opacity-50">Complaint: </span>
-              {complaint}
+            <h3 className="flex gap-2 text-lg text-primaryColor-500">
+              <span className="text-headingColor-400 opacity-75 font-bold">
+                Complaint:
+              </span>
+              <span className="px-2 bg-[#1A5980] text-white rounded-lg">
+                {complaint}
+              </span>
             </h3>
           </div>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-4 mt-6 rounded-3xl px-[20px] pt-6 pb-8 shadow-lg border-[2px] border-gray-200"
+            className="flex flex-col gap-4 mt-6 rounded-3xl px-[20px] pt-6 pb-8"
           >
             <div className="flex flex-col">
               <label className="text-gray-500 text-[18px]">
@@ -226,7 +226,7 @@ const Form: React.FC = ({ params }: any) => {
                 type="submit"
                 className="flex items-center justify-center gap-3 text-white mt-4 w-[100%] uppercase bg-primaryColor-500 rounded-lg transition-all outline-none cursor-pointer py-2 px-4 text-[18px] font-bold shadow-md"
               >
-                <AiOutlineFileAdd className="text-lg text-white" />
+                <TbFilePlus className="text-xl font-bold text-white" />
                 <span>Submit</span>
               </button>
             </div>

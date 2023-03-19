@@ -7,16 +7,15 @@ import { UserSubmitForm } from "../../@types/signup.types";
 import logo from "../../public/wsscmlogo.png";
 import Image from "next/image";
 import axios from "axios";
-import {useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ChangeName } from "@/Redux-toolkit/UserSlice";
 interface Prop {
   setAuthState: Dispatch<SetStateAction<string>>;
 }
 
-
 const Signin = ({ setAuthState }: Prop) => {
   const dispatch = useDispatch();
-    
+
   const {
     register,
     handleSubmit,
@@ -30,8 +29,8 @@ const Signin = ({ setAuthState }: Prop) => {
     // console.log(JSON.stringify(data, null, 2));
     const { phone, password } = data;
     // console.log(data);
-      console.log(phone)
-      dispatch(ChangeName(phone))
+    console.log(phone);
+    dispatch(ChangeName(phone));
     // console.log(`phone is : ${phone} | username is: ${username} | password is: ${password}`)
 
     // await axios.post("http://localhost:7000/api/v1/auth/signup", {
@@ -60,8 +59,6 @@ const Signin = ({ setAuthState }: Prop) => {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
-           
-
             <div className="relative z-0 mt-10 mb-6">
               <input
                 type="number"
@@ -97,14 +94,13 @@ const Signin = ({ setAuthState }: Prop) => {
                 htmlFor="password"
                 className="absolute text-md text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                Enter Password | پاس ورڈ بنائیں
+                Enter Password | پاس ورڈ درج کریں
               </label>
               <div className="text-sm text-red-500">
                 {errors.password?.message}
               </div>
             </div>
 
-           
             {/* ---------------------- Submit form ------------------ */}
             <div className="flex justify-center mt-12">
               <button
