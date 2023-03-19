@@ -12,16 +12,17 @@ import { BiVideo } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 // import { useRouter } from "next/router";
 import Loading from "@/app/loading";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { RootState } from "@/Redux-toolkit/store";
+import { FileComplaint } from "@/Redux-toolkit/complaintSlice";
 
 const Form: React.FC = ({ params }: any) => {
   const complaint = params.complaint;
-  
+  const dispatch = useDispatch();
+
   const Navigate = useRouter();
   // const phone = useSelector((state: RootState) => state.wsscm.phone);
   // if (!phone) Navigate.push("/");
-
 
   const {
     register,
@@ -37,21 +38,25 @@ const Form: React.FC = ({ params }: any) => {
   const videoRef = useRef<HTMLInputElement>(null);
   const [video, setvideo] = useState<string>();
 
-  const [load, setloading] = useState(false)
+  const [load, setloading] = useState(false);
   // Submit Form
   const onSubmit = (data: ComplainForm) => {
-    setloading(!load)
+    setloading(!load);
+
+    // updating state
+    dispatch(FileComplaint(data));
+
     console.log(JSON.stringify(data, null, 2));
 
     // alert("form submitted successfully");
-    Navigate.push("/complaint/timeline/slfsldfsdf")
-    setloading(!load)
+    Navigate.push("/complaint/timeline/slfsldfsdf");
+    setloading(!load);
     reset();
   };
 
   const GoHomePage = () => {
-    Navigate.push('/');
-  }
+    Navigate.push("/");
+  };
 
   // upload media
   const UploadAttachments = (event: any) => {
