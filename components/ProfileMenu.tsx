@@ -21,10 +21,10 @@ const ProfileMenu = () => {
         <div className="flex flex-col gap-2 items-center -mt-6">
           <Image
             src={user}
-            className="h-36 w-36 rounded-full border-1 border-gray-300 "
+            className="h-32 w-32 rounded-full border-1 border-gray-300 "
             alt=""
           />
-          <h1 className="text-xl text-headingColor-400 font-bold">John Doe</h1>
+          <h1 className="text-xl text-headingColor-400 font-bold">Arman Malik</h1>
           <button className="flex items-center gap-2 px-2 bg-[#A4C9D1] rounded-md">
             <span>Edit</span>
             <FaEdit />
@@ -36,12 +36,12 @@ const ProfileMenu = () => {
             <span className="text-gray-700">View Profile</span>
           </Link>
           <div className="flex items-center gap-2 text-md" onClick={()=>setsharePop(!sharePop)}>
-            <FiShare2 className="text-[28px] text-primaryColor-500" />
+            <FiShare2 className="text-[24px] text-primaryColor-500" />
             <span className="text-gray-700">Share App</span>
           </div>
 
           <Link href="profilepage" className="flex items-center gap-2 text-md">
-            <MdOutlineContactPhone className="text-[28px] text-primaryColor-500" />
+            <MdOutlineContactPhone className="text-[24px] text-primaryColor-500" />
             <span className="text-gray-700">Contact us</span>
           </Link>
           <Link href="profilepage" className="flex items-center gap-2 text-md">
@@ -58,11 +58,11 @@ const ProfileMenu = () => {
           className="flex items-center gap-2 text-md -mt-4"
         >
           <TbLogout className="text-[28px] text-primaryColor-500" />
-          <span className="text-gray-700">Log out</span>
+          <span  className="text-gray-700">Log out</span>
         </Link>
       </div>
 
-      {/* {sharePop && <ShareApp/>} */}
+      {sharePop && <ShareApp sharePop={sharePop} setSharePop={setsharePop}  />}
     </div>
   );
 };

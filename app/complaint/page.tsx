@@ -39,7 +39,7 @@ const Complaints = () => {
                   <div className="flex items-center gap-3 text-sm text-gray-600 mb-2">
                     <p>Status:</p>
                     <span
-                      className={`text-${
+                      className={`font-bold text-${
                         status === "Initiated" ? "initiatedColor" : ""
                       }  text-${
                         status === "InProgress" ? "inprogessColor" : ""

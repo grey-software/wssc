@@ -77,7 +77,7 @@ const Header = () => {
                   <span className="font-bold text-gray-400 text-right text-[12px]">
                     08:12 am
                   </span>
-                  <span className="text-inprogessColor">InProgess</span>
+                  <span className="text-inprogessColor font-bold">InProgess</span>
                 </div>
               </div>
               <div className="flex items-center justify-between pt-2">
@@ -93,7 +93,7 @@ const Header = () => {
                   <span className="font-bold text-gray-400 text-right text-[12px]">
                     08:12 am
                   </span>
-                  <span className="text-completedColor">Completed</span>
+                  <span className="text-completedColor font-bold">Completed</span>
                 </div>
               </div>
             </div>
