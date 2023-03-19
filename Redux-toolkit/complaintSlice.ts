@@ -61,7 +61,7 @@ const complaintSlice = createSlice({
     FileComplaint: (state, action) => {
       //     // File complaint
       state.newComplaint = action.payload;
-      console.log(state.complaints);
+      console.log(state.complaintsAll);
     },
   },
 });
