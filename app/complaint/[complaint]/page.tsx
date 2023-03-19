@@ -42,7 +42,10 @@ const Form: React.FC = ({ params }: any) => {
   // Submit Form
   const onSubmit = (data: ComplainForm) => {
     setloading(!load);
+
+    // updating state
     dispatch(FileComplaint(data));
+
     console.log(JSON.stringify(data, null, 2));
 
     // alert("form submitted successfully");

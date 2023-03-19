@@ -21,7 +21,30 @@ export const getComplaints = createAsyncThunk("/complaints", async () => {
 const complaintSlice = createSlice({
   name: "complaint",
   initialState: {
-    complaints: [],
+    complaintsAll: [
+      {
+        type: "waste water",
+        status: "Initiated",
+        complaintID: "WSSCM7654",
+        submitedOn: "12-09-2023",
+        address: "mardan",
+      },
+      {
+        type: "Solid waste",
+        status: "InProgress",
+        complaintID: "WSSCM7937",
+        submitedOn: "11-03-2023",
+        address: "College chowk mardan",
+      },
+      {
+        type: "water supply",
+        status: "Completed",
+        complaintID: "WSSCM8382",
+        submitedOn: "07-01-2023",
+        address: "near UET mardan",
+      },
+    ],
+    newComplaint: [],
     Loading: false,
     error: false,
   },
@@ -29,18 +52,15 @@ const complaintSlice = createSlice({
     // get complaits reducer
     // extraReducers: {
     //   [getComplaints.pending]: (state) => {
-    //     // get all complaints
     //   },
     //   [getComplaints.fulfilled]: (state, action) => {
-    //     // get all complaints
     //   },
     //   [getComplaints.rejected]: (state) => {
-    //     // get all complaints
     //   },
     // },
     FileComplaint: (state, action) => {
       //     // File complaint
-      state.complaints = action.payload;
+      state.newComplaint = action.payload;
       console.log(state.complaints);
     },
   },
