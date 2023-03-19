@@ -4,9 +4,14 @@ import Image from "next/image";
 import Complaint_stages from "./Complaint_stages";
 import { HiArrowLeft } from "react-icons/hi";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Redux-toolkit/store";
 
 const Timeline = () => {
 const navigate = useRouter();
+  // const phone = useSelector((state: RootState) => state.wsscm.phone);
+  
+  // if (!phone) navigate.push("/");
 
   const backTohome = () => {
     navigate.push('/')
