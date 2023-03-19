@@ -6,23 +6,30 @@ import Link from "next/link";
 const HomeScreen = () => {
   return (
     <div className="container py-3">
-
       <div className="complaints-record bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-lg shadow-gray-200 rounded-full p-2 mt-20">
-       
-        <Link href='/complaint' className="pending cursor-pointer hover:bg-gray-100 flex flex-col justify-center items-center border-r border-gray-300  flex-1 ">
+        <Link
+          href="/complaint"
+          className="pending cursor-pointer hover:bg-gray-100 flex flex-col justify-center items-center border-r border-gray-300  flex-1 "
+        >
           <h3 className="font-bold">02</h3>
-          <p className="">Pending</p>
-        </Link>
-          
-        <Link href="/complaint" className="all-complaints cursor-pointer hover:bg-gray-200  flex flex-col justify-center items-center border-r border-gray-300 flex-1">
-          <h3 className="font-bold">03</h3>
-          <p>All Complaints</p>
+          <p className="text-sm">Pending complaints</p>
         </Link>
 
-        <Link href='/complaint' className="arrow cursor-pointer hover:bg-gray-200 w-10 flex justify-center items-center">
+        <Link
+          href="/complaint"
+          className="all-complaints cursor-pointer hover:bg-gray-200  flex flex-col justify-center items-center border-r border-gray-300 flex-1"
+        >
+          <h3 className="font-bold">03</h3>
+          <p className="text-sm">Resolved complaints</p>
+        </Link>
+
+        <Link
+          href="/complaint"
+          className="arrow cursor-pointer hover:bg-gray-200 w-10 flex justify-center items-center"
+        >
           <IoIosArrowForward className="text-3xl text-green-500 font-extrabold" />
         </Link>
-    </div>
+      </div>
 
       <div className="complaints-types mt-4">
         <h2 className="text-lg text-center font-semibold">

@@ -7,7 +7,7 @@ type Props = {}
 
 function ShareApp({}: Props) {
   return (
-      <div className="flex justify-center items-center w-full h-screen bg-blend-overlay backdrop-blur-md">
+      <div className="absolute top-0 flex justify-center bg-gray-300 items-center w-full h-screen bg-blend-overlay backdrop-blur-2xl">
           
       <div className="wrapper flex justify-around space-x-4 items-center py-10 w-60 bg-gray-100 shadow-md">
         {/* facebook site */}
