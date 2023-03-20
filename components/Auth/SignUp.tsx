@@ -161,7 +161,7 @@ const SignUp = ({  setAuthState }: Prop) => {
                 className="text-blue-700 ml-4 font-bold cursor-pointer"
                 onClick={() => setAuthState("Signin")}
               >
-                <span onClick={() => setAuthState("Signin")}>Sign up</span>
+                <span onClick={() => setAuthState("Signin")}>Sign In</span>
               </span>
             </div>
           </form>

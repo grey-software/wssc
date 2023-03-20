@@ -7,14 +7,16 @@ import {
   TwitterShareButton,
   EmailShareButton,
 } from "react-share";
+import toast from "react-hot-toast";
+
 import { HiMail, HiOutlineMail } from "react-icons/hi";
 import {
   FaFacebook,
   FaLinkedin,
   FaTwitter,
-  FaVoicemail,
   FaWhatsapp,
 } from "react-icons/fa";
+import {FiCopy} from "react-icons/fi"
 import { MdClose } from "react-icons/md";
 
 type Props = {
@@ -23,6 +25,19 @@ type Props = {
 };
 
 function ShareApp({ sharePop, setSharePop }: Props) {
+
+  const CopiedToast = () => {
+    //  const notification = toast.loading("processing", {
+    //    position: "top-center",
+    //    style: { width: "auto", height: "auto" },
+    //  });
+    // window.alert("Link copied")
+
+     toast.success("Copied", {
+       position: "top-center",
+       style: { width: "auto", height: "auto" },
+     });
+  }
   return (
     <div className="absolute top-0 flex justify-center items-center w-screen h-screen backdrop-blur-sm transition-all">
       <div className="flex flex-col gap-12 shadow-lg bg-white px-5 py-5 rounded-md">
@@ -69,16 +84,18 @@ function ShareApp({ sharePop, setSharePop }: Props) {
         </div>
         <div className="flex items-center justify-between">
           <input
-            className="text-sm w-[65%] overflow-hidden px-1 py-1 border-[1px] border-gray-400 rounded-md"
-            value="https://fyp-front-end.vercel.app/"
+            className="text-sm w-[80%] overflow-hidden px-1 py-1 border-[1px] border-gray-400 rounded-md"
+            defaultValue={"https://fyp-front-end.vercel.app/"}
           />
           <button
             className="text-sm px-2 py-1 bg-primaryColor-500 text-white rounded-md"
-            onClick={() =>
-              navigator.clipboard.writeText("https://fyp-front-end.vercel.app/")
+            onClick={() => {
+              navigator.clipboard.writeText("https://fyp-front-end.vercel.app/");
+              CopiedToast();
+            }
             }
           >
-            Copy Link
+            <FiCopy className="font-bold text-lg"/>
           </button>
         </div>
       </div>
