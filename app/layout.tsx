@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import "./globals.css";
 import {Providers} from '../Redux-toolkit/Provider'
+import Notification from "@/components/Notification";
 
 export const metadata = {
   title: "WSSCM",
@@ -19,6 +20,9 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <Providers>
+            {/* Toast - Notification */}
+            <Notification/>
+            
           <Header />
           {children}
           </Providers>
