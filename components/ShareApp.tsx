@@ -70,7 +70,7 @@ function ShareApp({ sharePop, setSharePop }: Props) {
         <div className="flex items-center justify-between">
           <input
             className="text-sm w-[65%] overflow-hidden px-1 py-1 border-[1px] border-gray-400 rounded-md"
-            value="https://fyp-front-end.vercel.app/"
+            defaultValue={"https://fyp-front-end.vercel.app/"}
           />
           <button
             className="text-sm px-2 py-1 bg-primaryColor-500 text-white rounded-md"
