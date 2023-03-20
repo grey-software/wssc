@@ -23,7 +23,7 @@ const ProfileMenu = () => {
       duration: 3000,
     });
   }
-  // 
+  // im writing this just for the purpose of checking
   return (
     <div className="container w-full h-screen bg-red-700">
       <div className="flex flex-col justify-around gap-2 h-[100vh] w-[70vw] px-6 bg-blend-overlay border-r-2 border-gray-100 shadow-lg bg-primaryColor-100 ">
