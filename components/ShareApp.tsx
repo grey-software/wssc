@@ -38,23 +38,23 @@ function ShareApp({ sharePop, setSharePop }: Props) {
         <div className="wrapper relative flex justify-around space-x-4 items-center w-auto">
           {/* facebook site */}
           <FacebookShareButton url={"https://fyp-front-end.vercel.app/"}>
-            <FaFacebook className="text-3xl text-gray-300 hover:text-blue-500" />
+            <FaFacebook className="text-3xl text-blue-500" />
           </FacebookShareButton>
 
           {/* LinkedIn */}
           <LinkedinShareButton url={"https://fyp-front-end.vercel.app/"}>
-            <FaLinkedin className="text-3xl text-gray-300 hover:text-blue-700" />
+            <FaLinkedin className="text-3xl text-blue-700" />
           </LinkedinShareButton>
           {/* whatsapp */}
           <WhatsappShareButton url={"https://fyp-front-end.vercel.app/"}>
-            <FaWhatsapp className="text-3xl text-gray-300 hover:text-green-500" />
+            <FaWhatsapp className="text-4xl text-green-500" />
           </WhatsappShareButton>
           {/* Twitter */}
           <TwitterShareButton
             url={"https://fyp-front-end.vercel.app/"}
             title={"WSSCM"}
           >
-            <FaTwitter className="text-3xl text-gray-300 hover:text-blue-400" />
+            <FaTwitter className="text-3xl text-blue-400" />
           </TwitterShareButton>
           {/* email */}
           <EmailShareButton
@@ -64,7 +64,7 @@ function ShareApp({ sharePop, setSharePop }: Props) {
               "This is a wsscm official app through you can easily file any type of complaint which are related to WSSCM"
             }
           >
-            <HiMail className="text-3xl text-gray-300 hover:text-red-500" />
+            <HiMail className="text-4xl text-red-500" />
           </EmailShareButton>
         </div>
         <div className="flex items-center justify-between">
@@ -73,7 +73,7 @@ function ShareApp({ sharePop, setSharePop }: Props) {
             value="https://fyp-front-end.vercel.app/"
           />
           <button
-            className="text-sm px-1 py-1 bg-primaryColor-500 text-white rounded-md"
+            className="text-sm px-2 py-1 bg-primaryColor-500 text-white rounded-md"
             onClick={() =>
               navigator.clipboard.writeText("https://fyp-front-end.vercel.app/")
             }
