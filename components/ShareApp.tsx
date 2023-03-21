@@ -27,11 +27,7 @@ type Props = {
 function ShareApp({ sharePop, setSharePop }: Props) {
 
   const CopiedToast = () => {
-    //  const notification = toast.loading("processing", {
-    //    position: "top-center",
-    //    style: { width: "auto", height: "auto" },
-    //  });
-    // window.alert("Link copied")
+
 
      toast.success("Copied", {
        position: "top-center",
