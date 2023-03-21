@@ -26,12 +26,9 @@ const Signin = ({ setAuthState }: Prop) => {
   });
 
   const onSubmit = async (data: UserSubmitForm) => {
-    // console.log(JSON.stringify(data, null, 2));
     const { phone, password } = data;
-    // console.log(data);
     console.log(phone);
     dispatch(ChangeName(phone));
-    // console.log(`phone is : ${phone} | username is: ${username} | password is: ${password}`)
 
     // await axios.post("http://localhost:7000/api/v1/auth/signup", {
     //   name: username,

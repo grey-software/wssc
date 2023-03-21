@@ -12,10 +12,8 @@ const Complaints = () => {
   const complaintsAll = useSelector((state: RootState) => {
     return state.complaints.complaintsAll;
   });
-  // const navigate = useRouter();
-  // const phone = useSelector((state: RootState) => state.wsscm.phone);
-  // if (!phone) navigate.push("/");
 
+// JSX section
   return (
     <>
       <div className="mt-20 mx-3">
