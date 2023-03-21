@@ -44,46 +44,7 @@ const ProfileMenu = () => {
             <FaEdit />
           </button>
         </div>
-        <div className="flex flex-col gap-3 -mt-20">
-          <button
-            onClick={() => NotifyTost()}
-            className="flex items-center gap-2 text-md"
-          >
-            <BiUserCircle className="text-[28px] text-primaryColor-500" />
-            <span className="text-gray-700">View Profile</span>
-          </button>
-
-          <button
-            className="flex items-center gap-2 text-md"
-            onClick={() => setsharePop(!sharePop)}
-          >
-            <FiShare2 className="text-[24px] text-primaryColor-500" />
-            <span className="text-gray-700">Share App</span>
-          </button>
-
-          <button
-            onClick={() => NotifyTost()}
-            className="flex items-center gap-2 text-md"
-          >
-            <MdOutlineContactPhone className="text-[24px] text-primaryColor-500" />
-            <span className="text-gray-700">Contact us</span>
-          </button>
-          <button
-            onClick={() => NotifyTost()}
-            className="flex items-center gap-2 text-md"
-          >
-            <MdOutlinePrivacyTip className="text-[28px] text-primaryColor-500" />
-            <span className="text-gray-700">Privacy and Policy</span>
-          </button>
-
-          <button
-            onClick={() => NotifyTost()}
-            className="flex items-center gap-2 text-md"
-          >
-            <AiOutlineFileProtect className="text-[28px] text-primaryColor-500" />
-            <span className="text-gray-700">Terms and Conditions</span>
-          </button>
-        </div>
+       
 
         <button
           onClick={() => NotifyTost()}

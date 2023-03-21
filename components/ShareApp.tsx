@@ -9,7 +9,7 @@ import {
 } from "react-share";
 import toast from "react-hot-toast";
 
-import { HiMail, HiOutlineMail } from "react-icons/hi";
+import { HiMail } from "react-icons/hi";
 import {
   FaFacebook,
   FaLinkedin,
