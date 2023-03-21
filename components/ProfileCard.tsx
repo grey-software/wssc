@@ -14,6 +14,7 @@ const ProfileCard = () => {
       <span className=" text-headingColor-400 opacity-50 font-black">Profile Card</span>
     </h3>
   </div>  
+  {/* below code for user image */}
   <div className="flex flex-col gap-2 items-center">
         <Image src={user} className="h-36 w-36 rounded-full mt-8" alt="" />
         <h1 className="text-xl text-headingColor-400 font-bold">John Doe</h1>
