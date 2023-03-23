@@ -21,6 +21,11 @@ module.exports = {
           400: "#182F35",
           500: "#112429",
         },
+        DeleteButton: {
+          100: "#ECECEC",
+          300: "#FF0000"
+
+        },
         initiatedColor: "#FBB64F",
         inprogessColor: "#00A6FF",
         completedColor: "#6AD616",
