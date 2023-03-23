@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <>
       <div className="container">
-        {phone ? <HomeScreen /> : <Authentication />}
+        {phone ? <ProfileCard /> : <Authentication />}
       </div>
       {/* <Authentication /> */}
       {/* <Signup /> */}
