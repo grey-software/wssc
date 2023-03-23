@@ -7,7 +7,7 @@ import ComplaintReducer from "./complaintSlice";
 
 export const store = configureStore({
   reducer: {
-    wsscm: UserReducer,
+    users: UserReducer,
     complaints: ComplaintReducer,
   },
 });

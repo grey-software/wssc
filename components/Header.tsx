@@ -1,17 +1,19 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
 import { BsFillBellFill } from "react-icons/bs";
 import { GrFormClose } from "react-icons/gr";
 import ProfileMenu from "./ProfileMenu";
 import Link from "next/link";
-import user from "../public/user.jpg";
+import userdp from "../public/user.jpg";
+import type { user } from "@/Redux-toolkit/UserSlice";
 import type { RootState } from "../Redux-toolkit/store";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-    const phone = useSelector((state: RootState) => state.wsscm.phone);
+  const { phone }: user = useSelector(
+    (state: RootState) => state.users.SignInData
+  );
 
   const [menuActive, setMenuActive] = useState(false);
   const [windowActive, setWindowActive] = useState(false);
@@ -42,7 +44,7 @@ const Header = () => {
             </div>
 
             <Image
-              src={user}
+              src={userdp}
               className="w-8 rounded-full"
               alt="profileIcon"
               onClick={() => setMenuActive(!menuActive)}
@@ -77,7 +79,9 @@ const Header = () => {
                   <span className="font-bold text-gray-400 text-right text-[12px]">
                     08:12 am
                   </span>
-                  <span className="text-inprogessColor font-bold">InProgess</span>
+                  <span className="text-inprogessColor font-bold">
+                    InProgess
+                  </span>
                 </div>
               </div>
               <div className="flex items-center justify-between pt-2">
@@ -93,7 +97,9 @@ const Header = () => {
                   <span className="font-bold text-gray-400 text-right text-[12px]">
                     08:12 am
                   </span>
-                  <span className="text-completedColor font-bold">Completed</span>
+                  <span className="text-completedColor font-bold">
+                    Completed
+                  </span>
                 </div>
               </div>
             </div>
