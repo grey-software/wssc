@@ -2,14 +2,14 @@ import * as Yup from "yup";
 
 export const SignUp_validate = Yup.object().shape({
     username: Yup.string()
-        .required("username is required")
-        .min(4, "username must be at least 4 characters")
+        .required("Username is required")
+        .min(4, "username must be at least 4 characters long")
         .max(20, "username must not exceed 20 characters"),
 
     phone: Yup.string()
         .required("Mobile number is required")
         .min(11, "Mobile number must be at least 11 numbers long")
-        .max(14, "Mobile number must not exceed 14 numbers"),
+        .max(11, "Mobile number must not exceed 11 numbers"),
 
     password: Yup.string()
         .required("Password is required")
