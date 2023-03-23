@@ -1,8 +1,7 @@
 "use client";
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm, ValidationRule } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { SignUp_validate } from "./Validation/SignUP.validate";
 import { UserSubmitForm } from "../../@types/signup.types";
 import logo from "../../public/wsscmlogo.png";
@@ -13,8 +12,15 @@ import { useDispatch } from "react-redux";
 interface Prop {
   setAuthState: Dispatch<SetStateAction<string>>;
 }
+// pattern or regular expression to allow only letters
+const patternRule: ValidationRule<RegExp> = {
+  value: /^[A-Za-z]+$/,
+  message: "Only alphabets are allowed",
+};
+
 
 const SignUp = ({ setAuthState }: Prop) => {
+
   const dispatch = useDispatch();
   const {
     register,
@@ -47,7 +53,7 @@ const SignUp = ({ setAuthState }: Prop) => {
     setAuthState("Signin");
   };
 
-  // ------- JSX Section --------------
+  // ------- TSX Section --------------
   return (
     <>
       <div className="flex items-center justify-center h-screen w-full">
@@ -64,7 +70,9 @@ const SignUp = ({ setAuthState }: Prop) => {
               <input
                 type="text"
                 id="floating_standard"
-                {...register("username")}
+                {...register("username", {
+                  pattern: patternRule,
+                })}
                 className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
                   errors.username ? "focus:border-red-500" : ""
                 }`}
