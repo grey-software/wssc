@@ -10,21 +10,21 @@ import Loading from "./loading";
 import ProfileCard from "@/components/ProfileCard";
 import ShareApp from "@/components/ShareApp";
 import Authentication from "@/components/Auth/Authentication";
-import { Provider } from "react-redux";
-import { store } from "@/Redux-toolkit/store";
-// import Authentication from "@/components/auth/Authentication";
 import type { RootState } from "../Redux-toolkit/store";
 import { useSelector } from "react-redux";
 import RootLayout from "./layout";
+import type { user } from "../Redux-toolkit/UserSlice";
 
 export default function Home() {
-    const phone = useSelector((state: RootState) => state.wsscm.phone);
-  
+  const { phone }: user = useSelector(
+    (state: RootState) => state.users.SignInData
+  );
+
   return (
     <>
       <div className="container">
-        {phone ? <HomeScreen/> : <Authentication/>}
-       </div>
+        {phone ? <HomeScreen /> : <Authentication />}
+      </div>
       {/* <Authentication /> */}
       {/* <Signup /> */}
       {/* <Form /> */}

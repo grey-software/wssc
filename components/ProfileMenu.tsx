@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,18 +11,21 @@ import { FaEdit } from "react-icons/fa";
 import { MdOutlineContactPhone } from "react-icons/md";
 import user from "../public/user.jpg";
 import ShareApp from "./ShareApp";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
+import { LogOutUser } from "@/Redux-toolkit/UserSlice";
+import { useDispatch } from "react-redux";
 
 const ProfileMenu = () => {
   const [sharePop, setsharePop] = useState(false);
-  
+  const dispatch = useDispatch();
+
   const NotifyTost = () => {
     toast.error("This feature is in Progress", {
       position: "top-center",
       style: { width: "auto", height: "auto" },
       duration: 3000,
     });
-  }
+  };
   // im writing this just for the purpose of checking
   return (
     <div className="container w-full h-screen bg-red-700">
@@ -86,7 +89,7 @@ const ProfileMenu = () => {
         </div>
 
         <button
-          onClick={() => NotifyTost()}
+          onClick={() => dispatch(LogOutUser())}
           className="flex items-center gap-2 text-md -mt-4"
         >
           <TbLogout className="text-[28px] text-primaryColor-500" />

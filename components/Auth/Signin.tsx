@@ -6,9 +6,8 @@ import { SignIn_validate } from "./Validation/SignIn.validate";
 import { UserSubmitForm } from "../../@types/signup.types";
 import logo from "../../public/wsscmlogo.png";
 import Image from "next/image";
-import axios from "axios";
 import { useDispatch } from "react-redux";
-import { ChangeName } from "@/Redux-toolkit/UserSlice";
+import { SignInUser } from "@/Redux-toolkit/UserSlice";
 interface Prop {
   setAuthState: Dispatch<SetStateAction<string>>;
 }
@@ -26,9 +25,9 @@ const Signin = ({ setAuthState }: Prop) => {
   });
 
   const onSubmit = async (data: UserSubmitForm) => {
-    const { phone, password } = data;
-    console.log(phone);
-    dispatch(ChangeName(phone));
+    // const { phone, password } = data;
+    // console.log(phone);
+    dispatch(SignInUser(data));
 
     // await axios.post("http://localhost:7000/api/v1/auth/signup", {
     //   name: username,

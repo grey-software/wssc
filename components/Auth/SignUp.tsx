@@ -7,13 +7,15 @@ import { SignUp_validate } from "./Validation/SignUP.validate";
 import { UserSubmitForm } from "../../@types/signup.types";
 import logo from "../../public/wsscmlogo.png";
 import Image from "next/image";
-import axios from "axios";
+import { SignUpUser } from "@/Redux-toolkit/UserSlice";
+import { useDispatch } from "react-redux";
 
 interface Prop {
   setAuthState: Dispatch<SetStateAction<string>>;
 }
 
-const SignUp = ({  setAuthState }: Prop) => {
+const SignUp = ({ setAuthState }: Prop) => {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -26,6 +28,7 @@ const SignUp = ({  setAuthState }: Prop) => {
   const onSubmit = async (data: UserSubmitForm) => {
     // console.log(JSON.stringify(data, null, 2));
     const { phone, username, password } = data;
+    dispatch(SignUpUser(data));
 
     console.log(data);
     // console.log(`phone is : ${phone} | username is: ${username} | password is: ${password}`)
@@ -40,8 +43,8 @@ const SignUp = ({  setAuthState }: Prop) => {
     //         console.log(err)
     //       });
 
-      reset();
-      setAuthState("Signin")
+    reset();
+    setAuthState("Signin");
   };
 
   // ------- JSX Section --------------
