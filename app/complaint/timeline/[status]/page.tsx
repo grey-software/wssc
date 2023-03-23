@@ -6,13 +6,12 @@ import { useRouter } from "next/navigation";
 
 
 const Timeline = () => {
-const navigate = useRouter();
-
+  const navigate = useRouter();
+  
   const backTohome = () => {
     navigate.push('/')
   }
-
-  // JSX SECTION
+// TSX Section
   return (
     <>
       <div className="md:w-[40%] w-[90%] h-[100vh] bg-secondarycolor-500 mt-20 mx-3 relative">

@@ -6,12 +6,10 @@ import { validationSchema } from "../../../Schema_validation/ComplainForm.schema
 import { ComplainForm } from "../../../@types/complainForm.types";
 import Image from "next/image";
 import { BsImage } from "react-icons/bs";
-import { AiOutlineFileAdd } from "react-icons/ai";
 import { TbFilePlus } from "react-icons/tb";
 import { HiArrowLeft } from "react-icons/hi";
 import { BiVideo } from "react-icons/bi";
 import { useRouter } from "next/navigation";
-// import { useRouter } from "next/router";
 import Loading from "@/app/loading";
 import { useDispatch } from "react-redux";
 import { RootState } from "@/Redux-toolkit/store";
