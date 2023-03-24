@@ -111,7 +111,7 @@ const Header = () => {
               menuActive ? "translate-x-0" : "-translate-x-72"
             }`}
           >
-            <ProfileMenu />
+            <ProfileMenu menuActive={menuActive} setMenuActive={setMenuActive} />
           </div>
 
           {/* Overlay to profile menu */}

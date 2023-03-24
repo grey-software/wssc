@@ -15,10 +15,13 @@ const Timeline = () => {
   return (
     <>
       <div className="md:w-[40%] w-[90%] h-[100vh] bg-secondarycolor-500 mt-20 mx-3 relative">
-        <div className="flex items-center gap-24 mb-4">
-          <HiArrowLeft onClick={backTohome} className="text-[28px] text-primaryColor-500" />
-          <span className="text-[25px] font-bold text-headingColor-400">
-            Tracking
+        <div className="flex items-center gap-12 mb-4">
+          <HiArrowLeft
+            onClick={backTohome}
+            className="text-[28px] text-primaryColor-500"
+          />
+          <span className="text-lg font-bold bg-[#1A5980] text-white px-3 py-1 rounded-lg">
+           Complaint Tracking
           </span>
         </div>
         <div className="flex items-center justify-between rounded-lg border-2 border-gray-100 p-4 shadow-lg relative overflow-hidden">
@@ -42,7 +45,9 @@ const Timeline = () => {
             </div>
           </div>
           <Image
-            src='/garbage.png' width={80} height={50}
+            src="/garbage.png"
+            width={80}
+            height={50}
             className="h-70% w-[30%]"
             alt=""
           />

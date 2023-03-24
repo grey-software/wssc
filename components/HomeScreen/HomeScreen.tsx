@@ -8,7 +8,7 @@ const HomeScreen = () => {
     <div className="container py-3">
       <div className="complaints-record bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-md shadow-gray-200 rounded-full p-2 mt-20">
         <Link
-          href="/complaint"
+          href="/complaint/stages/Pending"
           className="pending cursor-pointer hover:bg-gray-100 flex flex-col justify-center items-center border-r border-gray-300  flex-1 "
         >
           <h3 className="font-bold">02</h3>
@@ -16,7 +16,7 @@ const HomeScreen = () => {
         </Link>
 
         <Link
-          href="/complaint"
+          href="/complaint/stages/Resolved"
           className="all-complaints cursor-pointer hover:bg-gray-200  flex flex-col justify-center items-center border-r border-gray-300 flex-1"
         >
           <h3 className="font-bold">03</h3>
@@ -24,7 +24,7 @@ const HomeScreen = () => {
         </Link>
 
         <Link
-          href="/complaint"
+          href="/complaint/stages/All"
           className="arrow cursor-pointer hover:bg-gray-200 w-10 flex justify-center items-center"
         >
           <IoIosArrowForward className="text-3xl text-green-500 font-extrabold" />

@@ -5,7 +5,6 @@ import Header from "@/components/Header";
 import Timeline from "@/app/complaint/timeline/[status]/page";
 import { Inter } from "next/font/google";
 // import Authentication from "@/components/auth/Authentication";
-import Complaints from "@/app/complaint/page";
 import Loading from "./loading";
 import ProfileCard from "@/components/ProfileCard";
 import ShareApp from "@/components/ShareApp";
@@ -14,6 +13,7 @@ import type { RootState } from "../Redux-toolkit/store";
 import { useSelector } from "react-redux";
 import RootLayout from "./layout";
 import type { user } from "../Redux-toolkit/UserSlice";
+import FeedbackRating from "@/components/FeedbackRating";
 
 export default function Home() {
   const { phone }: user = useSelector(
@@ -35,6 +35,7 @@ export default function Home() {
       {/* <Loading/> */}
       {/* <ShareApp/> */}
       {/* <Testing/> */}
+      {/* <FeedbackRating/> */}
     </>
   );
 }
