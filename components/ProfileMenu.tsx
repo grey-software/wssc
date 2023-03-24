@@ -13,6 +13,7 @@ import ShareApp from "./ShareApp";
 import { toast } from "react-hot-toast";
 import { LogOutUser } from "@/Redux-toolkit/UserSlice";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
 
 const ProfileMenu = () => {
   const [sharePop, setsharePop] = useState(false);
@@ -22,7 +23,7 @@ const ProfileMenu = () => {
     toast.error("This feature is in Progress", {
       position: "top-center",
       style: { width: "auto", height: "auto" },
-      duration: 3000,
+      duration: 2000,
     });
   };
   // im writing this just for the purpose of checking
@@ -47,13 +48,14 @@ const ProfileMenu = () => {
           </button>
         </div>
         <div className="flex flex-col gap-3 -mt-20">
-          <button
-            onClick={() => NotifyTost()}
+          <Link
+            href="/profile"
+            // onClick={() => navigate.push("/profileCard")}
             className="flex items-center gap-2 text-md"
           >
             <BiUserCircle className="text-[28px] text-primaryColor-500" />
             <span className="text-gray-700">View Profile</span>
-          </button>
+          </Link>
 
           <button
             className="flex items-center gap-2 text-md"
