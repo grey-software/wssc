@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -7,10 +7,12 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 import { IoIosGitCompare } from "react-icons/io";
 import { FaStarOfLife } from "react-icons/fa";
+import FeedbackRating from "@/components/FeedbackRating";
 
 type Props = {};
 
 function Complaint_stages({ }: Props) {
+  const [feedback, setfeedback] = useState(false);
   
   const Feedback = () => {
     alert("This feature is in progress!")
@@ -152,7 +154,7 @@ function Complaint_stages({ }: Props) {
               <span className="text-gray-500 mb-1">
                 Are you satisfied with:
               </span>
-              <button onClick={Feedback} className="w-1/2 py-1 px-2 bg-[#1A5980] text-white text-sm rounded-lg shadow-md">
+              <button onClick={()=>setfeedback(!feedback)} className="w-1/2 py-1 px-2 bg-[#1A5980] text-white text-sm rounded-lg shadow-md">
                 Feedback
               </button>
             </div>
@@ -195,6 +197,8 @@ function Complaint_stages({ }: Props) {
           <div className="h-[103%] w-1 bg-[#D43434] top-0 right-0 rounded-tr-md rounded-br-md absolute"></div>
         </VerticalTimelineElement>
       </VerticalTimeline>
+      {/* To open feedback window popup*/}
+      {feedback ? <FeedbackRating feedback={feedback} setfeedback={ setfeedback} /> : "" }
     </>
   );
 }

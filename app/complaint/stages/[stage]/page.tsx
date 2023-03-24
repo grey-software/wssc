@@ -1,19 +1,20 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import garbage from "../../public/garbage.png";
+import garbage from "../../../../public/garbage.png";
 import { HiArrowLeft } from "react-icons/hi";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Redux-toolkit/store";
 import { useRouter } from "next/navigation";
 
-const Complaints = () => {
+const Complaints = ({ params }: any) => {
+  const states = params.stage;
   const complaintsAll = useSelector((state: RootState) => {
     return state.complaints.complaintsAll;
   });
 
-// JSX section
+  // JSX section
   return (
     <>
       <div className="mt-20 mx-3">
@@ -21,9 +22,9 @@ const Complaints = () => {
           <Link href="/">
             <HiArrowLeft className="text-[28px] text-primaryColor-500" />
           </Link>
-          <span className="text-[25px] font-bold text-headingColor-400">
-            Complaints
-          </span>
+          <h3 className="text-md -ml-5 px-2 py-1 rounded-md bg-[#1A5980] text-white font-bold">
+            <span className="">{states} Complaints</span>
+          </h3>
         </div>
         <div className="flex flex-col gap-3 mt-6">
           {complaintsAll.map(
