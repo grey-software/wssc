@@ -23,7 +23,7 @@ export const UserSlice = createSlice({
       toast.success("Signed In Successfuly", {
         position: "top-center",
         style: { width: "auto", height: "auto" },
-        duration: 3000,
+        duration: 2000,
       });
     },
     SignUpUser: (state, action) => {
@@ -31,7 +31,7 @@ export const UserSlice = createSlice({
       toast.success("Signed Up Successfuly", {
         position: "top-center",
         style: { width: "auto", height: "auto" },
-        duration: 3000,
+        duration: 2000,
       });
     },
     LogOutUser: (state) => {
@@ -39,7 +39,7 @@ export const UserSlice = createSlice({
       toast.success("Loged Out", {
         position: "top-center",
         style: { width: "auto", height: "auto" },
-        duration: 3000,
+        duration: 2000,
       });
     },
   },
