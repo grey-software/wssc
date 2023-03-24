@@ -14,10 +14,23 @@ import { toast } from "react-hot-toast";
 import { LogOutUser } from "@/Redux-toolkit/UserSlice";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+interface Props {
+  menuActive: boolean,
+  setMenuActive: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-const ProfileMenu = () => {
+const ProfileMenu = ({menuActive, setMenuActive}: Props) => {
   const [sharePop, setsharePop] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useRouter();
+
+  //Logout Method def to logOut user
+  const LogOut = () => {
+    navigate.push("/")
+    dispatch(LogOutUser())
+    setMenuActive(!menuActive)
+  }
 
   const NotifyTost = () => {
     toast.error("This feature is in Progress", {
@@ -39,18 +52,20 @@ const ProfileMenu = () => {
           <h1 className="text-xl text-headingColor-400 font-bold">
             Arman Malik
           </h1>
-          <button
-            onClick={() => NotifyTost()}
-            className="flex items-center gap-2 px-2 bg-[#A4C9D1] rounded-md"
-          >
-            <span>Edit</span>
-            <FaEdit />
-          </button>
+          <Link href={`/profile/63463453`}>
+            <button
+              className="flex items-center gap-2 px-2 bg-[#A4C9D1] rounded-md"
+              onClick={() => setMenuActive(!menuActive)}
+            >
+              <span>Edit</span>
+              <FaEdit />
+            </button>
+          </Link>
         </div>
         <div className="flex flex-col gap-3 -mt-20">
           <Link
-            href="/profile"
-            // onClick={() => navigate.push("/profileCard")}
+            href="/profile/3435334"
+            onClick={() => setMenuActive(!menuActive)}
             className="flex items-center gap-2 text-md"
           >
             <BiUserCircle className="text-[28px] text-primaryColor-500" />
@@ -90,7 +105,7 @@ const ProfileMenu = () => {
         </div>
 
         <button
-          onClick={() => dispatch(LogOutUser())}
+          onClick={LogOut}
           className="flex items-center gap-2 text-md -mt-4"
         >
           <TbLogout className="text-[28px] text-primaryColor-500" />
