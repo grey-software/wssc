@@ -4,6 +4,7 @@ import React from "react";
 import { HiArrowLeft } from "react-icons/hi";
 import user from "../public/user.jpg";
 import Image from "next/image";
+import { BiEdit } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 
 const ProfileCard = () => {
@@ -31,30 +32,21 @@ const ProfileCard = () => {
         <h1 className="text-xl text-headingColor-400 font-bold">John Doe</h1>
       </div>
       {/* Name */}
-      <div className="relative z-0 mt-10 mb-6 ml-10 mr-10">
-        <input
-          type="text"
-          id="floating_standard"
-          className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer
-                `}
-          placeholder=""
-        />
-        <label
-          htmlFor="Name"
-          className="absolute text-med text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >
-          Your Name
+      <div className="flex flex-col gap-1 z-0 mt-10 mb-6 ml-10 mr-10">
+        <div className="flex items-center justify-between">
+          <h2>Ihtisham Ul Haq</h2>
+          <BiEdit className="text-primaryColor-500" />
+        </div>
+        <label htmlFor="Name" className="text-md text-gray-400">
+          Name
         </label>
       </div>
       {/* Contact */}
       <div className="relative z-0 mt-10 mb-6 ml-10 mr-10">
-        <input
-          type="text"
-          id="floating_standard"
-          className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer
-                `}
-          placeholder=""
-        />
+        <div className="flex items-center justify-between">
+          <h2>Ihtisham Ul Haq</h2>
+          <BiEdit className="text-primaryColor-500" />
+        </div>
         <label
           htmlFor="Name"
           className="absolute text-medium text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -64,13 +56,10 @@ const ProfileCard = () => {
       </div>
       {/* Email */}
       <div className="relative z-0 mt-10 mb-6 ml-10 mr-10">
-        <input
-          type="email"
-          id="email"
-          className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer
-                `}
-          placeholder=""
-        />
+        <div className="flex items-center justify-between">
+          <h2>Ihtisham Ul Haq</h2>
+          <BiEdit className="text-primaryColor-500" />
+        </div>
         <label
           htmlFor="email"
           className="absolute text-medium text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -80,13 +69,10 @@ const ProfileCard = () => {
       </div>
       {/* Your Address */}
       <div className="relative z-0 mt-10 mb-6 ml-10 mr-10">
-        <input
-          type="text"
-          id="address"
-          className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer
-                `}
-          placeholder=""
-        />
+        <div className="flex items-center justify-between">
+          <h2>Ihtisham Ul Haq</h2>
+          <BiEdit className="text-primaryColor-500" />
+        </div>
         <label
           htmlFor="address"
           className="absolute text-medium text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
