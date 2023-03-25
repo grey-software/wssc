@@ -50,6 +50,7 @@ const HomeScreen = () => {
                 <Image
                   src={complaint.img}
                   alt="water Supply"
+                  loading="lazy"
                   className="h-[100%] w-[100%]"
                 />
               </Link>

@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
 import { BiEdit } from "react-icons/bi";
-
+import { FiCamera } from "react-icons/fi";
 const ProfileCard = () => {
   const InProgress = () => {
     toast.error("This feature is in Progress", {
@@ -36,6 +36,7 @@ const ProfileCard = () => {
       <div className="flex flex-col gap-2 items-center">
         <Image src={user} className="h-36 w-36 rounded-full mt-2" alt="" />
         <h1 className="text-xl text-headingColor-400 font-bold">Arman Malik</h1>
+        <FiCamera />
       </div>
       {/* Name */}
       <div className="flex flex-col gap-1 z-0 mt-10 mb-6 ml-8 mr-8">
