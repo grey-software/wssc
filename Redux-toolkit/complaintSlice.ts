@@ -43,6 +43,13 @@ const complaintSlice = createSlice({
         submitedOn: "07-01-2023",
         address: "near UET mardan",
       },
+      {
+        type: "Solid Waste",
+        status: "Closed",
+        complaintID: "WSSCM8382",
+        submitedOn: "07-01-2023",
+        address: "near HBL bank",
+      },
     ],
     newComplaint: [],
     Loading: false,

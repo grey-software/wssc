@@ -75,7 +75,7 @@ const Form: React.FC = ({ params }: any) => {
         <Loading />
       ) : (
         <div className="md:w-[20%] mt-20 w-[93%] mx-3">
-          <div className="flex items-center gap-8">
+          <div className="flex items-center justify-between">
             <HiArrowLeft
               onClick={GoHomePage}
               className="text-[28px] text-primaryColor-500"
@@ -88,6 +88,7 @@ const Form: React.FC = ({ params }: any) => {
                 {complaint}
               </span>
             </h3>
+            <div></div>
           </div>
 
           <form
