@@ -24,7 +24,7 @@ const HomeScreen = () => {
         </Link>
 
         <Link
-          href="/complaint/stages/All"
+          href="/complaint/stages/AllComplaints"
           className="arrow cursor-pointer hover:bg-gray-200 w-10 flex justify-center items-center"
         >
           <IoIosArrowForward className="text-3xl text-green-500 font-extrabold" />
