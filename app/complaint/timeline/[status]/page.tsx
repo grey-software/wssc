@@ -4,25 +4,25 @@ import Complaint_stages from "./Complaint_stages";
 import { HiArrowLeft } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 
-
 const Timeline = () => {
   const navigate = useRouter();
-  
+
   const backTohome = () => {
-    navigate.push('/')
-  }
-// TSX Section
+    navigate.push("/");
+  };
+  // TSX Section
   return (
     <>
       <div className="md:w-[40%] w-[90%] h-[100vh] bg-secondarycolor-500 mt-20 mx-3 relative">
-        <div className="flex items-center gap-12 mb-4">
+        <div className="flex items-center justify-between mb-4">
           <HiArrowLeft
             onClick={backTohome}
             className="text-[28px] text-primaryColor-500"
           />
           <span className="text-lg font-bold bg-[#1A5980] text-white px-3 py-1 rounded-lg">
-           Complaint Tracking
+            Complaint Tracking
           </span>
+          <div></div>
         </div>
         <div className="flex items-center justify-between rounded-lg border-2 border-gray-100 p-4 shadow-lg relative overflow-hidden">
           <div className="flex flex-col justify-center ml-1">

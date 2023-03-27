@@ -25,11 +25,11 @@ const Complaint = ({
         <div className="flex items-center gap-3 text-sm text-gray-600 mb-2">
           <p>Status:</p>
           <span
-            className={`font-bold text-${
-              status === "Initiated" ? "initiatedColor" : ""
-            }  text-${status === "InProgress" ? "inprogessColor" : ""} text-${
-              status === "Completed" ? "completedColor" : ""
-            }`}
+            className={`font-bold ${
+              status === "Initiated" ? "text-initiatedColor" : ""
+            }  ${status === "InProgress" ? "text-inprogessColor" : ""} ${
+              status === "Completed" ? "text-completedColor" : ""
+            } ${status === "Closed" ? "text-closedColor" : ""}`}
           >
             {status}
           </span>
@@ -49,11 +49,11 @@ const Complaint = ({
       </div>
       <Image src={garbage} className="h-70% w-[30%]" alt="" />
       <div
-        className={`h-[100%] w-2 top-0 left-0 absolute bg-${
-          status === "Initiated" ? "initiatedColor" : ""
-        }  bg-${status === "InProgress" ? "inprogessColor" : ""} bg-${
-          status === "Completed" ? "completedColor" : ""
-        }`}
+        className={`h-[100%] w-2 top-0 left-0 absolute ${
+          status === "Initiated" ? "bg-initiatedColor" : ""
+        }  ${status === "InProgress" ? "bg-inprogessColor" : ""} ${
+          status === "Completed" ? "bg-completedColor" : ""
+        } ${status === "Closed" ? "bg-closedColor" : ""}`}
       ></div>
     </div>
   );
