@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import garbage from "../../../../public/garbage.png";
 import { HiArrowLeft } from "react-icons/hi";
@@ -7,9 +7,12 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Redux-toolkit/store";
 import { useRouter } from "next/navigation";
+import Complaint from "@/components/Complaint";
 
 const Complaints = ({ params }: any) => {
-  const states = params.stage;
+  let statesValue = params.stage;
+  const [states, setStates] = useState(statesValue);
+  if (states === "Resolved") setStates("Completed");
   const complaintsAll = useSelector((state: RootState) => {
     return state.complaints.complaintsAll;
   });
@@ -18,56 +21,66 @@ const Complaints = ({ params }: any) => {
   return (
     <>
       <div className="mt-20 mx-3">
-        <div className="flex items-center gap-24">
+        <div className="flex items-center justify-between">
           <Link href="/">
             <HiArrowLeft className="text-[28px] text-primaryColor-500" />
           </Link>
           <h3 className="text-md -ml-5 px-2 py-1 rounded-md bg-[#1A5980] text-white font-bold">
-            <span className="">{states} Complaints</span>
+            <span className="">Complaints</span>
           </h3>
+          <div></div>
+        </div>
+        <div className="flex items-center gap-8 my-6">
+          <label
+            htmlFor="countries"
+            className="text-sm font-medium text-gray-900"
+          >
+            Filter by:
+          </label>
+          <select
+            id="countries"
+            className="w-1/3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2"
+            onChange={(e) => setStates(e.target.value)}
+          >
+            <option selected>{states}</option>
+            <option value="All">All Complaints</option>
+            <option value="Initiated">Initiated</option>
+            <option value="InProgress">InProgress</option>
+            <option value="Completed">Completed</option>
+            <option value="Cosed">Cosed</option>
+          </select>
         </div>
         <div className="flex flex-col gap-3 mt-6">
           {complaintsAll.map(
             ({ type, status, complaintID, submitedOn, address }, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between rounded-lg border-2 border-gray-100 p-4 shadow-lg relative overflow-hidden"
-              >
-                <div className="flex flex-col justify-center ml-1">
-                  <h3 className="text-lg font-bold text-gray-600">{type}</h3>
-                  <div className="flex items-center gap-3 text-sm text-gray-600 mb-2">
-                    <p>Status:</p>
-                    <span
-                      className={`font-bold text-${
-                        status === "Initiated" ? "initiatedColor" : ""
-                      }  text-${
-                        status === "InProgress" ? "inprogessColor" : ""
-                      } text-${status === "Completed" ? "completedColor" : ""}`}
-                    >
-                      {status}
-                    </span>
+              <div>
+                {states === "All" ? (
+                  <Complaint
+                    index={index}
+                    type={type}
+                    status={status}
+                    complaintID={complaintID}
+                    submitedOn={submitedOn}
+                    address={address}
+                    garbage={garbage}
+                  />
+                ) : (
+                  <div>
+                    {status === states ? (
+                      <Complaint
+                        index={index}
+                        type={type}
+                        status={status}
+                        complaintID={complaintID}
+                        submitedOn={submitedOn}
+                        address={address}
+                        garbage={garbage}
+                      />
+                    ) : (
+                      ""
+                    )}
                   </div>
-                  <div className="flex items-center gap-3 text-sm text-gray-600">
-                    <p>Compliant ID:</p>
-                    <span>{complaintID}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-gray-600">
-                    <p>Submited On:</p>
-                    <span>{submitedOn}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-gray-600">
-                    <p>Address:</p>
-                    <span>{address}</span>
-                  </div>
-                </div>
-                <Image src={garbage} className="h-70% w-[30%]" alt="" />
-                <div
-                  className={`h-[100%] w-2 top-0 left-0 absolute bg-${
-                    status === "Initiated" ? "initiatedColor" : ""
-                  }  bg-${status === "InProgress" ? "inprogessColor" : ""} bg-${
-                    status === "Completed" ? "completedColor" : ""
-                  }`}
-                ></div>
+                )}
               </div>
             )
           )}
