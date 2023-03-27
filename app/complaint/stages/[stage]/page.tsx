@@ -12,7 +12,7 @@ import Complaint from "@/components/Complaint";
 const Complaints = ({ params }: any) => {
   let statesValue = params.stage;
   const [states, setStates] = useState(statesValue);
-  if (states === "Resolved") setStates("Completed");
+  if (states === "Resolved") setStates("Closed");
   const complaintsAll = useSelector((state: RootState) => {
     return state.complaints.complaintsAll;
   });
@@ -47,13 +47,14 @@ const Complaints = ({ params }: any) => {
             <option value="Initiated">Initiated</option>
             <option value="InProgress">InProgress</option>
             <option value="Completed">Completed</option>
-            <option value="Cosed">Cosed</option>
+            <option value="Closed">Closed</option>
           </select>
         </div>
         <div className="flex flex-col gap-3 mt-6">
           {complaintsAll.map(
             ({ type, status, complaintID, submitedOn, address }, index) => (
               <div key={index}>
+                {/* show all the complaints */}
                 {states === "AllComplaints" ? (
                   <Complaint
                     type={type}
@@ -65,7 +66,8 @@ const Complaints = ({ params }: any) => {
                   />
                 ) : (
                   <div>
-                    {status === states ? (
+                    {/* filter complaints based on provided filter */}
+                    {states === status ? (
                       <Complaint
                         type={type}
                         status={status}
@@ -75,7 +77,22 @@ const Complaints = ({ params }: any) => {
                         garbage={garbage}
                       />
                     ) : (
-                      ""
+                      <div>
+                        {/* show only pending complaints: initiated an inProgress */}
+                        {states === "Pending" &&
+                        (status === "Initiated" || status === "InProgress") ? (
+                          <Complaint
+                            type={type}
+                            status={status}
+                            complaintID={complaintID}
+                            submitedOn={submitedOn}
+                            address={address}
+                            garbage={garbage}
+                          />
+                        ) : (
+                          ""
+                        )}
+                      </div>
                     )}
                   </div>
                 )}

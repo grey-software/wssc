@@ -12,7 +12,6 @@ module.exports = {
     extend: {
       colors: {
         primaryColor: {
-          // 100: "#EBFFEA",
           100: "#F1FFF0",
           300: "#B8F2B5",
           500: "#46A941",
@@ -23,12 +22,13 @@ module.exports = {
         },
         DeleteButton: {
           100: "#ECECEC",
-          300: "#FF0000"
-
+          300: "#FF0000",
         },
         initiatedColor: "#FBB64F",
         inprogessColor: "#00A6FF",
         completedColor: "#6AD616",
+        feedbackColor: "#1A5980",
+        closedColor: "#D43434",
       },
     },
   },

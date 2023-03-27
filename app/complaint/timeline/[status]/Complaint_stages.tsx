@@ -11,12 +11,12 @@ import FeedbackRating from "@/components/FeedbackRating";
 
 type Props = {};
 
-function Complaint_stages({ }: Props) {
+function Complaint_stages({}: Props) {
   const [feedback, setfeedback] = useState(false);
-  
+
   const Feedback = () => {
-    alert("This feature is in progress!")
-  }
+    alert("This feature is in progress!");
+  };
   const date = "Mar 08 2023";
   return (
     <>
@@ -154,7 +154,10 @@ function Complaint_stages({ }: Props) {
               <span className="text-gray-500 mb-1">
                 Are you satisfied with:
               </span>
-              <button onClick={()=>setfeedback(!feedback)} className="w-1/2 py-1 px-2 bg-[#1A5980] text-white text-sm rounded-lg shadow-md">
+              <button
+                onClick={() => setfeedback(!feedback)}
+                className="w-1/2 py-1 px-2 bg-[#1A5980] text-white text-sm rounded-lg shadow-md"
+              >
                 Feedback
               </button>
             </div>
@@ -198,7 +201,11 @@ function Complaint_stages({ }: Props) {
         </VerticalTimelineElement>
       </VerticalTimeline>
       {/* To open feedback window popup*/}
-      {feedback ? <FeedbackRating feedback={feedback} setfeedback={ setfeedback} /> : "" }
+      {feedback ? (
+        <FeedbackRating feedback={feedback} setfeedback={setfeedback} />
+      ) : (
+        ""
+      )}
     </>
   );
 }
