@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 
 interface props {
-  index: number;
   type: String;
   status: String;
   complaintID: String;
@@ -12,7 +11,6 @@ interface props {
 }
 
 const Complaint = ({
-  index,
   type,
   status,
   complaintID,
@@ -21,10 +19,7 @@ const Complaint = ({
   garbage,
 }: props) => {
   return (
-    <div
-      key={index}
-      className="flex items-center justify-between rounded-lg border-2 border-gray-100 p-4 shadow-lg relative overflow-hidden"
-    >
+    <div className="flex items-center justify-between rounded-lg border-2 border-gray-100 p-4 shadow-lg relative overflow-hidden">
       <div className="flex flex-col justify-center ml-1">
         <h3 className="text-lg font-bold text-gray-600">{type}</h3>
         <div className="flex items-center gap-3 text-sm text-gray-600 mb-2">
