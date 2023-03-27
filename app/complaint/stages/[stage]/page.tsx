@@ -42,8 +42,8 @@ const Complaints = ({ params }: any) => {
             className="w-1/3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2"
             onChange={(e) => setStates(e.target.value)}
           >
-            <option selected>{states}</option>
-            <option value="All">All Complaints</option>
+            <option defaultValue={states}>{states}</option>
+            <option value="AllComplaints">All Complaints</option>
             <option value="Initiated">Initiated</option>
             <option value="InProgress">InProgress</option>
             <option value="Completed">Completed</option>
@@ -53,10 +53,9 @@ const Complaints = ({ params }: any) => {
         <div className="flex flex-col gap-3 mt-6">
           {complaintsAll.map(
             ({ type, status, complaintID, submitedOn, address }, index) => (
-              <div>
-                {states === "All" ? (
+              <div key={index}>
+                {states === "AllComplaints" ? (
                   <Complaint
-                    index={index}
                     type={type}
                     status={status}
                     complaintID={complaintID}
@@ -68,7 +67,6 @@ const Complaints = ({ params }: any) => {
                   <div>
                     {status === states ? (
                       <Complaint
-                        index={index}
                         type={type}
                         status={status}
                         complaintID={complaintID}
