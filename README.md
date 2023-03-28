@@ -12,6 +12,16 @@ Software that allow citizens to file complaints regarding garbage, sanitary issu
 
 **👤 AG**: As a resident of Pakistan, I see garbage thrown illegally and burned recklessly. Despite my personal efforts to ameliorate the problem, there has to be a larger, coordinated effort that involves the municipal and WSSCs corporations that are responsible for collecting garbage along with water sanitation issues accordingly. 
 
+
+## Objectives
+
+The main objectives of our proposed system are as follows: 
+
+- To Build a Complaint management system for WSSCM.
+- To integrate with their existing system (Odoo-MIS).
+- To equip citizens with a functional and convenient app to file complaints.
+
+
 ## 👁️ Vision 
 
 Citizens will have a mobile app with which they can:
@@ -20,14 +30,6 @@ Citizens will have a mobile app with which they can:
 - Request garbage cleanup and Water Sanitation from their municipality and WSSC
 - Request for collection points to be placed in their areas 
 - File complaints regarding garbage, sanitary issues, water supply, WSSCM staff, and other relevant issues.
-
-## Objectives
-
-The main objectives of our proposed system are as follows: 
-
-- To Build a Complaint management system for WSSCM.
-- To integrate with their existing system (Odoo-MIS).
-- To equip citizens with a functional and convenient app to file complaints
 
 
 The municipalities and WSSCs will have a web and mobile dashboard with which they can:
@@ -56,9 +58,9 @@ Garbage Collector was formally ideated on Github on the 14th of November, 2020
 The project invites any willing Product Owners, Designers, and Engineers.
 
 ## 🛡️ Team
-- [Hikmat Bangash](https://github.com/Hikmat-Bangash)
-- [Ihtisham Ul Haq](https://github.com/ihtisham914)
-- [Ayesha Aurangzeb](https://github.com/AyeshaAurangzeb)
+- [Hikmat Bangash](https://github.com/Hikmat-Bangash) Software Developer
+- [Ihtisham Ul Haq](https://github.com/ihtisham914) Software Developer
+- [Ayesha Aurangzeb](https://github.com/AyeshaAurangzeb) Software Developer
 
 ### ⚓ Product Owners
 
