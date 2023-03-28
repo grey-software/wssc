@@ -8,8 +8,7 @@ import logo from "../../public/wsscmlogo.png";
 import Image from "next/image";
 import { useDispatch, useStore } from "react-redux";
 import { SignInUser } from "@/Redux-toolkit/UserSlice";
-import { BiShow, BiHide } from "react-icons/bi"
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import {IoIosEye, IoIosEyeOff} from 'react-icons/io'
 
 interface Prop {
   setAuthState: Dispatch<SetStateAction<string>>;
@@ -92,12 +91,12 @@ const Signin = ({ setAuthState }: Prop) => {
               />
               {/* show password and hide password icons */}
               {showPassword ? (
-                <AiOutlineEye
+                <IoIosEye
                   onClick={() => setshowPassword(!showPassword)}
                   className=" absolute right-2 top-0 text-3xl text-green-500 font-bold float-right"
                 />
               ) : (
-                <AiOutlineEyeInvisible
+                <IoIosEyeOff
                   onClick={() => setshowPassword(!showPassword)}
                   className=" absolute right-2 top-0 text-3xl text-green-500 font-bold float-right"
                 />
@@ -132,7 +131,7 @@ const Signin = ({ setAuthState }: Prop) => {
                 Register with us
               </span>
               <h5 className="text-md text-gray-600 text-center no-underline">
-                ہمارے ساتھ رجسٹر ہوجائیں۔
+                ہمارے ساتھ رجسٹر کریں
               </h5>
             </div>
           </form>
