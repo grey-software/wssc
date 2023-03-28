@@ -8,7 +8,9 @@ import logo from "../../public/wsscmlogo.png";
 import Image from "next/image";
 import { SignUpUser } from "@/Redux-toolkit/UserSlice";
 import { useDispatch } from "react-redux";
-import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai'
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+
 interface Prop {
   setAuthState: Dispatch<SetStateAction<string>>;
 }
@@ -123,12 +125,12 @@ const SignUp = ({ setAuthState }: Prop) => {
               />
               {/* show password and hide password icons  */}
               {showPassword ? (
-                <AiOutlineEye
+                <IoIosEye
                   onClick={() => setshowPassword(!showPassword)}
                   className=" absolute right-2 top-0 text-3xl text-green-500 font-bold float-right"
                 />
               ) : (
-                <AiOutlineEyeInvisible
+                <IoIosEyeOff
                   onClick={() => setshowPassword(!showPassword)}
                   className=" absolute right-2 top-0 text-3xl text-green-500 font-bold float-right"
                 />
@@ -157,12 +159,12 @@ const SignUp = ({ setAuthState }: Prop) => {
               />
               {/* show or hide confirm password */}
               {confirmPassword ? (
-                <AiOutlineEye
+                <IoIosEye
                   onClick={() => setconfirmPassword(!confirmPassword)}
                   className=" absolute right-2 top-0 text-3xl text-green-500 font-bold float-right"
                 />
               ) : (
-                <AiOutlineEyeInvisible
+                <IoIosEyeOff
                   onClick={() => setconfirmPassword(!confirmPassword)}
                   className=" absolute right-2 top-0 text-3xl text-green-500 font-bold float-right"
                 />
