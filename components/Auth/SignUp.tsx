@@ -8,7 +8,7 @@ import logo from "../../public/wsscmlogo.png";
 import Image from "next/image";
 import { SignUpUser } from "@/Redux-toolkit/UserSlice";
 import { useDispatch } from "react-redux";
-
+import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai'
 interface Prop {
   setAuthState: Dispatch<SetStateAction<string>>;
 }
@@ -20,7 +20,8 @@ const patternRule: ValidationRule<RegExp> = {
 
 
 const SignUp = ({ setAuthState }: Prop) => {
-
+  const [showPassword, setshowPassword] = useState(false);
+  const [confirmPassword, setconfirmPassword] = useState(false);
   const dispatch = useDispatch();
   const {
     register,
@@ -65,11 +66,11 @@ const SignUp = ({ setAuthState }: Prop) => {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-3">
             <div className={`relative z-0 mt-10 mb-6 `}>
               <input
                 type="text"
-                id="floating_standard"
+                id="username"
                 {...register("username", {
                   pattern: patternRule,
                 })}
@@ -79,8 +80,8 @@ const SignUp = ({ setAuthState }: Prop) => {
                 placeholder=" "
               />
               <label
-                htmlFor="floating_standard"
-                className="absolute text-md text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                htmlFor="username"
+                className="absolute text-sm text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-1 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 User Name | صارف نام
               </label>
@@ -92,7 +93,7 @@ const SignUp = ({ setAuthState }: Prop) => {
             <div className="relative z-0 mt-10 mb-6">
               <input
                 type="number"
-                id="username"
+                id="phone"
                 {...register("phone")}
                 className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
                   errors.phone ? "focus:border-red-500" : ""
@@ -100,8 +101,8 @@ const SignUp = ({ setAuthState }: Prop) => {
                 placeholder=" "
               />
               <label
-                htmlFor="username"
-                className="absolute text-md text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                htmlFor="phone"
+                className="absolute text-sm text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-1 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 Mobile Number | فون نمبر
               </label>
@@ -112,7 +113,7 @@ const SignUp = ({ setAuthState }: Prop) => {
 
             <div className="relative z-0 mt-10 mb-6">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 {...register("password")}
                 className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
@@ -120,9 +121,22 @@ const SignUp = ({ setAuthState }: Prop) => {
                 }`}
                 placeholder=" "
               />
+              {/* show password and hide password icons  */}
+              {showPassword ? (
+                <AiOutlineEye
+                  onClick={() => setshowPassword(!showPassword)}
+                  className=" absolute right-2 top-0 text-3xl text-green-500 font-bold float-right"
+                />
+              ) : (
+                <AiOutlineEyeInvisible
+                  onClick={() => setshowPassword(!showPassword)}
+                  className=" absolute right-2 top-0 text-3xl text-green-500 font-bold float-right"
+                />
+              )}
+
               <label
                 htmlFor="password"
-                className="absolute text-md text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="absolute text-sm text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-1 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 Create Password | پاس ورڈ بنائیں
               </label>
@@ -133,7 +147,7 @@ const SignUp = ({ setAuthState }: Prop) => {
 
             <div className={`relative z-0 mt-10 mb-6`}>
               <input
-                type="text"
+                type={confirmPassword ? "text" : "password"}
                 id="confirm password"
                 {...register("confirmPassword")}
                 className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
@@ -141,9 +155,22 @@ const SignUp = ({ setAuthState }: Prop) => {
                 }`}
                 placeholder=" "
               />
+              {/* show or hide confirm password */}
+              {confirmPassword ? (
+                <AiOutlineEye
+                  onClick={() => setconfirmPassword(!confirmPassword)}
+                  className=" absolute right-2 top-0 text-3xl text-green-500 font-bold float-right"
+                />
+              ) : (
+                <AiOutlineEyeInvisible
+                  onClick={() => setconfirmPassword(!confirmPassword)}
+                  className=" absolute right-2 top-0 text-3xl text-green-500 font-bold float-right"
+                />
+              )}
+
               <label
                 htmlFor="confirm password"
-                className="absolute text-md text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="absolute text-sm text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-1 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 <p>
                   <span>Confirm Password</span> |
@@ -156,24 +183,25 @@ const SignUp = ({ setAuthState }: Prop) => {
             </div>
 
             {/* ---------------------- Submit form button ------------------ */}
-            <div className="flex justify-center mt-12">
+            <div className="flex justify-center mt-10">
               <button
                 type="submit"
                 className=" w-[100%] text-lg hover:bg-primaryColor-400 rounded-xl bg-primaryColor-500 text-white py-3 font-bold mb-3"
               >
-                Sign Up
+                Sign Up | سائن اپ
               </button>
             </div>
 
-            <div className="text-lg text-gray-600 text-center mt-6">
-              <span>Already Registered</span>
-
+            <div className="text-md text-gray-600 text-center mt-4">
               <span
-                className="text-blue-700 ml-4 font-bold cursor-pointer"
+                className="text-blue-700 ml-4 font-bold cursor-pointer underline"
                 onClick={() => setAuthState("Signin")}
               >
-                <span onClick={() => setAuthState("Signin")}>Sign In</span>
+                Already Registered?
               </span>
+              <h5 className="text-md text-gray-600 text-center no-underline">
+                کیا آپ پہلے ہی رجسٹرڈ ہیں؟
+              </h5>
             </div>
           </form>
         </div>

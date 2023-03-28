@@ -6,14 +6,18 @@ import { SignIn_validate } from "./Validation/SignIn.validate";
 import { UserSubmitForm } from "../../@types/signup.types";
 import logo from "../../public/wsscmlogo.png";
 import Image from "next/image";
-import { useDispatch } from "react-redux";
+import { useDispatch, useStore } from "react-redux";
 import { SignInUser } from "@/Redux-toolkit/UserSlice";
+import { BiShow, BiHide } from "react-icons/bi"
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
 interface Prop {
   setAuthState: Dispatch<SetStateAction<string>>;
 }
 
 const Signin = ({ setAuthState }: Prop) => {
   const dispatch = useDispatch();
+  const [showPassword, setshowPassword] = useState(false)
 
   const {
     register,
@@ -61,9 +65,7 @@ const Signin = ({ setAuthState }: Prop) => {
                 id="phone"
                 {...register("phone")}
                 className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
-                  errors.phone
-                    ? "focus:border-red-500"
-                    : ""
+                  errors.phone ? "focus:border-red-500" : ""
                 }`}
                 placeholder=" "
               />
@@ -80,7 +82,7 @@ const Signin = ({ setAuthState }: Prop) => {
 
             <div className="relative z-0 mt-10 mb-6">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 {...register("password")}
                 className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
@@ -88,6 +90,19 @@ const Signin = ({ setAuthState }: Prop) => {
                 }`}
                 placeholder=" "
               />
+              {/* show password and hide password icons */}
+              {showPassword ? (
+                <AiOutlineEye
+                  onClick={() => setshowPassword(!showPassword)}
+                  className=" absolute right-2 top-0 text-3xl text-green-500 font-bold float-right"
+                />
+              ) : (
+                <AiOutlineEyeInvisible
+                  onClick={() => setshowPassword(!showPassword)}
+                  className=" absolute right-2 top-0 text-3xl text-green-500 font-bold float-right"
+                />
+              )}
+
               <label
                 htmlFor="password"
                 className="absolute text-sm text-gray-400  duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primaryColor-500  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -105,19 +120,20 @@ const Signin = ({ setAuthState }: Prop) => {
                 type="submit"
                 className=" w-[100%] text-lg hover:bg-primaryColor-400 rounded-xl bg-primaryColor-500 text-white py-3 font-bold mb-3"
               >
-                Sign In
+                Login | لاگ ان
               </button>
             </div>
 
-            <div className="text-lg text-gray-600 text-center mt-6">
-              <span>New User</span>
-
+            <div className="text-md text-gray-600 text-center mt-4">
               <span
-                className="text-blue-700 ml-4 font-bold cursor-pointer"
+                className="text-blue-700 ml-4 font-semibold cursor-pointer underline"
                 onClick={() => setAuthState("signUp")}
               >
-                <span onClick={() => setAuthState("SignUp")}>Sign Up</span>
+                Register with us
               </span>
+              <h5 className="text-md text-gray-600 text-center no-underline">
+                ہمارے ساتھ رجسٹر ہوجائیں۔
+              </h5>
             </div>
           </form>
         </div>
