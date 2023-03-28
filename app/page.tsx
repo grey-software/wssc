@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import RootLayout from "./layout";
 import type { user } from "../Redux-toolkit/UserSlice";
 import FeedbackRating from "@/components/FeedbackRating";
+import Testing from "@/components/Auth/Testing";
 
 export default function Home() {
   const { phone }: user = useSelector(
@@ -36,6 +37,7 @@ export default function Home() {
       {/* <ShareApp/> */}
       {/* <Testing/> */}
       {/* <FeedbackRating/> */}
+      {/* <Testing/> */}
     </>
   );
 }
