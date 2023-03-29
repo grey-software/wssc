@@ -52,6 +52,7 @@ const HomeScreen = () => {
                   alt="water Supply"
                   loading="lazy"
                   className="h-[100%] w-[100%]"
+                  placeholder="blur"
                 />
               </Link>
               <div className="flex items-center justify-center flex-col">
