@@ -57,9 +57,9 @@ Garbage Collector was formally ideated on Github on the 14th of November, 2020
 The project invites any willing Product Owners, Designers, and Engineers.
 
 ## 🛡️ Team
-[Hikmat Bangash](https://github.com/Hikmat-Bangash) Software Develper
-[Ihtisham Ul Haq](https://github.com/ihtisham914) Software Develper
-[Ayesha Aurangzeb](https://github.com/AyeshaAurangzeb) Software Develper
+- [Hikmat Bangash](https://github.com/Hikmat-Bangash) 
+- [Ihtisham Ul Haq](https://github.com/ihtisham914) 
+- [Ayesha Aurangzeb](https://github.com/AyeshaAurangzeb) 
 
 ### ⚓ Product Owners
 
