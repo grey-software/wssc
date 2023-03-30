@@ -2,15 +2,25 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { IoCloseSharp } from "react-icons/io5";
 import { HiStar, HiOutlineStar } from "react-icons/hi";
+import {MdStar, MdStarBorder} from "react-icons/md"
 
 interface Props {
   feedback: boolean;
   setfeedback: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const FeedbackRating = ({ feedback, setfeedback }: Props) => {
-  const [rating, setRating] = useState<number>(0);
+  const [rating, setRating] = useState<number>(-1);
 
   const rates: number[] = [1, 2, 3, 4, 5];
+  const  RatingInWords: string[] = ["","Very Bad", "Bad","Good", "Very Good", "Excellent"];
+  //  const words: string[] = [
+  //    "",
+  //    "بہت برا",
+  //    "برا",
+  //    " اچھا",
+  //    "بہت اچھا",
+  //    "بہترین",
+  //  ];
 
   const handleRatingClick = (value: number) => {
     setRating(value);
@@ -40,7 +50,7 @@ const FeedbackRating = ({ feedback, setfeedback }: Props) => {
         <div className=" flex flex-col gap-6 shadow-lg shadow-gray-300 bg-gray-50 px-5 mr-6 py-8 border border-gray-200 rounded-md w-[90%] overflow-hidden">
           {/* close feedback icon */}
           <div className="flex items-center justify-between text-lg font-semibold">
-            <span>FeedBack</span>
+            <span className="text-primaryColor-500 ">Complaint Feedback</span>
             <h4
               onClick={() => setfeedback(!feedback)}
               className="flex justify-end  text-2xl text-green-600 font-bold"
@@ -56,18 +66,23 @@ const FeedbackRating = ({ feedback, setfeedback }: Props) => {
 
           <div>
             <h1 className="font-semibold">How would you rate us</h1>
-            <div className="flex items-center ">
-              {rates.map((value) => (
-                <span
-                  key={value}
-                  onClick={() => handleRatingClick(value)}
-                  className="cursor-pointer text-4xl"
-                >
-                  <span className="text-yellow-500 outline-none">
-                    {value <= rating ? <HiStar /> : <HiOutlineStar />}
+            <div className="flex justify-between items-center ">
+              <div className="flex star-rating">
+                {rates.map((value) => (
+                  <span
+                    key={value}
+                    onClick={() => handleRatingClick(value)}
+                    className="cursor-pointer text-4xl"
+                  >
+                    <span className="text-yellow-500 focus:invisible outline-none">
+                      {value <= rating ? <MdStar /> : <MdStarBorder />}
+                    </span>
                   </span>
-                </span>
-              ))}
+                ))}
+              </div>
+              <span className=" font-semibold text-yellow-500 ">
+                {rating > -1 ? RatingInWords[rating] : ""}
+              </span>
             </div>
           </div>
           {/* feedback input field */}
@@ -82,7 +97,7 @@ const FeedbackRating = ({ feedback, setfeedback }: Props) => {
               id="feedbackInput"
               cols={29}
               rows={5}
-              className="mt-1 rounded-lg border border-gray-500 px-2 py-1 focus:border-primaryColor-500 w-full"
+              className="mt-1 rounded-lg border px-2 py-1  border-yellow-500 w-full outline-none"
             ></textarea>
           </div>
           {/* feedback submit button */}
