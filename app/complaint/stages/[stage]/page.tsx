@@ -39,7 +39,7 @@ const Complaints = ({ params }: any) => {
           </label>
           <select
             id="countries"
-            className="w-2/5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2 outline-none"
+            className="w-3/3 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 outline-none"
             onChange={(e) => setStates(e.target.value)}
           >
             <option defaultValue={states}>{states}</option>

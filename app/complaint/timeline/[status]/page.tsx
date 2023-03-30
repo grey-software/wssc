@@ -4,11 +4,12 @@ import Complaint_stages from "./Complaint_stages";
 import { HiArrowLeft } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 
-const Timeline = () => {
+const Timeline = ({ params }: any) => {
+  const complaintID = params.status;
   const navigate = useRouter();
 
-  const backTohome = () => {
-    navigate.push("/");
+  const back = () => {
+    navigate.push("/complaint/stages/AllComplaints");
   };
   // TSX Section
   return (
@@ -16,7 +17,7 @@ const Timeline = () => {
       <div className="md:w-[40%] w-[90%] h-[100vh] bg-secondarycolor-500 mt-20 mx-3 relative">
         <div className="flex items-center justify-between mb-4">
           <HiArrowLeft
-            onClick={backTohome}
+            onClick={back}
             className="text-[28px] text-primaryColor-500"
           />
           <span className="text-lg font-bold bg-[#1A5980] text-white px-3 py-1 rounded-lg">
@@ -33,7 +34,7 @@ const Timeline = () => {
             </div>
             <div className="flex items-center gap-3 text-sm text-gray-600">
               <p>Compliant ID:</p>
-              <span>uwe1238</span>
+              <span>{complaintID}</span>
             </div>
             <div className="flex items-center gap-3 text-sm text-gray-600">
               <p>Submited On:</p>
