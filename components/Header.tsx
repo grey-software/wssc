@@ -15,6 +15,10 @@ const Header = () => {
     (state: RootState) => state.users.SignInData
   );
 
+  const notifications = useSelector(
+    (state: RootState) => state.complaints.notifications
+  );
+
   const [menuActive, setMenuActive] = useState(false);
   const [windowActive, setWindowActive] = useState(false);
 
@@ -57,7 +61,7 @@ const Header = () => {
             }`}
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-bold text-gray-500">
+              <span className="text-sm font-bold text-primaryColor-500">
                 Notifications
               </span>
               <GrFormClose
@@ -66,42 +70,39 @@ const Header = () => {
               />
             </div>
             <div className="flex flex-col">
-              <div className="flex items-center justify-between border-b-[1px] border-gray-400 py-2">
-                <div className="flex flex-col">
-                  <p className="text-[10px] text-gray-500">
-                    ID: <span>WSSC3457</span>
-                  </p>
-                  <span className="text-sm font-bold text-headingColor-400">
-                    Waste Water
-                  </span>
-                </div>
-                <div className="flex flex-col text-sm">
-                  <span className="font-bold text-gray-400 text-right text-[12px]">
-                    08:12 am
-                  </span>
-                  <span className="text-inprogessColor font-bold">
-                    InProgess
-                  </span>
-                </div>
-              </div>
-              <div className="flex items-center justify-between pt-2">
-                <div className="flex flex-col">
-                  <p className="text-[10px] text-gray-500">
-                    ID: <span>WSSC3987</span>
-                  </p>
-                  <span className="text-sm font-bold text-headingColor-400">
-                    Solid Waste
-                  </span>
-                </div>
-                <div className="flex flex-col text-sm">
-                  <span className="font-bold text-gray-400 text-right text-[12px]">
-                    08:12 am
-                  </span>
-                  <span className="text-completedColor font-bold">
-                    Completed
-                  </span>
-                </div>
-              </div>
+              {notifications.map(({ id, type, status, time }) => (
+                <Link
+                  key={id}
+                  href={`/complaint/timeline/${id}`}
+                  onClick={() => setWindowActive(!windowActive)}
+                  className="flex items-center justify-between border-b-[1px] border-gray-400 py-2"
+                >
+                  <div className="flex flex-col">
+                    <p className="text-[10px] text-gray-500">
+                      ID: <span>{id}</span>
+                    </p>
+                    <span className="text-sm font-bold text-headingColor-400">
+                      {type}
+                    </span>
+                  </div>
+                  <div className="flex flex-col text-sm">
+                    <span className="font-bold text-gray-400 text-right text-[12px]">
+                      {time}
+                    </span>
+                    <span
+                      className={`font-bold  ${
+                        status === "Initiated" ? "text-initiatedColor" : ""
+                      }  ${
+                        status === "InProgress" ? "text-inprogessColor" : ""
+                      } ${
+                        status === "Completed" ? "text-completedColor" : ""
+                      } ${status === "Closed" ? "text-closedColor" : ""}`}
+                    >
+                      {status}
+                    </span>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -111,7 +112,10 @@ const Header = () => {
               menuActive ? "translate-x-0" : "-translate-x-72"
             }`}
           >
-            <ProfileMenu menuActive={menuActive} setMenuActive={setMenuActive} />
+            <ProfileMenu
+              menuActive={menuActive}
+              setMenuActive={setMenuActive}
+            />
           </div>
 
           {/* Overlay to profile menu */}

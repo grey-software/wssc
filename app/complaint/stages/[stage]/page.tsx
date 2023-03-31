@@ -25,20 +25,20 @@ const Complaints = ({ params }: any) => {
           <Link href="/">
             <HiArrowLeft className="text-[28px] text-primaryColor-500" />
           </Link>
-          <h3 className="text-md -ml-5 px-2 py-1 rounded-md bg-[#1A5980] text-white font-bold">
+          <h3 className="text-md -ml-5 px-2 py-1 rounded-md bg-feedbackColor text-white font-bold">
             <span className="">Complaints</span>
           </h3>
           <div></div>
         </div>
         <div className="flex items-center gap-8 my-6">
           <label
-            htmlFor="countries"
+            htmlFor="complaint-stages"
             className="text-sm font-medium text-gray-900"
           >
             Filter by:
           </label>
           <select
-            id="countries"
+            id="complaint-stages"
             className="w-3/3 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 outline-none"
             onChange={(e) => setStates(e.target.value)}
           >

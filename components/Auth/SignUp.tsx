@@ -8,7 +8,7 @@ import logo from "../../public/wsscmlogo.png";
 import Image from "next/image";
 import { SignUpUser } from "@/Redux-toolkit/UserSlice";
 import { useDispatch } from "react-redux";
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 interface Prop {
@@ -19,7 +19,6 @@ const patternRule: ValidationRule<RegExp> = {
   value: /^[A-Za-z]+$/,
   message: "Only alphabets are allowed",
 };
-
 
 const SignUp = ({ setAuthState }: Prop) => {
   const [showPassword, setshowPassword] = useState(false);
@@ -188,15 +187,15 @@ const SignUp = ({ setAuthState }: Prop) => {
             <div className="flex justify-center mt-10">
               <button
                 type="submit"
-                className=" w-[100%] text-lg hover:bg-primaryColor-400 rounded-xl bg-primaryColor-500 text-white py-3 font-bold mb-3"
+                className="w-[100%] text-lg hover:bg-primaryColor-400 rounded-xl bg-primaryColor-500 active:scale-95 transition-all text-white py-3 font-semibold mb-3"
               >
-                Sign Up | سائن اپ
+                SIGN UP | سائن اپ
               </button>
             </div>
 
             <div className="text-md text-gray-600 text-center mt-4">
               <span
-                className="text-blue-700 ml-4 font-bold cursor-pointer underline"
+                className="text-blue-700 ml-4 font-semibold cursor-pointer underline"
                 onClick={() => setAuthState("Signin")}
               >
                 Already Registered?
