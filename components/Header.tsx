@@ -72,6 +72,7 @@ const Header = () => {
             <div className="flex flex-col">
               {notifications.map(({ id, type, status, time }) => (
                 <Link
+                  key={id}
                   href={`/complaint/timeline/${id}`}
                   onClick={() => setWindowActive(!windowActive)}
                   className="flex items-center justify-between border-b-[1px] border-gray-400 py-2"
