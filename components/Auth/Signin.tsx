@@ -8,7 +8,7 @@ import logo from "../../public/wsscmlogo.png";
 import Image from "next/image";
 import { useDispatch, useStore } from "react-redux";
 import { SignInUser } from "@/Redux-toolkit/UserSlice";
-import {IoIosEye, IoIosEyeOff} from 'react-icons/io'
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 interface Prop {
   setAuthState: Dispatch<SetStateAction<string>>;
@@ -16,7 +16,7 @@ interface Prop {
 
 const Signin = ({ setAuthState }: Prop) => {
   const dispatch = useDispatch();
-  const [showPassword, setshowPassword] = useState(false)
+  const [showPassword, setshowPassword] = useState(false);
 
   const {
     register,
@@ -117,9 +117,9 @@ const Signin = ({ setAuthState }: Prop) => {
             <div className="flex justify-center mt-12">
               <button
                 type="submit"
-                className=" w-[100%] text-lg hover:bg-primaryColor-400 rounded-xl bg-primaryColor-500 text-white py-3 font-bold mb-3"
+                className=" w-[100%] text-lg hover:bg-primaryColor-400 rounded-xl bg-primaryColor-500 active:scale-95 transition-all text-white py-3 font-semibold mb-3"
               >
-                Login | لاگ ان
+                LOGIN | لاگ ان
               </button>
             </div>
 

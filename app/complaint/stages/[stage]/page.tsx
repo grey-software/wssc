@@ -25,7 +25,7 @@ const Complaints = ({ params }: any) => {
           <Link href="/">
             <HiArrowLeft className="text-[28px] text-primaryColor-500" />
           </Link>
-          <h3 className="text-md -ml-5 px-2 py-1 rounded-md bg-[#1A5980] text-white font-bold">
+          <h3 className="text-md -ml-5 px-2 py-1 rounded-md bg-feedbackColor text-white font-bold">
             <span className="">Complaints</span>
           </h3>
           <div></div>
