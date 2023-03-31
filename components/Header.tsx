@@ -71,7 +71,11 @@ const Header = () => {
             </div>
             <div className="flex flex-col">
               {notifications.map(({ id, type, status, time }) => (
-                <div className="flex items-center justify-between border-b-[1px] border-gray-400 py-2">
+                <Link
+                  href={`/complaint/timeline/${id}`}
+                  onClick={() => setWindowActive(!windowActive)}
+                  className="flex items-center justify-between border-b-[1px] border-gray-400 py-2"
+                >
                   <div className="flex flex-col">
                     <p className="text-[10px] text-gray-500">
                       ID: <span>{id}</span>
@@ -96,26 +100,8 @@ const Header = () => {
                       {status}
                     </span>
                   </div>
-                </div>
+                </Link>
               ))}
-              {/* <div className="flex items-center justify-between pt-2">
-                <div className="flex flex-col">
-                  <p className="text-[10px] text-gray-500">
-                    ID: <span>WSSC3987</span>
-                  </p>
-                  <span className="text-sm font-bold text-headingColor-400">
-                    Solid Waste
-                  </span>
-                </div>
-                <div className="flex flex-col text-sm">
-                  <span className="font-bold text-gray-400 text-right text-[12px]">
-                    08:12 am
-                  </span>
-                  <span className="text-completedColor font-bold">
-                    Completed
-                  </span>
-                </div>
-              </div> */}
             </div>
           </div>
 
