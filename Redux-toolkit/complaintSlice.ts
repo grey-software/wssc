@@ -52,6 +52,26 @@ const complaintSlice = createSlice({
       },
     ],
     newComplaint: [],
+    notifications: [
+      {
+        id: "WSSCM7937",
+        type: "Solid Waste",
+        status: "InProgress",
+        time: "12:08 AM",
+      },
+      {
+        id: "WSSCM76767",
+        type: "Waste Water",
+        status: "Completed",
+        time: "11:23 AM",
+      },
+      {
+        id: "WSSCM73456",
+        type: "Water Supply",
+        status: "Closed",
+        time: "09:12 AM",
+      },
+    ],
     Loading: false,
     error: false,
   },
