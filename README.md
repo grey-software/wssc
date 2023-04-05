@@ -32,6 +32,15 @@ Citizens will have a mobile app with which they can:
 - File complaints regarding garbage, sanitary issues, water supply, WSSCM staff, and other relevant issues.
 
 
+## 👁️ Vision 
+
+Citizens will have a mobile app with which they can:
+
+- Report areas of dumped garbage
+- Request garbage cleanup and Water Sanitation from their municipality and WSSC
+- Request for collection points to be placed in their areas 
+- File complaints regarding garbage, sanitary issues, water supply, WSSCM staff, and other relevant issues.
+
 The municipalities and WSSCs will have a web and mobile dashboard with which they can:
 
 - Monitor the incoming requests for garbage cleanup, water sanitation or collection points from users.
@@ -58,9 +67,9 @@ Garbage Collector was formally ideated on Github on the 14th of November, 2020
 The project invites any willing Product Owners, Designers, and Engineers.
 
 ## 🛡️ Team
-- [Hikmat Bangash](https://github.com/Hikmat-Bangash) Software Developer
-- [Ihtisham Ul Haq](https://github.com/ihtisham914) Software Developer
-- [Ayesha Aurangzeb](https://github.com/AyeshaAurangzeb) Software Developer
+- [Hikmat Bangash](https://github.com/Hikmat-Bangash) 
+- [Ihtisham Ul Haq](https://github.com/ihtisham914) 
+- [Ayesha Aurangzeb](https://github.com/AyeshaAurangzeb) 
 
 ### ⚓ Product Owners
 
