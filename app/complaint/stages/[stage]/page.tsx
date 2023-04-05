@@ -32,13 +32,13 @@ const Complaints = ({ params }: any) => {
         </div>
         <div className="flex items-center gap-8 my-6">
           <label
-            htmlFor="countries"
+            htmlFor="complaint-stages"
             className="text-sm font-medium text-gray-900"
           >
             Filter by:
           </label>
           <select
-            id="countries"
+            id="complaint-stages"
             className="w-3/3 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 outline-none"
             onChange={(e) => setStates(e.target.value)}
           >
