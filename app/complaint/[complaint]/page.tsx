@@ -35,6 +35,8 @@ const Form: React.FC = ({ params }: any) => {
   const [image, setImage] = useState<string>();
   const videoRef = useRef<HTMLInputElement>(null);
   const [video, setvideo] = useState<string>();
+  let [imageUrl, setImageUrl] = useState<string>();
+  let [videoUrl, setVideoUrl] = useState<string>();
 
   const [load, setloading] = useState(false);
   // Submit Form
@@ -60,10 +62,48 @@ const Form: React.FC = ({ params }: any) => {
         let img: any = event.target.files[0];
         let imgurl: string = URL.createObjectURL(img);
         setImage(imgurl);
+
+        // uploading image to cloudinary
+        const data = new FormData();
+        data.append("file", event.target.files[0]);
+        data.append("upload_preset", "xguxdutu");
+        data.append("cloud_name", "dgpwe8xy6");
+        data.append("folder", "complaint");
+
+        fetch("https://api.cloudinary.com/v1_1/dgpwe8xy6/image/upload", {
+          method: "post",
+          body: data,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            setImageUrl(data.secure_url);
+            console.log(imageUrl);
+          })
+          .catch((err) => console.log(err));
       } else {
         const video: any = event.target.files[0];
-        let videourl: string = URL.createObjectURL(video);
-        setvideo(videourl);
+        let vidurl: string = URL.createObjectURL(video);
+        setvideo(vidurl);
+
+        // uploading video to cloudinary
+        const data = new FormData();
+        data.append("file", event.target.files[0]);
+        data.append("upload_preset", "xguxdutu");
+        data.append("cloud_name", "dgpwe8xy6");
+        data.append("folder", "complaint");
+
+        fetch("https://api.cloudinary.com/v1_1/dgpwe8xy6/video/upload", {
+          method: "post",
+          body: data,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            setVideoUrl(data.secure_url);
+            console.log(videoUrl);
+          })
+          .catch((err) => console.log(err));
       }
     }
   };
