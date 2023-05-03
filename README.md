@@ -1,99 +1,81 @@
-<div align="center">
-    <img alt="Community Cleanup Logo" width="100" src="/public/wsscmlogo.png">
-</div>
+# Turborepo starter
 
+This is an official starter Turborepo.
 
-# Community Cleanup
+## Using this example
 
-Software that allow citizens to file complaints regarding garbage, sanitary issues, water supply, WSSCM staff, and other relevant issues that fall under the purview of the WSSCM.
+Run the following command:
 
+```sh
+npx create-turbo@latest
+```
 
-## 🥅 Motivation 
+## What's inside?
 
-**👤 AG**: As a resident of Pakistan, I see garbage thrown illegally and burned recklessly. Despite my personal efforts to ameliorate the problem, there has to be a larger, coordinated effort that involves the municipal and WSSCs corporations that are responsible for collecting garbage along with water sanitation issues accordingly. 
+This Turborepo includes the following packages/apps:
 
+### Apps and Packages
 
-## Objectives
+- `docs`: a [Next.js](https://nextjs.org/) app
+- `web`: another [Next.js](https://nextjs.org/) app
+- `ui`: a stub React component library shared by both `web` and `docs` applications
+- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
-The main objectives of our proposed system are as follows: 
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-- To Build a Complaint management system for WSSCM.
-- To integrate with their existing system (Odoo-MIS).
-- To equip citizens with a functional and convenient app to file complaints.
+### Utilities
 
+This Turborepo has some additional tools already setup for you:
 
-## 👁️ Vision 
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
 
-Citizens will have a mobile app with which they can:
+### Build
 
-- Report areas of dumped garbage
-- Request garbage cleanup and Water Sanitation from their municipality and WSSC
-- Request for collection points to be placed in their areas 
-- File complaints regarding garbage, sanitary issues, water supply, WSSCM staff, and other relevant issues.
+To build all apps and packages, run the following command:
 
+```
+cd my-turborepo
+pnpm build
+```
 
-## 👁️ Vision 
+### Develop
 
-Citizens will have a mobile app with which they can:
+To develop all apps and packages, run the following command:
 
-- Report areas of dumped garbage
-- Request garbage cleanup and Water Sanitation from their municipality and WSSC
-- Request for collection points to be placed in their areas 
-- File complaints regarding garbage, sanitary issues, water supply, WSSCM staff, and other relevant issues.
+```
+cd my-turborepo
+pnpm dev
+```
 
-The municipalities and WSSCs will have a web and mobile dashboard with which they can:
+### Remote Caching
 
-- Monitor the incoming requests for garbage cleanup, water sanitation or collection points from users.
-- Manage collection operations, with live updates coming from the deployed collectors  
+Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
 
-## ⚙️ Implementation
+By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
 
-### Platforms
+```
+cd my-turborepo
+npx turbo login
+```
 
-This system requires:
+This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
 
-- A mobile app for citizens
-- A web and mobile dashboard for municipal and WSSC corporations
+Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
 
-Due to the advances in web technologies, we recommend deploying this system on the web, where citizens will use a Progressive Web App and the government can use a web dashboard. This will allow developers to share code and mitigate the need for maintaining multiple versions for each platform. 
+```
+npx turbo link
+```
 
-### Data Storage
+## Useful Links
 
-The garbage markers users place and the pictures they take will be sent to the servers deployed by the municipal corporations. It is likely that this data won't be of a sensitive nature, so it could fall under open government data. If a rewards system is put in place that requires verification of a citizen's data, then measures will have to be taken to ensure that data remains accessible only to the municipal corporations.
+Learn more about the power of Turborepo:
 
-## Project Status
-
-Garbage Collector was formally ideated on Github on the 14th of November, 2020
-The project invites any willing Product Owners, Designers, and Engineers.
-
-## 🛡️ Team
-- [Hikmat Bangash](https://github.com/Hikmat-Bangash) 
-- [Ihtisham Ul Haq](https://github.com/ihtisham914) 
-- [Ayesha Aurangzeb](https://github.com/AyeshaAurangzeb) 
-
-### ⚓ Product Owners
-
-[Arsala](https://github.com/ArsalaBangash)
-
-[Join our community](http://community.grey.software) and [learn how to contribute](https://grey.software/contribute)
-
-### 🖌 Designers
-
-[Join our community](http://community.grey.software) and [learn how to contribute](https://grey.software/contribute)
-
-We are open to you using any tool of your choice to help us prototype.
-
-### 🛠️ Engineers
-
-[Join our community](http://community.grey.software) and [learn how to contribute](https://grey.software/contribute)
-
-Projected tech stack:
-
-- The [Quasar](https://quasar.dev) or [Nuxt](https://nuxtjs.org) web frameworks to develop the web apps
-- [Vue.js](https://cssc.utm.utoronto.ca/resources/vue) to provide advanced functionality on top of [HTML](https://cssc.utm.utoronto.ca/resources/html), [CSS](https://cssc.utm.utoronto.ca/resources/css), and [JS](https://cssc.utm.utoronto.ca/resources/javascript).
-
-## Made with Love, Joy, and Hope
-
-This project was ideated and developed at Grey Software, a not-for-profit organization that empowers students to build open-source software for their communities and societies.
-
-<img alt="Grey Software Sticker" width="500" src="https://grey.software/grey-software-sticker.png">
+- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
+- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
+- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
+- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
+- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
+- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
