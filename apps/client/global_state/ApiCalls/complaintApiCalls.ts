@@ -41,7 +41,6 @@ export const CreateComplaint = async (
 // Fetching Complaints from Server
 export const FetchAllComplaints = async (dispatch: any): Promise<any> => {
   dispatch(GetComplaintsStart());
-  // calling api to fetch all complaints
   try {
     const res = await API.get("api/v1/complaints", config);
     dispatch(GetComplaintsSuccess(res.data.allComplaints));
