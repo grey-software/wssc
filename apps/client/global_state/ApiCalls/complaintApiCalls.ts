@@ -8,7 +8,6 @@ import {
   NewComplaintError,
 } from "../ReduxSlices/complaintSlice";
 import { config } from "./config";
-// import { complaintTypes } from "@/Types";
 import { ComplainForm } from "@/@types/complainForm.types";
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
@@ -40,6 +39,7 @@ export const CreateComplaint = async (
 
 // Fetching Complaints from Server
 export const FetchAllComplaints = async (dispatch: any): Promise<any> => {
+
   dispatch(GetComplaintsStart());
   try {
     const res = await API.get("api/v1/complaints", config);

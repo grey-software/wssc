@@ -60,7 +60,7 @@ app.all("*", (req: Request, res: Response) => {
   });
 });
 
-// -------- app listening port no ---------
+// -------- app listening port number ---------
 app.listen(PORT, () => {
   console.log(`App listening on port: ${PORT}`);
 });
