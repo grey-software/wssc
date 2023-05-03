@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "Community-cleanup-backend",
+    "builds": [
+        {
+            "src": "server.ts",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/server.ts"
+        }
+    ]
+}
