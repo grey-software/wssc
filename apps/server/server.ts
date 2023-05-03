@@ -45,8 +45,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req: Request, res: Response) => {
   res.send("WELCOME TO THE 'COMMUNITY CLEANUP' PROJECT SERVER SIDE PAGE 👋");
 });
-// ------ Custom middlewares ---------
 
+// ------ Custom middlewares ---------
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/citizens", Citizen);
 app.use("/api/v1/complaints", complaint);
@@ -60,7 +60,7 @@ app.all("*", (req: Request, res: Response) => {
   });
 });
 
-// -------- app listening port no ---------
+// -------- app listening port number ---------
 app.listen(PORT, () => {
   console.log(`App listening on port: ${PORT}`);
 });

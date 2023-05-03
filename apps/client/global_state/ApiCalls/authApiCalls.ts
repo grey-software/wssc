@@ -47,8 +47,8 @@ export const SignIn = async (UserData: user, dispatch: any) => {
   const { phone, password } = UserData;
   // SignIn start action
   dispatch(SignInStart());
-  // calling api to check the credentials
   try {
+    // calling api to check the credentials
     const res = await API.post("api/v1/auth/signin", { phone, password }, config);
     dispatch(SignInSuccess(res.data));
   } catch (err: any) {
