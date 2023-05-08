@@ -46,10 +46,10 @@ const Header = () => {
             </div>
 
             <Image
-              src={UserInfo?.profile_image? UserInfo.profile_image:userdp}
-                className="w-8 rounded-full"
-                width={32}
-                height={32}
+              src={UserInfo?.profile_image ? UserInfo?.profile_image:userdp}
+              width={32}
+              height={32}
+              className="w-8 h-8 rounded-full object-cover"
               alt="profileIcon"
               onClick={() => setMenuActive(!menuActive)}
             />

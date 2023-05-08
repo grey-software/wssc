@@ -20,9 +20,10 @@ const Complaint = ({
   address,
   garbage,
 }: props) => {
+  console.log(`testing complaint Address: ${address}`)
   const navigate = useRouter();
-
   const handleClick = (id: any) => {
+    console.log(id);
     navigate.push(`/complaint/timeline/${id}`);
   };
   return (
@@ -36,24 +37,24 @@ const Complaint = ({
           <p>Status:</p>
           <span
             className={`font-bold ${
-              status[status.length - 1].state === "Initiated"
+              status[status.length - 1]?.state === "Initiated"
                 ? "text-initiatedColor"
                 : ""
             }  ${
-              status[status.length - 1].state === "InProgress"
+              status[status.length - 1]?.state === "InProgress"
                 ? "text-inprogessColor"
                 : ""
             } ${
-              status[status.length - 1].state === "Completed"
+              status[status.length - 1]?.state === "Completed"
                 ? "text-completedColor"
                 : ""
             } ${
-              status[status.length - 1].state === "Closed"
+              status[status.length - 1]?.state === "Closed"
                 ? "text-closedColor"
                 : ""
             }`}
           >
-            {status[status.length - 1].state}
+            {status[status.length - 1]?.state}
           </span>
         </div>
         <div className="flex items-center gap-3 text-sm text-gray-600">
@@ -72,19 +73,19 @@ const Complaint = ({
       <Image src={garbage} className="h-70% w-[30%]" alt="" />
       <div
         className={`h-[100%] w-2 top-0 left-0 absolute ${
-          status[status.length - 1].state === "Initiated"
+          status[status.length - 1]?.state === "Initiated"
             ? "bg-initiatedColor"
             : ""
         }  ${
-          status[status.length - 1].state === "InProgress"
+          status[status.length - 1]?.state === "InProgress"
             ? "bg-inprogessColor"
             : ""
         } ${
-          status[status.length - 1].state === "Completed"
+          status[status.length - 1]?.state === "Completed"
             ? "bg-completedColor"
             : ""
         } ${
-          status[status.length - 1].state === "Closed" ? "bg-closedColor" : ""
+          status[status.length - 1]?.state === "Closed" ? "bg-closedColor" : ""
         }`}
       ></div>
     </div>

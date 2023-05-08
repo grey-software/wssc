@@ -8,6 +8,15 @@ import {
   SignUpSuccess,
   SignUpError,
   LogOutUser,
+  UpdateUserInfoStart,
+  UpdateUserInfoSuccess,
+  UpdateUserInfoError,
+  ChangingPasswordStart,
+  ChangingPasswordSuccess,
+  ChangingPasswordError,
+  DeleteAccountStart,
+  DeleteAccountSuccess,
+  DeleteAccountError
 } from "../ReduxSlices/UserSlice";
 import { config } from "./config";
 
@@ -64,6 +73,56 @@ export const SignIn = async (UserData: user, dispatch: any) => {
   }
 };
 
+// Update UserInfo
+export const UpdateUserProfile = async (dispatch: any, updatedData: any, userId:any): Promise<any> => {
+  console.log(updatedData);
+  console.log(userId)
+  dispatch(UpdateUserInfoStart());
+
+  // calling updateUser api endpoint to update userInfo:a
+  try {
+    const res = await API.patch(`api/v1/citizens/${userId}`, updatedData , config);
+    dispatch(UpdateUserInfoSuccess(res.data.updateInfo));
+    return res.data;
+  } catch (err: any) {
+    console.log(err)
+    if (err.response) {
+       if (err.response.status == 401) {
+         dispatch(UpdateUserInfoError("You are not authorized"));
+         return err.response;
+      } else {
+         dispatch(UpdateUserInfoError("Server error, please try again later"));
+         return err.response;
+      }
+    }
+  }
+}
+
+// change Password api call
+export const ChangedPassword = async(dispatch:any, updatedPassword: any, userId: any): Promise<any> => {
+  
+  dispatch(ChangingPasswordStart());
+  // calling password endpoint api
+  try {
+    const res = await API.patch(`api/v1/citizens/changepassword/${userId}`, updatedPassword, config);
+    console.log(res.data)
+    dispatch(ChangingPasswordSuccess())
+    return res.data;
+  } catch (err: any) {
+    dispatch(ChangingPasswordError())
+    console.log(err)
+    if (err.response) {
+      if (err.response.status == 401) {
+        console.log(err.response)
+        return err.response;
+      } else {
+        console.log(err.response)
+        return err.response;
+      }
+    }
+  }
+}
+
 // LOGOUT APICALL
 export const LOGOUT = async (dispatch: any) => {
   try {
@@ -75,3 +134,27 @@ export const LOGOUT = async (dispatch: any) => {
   }
 }
 
+// User account delete API CALL
+export const UserAccountDelete = async (dispatch: any, userId: any): Promise<any> => {
+  dispatch(DeleteAccountStart());
+  try {
+    const res = await API.delete(`api/v1/citizens/${userId}`, config);
+    console.log(res.data);
+    dispatch(DeleteAccountSuccess())
+    return res.data;
+
+  } catch (err: any) {
+    if (err.response) {
+      if (err.response.status == 401) {
+        dispatch(DeleteAccountError("you are unauthorized"))
+        console.log(err.response)
+        return err.response;
+      } else {
+        dispatch(DeleteAccountError("internal server error"))
+        console.log(err.response)
+        return err.response;
+      }
+    }
+    
+  }
+}

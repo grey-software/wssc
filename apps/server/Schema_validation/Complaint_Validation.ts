@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi, { object, string } from "joi";
 import { IComplaint } from "../@types/ComplaintSchema.type";
 
 export const ComplaintValidation = (data: IComplaint): Joi.ValidationResult<any> => {
@@ -8,7 +8,7 @@ export const ComplaintValidation = (data: IComplaint): Joi.ValidationResult<any>
         userId: Joi.string()
             .required(),
         
-        userName: Joi.string()
+        username: Joi.string()
             .min(3)
             .max(20)
             .pattern(new RegExp('^[a-zA-Z ._-]*$')).message("Only Alphabets are allowed in Username field")
@@ -17,9 +17,7 @@ export const ComplaintValidation = (data: IComplaint): Joi.ValidationResult<any>
         phone: Joi.string()
             .min(11).message("Phone number must be 11 characters long.")
             .max(11).message("Phone number must be 11 characters long.")
-            .pattern(new RegExp('^[0-9]*$')).message("Only Numbers are allowed in phone Numbers")
-            .required(),
-
+            .pattern(new RegExp('^[0-9]*$')).message("Only Numbers are allowed in phone Numbers"),
         complaintType: Joi.string(),
 
         complaintAddress: Joi.string()
@@ -30,7 +28,7 @@ export const ComplaintValidation = (data: IComplaint): Joi.ValidationResult<any>
 
         complaintDes: Joi.string()
             .pattern(new RegExp('^[\.a-zA-Z0-9,!? ]*$')).message("Only alphanumeric characters are allowed complaint description"),
-
+        
         ImageUrl: Joi.string(),
 
         VideoUrl: Joi.string(),

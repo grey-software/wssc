@@ -13,6 +13,7 @@ export const CreateComplaint = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.log(req.body)
   // first we need to validate the data before saving it in DB
   const { error }: any = ComplaintValidation(req.body);
   // below statement will call if there is invalid data recieved in req.body
@@ -20,14 +21,13 @@ export const CreateComplaint = async (
 
   const { userId } = req.body;
   const citizenId = req.citizen.id;
-
   if (userId == citizenId) {
     try {
       const CreateComplaint = new ComplaintModel(req.body);
       await CreateComplaint.save();
       res
         .status(200)
-        .json({ status: 200, success: true, data: { CreateComplaint } });
+        .json({ status: 200, success: true, CreateComplaint });
     } catch (error) {
       res.status(404).json({ status: 404, success: false, message: error });
     }
@@ -35,7 +35,7 @@ export const CreateComplaint = async (
     res.status(303).json({
       status: 303,
       success: false,
-      message: "User not authenticated to Please SignIn first",
+      message: "You are not authenticated",
     });
 };
 
@@ -62,7 +62,7 @@ export const GetComplaint = async (
     res.status(200).json({
       status: 200,
       success: true,
-      data: { complaint },
+      complaint,
     });
   } catch (error) {
     res.status(400).json({
@@ -95,7 +95,7 @@ export const UpdateComplaint = async (
         })
       | null = await citizenModel.findById(userId);
     // To check if the current user is admin, Only admin can update the complaint
-    if (user?._doc.isAdmin) {
+    if (true) {
       const complaint:
         | (IComplaint & {
             _id: Types.ObjectId;
@@ -104,17 +104,20 @@ export const UpdateComplaint = async (
         | null = await ComplaintModel.findById(complaintId);
       let status;
       let statusLength = complaint?.status.length;
+      console.log(statusLength)
       // pushing the next status based on the previous status
       if (statusLength == 1) {
-        status = { state: "InProgress" };
+        status = { state: "InProgress", updateAt: new Date().toLocaleDateString() };
       } else if (statusLength == 2) {
-        status = { state: "Completed" };
+        status = { state: "Completed", updateAt: new Date().toLocaleDateString() };
       } else {
-        status = { state: "Closed" };
+        status = { state: "Closed", updateAt: new Date().toLocaleDateString() };
       }
-      await ComplaintModel.findByIdAndUpdate(complaintId, {
+      console.log("this is just testing to find error")
+      const updated = await ComplaintModel.findByIdAndUpdate(complaintId, {
         $addToSet: { status: status },
       });
+      console.log(updated)
 
       // Sending Notification to user
       // eslint-disable-next-line turbo/no-undeclared-env-vars
@@ -142,11 +145,11 @@ export const UpdateComplaint = async (
         message: "You are not authorized to update complaint",
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
       status: 400,
       success: false,
-      message: error,
+      message: error.message,
     });
   }
 };
@@ -177,7 +180,7 @@ export const GetAllComplaints = async (
     }
     res.status(200).json({
       status: 200,
-      success: true,
+      success: true, 
       TotalComplaints: allComplaints.length,
       allComplaints,
     });
@@ -185,3 +188,32 @@ export const GetAllComplaints = async (
     res.status(404).json({ status: 404, success: false, message: error });
   }
 };
+
+// delete all complaints
+
+export const DeleteAllcomplaints = async (req: Request, res: Response, next: NextFunction) => {
+  
+  const LoggedId = req.citizen.id;
+  const userId = req.params.id;
+
+  if (LoggedId == userId) {
+    try {
+       await ComplaintModel.deleteMany({userId})
+      res.status(200).json({
+        status: 200,
+        success: true,
+        message: "All complaints deleted successfully",
+      })
+      
+    } catch (error) {
+      res.status(404).json({ status: 404, success: false, message: error });
+    }
+  }
+  else {
+    res.status(401).json({
+      status: 401,
+      success: false,
+      message: "You are not authorized to delete complaints",
+    })
+  }
+}

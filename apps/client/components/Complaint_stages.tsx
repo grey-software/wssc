@@ -5,10 +5,8 @@ import {
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import { IoIosGitCompare } from "react-icons/io";
-import { FaStarOfLife } from "react-icons/fa";
 import FeedbackRating from "@/components/FeedbackRating";
-
+import moment from "moment";
 type Props = {
   status: any;
 };
@@ -16,7 +14,6 @@ type Props = {
 function Complaint_stages({ status }: Props) {
   const [feedback, setfeedback] = useState(false);
 
-  const date = "Mar 08 2023";
   return (
     <>
       <VerticalTimeline layout="1-column-left" lineColor="#aaa">
@@ -38,9 +35,14 @@ function Complaint_stages({ status }: Props) {
                 padding: "9px 0px 0px 6px",
                 fontWeight: "bold",
               }}
-              contentArrowStyle={{ borderRight: "10px solid #FBB64F" }}
-              // icon={<IoIosGitCompare />}
-              icon={stage.updatedAt}
+              contentArrowStyle={{
+                borderRight: `10px solid ${
+                  stage.state === "Initiated" ? "rgb(251 182 79)" : ""
+                }  ${stage.state === "InProgress" ? "rgb(0 166 255)" : ""} ${
+                  stage.state === "Completed" ? "rgb(106 214 22)" : ""
+                } ${stage.state === "Closed" ? "rgb(212 52 52)" : ""}`,
+              }}
+              icon={stage.updatedAt.split("T")[0]}
             >
               <div className="flex flex-col">
                 <div className="parent flex justify-between text-lg font-bold">
@@ -57,6 +59,7 @@ function Complaint_stages({ status }: Props) {
                   </h3>
                   <h3 className="text-sm text-gray-400">
                     {stage.updatedAt.split("T")[1].split(".")[0]}
+                  
                   </h3>
                 </div>
                 <div className="flex flex-col mt-6">
@@ -91,8 +94,7 @@ function Complaint_stages({ status }: Props) {
                   fontWeight: "bold",
                 }}
                 contentArrowStyle={{ borderRight: "10px solid #1A5980" }}
-                // icon={<IoIosGitCompare />}
-                icon={date}
+                icon={stage.updatedAt.split("T")[0]}
               >
                 <div className="flex flex-col">
                   <div className="parent flex justify-between text-lg font-bold">

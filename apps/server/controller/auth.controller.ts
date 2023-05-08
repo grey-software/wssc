@@ -100,7 +100,6 @@ export const SignIn = async (
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: true,
       })
       .status(200)
       .json(detail);

@@ -1,12 +1,14 @@
 "use client";
 
+import { complaintTypes } from "@/Types";
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
+import { FetchAllComplaints } from "../ApiCalls/complaintApiCalls";
 
 const complaintSlice = createSlice({
   name: "complaint",
   initialState: {
-    complaintsAll: [],
+    complaintsAll: <complaintTypes[]><unknown>[],
     newComplaint: [],
     notifications: [
       {
@@ -39,7 +41,6 @@ const complaintSlice = createSlice({
     GetComplaintsSuccess: (state, action) => {
       state.loading = false;
       state.complaintsAll = action.payload;
-      console.log(state.complaintsAll);
     },
     GetComplaintsError: (state, action) => {
       state.error = true;
@@ -49,12 +50,17 @@ const complaintSlice = createSlice({
         duration: 3000,
       });
     },
+
+    // creatng a complaint
     NewComplaintStart: (state) => {
       state.loading = true;
     },
     NewComplaintSuccess: (state, action) => {
+      
       state.loading = false;
+      const data = action.payload;
       state.newComplaint = action.payload;
+      state.complaintsAll.push(action.payload)
     },
     NewComplaintError: (state, action) => {
       state.error = true;

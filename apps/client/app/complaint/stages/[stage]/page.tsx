@@ -18,7 +18,6 @@ const Complaints = ({ params }: any) => {
     return state.complaints.complaintsAll;
   });
 
-  console.log(complaintsAll);
 
   // JSX section
   return (
@@ -88,7 +87,7 @@ const Complaints = ({ params }: any) => {
                 ) : (
                   <div>
                     {/* filter complaints based on provided filter */}
-                    {states === status[status.length - 1].state ? (
+                    {states === status[status.length - 1]?.state ? (
                       <Complaint
                         type={complaintType}
                         status={status}
@@ -101,8 +100,8 @@ const Complaints = ({ params }: any) => {
                       <div>
                         {/* show only pending complaints: initiated an inProgress */}
                         {states === "Pending" &&
-                        (status[status.length - 1].state === "Initiated" ||
-                          status[status.length - 1].state === "InProgress") ? (
+                        (status[status.length - 1]?.state === "Initiated" ||
+                          status[status.length - 1]?.state === "InProgress") ? (
                           <Complaint
                             type={complaintType}
                             status={status}

@@ -24,7 +24,7 @@ interface Props {
 }
 
 const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
-  const {name, profile_image}:any = useSelector((state: RootState)=> state.users.UserInfo)
+  const {name, profile_image, _id}:any = useSelector((state: RootState)=> state.users.UserInfo)
   const [sharePop, setsharePop] = useState(false);
   const dispatch = useDispatch();
   const navigate = useRouter();
@@ -58,7 +58,7 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
           <h1 className="text-xl text-headingColor-400 font-bold">
             {name}
           </h1>
-          <Link href={`/profile/63463453`}>
+          <Link href={`/profile/${_id}`}>
             <button
               className="flex items-center gap-2 px-2 bg-[#A4C9D1] rounded-md"
               onClick={() => setMenuActive(!menuActive)}
@@ -70,7 +70,7 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
         </div>
         <div className="flex flex-col gap-3 -mt-20">
           <Link
-            href="/profile/3435334"
+            href={`/profile/${_id}`}
             onClick={() => setMenuActive(!menuActive)}
             className="flex items-center gap-2 text-md"
           >
