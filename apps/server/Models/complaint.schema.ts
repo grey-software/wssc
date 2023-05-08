@@ -4,6 +4,8 @@ import { IComplaint } from "../@types/ComplaintSchema.type";
 const ComplaintSchema = new mongoose.Schema(
   {
     userId: { type: String, required: [true, "CurrentUser_Id is required"] },
+    username: { type: String },
+    phone: {type: String},
     complaintAddress: {
       type: String,
       required: [true, "Complaint address is required"],
@@ -13,6 +15,20 @@ const ComplaintSchema = new mongoose.Schema(
       required: [true, "Complaint type is mandatory one"],
     },
     complaintDes: { type: String },
+    status: {
+      type: [
+        {
+          state: { type: String},
+          updatedAt: {
+            type: Date,
+            default: new Date()
+            
+          },
+          '_id': false
+        },
+      ],
+      default: [{state: "Initiated"}]
+    },
     feedback: {
       type: {
         rating: {
@@ -24,17 +40,7 @@ const ComplaintSchema = new mongoose.Schema(
     },
     imageUrl: { type: String },
     videoUrl: { type: String },
-    status: {
-      type: [
-        {
-          state: { type: String, default: "Initiated" },
-          updatedAt: {
-            type: Date,
-            default: Date.now,
-          },
-        },
-      ],
-    },
+    
   },
   { timestamps: true }
 );

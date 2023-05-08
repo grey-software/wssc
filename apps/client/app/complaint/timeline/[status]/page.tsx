@@ -5,25 +5,58 @@ import { HiArrowLeft } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/global_state/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { config } from "@/global_state/ApiCalls/config";
 
 const Timeline = ({ params }: any) => {
   const complaintsAll = useSelector((state: RootState) => {
     return state.complaints.complaintsAll;
   });
 
+  console.log(`all complaints are: ${complaintsAll}`)
+
   const [complaints, setComplaints] = useState<any[]>(complaintsAll);
+  const [complaint, setComplaint] = useState<any>();
   const complaintID = params.status;
   const navigate = useRouter();
+
+  console.log(complaints)
+
+  // useEffect(() => {
+  //   const getSingleComplaint = async () => {
+  //     try {
+  //       const res = await axios.get(
+  //         `http://localhost:7000/api/v1/complaints/${complaintID}`,
+  //         config
+  //       );
+  //       console.log(res.data.complaint);
+  //       setComplaint(res.data.complaint);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getSingleComplaint();
+  // }, []);
+
 
   const {
     _id,
     complaintType,
     complaintAddress,
-    complaintDes,
     createdAt,
     status,
-  } = complaints.find((c) => c._id == complaintID);
+  }: any = complaints.find((c) => c._id == complaintID);
+  
+
+  
+  // const {
+  //   _id,
+  //   complaintType,
+  //   complaintAddress,
+  //   createdAt,
+  //   status,
+  // }: any = complaint;
 
   const back = () => {
     navigate.push("/complaint/stages/AllComplaints");

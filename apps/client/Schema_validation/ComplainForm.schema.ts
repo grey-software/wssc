@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 export const validationSchema = Yup.object().shape({
     
-    phone: Yup.string()
+    address: Yup.string()
         .required("Complaint address is required")
         .min(8, "Address must not less than 8 characters"),
     

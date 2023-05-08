@@ -4,12 +4,12 @@ import { createError } from "../HandleError";
 import dotenv from 'dotenv';
 dotenv.config();
 
-const JWT:any = process.env.JWT_KEY;
+// eslint-disable-next-line turbo/no-undeclared-env-vars
+const JWT: any = process.env.JWT_KEY;
 // ----- verify citizen token -------------
 export const verifyCitizenToken = async (req: Request, res:Response, next: NextFunction) => {
 
-        const token: any = req.cookies.access_token;
-
+    const token: any = req.cookies.access_token;
         if (!token) return next(createError(401, "You are not authenticated!"));
 
         jwt.verify(token, JWT, (err: jwt.VerifyErrors | null, user: any) => {

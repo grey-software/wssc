@@ -1,8 +1,10 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, response } from "express";
 import { Types } from "mongoose";
 import { citizenModel } from "../Models/citizen.schema";
 import { ICitizen } from "../@types/userSchema.type";
+import bcrypt from "bcryptjs";
 
+// update user info
 export const UpdateUser = async (
   req: Request,
   res: Response,
@@ -10,39 +12,40 @@ export const UpdateUser = async (
 ) => {
   const userId: string = req.params.id;
   const citizenId: string = req.citizen.id;
-
+  console.log(req.body)
   if (userId == citizenId) {
     try {
-      const user:
+      const updateInfo:
         | (ICitizen & {
             _id: Types.ObjectId;
             _doc: any;
           })
         | null = await citizenModel.findByIdAndUpdate(userId, req.body, {
-        eturnDocument: "after",
+       new: true,
       });
       res.status(200).json({
         status: 200,
         success: true,
         message: "Account Updated Successfully",
-        data: { user },
+        updateInfo,
       });
     } catch (error) {
-      res.status(400).json({
-        status: 400,
+      res.status(500).json({
+        status: 500,
         success: false,
         message: error,
       });
     }
   } else {
-    res.status(400).json({
-      status: 400,
+    res.status(401).json({
+      status: 401,
       success: false,
       message: "You are not authenticated to update this account",
     });
   }
 };
 
+// get a single user info
 export const GetUser = async (
   req: Request,
   res: Response,
@@ -72,6 +75,7 @@ export const GetUser = async (
     });
 };
 
+// RetreiveAllUsers Controller
 export const RetreiveAllUsers = async (
   req: Request,
   res: Response,
@@ -114,8 +118,8 @@ export const DeleteAccount = async (
 ) => {
   const userId: string = req.params.id; //getting user_Id through params/url
   const LoggedId: string = req.citizen.id; // getting user current logged id.
-  // checking whether the logged_id and params_id are same or not, if yes then delete acc otherwise req deny bcz its wrong user
-  console.log(userId == LoggedId);
+  // checking whether the logged_id and params_id are same or not, if not then request will denay because its wrong user
+  
   if (userId == LoggedId) {
     try {
       const validiting = await citizenModel.find(req.body.userId);
@@ -126,15 +130,51 @@ export const DeleteAccount = async (
         res
           .clearCookie("access_token", {
             sameSite: "none",
-            secure: true,
           })
-          .status(204)
+          .status(200)
           .json({
-            status: 204,
+            status: 200,
             success: true,
-            message: "User Account Deleted Successfuly",
+            message: "Account Deleted Successfuly",
           });
       }
+    } catch (error) {
+      res.status(500).json({
+        status: 500,
+        success: false,
+        message: error,
+      });
+    }
+  } else
+    return res.status(401).json({
+      status: 401,
+      success: false,
+      message: "You are not authenticated to deleted this account",
+    });
+};
+
+// change password controller 
+export const ChangePassword = async (req: Request, res: Response, next: NextFunction) => {
+  
+  const userId: string = req.params.id; //getting user_Id through params/url
+  const LoggedId: string = req.citizen.id; // getting user current logged id.
+  // checking whether the logged_id and params_id are same or not, if not then request will denay because its wrong user
+  if (userId == LoggedId) { 
+    // encrypt password by using bcrypt algorithm
+    const salt: string = bcrypt.genSaltSync(10);
+    const HashedPassword: any = bcrypt.hashSync(req.body.password, salt);
+    console.log(HashedPassword)
+    console.log(req.body.password) 
+    try {
+      await citizenModel.findByIdAndUpdate(userId, {password:HashedPassword}, {
+        new: true
+         })
+      res.status(200).json({
+        status: 200,
+        success: true,
+        message: "Password changed successfully"
+      });
+    
     } catch (error) {
       res.status(400).json({
         status: 400,
@@ -142,10 +182,11 @@ export const DeleteAccount = async (
         message: error,
       });
     }
-  } else
-    return res.status(200).json({
+  }
+  else
+    return res.status(401).json({
       status: 200,
       success: false,
-      message: "You are not authenticated to deleted this account",
+      message: "You are not authenticated to change password",
     });
-};
+}

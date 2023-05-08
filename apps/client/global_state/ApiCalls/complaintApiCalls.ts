@@ -14,25 +14,27 @@ const API = axios.create({ baseURL: "http://localhost:7000" });
 
 // Creating New Complaint
 export const CreateComplaint = async (
-  newComplaint: ComplainForm,
+  newComplaint: any,
   dispatch: any
 ): Promise<any> => {
+  const { userId , username,complaintType, complaintAddress, complaintDes, ImageUrl, VideoUrl } = newComplaint;
   dispatch(NewComplaintStart());
 
   // calling API to create complaint in database
   try {
-    const res = await API.post("api/v1/complaints", { ...newComplaint }, config);
-    dispatch(NewComplaintSuccess(res.data));
-    return res.status;
+    const res = await API.post("api/v1/complaints", { userId, username, complaintType, complaintAddress, complaintDes, ImageUrl, VideoUrl }, config);
+    console.log(res.data)
+    dispatch(NewComplaintSuccess(res.data.CreateComplaint));
+    return res.data;
   }
   catch (err: any)
   {
-    if (err.response.status == 400) {
+    if (err.response?.status == 400) {
       dispatch(NewComplaintError(err.response.data));
-      return err.response.status;
+      return err.response;
     } else if (err.response.status == 500) {
       dispatch(NewComplaintError(err.response.statusText));
-      return err.response.status;
+      return err.response;
     }
   }
 };
