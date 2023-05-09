@@ -19,12 +19,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/global_state/store";
 import { LOGOUT } from "@/global_state/ApiCalls/authApiCalls";
 interface Props {
-  menuActive: boolean,
-  setMenuActive: React.Dispatch<React.SetStateAction<boolean>>
+  menuActive: boolean;
+  setMenuActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
-  const {name, profile_image, _id}:any = useSelector((state: RootState)=> state.users.UserInfo)
+  const { name, profile_image, _id }: any = useSelector(
+    (state: RootState) => state.users.UserInfo
+  );
   const [sharePop, setsharePop] = useState(false);
   const dispatch = useDispatch();
   const navigate = useRouter();
@@ -32,9 +34,10 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
   //Logout Method def to logOut user
   const LogOut = () => {
     // calling LOGOUT apicall method to logout user
-    LOGOUT(dispatch)
-    setMenuActive(!menuActive)
-  }
+    LOGOUT(dispatch);
+    setMenuActive(!menuActive);
+    navigate.push("/");
+  };
 
   const NotifyTost = () => {
     toast.error("This feature is in Progress", {
@@ -55,9 +58,7 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
             height={128}
             alt=""
           />
-          <h1 className="text-xl text-headingColor-400 font-bold">
-            {name}
-          </h1>
+          <h1 className="text-xl text-headingColor-400 font-bold">{name}</h1>
           <Link href={`/profile/${_id}`}>
             <button
               className="flex items-center gap-2 px-2 bg-[#A4C9D1] rounded-md"
