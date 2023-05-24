@@ -8,6 +8,7 @@ import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import { RootState } from "@/app/GlobalState/store";
 import Image from "next/image";
 import logo from "../public/wsscmlogo.png";
+import { FetchAllComplaints } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
 
 // import Fgpc_logo  from '../assets/fgpc_logo.svg'
 
@@ -18,6 +19,7 @@ function Aside() {
 
   const clickHander = (link: any, index: any) => {
     navigate.push(`${link}`);
+    if (link == "/complaint") FetchAllComplaints(dispatch);
     dispatch(setActiveTab(index));
   };
   const { username } = useSelector((state: RootState) => state.User.SignInData);

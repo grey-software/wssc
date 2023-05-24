@@ -11,16 +11,6 @@ export const items = [
   },
   {
     id: 2,
-    name: "Unassigned",
-    to: "/complaint/stage/unassigned",
-  },
-  {
-    id: 3,
-    name: "Supervisors",
-    to: "/supervisor",
-  },
-  {
-    id: 4,
     name: "Citizens",
     to: "/citizen",
   },
