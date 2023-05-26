@@ -47,7 +47,7 @@ export const UserSlice = createSlice({
     SignUpStart: (state) => {
       state.pending = true;
     },
-    SignUpSuccess: (state, action) => {
+    SignUpSuccess: (state) => {
       state.pending = false;
     },
     SignUpError: (state, action) => {

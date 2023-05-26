@@ -71,6 +71,7 @@ const Complaints = ({ params }: any) => {
                   status,
                   createdAt,
                   complaintAddress,
+                  ImageUrl,
                 }: complaintTypes,
                 index
               ) => (
@@ -84,6 +85,7 @@ const Complaints = ({ params }: any) => {
                       submitedOn={createdAt}
                       address={complaintAddress}
                       garbage={garbage}
+                      ImageUrl={ImageUrl}
                     />
                   ) : (
                     <div>
@@ -96,6 +98,7 @@ const Complaints = ({ params }: any) => {
                           submitedOn={createdAt}
                           address={complaintAddress}
                           garbage={garbage}
+                          ImageUrl={ImageUrl}
                         />
                       ) : (
                         <div>
@@ -111,6 +114,7 @@ const Complaints = ({ params }: any) => {
                               submitedOn={createdAt}
                               address={complaintAddress}
                               garbage={garbage}
+                              ImageUrl={ImageUrl}
                             />
                           ) : (
                             ""

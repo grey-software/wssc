@@ -9,6 +9,7 @@ import AuthRouter from "./Routes/auth.route";
 import complaint from "./Routes/Complaint.route";
 import Citizen from "./Routes/citizen.route";
 import mongoose, { ConnectOptions } from "mongoose";
+import testingRouter from "./dummyRoute";
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // ------ Custom middlewares ---------
+app.use('/testing', testingRouter);
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/citizens", Citizen);
 app.use("/api/v1/complaints", complaint);
