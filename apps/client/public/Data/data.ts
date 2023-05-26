@@ -11,13 +11,13 @@ export const complaints_types = [
         img: waterSupply,
         name: "Water Supply",
         urdu: "پانی کی فراہمی",
-        complaintType: "Water-Supply"
+        complaintType: "Water Supply"
     },
     {
         img: WasteWater,
         name: "Waste Water",
         urdu: "گندا پانی",
-        complaintType: "Waste-water"
+        complaintType: "Waste water"
 
 
     },
@@ -25,7 +25,7 @@ export const complaints_types = [
         img: solidWaste,
         name: "Solid Waste",
         urdu: "سالڈ ویسٹ",
-        complaintType: "Solid-waste"
+        complaintType: "Solid waste"
 
 
     },

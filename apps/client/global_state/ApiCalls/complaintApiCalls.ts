@@ -23,7 +23,6 @@ export const CreateComplaint = async (
   // calling API to create complaint in database
   try {
     const res = await API.post("api/v1/complaints", { userId, username, complaintType, complaintAddress, complaintDes, ImageUrl, VideoUrl }, config);
-    console.log(res.data)
     dispatch(NewComplaintSuccess(res.data.CreateComplaint));
     return res.data;
   }

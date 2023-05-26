@@ -17,7 +17,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/global_state/store";
 
 const Form: React.FC = ({ params }: any) => {
-  const complaintType = params.complaint;
+  const complaintType = decodeURI(params.complaint);
+  
   const { name, _id, phone }: any = useSelector(
     (state: RootState) => state.users.UserInfo
   );
@@ -56,14 +57,15 @@ const Form: React.FC = ({ params }: any) => {
     };
     // Calling API
     try {
+      setload(true)
       const res = await CreateComplaint(complaintData, dispatch);
       if (res.status == 200) {
-        setload(true)
         Navigate.push(`/complaint/timeline/${res.CreateComplaint._id}`);
         setload(false)
         reset();
       }
     } catch (error) {
+      setload(false)
        console.log(error)
     }
   };

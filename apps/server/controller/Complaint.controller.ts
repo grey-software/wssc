@@ -13,7 +13,6 @@ export const CreateComplaint = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(req.body)
   // first we need to validate the data before saving it in DB
   const { error }: any = ComplaintValidation(req.body);
   // below statement will call if there is invalid data recieved in req.body

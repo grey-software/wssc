@@ -38,8 +38,8 @@ const ComplaintSchema = new mongoose.Schema(
         description: String,
       },
     },
-    imageUrl: { type: String },
-    videoUrl: { type: String },
+    ImageUrl: { type: String },
+    VideoUrl: { type: String },
     
   },
   { timestamps: true }

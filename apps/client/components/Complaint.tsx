@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import DefaultPic from "../public/assets/complaintDefaultPic.png";
 import { useRouter } from "next/navigation";
 
 interface props {
@@ -10,6 +11,7 @@ interface props {
   submitedOn: String;
   address: String;
   garbage: any;
+  ImageUrl: any,
 }
 
 const Complaint = ({
@@ -18,12 +20,12 @@ const Complaint = ({
   complaintID,
   submitedOn,
   address,
+  ImageUrl,
   garbage,
 }: props) => {
-  console.log(`testing complaint Address: ${address}`)
+  const complaintPic: any = ImageUrl != undefined ? ImageUrl : DefaultPic;
   const navigate = useRouter();
   const handleClick = (id: any) => {
-    console.log(id);
     navigate.push(`/complaint/timeline/${id}`);
   };
   return (
@@ -70,7 +72,13 @@ const Complaint = ({
           <span>{address}</span>
         </div>
       </div>
-      <Image src={garbage} className="h-70% w-[30%]" alt="" />
+      <Image
+        src={complaintPic}
+        className="h-70% w-[30%]"
+        width={80}
+        height={50}
+        alt=""
+      />
       <div
         className={`h-[100%] w-2 top-0 left-0 absolute ${
           status[status.length - 1]?.state === "Initiated"
