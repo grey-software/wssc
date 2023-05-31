@@ -13,6 +13,7 @@ const page = () => {
   const dispatch = useDispatch();
   const navigate = useRouter();
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     FetchAllComplaints(dispatch);
@@ -33,27 +34,43 @@ const page = () => {
 
   return (
     <div className="container flex flex-col gap-6">
-      <div className="flex items-center gap-4  text-md">
-        <span
-          className="cursor-pointer flex items-center justify-center p-[10px] rounded-full hover:bg-gray-100 active:bg-gray-300 transition-all"
-          title="Dashboard"
-          onClick={() => {
-            navigate.push("/");
-            dispatch(setActiveTab(0));
-          }}
-        >
-          <AiFillHome />
-        </span>
-        <span className="text-[10px] font-bold text-gray-500">
-          <MdOutlineArrowForwardIos />
-        </span>
-        <span
-          title="Complaints"
-          className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full bg-primaryColor-300"
-        >
-          <span>Complaints</span>
-        </span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4  text-md">
+          <span
+            className="cursor-pointer flex items-center justify-center p-[10px] rounded-full hover:bg-gray-100 active:bg-gray-300 transition-all"
+            title="Dashboard"
+            onClick={() => {
+              navigate.push("/");
+              dispatch(setActiveTab(0));
+            }}
+          >
+            <AiFillHome />
+          </span>
+          <span className="text-[10px] font-bold text-gray-500">
+            <MdOutlineArrowForwardIos />
+          </span>
+          <span
+            title="Complaints"
+            className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full bg-primaryColor-300"
+          >
+            <span>Complaints</span>
+          </span>
+        </div>
+        <div className="flex items-center border-2 border-gray-300 rounded-full">
+          <input
+            type="text"
+            placeholder="Search here               "
+            className="text-sm rounded-l-full outline-none py-1 px-4 w-52 "
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <div className="border-[1px] border-gray-300 h-8"></div>
+          <button className="py-1 px-4 rounded-r-full transition-all text-white bg-feedbackColor cursor-pointer">
+            Search
+          </button>
+        </div>
       </div>
+
       <div className="overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
