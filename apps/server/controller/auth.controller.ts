@@ -4,11 +4,11 @@ import { citizenModel } from "../Models/citizen.schema";
 import jwt from "jsonwebtoken";
 import { ICitizen } from "../@types/userSchema.type";
 import { Types } from "mongoose";
-import dotenv from "dotenv";
 import {
   SignIn_validate,
   SignUp_validate,
 } from "../Schema_validation/Auth_Validation";
+import dotenv from "dotenv";
 dotenv.config();
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
@@ -27,7 +27,7 @@ export const SignUp = async (
   const { name, phone, password }: any = req.body;
   // encrypt password by using bcrypt algorithm
   const salt: string = bcrypt.genSaltSync(10);
-  const hash: string = bcrypt.hashSync(req.body.password, salt);
+  const hash: string = bcrypt.hashSync(password, salt);
 
   try {
     const verify:

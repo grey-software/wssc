@@ -19,33 +19,30 @@ function Aside() {
 
   const clickHander = (link: any, index: any) => {
     navigate.push(`${link}`);
-    if (link == "/complaint") FetchAllComplaints(dispatch);
+    // if (link == "/complaint") FetchAllComplaints(dispatch);
     dispatch(setActiveTab(index));
   };
+  
   const { username } = useSelector((state: RootState) => state.User.SignInData);
 
   return (
     <div>
       {username ? (
-        <aside className="h-screen w-[200px] absolute shadow top-0">
-          <div className="flex items-center gap-2 mt-4 pl-7">
-            <Image src={logo} className="h-9 w-10" alt="logo" />
-            <h1 className="text-2xl font-bold text-primaryColor-500">WSSC</h1>
-          </div>
-          <ul className="mt-6 w-full">
+        <aside className="h-screen w-[250px] fixed shadow bg-slate-50 border-r">
+          <ul className=" mt-4 w-full">
             {items.map((item, index) => (
               <li
                 key={index}
                 onClick={() => clickHander(item.to, index)}
-                className={` py-4 flex w-full justify-start cursor-pointer items-center border-l-4 transition-all ${
+                className={` py-3 flex w-full justify-start cursor-pointer items-center transition-all rounded-tl-lg rounded-bl-lg ${
                   activeTab.index === index
-                    ? "bg-gray-100 font-bold text-primaryColor-500  border-primaryColor-500"
+                    ? "bg-primaryColor-500 font-semibold tracking-wide text-gray-50 border-primaryColor-500"
                     : ""
                 }`}
               >
                 <div className={`flex items-center justify-start ml-6`}>
-                  {/* {item.icon} */}
-                  <span className="text-lg ml-2">{item.name}</span>
+                  <span className="text-xl">{item.icon}</span>
+                  <span className="text-lg ml-4">{item.name}</span>
                 </div>
               </li>
             ))}
