@@ -6,15 +6,15 @@ import {
   DeleteAccount,
   ChangePassword,
 } from "../controller/citizen.controller";
-import { verifyCitizenToken } from "../middleware/verifyToken";
+import { verifyAdmin, verifyUser } from "../middleware/verifyToken";
 
 const Citizen: Router = Router();
 
 Citizen.route("/:id")
-  .get(verifyCitizenToken, GetUser)
-  .patch(verifyCitizenToken, UpdateUser)
-  .delete(verifyCitizenToken, DeleteAccount);
-Citizen.patch('/changepassword/:id', verifyCitizenToken, ChangePassword)
-Citizen.get("/", RetreiveAllUsers);
+  .get(verifyUser, GetUser)
+  .patch(verifyUser, UpdateUser)
+  .delete(verifyUser, DeleteAccount);
+Citizen.patch('/changepassword/:id', verifyUser, ChangePassword)
+Citizen.get("/",verifyAdmin, RetreiveAllUsers);
 
 export default Citizen;

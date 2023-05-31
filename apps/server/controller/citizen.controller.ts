@@ -11,9 +11,9 @@ export const UpdateUser = async (
   next: NextFunction
 ) => {
   const userId: string = req.params.id;
-  const citizenId: string = req.citizen.id;
+  const citizenId: string = req.user.id;
   console.log(req.body)
-  if (userId == citizenId) {
+  if (userId == citizenId || req.user.isAdmin) {
     try {
       const updateInfo:
         | (ICitizen & {
@@ -52,9 +52,9 @@ export const GetUser = async (
   next: NextFunction
 ) => {
   const userId: string = req.params.id;
-  const citizenId: string = req.citizen.id;
+  const citizenId: string = req.user.id;
 
-  if (userId == citizenId) {
+  if (userId == citizenId || req.user.isAdmin) {
     try {
       const user:
         | (ICitizen & {
@@ -81,30 +81,18 @@ export const RetreiveAllUsers = async (
   res: Response,
   next: NextFunction
 ) => {
-  const citizenId: string = req.body.userId;
 
   try {
-    const user:
-      | (ICitizen & {
-          _id: Types.ObjectId;
-          _doc: any;
-        })
-      | null = await citizenModel.findById(citizenId);
-
     // Only Admin can retrieve all the users data
-    if (user?._doc.isAdmin == true) {
-      const allUsers = await citizenModel.find().sort({ _id: -1 });
-      res.status(200).json({
-        status: 200,
-        success: true,
-        TotalUsers: allUsers.length,
-        data: { allUsers },
-      });
-    } else {
-      res
-        .status(404)
-        .json({ status: 404, success: false, message: "You are not an Admin" });
-    }
+    const allUsers = await citizenModel.find().sort({ _id: -1 });
+
+    res.status(200).json({
+      status: 200,
+      success: true,
+      TotalUsers: allUsers.length,
+      data: { allUsers },
+    });
+
   } catch (error) {
     res.status(404).json({ status: 404, success: false, message: error });
   }
@@ -117,10 +105,10 @@ export const DeleteAccount = async (
   next: NextFunction
 ) => {
   const userId: string = req.params.id; //getting user_Id through params/url
-  const LoggedId: string = req.citizen.id; // getting user current logged id.
+  const LoggedId: string = req.user.id; // getting user current logged id.
   // checking whether the logged_id and params_id are same or not, if not then request will denay because its wrong user
   
-  if (userId == LoggedId) {
+  if (userId == LoggedId || req.user.isAdmin) {
     try {
       const validiting = await citizenModel.find(req.body.userId);
       if (validiting) {
@@ -157,7 +145,7 @@ export const DeleteAccount = async (
 export const ChangePassword = async (req: Request, res: Response, next: NextFunction) => {
   
   const userId: string = req.params.id; //getting user_Id through params/url
-  const LoggedId: string = req.citizen.id; // getting user current logged id.
+  const LoggedId: string = req.user.id; // getting user current logged id.
   // checking whether the logged_id and params_id are same or not, if not then request will denay because its wrong user
   if (userId == LoggedId) { 
     // encrypt password by using bcrypt algorithm
