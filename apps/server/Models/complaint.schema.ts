@@ -5,7 +5,7 @@ const ComplaintSchema = new mongoose.Schema(
   {
     userId: { type: String, required: [true, "CurrentUser_Id is required"] },
     username: { type: String },
-    phone: {type: String},
+    phone: { type: String },
     complaintAddress: {
       type: String,
       required: [true, "Complaint address is required"],
@@ -15,19 +15,19 @@ const ComplaintSchema = new mongoose.Schema(
       required: [true, "Complaint type is mandatory one"],
     },
     complaintDes: { type: String },
+    wsscStatement: { type: String },
     status: {
       type: [
         {
-          state: { type: String},
+          state: { type: String },
           updatedAt: {
             type: Date,
-            default: new Date()
-            
+            default: new Date(),
           },
-          '_id': false
+          _id: false,
         },
       ],
-      default: [{state: "Initiated"}]
+      default: [{ state: "Initiated" }],
     },
     feedback: {
       type: {
@@ -40,7 +40,6 @@ const ComplaintSchema = new mongoose.Schema(
     },
     ImageUrl: { type: String },
     VideoUrl: { type: String },
-    
   },
   { timestamps: true }
 );
