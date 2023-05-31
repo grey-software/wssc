@@ -31,10 +31,4 @@ export const items = [
     to: "/feedback",
     icon: <FaUserCircle />,
   },
-  {
-    id: 5,
-    name: "Stats",
-    to: "/statistics",
-    icon: <FaUserCircle />,
-  },
 ];

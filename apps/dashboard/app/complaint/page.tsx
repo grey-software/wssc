@@ -32,7 +32,7 @@ const page = () => {
   };
 
   return (
-    <div className="container flex flex-col gap-2">
+    <div className="container flex flex-col gap-6">
       <div className="flex items-center gap-4  text-md">
         <span
           className="cursor-pointer flex items-center justify-center p-[10px] rounded-full hover:bg-gray-100 active:bg-gray-300 transition-all"
@@ -49,7 +49,7 @@ const page = () => {
         </span>
         <span
           title="Complaints"
-          className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full bg-gray-200"
+          className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full bg-primaryColor-300"
         >
           <span>Complaints</span>
         </span>

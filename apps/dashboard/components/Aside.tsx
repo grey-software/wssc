@@ -22,7 +22,7 @@ function Aside() {
     // if (link == "/complaint") FetchAllComplaints(dispatch);
     dispatch(setActiveTab(index));
   };
-  
+
   const { username } = useSelector((state: RootState) => state.User.SignInData);
 
   return (
@@ -34,9 +34,9 @@ function Aside() {
               <li
                 key={index}
                 onClick={() => clickHander(item.to, index)}
-                className={` py-3 flex w-full justify-start cursor-pointer items-center transition-all rounded-tl-lg rounded-bl-lg ${
+                className={` py-3 flex w-full justify-start cursor-pointer items-center transition-all  ${
                   activeTab.index === index
-                    ? "bg-primaryColor-500 font-semibold tracking-wide text-gray-50 border-primaryColor-500"
+                    ? "bg-primaryColor-300 font-semibold tracking-wide text-feedbackColor border-primaryColor-300"
                     : ""
                 }`}
               >
