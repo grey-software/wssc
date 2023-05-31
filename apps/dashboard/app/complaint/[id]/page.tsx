@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { AiFillStar } from "react-icons/ai";
 import { AiFillHome } from "react-icons/ai";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { BsCaretLeftSquareFill, BsCaretRightSquareFill } from "react-icons/bs";
@@ -49,7 +50,7 @@ const page = ({ params }: any) => {
         </span>
       </div>
       {/* showing single  Complaint */}
-      <div className="grid grid-cols-2 w-full gap-10 text-sm">
+      <div className="grid grid-cols-2 w-full gap-6 text-sm">
         {/* Complaint details */}
         <div className=" shadow-md p-5 rounded ">
           <div className="flex items-center justify-between mb-1">
@@ -85,9 +86,12 @@ const page = ({ params }: any) => {
               <span className="font-semibold">Description</span>
               <span>There is water blockage in the sevarage system</span>
             </div>
-            <div className="flex items-start gap-2 col-span-2">
+            <div className="flex items-center gap-2 col-span-2">
               <span className="font-semibold">Statement</span>
-              <span>The problem is in the hostel sevarage system</span>
+              <button className="px-2 py-1 bg-primaryColor-300 rounded-md hover:bg-primaryColor-500 hover:text-white transition-all text-feedbackColor text-[10px] font-bold">
+                Add Statement
+              </button>
+              {/* <span>The problem is in the hostel sevarage system</span> */}
             </div>
           </div>
         </div>
@@ -98,28 +102,59 @@ const page = ({ params }: any) => {
           <div className="w-full border-[1px] border-gray-300"></div>
           <div className="grid grid-cols-2 gap-4 mt-4">
             <div className="flex items-start gap-2">
-              <span className="font-semibold">User ID</span>
-              <span>56576879890</span>
-            </div>
-            <div className="flex items-start gap-2">
               <span className="font-semibold">UserName</span>
               <span>Ihtisham Ul Haq</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="font-semibold">User ID</span>
+              <span>56576879890</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="font-semibold">Contact</span>
               <span>03118133026</span>
             </div>
-            <div className="col-span-2">feedback</div>
+            <div></div>
+            <div className="p-4 shadow-md flex flex-col gap-2">
+              <h1 className="text-md font-bold">Feedback</h1>
+              <div className="flex items-center gap-1 text-2xl">
+                <span className="text-initiatedColor">
+                  <AiFillStar />
+                </span>
+                <span className="text-initiatedColor">
+                  <AiFillStar />
+                </span>
+                <span className="text-initiatedColor">
+                  <AiFillStar />
+                </span>
+                <span className="text-gray-300">
+                  <AiFillStar />
+                </span>
+                <span className="text-gray-300">
+                  <AiFillStar />
+                </span>
+              </div>
+              <p className="text-sm">
+                "The Service is really great, WSSC staff is really cooperating"
+              </p>
+            </div>
           </div>
         </div>
 
         {/* complaint media */}
         <div className="shadow-md p-5 col-span-2 rounded">
           <h1 className="mb-1 font-bold text-md">Complaint Media</h1>
-          <div className="w-full border-[1px] border-gray-300 mb-1"></div>
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            <Image src="" width={300} height={300} alt="Complaint Picture" />
-            <Image src="" width={300} height={300} alt="Complaint Picture" />
+          <div className="w-full border-[1px] border-gray-300 mb-4"></div>
+          <div className="grid grid-cols-2 gap-4 mt-4 h-80 w-full">
+            <Image
+              src=""
+              className="h-full "
+              width={300}
+              height={100}
+              alt="Complaint Picture"
+            />
+            <video className="h-full" controls>
+              <source src="Video Link" />
+            </video>
           </div>
         </div>
       </div>
