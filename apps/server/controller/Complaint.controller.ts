@@ -19,8 +19,8 @@ export const CreateComplaint = async (
   if (error) return res.send(error.details[0].message);
 
   const { userId } = req.body;
-  const citizenId = req.citizen.id;
-  if (userId == citizenId) {
+  const citizenId = req.user.id;
+  if (userId == citizenId ) {
     try {
       const CreateComplaint = new ComplaintModel(req.body);
       await CreateComplaint.save();
@@ -45,9 +45,7 @@ export const GetComplaint = async (
   next: NextFunction
 ) => {
   const complaintId = req.params.id;
-  // const { userId } = req.body;
-  const LoggedId = req.citizen.id;
-  // if (userId == LoggedId) {
+
   try {
     const complaint:
       | (IComplaint & {
@@ -55,8 +53,7 @@ export const GetComplaint = async (
           _doc: any;
         })
       | null = await ComplaintModel.findById({
-      _id: complaintId,
-      userId: LoggedId,
+      _id: complaintId
     });
     res.status(200).json({
       status: 200,
@@ -70,13 +67,6 @@ export const GetComplaint = async (
       message: error,
     });
   }
-  // } else {
-  //   res.status(303).json({
-  //     status: 303,
-  //     success: false,
-  //     message: "User not authenticated to Please SignIn first",
-  //   });
-  // }
 };
 
 export const UpdateComplaint = async (
@@ -85,16 +75,9 @@ export const UpdateComplaint = async (
   next: NextFunction
 ) => {
   const complaintId = req.params.id;
-  const { userId } = req.citizen.id;
   try {
-    const user:
-      | (ICitizen & {
-          _id: Types.ObjectId;
-          _doc: any;
-        })
-      | null = await citizenModel.findById(userId);
     // To check if the current user is admin, Only admin can update the complaint
-    if (true) {
+    if (req.user.isAdmin) {
       const complaint:
         | (IComplaint & {
             _id: Types.ObjectId;
@@ -112,11 +95,9 @@ export const UpdateComplaint = async (
       } else {
         status = { state: "Closed", updateAt: new Date().toLocaleDateString() };
       }
-      console.log("this is just testing to find error")
       const updated = await ComplaintModel.findByIdAndUpdate(complaintId, {
         $addToSet: { status: status },
       });
-      console.log(updated)
 
       // Sending Notification to user
       // eslint-disable-next-line turbo/no-undeclared-env-vars
@@ -159,10 +140,10 @@ export const GetAllComplaints = async (
   res: Response,
   next: NextFunction
 ) => {
-  const userId = req.citizen.id;
+  const userId = req.user.id;
 
   let allComplaints;
-  try {
+  try { 
     const user:
       | (ICitizen & {
           _id: Types.ObjectId;
@@ -170,7 +151,7 @@ export const GetAllComplaints = async (
         })
       | null = await citizenModel.findById(userId);
     // for admin fetch all the complaints while for citizen only fetch his corresponding complaints
-    if (user?._doc.isAdmin) {
+    if (req.user.isAdmin) {
       allComplaints = await ComplaintModel.find().sort({ _id: -1 });
     } else {
       allComplaints = await ComplaintModel.find({ userId: userId }).sort({
@@ -192,7 +173,7 @@ export const GetAllComplaints = async (
 
 export const DeleteAllcomplaints = async (req: Request, res: Response, next: NextFunction) => {
   
-  const LoggedId = req.citizen.id;
+  const LoggedId = req.user.id;
   const userId = req.params.id;
 
   if (LoggedId == userId) {

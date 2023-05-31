@@ -6,16 +6,17 @@ import {
   GetAllComplaints,
   DeleteAllcomplaints,
 } from "../controller/Complaint.controller";
-import { verifyCitizenToken } from "../middleware/verifyToken";
+import { verifyAdmin, verifyUser } from "../middleware/verifyToken";
 
 const ComplaintRouter: Router = Router();
 
-ComplaintRouter.get("/", verifyCitizenToken, GetAllComplaints);
+ComplaintRouter.get("/", verifyUser, GetAllComplaints);
 ComplaintRouter.route("/:id")
-  .get(verifyCitizenToken, GetComplaint)
-  .patch(verifyCitizenToken, UpdateComplaint)
-  .delete(verifyCitizenToken, DeleteAllcomplaints);
+  .get( GetComplaint)
+  .patch(verifyAdmin, UpdateComplaint)
+  .post(verifyUser, CreateComplaint)
+  .delete(verifyAdmin, DeleteAllcomplaints);
 
-ComplaintRouter.post("/", verifyCitizenToken, CreateComplaint);
+ComplaintRouter
 
 export default ComplaintRouter;

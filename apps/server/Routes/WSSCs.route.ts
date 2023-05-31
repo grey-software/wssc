@@ -8,4 +8,4 @@ WSSC.post('/signin', SignIn);
 WSSC.get('/logout', AdminLogout)
 
 
-export default WSSC;
+export default WSSC

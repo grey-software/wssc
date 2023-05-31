@@ -9,7 +9,7 @@ const AdminSchema = new mongoose.Schema({
     },
     WSSC_CODE: {
         type: String,
-        required: [true, "please validated your organization code"],
+        required: [true, "please validate your organization code"],
         unique: true
     },
     isAdmin: {
