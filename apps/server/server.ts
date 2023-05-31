@@ -8,6 +8,7 @@ import dbconnect from "./db/dbconnect";
 import AuthRouter from "./Routes/auth.route";
 import complaint from "./Routes/Complaint.route";
 import Citizen from "./Routes/citizen.route";
+import WSSC from "./Routes/WSSCs.route";
 import mongoose, { ConnectOptions } from "mongoose";
 import testingRouter from "./dummyRoute";
 
@@ -35,7 +36,8 @@ mongoose
   });
 
 //-------- MIDDLEWARES ---------
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({
+  origin: ["http://localhost:3000", "http://localhost:3001"], credentials: true }));
 app.use(helmet());
 app.use(morgan("tiny"));
 app.use(cookieParser());
@@ -48,8 +50,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // ------ Custom middlewares ---------
-app.use('/testing', testingRouter);
 app.use("/api/v1/auth", AuthRouter);
+app.use("/api/v1/wssc", WSSC);
 app.use("/api/v1/citizens", Citizen);
 app.use("/api/v1/complaints", complaint);
 

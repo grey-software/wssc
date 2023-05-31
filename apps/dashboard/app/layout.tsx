@@ -20,16 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <section className="flex w-full">
           <Providers>
-            <Notification />
-            <Aside />
-            <div className="pl-[200px] w-full">
               <Header />
-              <main className="ml-8 mt-6 mr-8">{children}</main>
+            <div className="w-full mt-14 absolute ">
+            <Aside />
+              <main className="ml-[280px] mt-10 mr-8">{children}</main>
             </div>
           </Providers>
-        </section>
       </body>
     </html>
   );
