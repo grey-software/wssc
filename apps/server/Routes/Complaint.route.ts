@@ -10,13 +10,13 @@ import { verifyAdmin, verifyUser } from "../middleware/verifyToken";
 
 const ComplaintRouter: Router = Router();
 
-ComplaintRouter.get("/", verifyUser, GetAllComplaints);
 ComplaintRouter.route("/:id")
-  .get( GetComplaint)
+  .get(verifyUser, GetAllComplaints)
+  .get(GetComplaint)
   .patch(verifyAdmin, UpdateComplaint)
   .post(verifyUser, CreateComplaint)
   .delete(verifyAdmin, DeleteAllcomplaints);
 
-ComplaintRouter
+ComplaintRouter;
 
 export default ComplaintRouter;

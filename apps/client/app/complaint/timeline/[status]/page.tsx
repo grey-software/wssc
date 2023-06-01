@@ -12,15 +12,13 @@ const Timeline = ({ params }: any) => {
   const complaintsAll = useSelector((state: RootState) => {
     return state.complaints.complaintsAll;
   });
-  
-  const { UserInfo }: any = useSelector((state: RootState) => state.users);
-
 
   const [complaints, setComplaints] = useState<any[]>(complaintsAll);
-  const [complaint, setComplaint] = useState<any>();
+  console.log(complaints);
   const complaintID = params.status;
+  console.log(complaintID);
   const navigate = useRouter();
-
+  // console.log(complaints.includes(complaintID));
   const {
     _id,
     complaintType,
@@ -29,6 +27,7 @@ const Timeline = ({ params }: any) => {
     status,
     ImageUrl,
   }: any = complaints.find((c) => c._id == complaintID);
+  console.log(complaints.find((c) => c._id == complaintID));
 
   const back = () => {
     navigate.push("/complaint/stages/AllComplaints");

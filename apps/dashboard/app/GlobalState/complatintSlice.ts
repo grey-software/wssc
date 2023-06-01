@@ -8,15 +8,15 @@ import { ComplainForm } from "@/@types/complainForm.types";
 interface complaintTypes {
   _id: string;
   phone: string;
-  username: string;
+  userName: string;
   userId: string;
   complaintType: string;
   complaintAddress: string;
   complaintDes: string;
-  statement: string;
-  picture: string;
+  wsscStatement: string;
+  ImageUrl: string;
   feedback: any;
-  video: string;
+  VideoUrl: string;
   status: any;
   createdAt: string;
 }
@@ -36,7 +36,6 @@ const complaintSlice = createSlice({
     },
     GetComplaintsSuccess: (state, action) => {
       state.loading = false;
-      console.log(action.payload);
       state.complaintsAll = action.payload;
     },
     GetComplaintsError: (state, action) => {

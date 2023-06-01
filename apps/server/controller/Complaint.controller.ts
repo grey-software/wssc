@@ -14,19 +14,18 @@ export const CreateComplaint = async (
   next: NextFunction
 ) => {
   // first we need to validate the data before saving it in DB
+  console.log(req.body);
   const { error }: any = ComplaintValidation(req.body);
   // below statement will call if there is invalid data recieved in req.body
   if (error) return res.send(error.details[0].message);
 
   const { userId } = req.body;
   const citizenId = req.user.id;
-  if (userId == citizenId ) {
+  if (userId == citizenId) {
     try {
       const CreateComplaint = new ComplaintModel(req.body);
       await CreateComplaint.save();
-      res
-        .status(200)
-        .json({ status: 200, success: true, CreateComplaint });
+      res.status(200).json({ status: 200, success: true, CreateComplaint });
     } catch (error) {
       res.status(404).json({ status: 404, success: false, message: error });
     }
@@ -53,7 +52,7 @@ export const GetComplaint = async (
           _doc: any;
         })
       | null = await ComplaintModel.findById({
-      _id: complaintId
+      _id: complaintId,
     });
     res.status(200).json({
       status: 200,
@@ -86,12 +85,18 @@ export const UpdateComplaint = async (
         | null = await ComplaintModel.findById(complaintId);
       let status;
       let statusLength = complaint?.status.length;
-      console.log(statusLength)
+      console.log(statusLength);
       // pushing the next status based on the previous status
       if (statusLength == 1) {
-        status = { state: "InProgress", updateAt: new Date().toLocaleDateString() };
+        status = {
+          state: "InProgress",
+          updateAt: new Date().toLocaleDateString(),
+        };
       } else if (statusLength == 2) {
-        status = { state: "Completed", updateAt: new Date().toLocaleDateString() };
+        status = {
+          state: "Completed",
+          updateAt: new Date().toLocaleDateString(),
+        };
       } else {
         status = { state: "Closed", updateAt: new Date().toLocaleDateString() };
       }
@@ -141,15 +146,15 @@ export const GetAllComplaints = async (
   next: NextFunction
 ) => {
   const userId = req.user.id;
-
+  console.log(req.user.id == req.params.id);
   let allComplaints;
-  try { 
-    const user:
-      | (ICitizen & {
-          _id: Types.ObjectId;
-          _doc: any;
-        })
-      | null = await citizenModel.findById(userId);
+  try {
+    // const user:
+    //   | (ICitizen & {
+    //       _id: Types.ObjectId;
+    //       _doc: any;
+    //     })
+    //   | null = await citizenModel.findById(userId);
     // for admin fetch all the complaints while for citizen only fetch his corresponding complaints
     if (req.user.isAdmin) {
       allComplaints = await ComplaintModel.find().sort({ _id: -1 });
@@ -160,7 +165,7 @@ export const GetAllComplaints = async (
     }
     res.status(200).json({
       status: 200,
-      success: true, 
+      success: true,
       TotalComplaints: allComplaints.length,
       allComplaints,
     });
@@ -171,29 +176,30 @@ export const GetAllComplaints = async (
 
 // delete all complaints
 
-export const DeleteAllcomplaints = async (req: Request, res: Response, next: NextFunction) => {
-  
+export const DeleteAllcomplaints = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const LoggedId = req.user.id;
   const userId = req.params.id;
 
   if (LoggedId == userId) {
     try {
-       await ComplaintModel.deleteMany({userId})
+      await ComplaintModel.deleteMany({ userId });
       res.status(200).json({
         status: 200,
         success: true,
         message: "All complaints deleted successfully",
-      })
-      
+      });
     } catch (error) {
       res.status(404).json({ status: 404, success: false, message: error });
     }
-  }
-  else {
+  } else {
     res.status(401).json({
       status: 401,
       success: false,
       message: "You are not authorized to delete complaints",
-    })
+    });
   }
-}
+};

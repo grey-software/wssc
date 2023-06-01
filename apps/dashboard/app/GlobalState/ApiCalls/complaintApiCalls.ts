@@ -9,11 +9,13 @@ import { config } from "./config";
 const API = axios.create({ baseURL: "http://localhost:7000" });
 
 // Fetching Complaints from Server
-export const FetchAllComplaints = async (dispatch: any): Promise<any> => {
+export const FetchAllComplaints = async (
+  dispatch: any,
+  userId: any
+): Promise<any> => {
   dispatch(GetComplaintsStart());
-  console.log("fetching started");
   try {
-    const res = await API.get("api/v1/complaints", config);
+    const res = await API.get(`api/v1/complaints/${userId}`, config);
     dispatch(GetComplaintsSuccess(res.data.allComplaints));
     console.log(res.data);
     return res.data;

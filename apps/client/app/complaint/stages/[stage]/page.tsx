@@ -17,6 +17,7 @@ const Complaints = ({ params }: any) => {
   const complaintsAll = useSelector((state: RootState) => {
     return state.complaints.complaintsAll;
   });
+  console.log(complaintsAll);
   const { UserInfo }: any = useSelector((state: RootState) => state.users);
 
   // JSX section
@@ -57,7 +58,7 @@ const Complaints = ({ params }: any) => {
             <div className="flex items-center gap-4">
               <span>Complaints:</span>
               <span className="py-1 px-3 rounded-lg bg-gray-200 text-feedbackColor">
-                {complaintsAll.length}
+                {complaintsAll?.length}
               </span>
             </div>
           </div>

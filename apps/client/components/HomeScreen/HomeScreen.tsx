@@ -5,14 +5,18 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FetchAllComplaints } from "@/global_state/ApiCalls/complaintApiCalls";
 import { useDispatch } from "react-redux";
+import { useContext } from "react";
+import { useSelector } from "react-redux";
+import { RootState, store } from "@/global_state/store";
 
 const HomeScreen = () => {
   const navigate = useRouter();
   const dispatch = useDispatch();
-
+  const user: any = useSelector((state: RootState) => state.users.UserInfo);
+  console.log(user);
   const handleClick = (stage: string) => {
     navigate.push(`/complaint/stages/${stage}`);
-    FetchAllComplaints(dispatch);
+    FetchAllComplaints(dispatch, user._id);
   };
   return (
     <div className="container py-3">
