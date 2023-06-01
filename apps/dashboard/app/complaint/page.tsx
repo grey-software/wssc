@@ -15,8 +15,9 @@ const page = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
+  const userId = useSelector((state: RootState) => state.User.SignInData);
   useEffect(() => {
-    FetchAllComplaints(dispatch);
+    FetchAllComplaints(userId, dispatch);
   }, []);
 
   const compliants = useSelector(
@@ -111,7 +112,7 @@ const page = () => {
                   {
                     _id,
                     complaintType,
-                    username,
+                    userName,
                     complaintAddress,
                     createdAt,
                     status,
@@ -145,7 +146,7 @@ const page = () => {
                       {complaintAddress.slice(0, 20)}
                     </td>
                     <td className="px-6 py-4">
-                      {!username ? "NILL" : username}
+                      {!userName ? "NILL" : userName}
                     </td>
                     <td className="px-6 py-4">
                       {createdAt.split("T").join(" ")}

@@ -18,11 +18,11 @@ import { RootState } from "@/global_state/store";
 
 const Form: React.FC = ({ params }: any) => {
   const complaintType = decodeURI(params.complaint);
-  
+
   const { name, _id, phone }: any = useSelector(
     (state: RootState) => state.users.UserInfo
   );
-  const {loading } = useSelector((state: RootState) => state.complaints)
+  const { loading } = useSelector((state: RootState) => state.complaints);
   const Navigate = useRouter();
   const dispatch = useDispatch();
 
@@ -46,27 +46,27 @@ const Form: React.FC = ({ params }: any) => {
   const onSubmit = async (data: ComplainForm) => {
     const { address, desc } = data;
     const complaintData = {
-      username: name,
+      userName: name,
       userId: _id,
       phone: phone.toString(),
       complaintType,
       complaintAddress: address,
-      complaintDes:desc,
+      complaintDes: desc,
       ImageUrl,
       VideoUrl,
     };
     // Calling API
     try {
-      setload(true)
+      setload(true);
       const res = await CreateComplaint(complaintData, dispatch);
       if (res.status == 200) {
         Navigate.push(`/complaint/timeline/${res.CreateComplaint._id}`);
-        setload(false)
+        setload(false);
         reset();
       }
     } catch (error) {
-      setload(false)
-       console.log(error)
+      setload(false);
+      console.log(error);
     }
   };
 
@@ -123,7 +123,7 @@ const Form: React.FC = ({ params }: any) => {
   return (
     <>
       {load ? (
-        <Loading/>
+        <Loading />
       ) : (
         <div className="md:w-[20%] mt-20 w-[93%] mx-3">
           <div className="flex items-center justify-between">

@@ -14,6 +14,15 @@ const page = ({ params }: any) => {
   const id = params.id;
   const dispatch = useDispatch();
   const navigate = useRouter();
+  const RatingInWords: string[] = [
+    "",
+    "Very Bad",
+    "Bad",
+    "Good",
+    "Very Good",
+    "Excellent",
+  ];
+  const rates: number[] = [1, 2, 3, 4, 5];
   const complaints = useSelector(
     (state: RootState) => state.Complaint.complaintsAll
   );
@@ -63,7 +72,7 @@ const page = ({ params }: any) => {
             <div className="flex items-center gap-2 ">
               <span>Status</span>
               <span
-                className={`text-white bg-inprogessColor px-2 py-1 rounded ${
+                className={`text-white  px-2 py-1 rounded ${
                   complaint?.status[complaint.status.length - 1].state ===
                   "Initiated"
                     ? "bg-initiatedColor"
@@ -115,8 +124,8 @@ const page = ({ params }: any) => {
             </div>
             <div className="flex items-center gap-2 col-span-2">
               <span className="font-semibold">Statement</span>
-              {complaint?.statement ? (
-                <span>{complaint.statement}</span>
+              {complaint?.wsscStatement ? (
+                <span>{complaint.wsscStatement}</span>
               ) : (
                 <button className="px-2 py-1 bg-primaryColor-300 rounded-md hover:bg-primaryColor-500 hover:text-white transition-all text-feedbackColor text-[10px] font-bold">
                   Add Statement
@@ -133,7 +142,7 @@ const page = ({ params }: any) => {
           <div className="grid grid-cols-2 gap-4 mt-4">
             <div className="flex items-start gap-2">
               <span className="font-semibold">UserName</span>
-              <span>{complaint?.username}</span>
+              <span>{complaint?.userName}</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="font-semibold">User ID</span>
@@ -148,26 +157,21 @@ const page = ({ params }: any) => {
               <div className="p-4 shadow-md flex flex-col gap-2">
                 <h1 className="text-md font-bold">Feedback</h1>
                 <div className="flex items-center gap-1 text-2xl">
-                  <span className="text-initiatedColor">
-                    <AiFillStar />
-                  </span>
-                  <span className="text-initiatedColor">
-                    <AiFillStar />
-                  </span>
-                  <span className="text-initiatedColor">
-                    <AiFillStar />
-                  </span>
-                  <span className="text-gray-300">
-                    <AiFillStar />
-                  </span>
-                  <span className="text-gray-300">
-                    <AiFillStar />
-                  </span>
+                  {rates.map((value, index) => (
+                    <div key={index}>
+                      {value <= complaint.feedback.rating ? (
+                        <span className="text-initiatedColor">
+                          <AiFillStar />
+                        </span>
+                      ) : (
+                        <span className="text-gray-300">
+                          <AiFillStar />
+                        </span>
+                      )}
+                    </div>
+                  ))}
                 </div>
-                <p className="text-sm">
-                  "The Service is really great, WSSC staff is really
-                  cooperating"
-                </p>
+                <p className="text-sm">"{complaint.feedback.description}"</p>
               </div>
             )}
           </div>
@@ -178,15 +182,17 @@ const page = ({ params }: any) => {
           <h1 className="mb-1 font-bold text-md">Complaint Media</h1>
           <div className="w-full border-[1px] border-gray-300 mb-4"></div>
           <div className="grid grid-cols-2 gap-4 mt-4 h-80 w-full">
-            <Image
-              src={complaint?.picture}
-              className="h-full "
-              width={300}
-              height={100}
-              alt="Complaint Picture"
-            />
+            {complaint?.ImageUrl && (
+              <Image
+                src={complaint?.ImageUrl}
+                className="h-full "
+                width={300}
+                height={100}
+                alt="Complaint Picture"
+              />
+            )}
             <video className="h-full" controls>
-              <source src={complaint?.video} />
+              <source src={complaint?.VideoUrl} />
             </video>
           </div>
         </div>

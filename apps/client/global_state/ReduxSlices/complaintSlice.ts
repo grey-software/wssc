@@ -8,7 +8,7 @@ import { FetchAllComplaints } from "../ApiCalls/complaintApiCalls";
 const complaintSlice = createSlice({
   name: "complaint",
   initialState: {
-    complaintsAll: <complaintTypes[]><unknown>[],
+    complaintsAll: <complaintTypes[]>(<unknown>[]),
     newComplaint: [],
     notifications: [
       {
@@ -56,11 +56,9 @@ const complaintSlice = createSlice({
       state.loading = true;
     },
     NewComplaintSuccess: (state, action) => {
-      
       state.loading = false;
-      const data = action.payload;
       state.newComplaint = action.payload;
-      state.complaintsAll.push(action.payload)
+      state.complaintsAll.push(action.payload);
     },
     NewComplaintError: (state, action) => {
       state.error = true;

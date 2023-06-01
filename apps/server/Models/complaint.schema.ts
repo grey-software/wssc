@@ -4,7 +4,7 @@ import { IComplaint } from "../@types/ComplaintSchema.type";
 const ComplaintSchema = new mongoose.Schema(
   {
     userId: { type: String, required: [true, "CurrentUser_Id is required"] },
-    username: { type: String },
+    userName: { type: String },
     phone: { type: String },
     complaintAddress: {
       type: String,

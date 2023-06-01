@@ -17,17 +17,37 @@ export const CreateComplaint = async (
   newComplaint: any,
   dispatch: any
 ): Promise<any> => {
-  const { userId , username,complaintType, complaintAddress, complaintDes, ImageUrl, VideoUrl } = newComplaint;
+  const {
+    userId,
+    userName,
+    complaintType,
+    complaintAddress,
+    complaintDes,
+    ImageUrl,
+    VideoUrl,
+  } = newComplaint;
   dispatch(NewComplaintStart());
 
+  console.log(userId);
   // calling API to create complaint in database
   try {
-    const res = await API.post("api/v1/complaints", { userId, username, complaintType, complaintAddress, complaintDes, ImageUrl, VideoUrl }, config);
+    const res = await API.post(
+      `api/v1/complaints/${userId}`,
+      {
+        userId,
+        userName,
+        complaintType,
+        complaintAddress,
+        complaintDes,
+        ImageUrl,
+        VideoUrl,
+      },
+      config
+    );
     dispatch(NewComplaintSuccess(res.data.CreateComplaint));
+    console.log(res.data);
     return res.data;
-  }
-  catch (err: any)
-  {
+  } catch (err: any) {
     if (err.response?.status == 400) {
       dispatch(NewComplaintError(err.response.data));
       return err.response;
@@ -39,11 +59,14 @@ export const CreateComplaint = async (
 };
 
 // Fetching Complaints from Server
-export const FetchAllComplaints = async (dispatch: any): Promise<any> => {
-
+export const FetchAllComplaints = async (
+  dispatch: any,
+  userId: any
+): Promise<any> => {
   dispatch(GetComplaintsStart());
+  console.log(userId);
   try {
-    const res = await API.get("api/v1/complaints", config);
+    const res = await API.get(`api/v1/complaints/${userId}`, config);
     dispatch(GetComplaintsSuccess(res.data.allComplaints));
     return res.data;
   } catch (err: any) {
