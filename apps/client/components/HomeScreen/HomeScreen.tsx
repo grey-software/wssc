@@ -13,7 +13,6 @@ const HomeScreen = () => {
   const navigate = useRouter();
   const dispatch = useDispatch();
   const user: any = useSelector((state: RootState) => state.users.UserInfo);
-  console.log(user);
   const handleClick = (stage: string) => {
     navigate.push(`/complaint/stages/${stage}`);
     FetchAllComplaints(dispatch, user._id);

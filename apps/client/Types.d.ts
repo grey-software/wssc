@@ -4,6 +4,7 @@ export interface complaintTypes {
   complaintType: string;
   complaintAddress: string;
   complaintDes: string;
+  garbage: string;
   ImageUrl: string;
   video: string;
   status: any;

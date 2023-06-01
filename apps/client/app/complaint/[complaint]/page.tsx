@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "@/global_state/store";
 
-const Form: React.FC = ({ params }: any) => {
+const Page: React.FC = ({ params }: any) => {
   const complaintType = decodeURI(params.complaint);
 
   const { name, _id, phone }: any = useSelector(
@@ -59,10 +59,12 @@ const Form: React.FC = ({ params }: any) => {
     try {
       setload(true);
       const res = await CreateComplaint(complaintData, dispatch);
-      if (res.status == 200) {
+      if (res && res.status === 200) {
         Navigate.push(`/complaint/timeline/${res.CreateComplaint._id}`);
         setload(false);
         reset();
+      } else {
+        console.log("Invalid response or missing data:", res);
       }
     } catch (error) {
       setload(false);
@@ -309,4 +311,4 @@ const Form: React.FC = ({ params }: any) => {
   );
 };
 
-export default Form;
+export default Page;

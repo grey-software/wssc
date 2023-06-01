@@ -14,13 +14,12 @@ export const CreateComplaint = async (
   next: NextFunction
 ) => {
   // first we need to validate the data before saving it in DB
-  console.log(req.body);
   const { error }: any = ComplaintValidation(req.body);
   // below statement will call if there is invalid data recieved in req.body
   if (error) return res.send(error.details[0].message);
-
-  const { userId } = req.body;
+  const userId  = req.params.id;
   const citizenId = req.user.id;
+
   if (userId == citizenId) {
     try {
       const CreateComplaint = new ComplaintModel(req.body);
@@ -149,13 +148,6 @@ export const GetAllComplaints = async (
   console.log(req.user.id == req.params.id);
   let allComplaints;
   try {
-    // const user:
-    //   | (ICitizen & {
-    //       _id: Types.ObjectId;
-    //       _doc: any;
-    //     })
-    //   | null = await citizenModel.findById(userId);
-    // for admin fetch all the complaints while for citizen only fetch his corresponding complaints
     if (req.user.isAdmin) {
       allComplaints = await ComplaintModel.find().sort({ _id: -1 });
     } else {
