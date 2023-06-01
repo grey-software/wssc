@@ -8,10 +8,14 @@ import { ComplainForm } from "@/@types/complainForm.types";
 interface complaintTypes {
   _id: string;
   phone: string;
+  username: string;
+  userId: string;
   complaintType: string;
   complaintAddress: string;
   complaintDes: string;
+  statement: string;
   picture: string;
+  feedback: any;
   video: string;
   status: any;
   createdAt: string;

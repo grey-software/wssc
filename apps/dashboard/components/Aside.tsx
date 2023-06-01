@@ -23,11 +23,13 @@ function Aside() {
     dispatch(setActiveTab(index));
   };
 
-  const { username } = useSelector((state: RootState) => state.User.SignInData);
+  const { WSSC_CODE }: any = useSelector(
+    (state: RootState) => state.User.SignInData
+  );
 
   return (
     <div>
-      {username ? (
+      {WSSC_CODE ? (
         <aside className="h-screen w-[250px] fixed shadow bg-slate-50 border-r">
           <ul className=" mt-4 w-full">
             {items.map((item, index) => (

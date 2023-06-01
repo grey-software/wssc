@@ -11,9 +11,14 @@ import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import Image from "next/image";
 
 const page = ({ params }: any) => {
+  const id = params.id;
   const dispatch = useDispatch();
   const navigate = useRouter();
-  const id = params.id;
+  const complaints = useSelector(
+    (state: RootState) => state.Complaint.complaintsAll
+  );
+
+  const complaint = complaints.find((c) => c._id == id);
   return (
     <div className="container flex flex-col gap-6 mb-3">
       <div className="flex items-center gap-4 text-md">
@@ -57,8 +62,30 @@ const page = ({ params }: any) => {
             <h1 className=" font-bold text-md">Complaint Details</h1>
             <div className="flex items-center gap-2 ">
               <span>Status</span>
-              <span className="text-white bg-inprogessColor px-2 py-1 rounded">
-                InProgress
+              <span
+                className={`text-white bg-inprogessColor px-2 py-1 rounded ${
+                  complaint?.status[complaint.status.length - 1].state ===
+                  "Initiated"
+                    ? "bg-initiatedColor"
+                    : ""
+                }  ${
+                  complaint?.status[complaint.status.length - 1].state ===
+                  "InProgress"
+                    ? "bg-inprogessColor"
+                    : ""
+                } ${
+                  complaint?.status[complaint.status.length - 1].state ===
+                  "Completed"
+                    ? "bg-completedColor"
+                    : ""
+                } ${
+                  complaint?.status[complaint.status.length - 1].state ===
+                  "Closed"
+                    ? "bg-closedColor"
+                    : ""
+                }`}
+              >
+                {complaint?.status[complaint.status.length - 1].state}
               </span>
             </div>
           </div>
@@ -67,31 +94,34 @@ const page = ({ params }: any) => {
             <div className="flex items-center gap-2">
               <span className="font-semibold">Type</span>
               <span className="bg-feedbackColor px-2 py-1 rounded text-white">
-                Waste water
+                {complaint?.complaintType}
               </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="font-semibold">intiated</span>
-              <span>12 March, 2023</span>
+              <span>{complaint?.createdAt.split("T")[0]}</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="font-semibold">ID</span>
-              <span>56576879890</span>
+              <span className="uppercase">{complaint?._id.slice(-8)}</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="font-semibold">Address</span>
-              <span>Near Uet Mardan</span>
+              <span>{complaint?.complaintAddress}</span>
             </div>
             <div className="flex items-start gap-2 col-span-2">
               <span className="font-semibold">Description</span>
-              <span>There is water blockage in the sevarage system</span>
+              <span>{complaint?.complaintDes}</span>
             </div>
             <div className="flex items-center gap-2 col-span-2">
               <span className="font-semibold">Statement</span>
-              <button className="px-2 py-1 bg-primaryColor-300 rounded-md hover:bg-primaryColor-500 hover:text-white transition-all text-feedbackColor text-[10px] font-bold">
-                Add Statement
-              </button>
-              {/* <span>The problem is in the hostel sevarage system</span> */}
+              {complaint?.statement ? (
+                <span>{complaint.statement}</span>
+              ) : (
+                <button className="px-2 py-1 bg-primaryColor-300 rounded-md hover:bg-primaryColor-500 hover:text-white transition-all text-feedbackColor text-[10px] font-bold">
+                  Add Statement
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -103,40 +133,43 @@ const page = ({ params }: any) => {
           <div className="grid grid-cols-2 gap-4 mt-4">
             <div className="flex items-start gap-2">
               <span className="font-semibold">UserName</span>
-              <span>Ihtisham Ul Haq</span>
+              <span>{complaint?.username}</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="font-semibold">User ID</span>
-              <span>56576879890</span>
+              <span className="uppercase">{complaint?.userId.slice(-8)}</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="font-semibold">Contact</span>
-              <span>03118133026</span>
+              <span>{complaint?.phone}</span>
             </div>
             <div></div>
-            <div className="p-4 shadow-md flex flex-col gap-2">
-              <h1 className="text-md font-bold">Feedback</h1>
-              <div className="flex items-center gap-1 text-2xl">
-                <span className="text-initiatedColor">
-                  <AiFillStar />
-                </span>
-                <span className="text-initiatedColor">
-                  <AiFillStar />
-                </span>
-                <span className="text-initiatedColor">
-                  <AiFillStar />
-                </span>
-                <span className="text-gray-300">
-                  <AiFillStar />
-                </span>
-                <span className="text-gray-300">
-                  <AiFillStar />
-                </span>
+            {complaint?.feedback && (
+              <div className="p-4 shadow-md flex flex-col gap-2">
+                <h1 className="text-md font-bold">Feedback</h1>
+                <div className="flex items-center gap-1 text-2xl">
+                  <span className="text-initiatedColor">
+                    <AiFillStar />
+                  </span>
+                  <span className="text-initiatedColor">
+                    <AiFillStar />
+                  </span>
+                  <span className="text-initiatedColor">
+                    <AiFillStar />
+                  </span>
+                  <span className="text-gray-300">
+                    <AiFillStar />
+                  </span>
+                  <span className="text-gray-300">
+                    <AiFillStar />
+                  </span>
+                </div>
+                <p className="text-sm">
+                  "The Service is really great, WSSC staff is really
+                  cooperating"
+                </p>
               </div>
-              <p className="text-sm">
-                "The Service is really great, WSSC staff is really cooperating"
-              </p>
-            </div>
+            )}
           </div>
         </div>
 
@@ -146,14 +179,14 @@ const page = ({ params }: any) => {
           <div className="w-full border-[1px] border-gray-300 mb-4"></div>
           <div className="grid grid-cols-2 gap-4 mt-4 h-80 w-full">
             <Image
-              src=""
+              src={complaint?.picture}
               className="h-full "
               width={300}
               height={100}
               alt="Complaint Picture"
             />
             <video className="h-full" controls>
-              <source src="Video Link" />
+              <source src={complaint?.video} />
             </video>
           </div>
         </div>
