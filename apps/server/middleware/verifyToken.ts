@@ -12,7 +12,6 @@ export const verifyToken = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("this verify token middleware");
   const token: any = req.cookies.access_token;
   if (!token) return next(createError(401, "You are not authenticated!"));
 

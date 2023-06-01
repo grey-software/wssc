@@ -9,15 +9,15 @@ import { RootState } from "../GlobalState/store";
 import { FetchAllComplaints } from "../GlobalState/ApiCalls/complaintApiCalls";
 import { setActiveTab } from "../GlobalState/TabSlice";
 
-const page = () => {
+const Page = () => {
   const dispatch = useDispatch();
   const navigate = useRouter();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
-  const userId = useSelector((state: RootState) => state.User.SignInData);
+  const userId:any = useSelector((state: RootState) => state.User.SignInData);
   useEffect(() => {
-    FetchAllComplaints(userId, dispatch);
+    FetchAllComplaints(dispatch, userId._id);
   }, []);
 
   const compliants = useSelector(
@@ -202,6 +202,7 @@ const page = () => {
             {compliants.length > 10 &&
               [...Array(Math.ceil(compliants.length / 10))].map((_, index) => (
                 <span
+                  key={index}
                   className={
                     page === index + 1
                       ? "bg-primaryColor-300 text-sm font-semibold  rounded-md px-2 py-1 cursor-pointer"
@@ -229,4 +230,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -1,31 +1,52 @@
 
 {
   "compilerOptions": {
-    "target": "es2022",
-    "lib": ["ES2022"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "ES2022",
-    "moduleResolution": "node",
+    "target": "es6",
+    "module": "CommonJS",
+    "rootDir": ".",
+    "outDir": "dist",
+    "sourceMap": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
+    "lib": ["es6", "dom"],
+    "esModuleInterop": true,
     "typeRoots": [
-      "@types",
-      "./node_modules/@types",
-      "./node_modules/@microsoft"
+      "@types", // custom merged types must be first in a list
+      "./node_modules/@types"
     ]
   },
-  "exclude": [
-    "node_modules",
-  ],
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node",
-  }
+  "include": ["*.ts"],
+  "exclude": ["node_modules"]
 }
+
+
+
+// {
+//   "compilerOptions": {
+//     "target": "es2022",
+//     "lib": ["ES2022"],
+//     "allowJs": true,
+//     "skipLibCheck": true,
+//     "esModuleInterop": true,
+//     "allowSyntheticDefaultImports": true,
+//     "strict": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "noFallthroughCasesInSwitch": true,
+//     "module": "ES2022",
+//     "moduleResolution": "node",
+//     "resolveJsonModule": true,
+//     "isolatedModules": true,
+//     "noEmit": true,
+//     "typeRoots": [
+//       "@types",
+//       "./node_modules/@types",
+//       "./node_modules/@microsoft"
+//     ]
+//   },
+//   "exclude": [
+//     "node_modules",
+//   ],
+//   "ts-node": {
+//     "esm": true,
+//     "experimentalSpecifierResolution": "node",
+//   }
+// }

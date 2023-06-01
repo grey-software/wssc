@@ -21,6 +21,7 @@ export const CreateComplaint = async (
     userId,
     userName,
     complaintType,
+    phone,
     complaintAddress,
     complaintDes,
     ImageUrl,
@@ -28,7 +29,6 @@ export const CreateComplaint = async (
   } = newComplaint;
   dispatch(NewComplaintStart());
 
-  console.log(userId);
   // calling API to create complaint in database
   try {
     const res = await API.post(
@@ -37,6 +37,7 @@ export const CreateComplaint = async (
         userId,
         userName,
         complaintType,
+        phone,
         complaintAddress,
         complaintDes,
         ImageUrl,
@@ -45,7 +46,6 @@ export const CreateComplaint = async (
       config
     );
     dispatch(NewComplaintSuccess(res.data.CreateComplaint));
-    console.log(res.data);
     return res.data;
   } catch (err: any) {
     if (err.response?.status == 400) {

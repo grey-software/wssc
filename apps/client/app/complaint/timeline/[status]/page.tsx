@@ -14,11 +14,9 @@ const Timeline = ({ params }: any) => {
   });
 
   const [complaints, setComplaints] = useState<any[]>(complaintsAll);
-  console.log(complaints);
   const complaintID = params.status;
-  console.log(complaintID);
   const navigate = useRouter();
-  // console.log(complaints.includes(complaintID));
+
   const {
     _id,
     complaintType,
@@ -26,8 +24,7 @@ const Timeline = ({ params }: any) => {
     createdAt,
     status,
     ImageUrl,
-  }: any = complaints.find((c) => c._id == complaintID);
-  console.log(complaints.find((c) => c._id == complaintID));
+  }: any = complaints.find((c) => c?._id == complaintID);
 
   const back = () => {
     navigate.push("/complaint/stages/AllComplaints");

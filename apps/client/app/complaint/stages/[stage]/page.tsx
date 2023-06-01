@@ -11,7 +11,8 @@ import { useDispatch } from "react-redux";
 import { complaintTypes } from "@/Types";
 
 const Complaints = ({ params }: any) => {
-  let statesValue = params.stage;
+  // let statesValue = params.stage;
+  let statesValue = "AllComplaints";
   const [states, setStates] = useState(statesValue);
   if (states === "Resolved") setStates("Closed");
   const complaintsAll = useSelector((state: RootState) => {

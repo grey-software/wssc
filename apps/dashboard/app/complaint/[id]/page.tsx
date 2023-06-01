@@ -10,7 +10,7 @@ import { RootState } from "@/app/GlobalState/store";
 import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import Image from "next/image";
 
-const page = ({ params }: any) => {
+const Page = ({ params }: any) => {
   const id = params.id;
   const dispatch = useDispatch();
   const navigate = useRouter();
@@ -171,7 +171,7 @@ const page = ({ params }: any) => {
                     </div>
                   ))}
                 </div>
-                <p className="text-sm">"{complaint.feedback.description}"</p>
+                <p className="text-sm">{complaint.feedback.description}</p>
               </div>
             )}
           </div>
@@ -201,4 +201,4 @@ const page = ({ params }: any) => {
   );
 };
 
-export default page;
+export default Page;

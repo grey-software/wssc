@@ -15,12 +15,9 @@ export const ComplaintValidation = (
       .required(),
 
     phone: Joi.string()
-      .min(11)
-      .message("Phone number must be 11 characters long.")
-      .max(11)
-      .message("Phone number must be 11 characters long.")
       .pattern(new RegExp("^[0-9]*$"))
       .message("Only Numbers are allowed in phone Numbers"),
+    
     complaintType: Joi.string(),
 
     complaintAddress: Joi.string()
@@ -30,7 +27,7 @@ export const ComplaintValidation = (
       .pattern(new RegExp("^[.a-zA-Z0-9,!? ]*$"))
       .message("Only alphanumeric characters are allowed in complaint address"),
 
-    complaintDes: Joi.string()
+    complaintDes: Joi.string().allow('', null).optional()
       .pattern(new RegExp("^[.a-zA-Z0-9,!? ]*$"))
       .message(
         "Only alphanumeric characters are allowed complaint description"
