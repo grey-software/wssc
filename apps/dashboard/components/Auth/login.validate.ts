@@ -1,10 +1,10 @@
 import * as Yup from "yup";
 
 export const login_validate = Yup.object().shape({
-  phone: Yup.string()
-    .required("Mobile number is required")
-    .min(11, "Mobile number must be at least 11 numbers long")
-    .max(11, "Mobile number must not exceed 11 numbers"),
+  WSSC_CODE: Yup.string()
+    .required("WSSC Code is required")
+    .min(10, "WSSC Code must be at least 10 numbers long")
+    .max(10, "WSSC Code must not exceed 10 numbers"),
 
   password: Yup.string()
     .required("Password is required")

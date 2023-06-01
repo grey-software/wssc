@@ -12,14 +12,16 @@ import logo from "../public/wsscmlogo.png";
 
 const Header = () => {
   const [search, setSearch] = useState("");
-  const { username } = useSelector((state: RootState) => state.User.SignInData);
+  const { WSSC_CODE }: any = useSelector(
+    (state: RootState) => state.User.SignInData
+  );
   const activeTab = useSelector((state: RootState) => state.Tab.index);
   const currentTab = items.find((x) => x.id === activeTab);
   console.log(activeTab, currentTab);
   const dispatch = useDispatch();
   return (
     <div>
-      {username ? (
+      {WSSC_CODE ? (
         <div className="w-full flex justify-between items-center px-8 py-2 bg-slate-50 top-0 fixed border-b shadow z-50">
           <div className="flex items-center gap-2 pl-7">
             <Image src={logo} className="h-9 w-10" alt="logo" />
