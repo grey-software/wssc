@@ -50,6 +50,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // ------ Custom middlewares ---------
+app.use("/api/v1/dummy", testingRouter);
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/wssc", WSSC);
 app.use("/api/v1/citizens", Citizen);
