@@ -118,10 +118,13 @@ const Page = ({ params }: any) => {
               <span className="font-semibold">Address</span>
               <span>{complaint?.complaintAddress}</span>
             </div>
-            <div className="flex items-start gap-2 col-span-2">
-              <span className="font-semibold">Description</span>
-              <span>{complaint?.complaintDes}</span>
-            </div>
+            {complaint?.complaintDes && (
+              <div className="flex items-start gap-2 col-span-2">
+                <span className="font-semibold">Description</span>
+                <span>{complaint.complaintDes}</span>
+              </div>
+            )}
+
             <div className="flex items-center gap-2 col-span-2">
               <span className="font-semibold">Statement</span>
               {complaint?.wsscStatement ? (
@@ -153,7 +156,7 @@ const Page = ({ params }: any) => {
               <span>{complaint?.phone}</span>
             </div>
             <div></div>
-            {complaint?.feedback && (
+            {complaint?.feedback ? (
               <div className="p-4 shadow-md flex flex-col gap-2">
                 <h1 className="text-md font-bold">Feedback</h1>
                 <div className="flex items-center gap-1 text-2xl">
@@ -173,6 +176,8 @@ const Page = ({ params }: any) => {
                 </div>
                 <p className="text-sm">{complaint.feedback.description}</p>
               </div>
+            ) : (
+              <>No feedback yet</>
             )}
           </div>
         </div>
@@ -182,18 +187,27 @@ const Page = ({ params }: any) => {
           <h1 className="mb-1 font-bold text-md">Complaint Media</h1>
           <div className="w-full border-[1px] border-gray-300 mb-4"></div>
           <div className="grid grid-cols-2 gap-4 mt-4 h-80 w-full">
-            {complaint?.ImageUrl && (
-              <Image
-                src={complaint?.ImageUrl}
-                className="h-full "
-                width={300}
-                height={100}
-                alt="Complaint Picture"
-              />
+            {complaint?.ImageUrl && complaint.VideoUrl ? (
+              <>
+                {" "}
+                {complaint?.ImageUrl && (
+                  <Image
+                    src={complaint?.ImageUrl}
+                    className="h-full "
+                    width={300}
+                    height={100}
+                    alt="Complaint Picture"
+                  />
+                )}
+                {complaint?.VideoUrl && (
+                  <video className="h-full" controls>
+                    <source src={complaint?.VideoUrl} />
+                  </video>
+                )}
+              </>
+            ) : (
+              <h1>The Citizen have not provided any Media</h1>
             )}
-            <video className="h-full" controls>
-              <source src={complaint?.VideoUrl} />
-            </video>
           </div>
         </div>
       </div>

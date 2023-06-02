@@ -69,6 +69,23 @@ const complaintSlice = createSlice({
         duration: 3000,
       });
     },
+
+    // Citizen feedback
+    FeedbackStart: (state) => {
+      state.loading = true;
+    },
+    FeedbackSuccess: (state) => {
+      state.loading = false;
+    },
+    FeedbackError: (state, action) => {
+      state.error = true;
+      state.loading = false;
+      toast.error(action.payload, {
+        position: "top-center",
+        style: { width: "auto", height: "auto" },
+        duration: 3000,
+      });
+    },
   },
 });
 
@@ -79,5 +96,8 @@ export const {
   NewComplaintStart,
   NewComplaintSuccess,
   NewComplaintError,
+  FeedbackStart,
+  FeedbackSuccess,
+  FeedbackError,
 } = complaintSlice.actions;
 export default complaintSlice.reducer;
