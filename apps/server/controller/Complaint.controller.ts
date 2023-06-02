@@ -207,21 +207,25 @@ export const CitizenFeedback = async (
     rating: rating,
     description: description,
   };
-  console.log(feedback);
   try {
-    const complaint:
-      | (IComplaint & {
-          _id: Types.ObjectId;
-          _doc: any;
-        })
-      | null = await ComplaintModel.findById(complaintId);
+    // const complaint:
+    //   | (IComplaint & {
+    //       _id: Types.ObjectId;
+    //       _doc: any;
+    //     })
+    //   | null = await ComplaintModel.findById(complaintId);
 
     // if (complaint.userId == LoggedId) {
     const updated = await ComplaintModel.findByIdAndUpdate(
       complaintId,
-      { $set: { feedback: feedback } },
+      { $set: { feedback } },
       { new: true }
     );
+    console.log(updated);
+    let status = { state: "Closed", updateAt: new Date().toLocaleDateString() };
+    await ComplaintModel.findByIdAndUpdate(complaintId, {
+      $addToSet: { status: status },
+    });
     res.status(200).json({
       status: 200,
       success: true,
@@ -235,5 +239,8 @@ export const CitizenFeedback = async (
     //     message: "You are not authorized to provide feedback on this complaint",
     //   });
     // }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ status: 404, success: false, message: error });
+  }
 };

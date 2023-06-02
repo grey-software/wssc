@@ -9,9 +9,10 @@ import FeedbackRating from "@/components/FeedbackRating";
 import moment from "moment";
 type Props = {
   status: any;
+  complaintId: any;
 };
 
-function Complaint_stages({ status }: Props) {
+function Complaint_stages({ status, complaintId }: Props) {
   const [feedback, setfeedback] = useState(false);
 
   return (
@@ -59,7 +60,6 @@ function Complaint_stages({ status }: Props) {
                   </h3>
                   <h3 className="text-sm text-gray-400">
                     {stage.updatedAt.split("T")[1].split(".")[0]}
-                  
                   </h3>
                 </div>
                 <div className="flex flex-col mt-6">
@@ -124,7 +124,11 @@ function Complaint_stages({ status }: Props) {
       </VerticalTimeline>
       {/* To open feedback window popup*/}
       {feedback ? (
-        <FeedbackRating feedback={feedback} setfeedback={setfeedback} />
+        <FeedbackRating
+          feedback={feedback}
+          setfeedback={setfeedback}
+          complaintId={complaintId}
+        />
       ) : (
         ""
       )}

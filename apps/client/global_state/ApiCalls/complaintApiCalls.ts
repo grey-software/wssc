@@ -6,11 +6,48 @@ import {
   NewComplaintStart,
   NewComplaintSuccess,
   NewComplaintError,
+  FeedbackStart,
+  FeedbackSuccess,
+  FeedbackError,
 } from "../ReduxSlices/complaintSlice";
 import { config } from "./config";
 import { ComplainForm } from "@/@types/complainForm.types";
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
+
+// Citizen feedback
+export const CreateFeedback = async (
+  complaintId: any,
+  feedback: any,
+  dispatch: any
+): Promise<any> => {
+  console.log("start");
+  dispatch(FeedbackStart());
+  console.log("started");
+  try {
+    console.log("try");
+    console.log(feedback);
+    const res = await API.patch(
+      `api/v1/complaints/${complaintId}`,
+      feedback,
+      config
+    );
+    console.log(res);
+    console.log("feedback updated");
+    dispatch(FeedbackSuccess());
+    return res.data;
+  } catch (error: any) {
+    if (error.response) {
+      if (error.response.status == 401) {
+        dispatch(FeedbackError("You are not authorized"));
+        return error.response;
+      } else {
+        dispatch(FeedbackError("Server Error, Try again later"));
+        return error.response;
+      }
+    }
+  }
+};
 
 // Creating New Complaint
 export const CreateComplaint = async (
