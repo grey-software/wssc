@@ -15,10 +15,6 @@ const ComplaintValidation = (data) => {
             .message("Only Alphabets are allowed in Username field")
             .required(),
         phone: joi_1.default.string()
-            .min(11)
-            .message("Phone number must be 11 characters long.")
-            .max(11)
-            .message("Phone number must be 11 characters long.")
             .pattern(new RegExp("^[0-9]*$"))
             .message("Only Numbers are allowed in phone Numbers"),
         complaintType: joi_1.default.string(),
@@ -28,7 +24,7 @@ const ComplaintValidation = (data) => {
             .required()
             .pattern(new RegExp("^[.a-zA-Z0-9,!? ]*$"))
             .message("Only alphanumeric characters are allowed in complaint address"),
-        complaintDes: joi_1.default.string()
+        complaintDes: joi_1.default.string().allow('', null).optional()
             .pattern(new RegExp("^[.a-zA-Z0-9,!? ]*$"))
             .message("Only alphanumeric characters are allowed complaint description"),
         ImageUrl: joi_1.default.string(),

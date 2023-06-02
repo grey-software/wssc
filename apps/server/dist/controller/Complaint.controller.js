@@ -16,12 +16,11 @@ const node_1 = require("@novu/node");
 // create complaint method definition
 const CreateComplaint = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     // first we need to validate the data before saving it in DB
-    console.log(req.body);
     const { error } = (0, Complaint_Validation_1.ComplaintValidation)(req.body);
     // below statement will call if there is invalid data recieved in req.body
     if (error)
         return res.send(error.details[0].message);
-    const { userId } = req.body;
+    const userId = req.params.id;
     const citizenId = req.user.id;
     if (userId == citizenId) {
         try {
@@ -133,13 +132,6 @@ const GetAllComplaints = (req, res, next) => __awaiter(void 0, void 0, void 0, f
     console.log(req.user.id == req.params.id);
     let allComplaints;
     try {
-        // const user:
-        //   | (ICitizen & {
-        //       _id: Types.ObjectId;
-        //       _doc: any;
-        //     })
-        //   | null = await citizenModel.findById(userId);
-        // for admin fetch all the complaints while for citizen only fetch his corresponding complaints
         if (req.user.isAdmin) {
             allComplaints = yield complaint_schema_1.ComplaintModel.find().sort({ _id: -1 });
         }
