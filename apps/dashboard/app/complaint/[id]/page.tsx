@@ -50,7 +50,7 @@ const Page = ({ params }: any) => {
               navigate.push("/complaint");
             }}
             title="Complaints"
-            className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full transition-all hover:bg-primaryColor-300 bg-gray-100"
+            className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full transition-all hover:bg-primaryColor-300 bg-gray-200"
           >
             <span>Complaints</span>
           </span>
@@ -127,7 +127,7 @@ const Page = ({ params }: any) => {
               </span>
             </div>
             <div className="flex items-start gap-2">
-              <span className="font-semibold">intiated</span>
+              <span className="font-semibold">Intiated At</span>
               <span>{complaint?.createdAt.split("T")[0]}</span>
             </div>
             <div className="flex items-start gap-2">
