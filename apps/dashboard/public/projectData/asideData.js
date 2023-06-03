@@ -21,7 +21,7 @@ export const items = [
   },
   {
     id: 3,
-    name: "Users",
+    name: "Citizens",
     to: "/users",
     icon: <FaUserCircle />,
   },
