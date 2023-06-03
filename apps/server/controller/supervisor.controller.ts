@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { Types } from "mongoose";
 import jwt from "jsonwebtoken";
 import { SupervisorModel } from "../Models/supervisor.schema";
 import { SupervisorTypes } from "../@types/supervisorSchema.type";
