@@ -21,7 +21,6 @@ dotenv_1.default.config();
 const JWT = process.env.JWT_KEY;
 // ----- verify citizen token -------------
 const verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("this verify token middleware");
     const token = req.cookies.access_token;
     if (!token)
         return next((0, HandleError_1.createError)(401, "You are not authenticated!"));

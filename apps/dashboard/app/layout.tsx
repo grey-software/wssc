@@ -19,12 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={ ` ${inter.className}`} >
         <Providers>
           <Header />
           <div className="w-full mt-14 absolute ">
             <Aside />
-            <main className="ml-[280px] mt-6 mr-8">{children}</main>
+            <main className="ml-[280px] mt-4 mr-5">{children}</main>
           </div>
         </Providers>
       </body>
