@@ -30,38 +30,58 @@ const Page = ({ params }: any) => {
   const complaint = complaints.find((c) => c._id == id);
   return (
     <div className="container flex flex-col gap-6 mb-3">
-      <div className="flex items-center gap-4 text-md">
-        <span
-          className="cursor-pointer flex items-center justify-center p-[10px] rounded-full hover:bg-gray-100 active:bg-gray-300 transition-all"
-          title="Dashboard"
-          onClick={() => {
-            navigate.push("/");
-            dispatch(setActiveTab(0));
-          }}
-        >
-          <AiFillHome />
-        </span>
-        <span className="text-[10px] font-bold text-gray-500">
-          <MdOutlineArrowForwardIos />
-        </span>
-        <span
-          onClick={() => {
-            navigate.push("/complaint");
-          }}
-          title="Complaints"
-          className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full transition-all hover:bg-primaryColor-300 bg-gray-100"
-        >
-          <span>Complaints</span>
-        </span>
-        <span className="text-[10px] font-bold text-gray-500">
-          <MdOutlineArrowForwardIos />
-        </span>
-        <span
-          title="Complaint"
-          className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full bg-primaryColor-300"
-        >
-          <span>Complaint</span>
-        </span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4 text-md">
+          <span
+            className="cursor-pointer flex items-center justify-center p-[10px] rounded-full hover:bg-gray-100 active:bg-gray-300 transition-all"
+            title="Dashboard"
+            onClick={() => {
+              navigate.push("/");
+              dispatch(setActiveTab(0));
+            }}
+          >
+            <AiFillHome />
+          </span>
+          <span className="text-[10px] font-bold text-gray-500">
+            <MdOutlineArrowForwardIos />
+          </span>
+          <span
+            onClick={() => {
+              navigate.push("/complaint");
+            }}
+            title="Complaints"
+            className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full transition-all hover:bg-primaryColor-300 bg-gray-100"
+          >
+            <span>Complaints</span>
+          </span>
+          <span className="text-[10px] font-bold text-gray-500">
+            <MdOutlineArrowForwardIos />
+          </span>
+          <span
+            title="Complaint"
+            className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full bg-primaryColor-300"
+          >
+            <span>Complaint</span>
+          </span>
+        </div>
+        {complaint?.status[complaint.status.length - 1].state ===
+          "Initiated" && (
+          <form className="flex items-center gap-4">
+            <select
+              name="supervisor"
+              id="supervisor"
+              className="px-3 py-1 border-2 border-gray-400 rounded focus:border-primaryColor-500"
+            >
+              <option value="Select supervisor">Select Supervisor</option>
+              <option value="Select supervisor">Ihtisham</option>
+              <option value="Select supervisor">Hikmat</option>
+              <option value="Select supervisor">Ahmad</option>
+            </select>
+            <button className="text-white  px-3 py-1 rounded bg-inprogessColor shadow-sm hover:shadow-md transition-all">
+              Assign
+            </button>
+          </form>
+        )}
       </div>
       {/* showing single  Complaint */}
       <div className="grid grid-cols-2 w-full gap-6 text-sm">

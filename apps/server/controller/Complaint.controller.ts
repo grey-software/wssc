@@ -200,7 +200,7 @@ export const CitizenFeedback = async (
   res: Response,
   next: NextFunction
 ) => {
-  // const LoggedId = req.user.id;
+  const LoggedId = req.user.id;
   const complaintId = req.params.id;
   const { rating, description } = req.body;
   let feedback = {
@@ -208,37 +208,40 @@ export const CitizenFeedback = async (
     description: description,
   };
   try {
-    // const complaint:
-    //   | (IComplaint & {
-    //       _id: Types.ObjectId;
-    //       _doc: any;
-    //     })
-    //   | null = await ComplaintModel.findById(complaintId);
+    const complaint:
+      | (IComplaint & {
+          _id: Types.ObjectId;
+          _doc: any;
+        })
+      | null = await ComplaintModel.findById(complaintId);
 
-    // if (complaint.userId == LoggedId) {
-    const updated = await ComplaintModel.findByIdAndUpdate(
-      complaintId,
-      { $set: { feedback } },
-      { new: true }
-    );
-    console.log(updated);
-    let status = { state: "Closed", updateAt: new Date().toLocaleDateString() };
-    await ComplaintModel.findByIdAndUpdate(complaintId, {
-      $addToSet: { status: status },
-    });
-    res.status(200).json({
-      status: 200,
-      success: true,
-      message: "Feedback Provided successfully",
-      data: updated,
-    });
-    // } else {
-    //   res.status(401).json({
-    //     status: 401,
-    //     success: false,
-    //     message: "You are not authorized to provide feedback on this complaint",
-    //   });
-    // }
+    if (complaint.userId == LoggedId) {
+      const updated = await ComplaintModel.findByIdAndUpdate(
+        complaintId,
+        { $set: { feedback } },
+        { new: true }
+      );
+      console.log(updated);
+      let status = {
+        state: "Closed",
+        updateAt: new Date().toLocaleDateString(),
+      };
+      await ComplaintModel.findByIdAndUpdate(complaintId, {
+        $addToSet: { status: status },
+      });
+      res.status(200).json({
+        status: 200,
+        success: true,
+        message: "Feedback Provided successfully",
+        data: updated,
+      });
+    } else {
+      res.status(401).json({
+        status: 401,
+        success: false,
+        message: "You are not authorized to provide feedback on this complaint",
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(404).json({ status: 404, success: false, message: error });
