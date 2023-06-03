@@ -11,7 +11,7 @@ type Props = {};
 function Supervisors({}: Props) {
   const dispatch = useDispatch();
   const navigate = useRouter();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
 
   const supervisors: any = [
     {
@@ -93,7 +93,7 @@ function Supervisors({}: Props) {
         <div className="flex items-center border-2 border-gray-300 rounded-full">
           <input
             type="text"
-            placeholder="Search in supervisors               "
+            placeholder={`Search in ${supervisors.length} supervisors`}
             className="text-sm rounded-l-full outline-none py-1 px-4 w-52 "
             value={search}
             onChange={(e) => setSearch(e.target.value)}
