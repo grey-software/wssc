@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ComplaintModel } from "../Models/complaint.schema";
-import { citizenModel } from "../Models/citizen.schema";
-import { ICitizen } from "../@types/userSchema.type";
+
 import { Types } from "mongoose";
 import { ComplaintValidation } from "../Schema_validation/Complaint_Validation";
 import { IComplaint } from "../@types/ComplaintSchema.type";

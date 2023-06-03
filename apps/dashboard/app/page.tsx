@@ -6,7 +6,8 @@ import { RootState } from "./GlobalState/store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setActiveTab } from "@/app/GlobalState/TabSlice";
+import CardsPage from "@/components/MainPage/CardsPage";
+import ChartSection from "@/components/MainPage/ChartSection";
 
 export default function Home() {
   const navigate = useRouter();
@@ -14,7 +15,7 @@ export default function Home() {
   const { WSSC_CODE }: any = useSelector(
     (state: RootState) => state.User.SignInData
   );
-  console.log();
+
   useEffect(() => {
     if (!WSSC_CODE) {
       navigate.push("/auth");
@@ -24,7 +25,11 @@ export default function Home() {
 
   return (
     <>
-      <h1>Dashboard</h1>
+      <div className="container w-full h-auto overflow-x-hidden">
+        {/* card section */}
+        <CardsPage />
+        <ChartSection/>
+      </div>
     </>
   );
 }
