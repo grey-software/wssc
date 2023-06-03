@@ -1,17 +1,30 @@
+"use client";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { IoCloseSharp } from "react-icons/io5";
-import {MdStar, MdStarBorder} from "react-icons/md"
+import { MdStar, MdStarBorder } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { CreateFeedback } from "@/global_state/ApiCalls/complaintApiCalls";
 
 interface Props {
   feedback: boolean;
   setfeedback: React.Dispatch<React.SetStateAction<boolean>>;
+  complaintId: any;
 }
-const FeedbackRating = ({ feedback, setfeedback }: Props) => {
+const FeedbackRating = ({ feedback, setfeedback, complaintId }: Props) => {
+  const dispatch = useDispatch();
   const [rating, setRating] = useState<number>(-1);
+  const [description, setDescription] = useState<string>("");
 
   const rates: number[] = [1, 2, 3, 4, 5];
-  const  RatingInWords: string[] = ["","Very Bad", "Bad","Good", "Very Good", "Excellent"];
+  const RatingInWords: string[] = [
+    "",
+    "Very Bad",
+    "Bad",
+    "Good",
+    "Very Good",
+    "Excellent",
+  ];
   //  const words: string[] = [
   //    "",
   //    "بہت برا",
@@ -25,15 +38,16 @@ const FeedbackRating = ({ feedback, setfeedback }: Props) => {
     setRating(value);
   };
 
-  // ToastifyNotifiction method definition
-  const ToastifyNotifiction = () => {
+  // handle feedback
+  const handleFeedback = () => {
     if (rating > 0) {
-      setfeedback(!feedback);
+      CreateFeedback(complaintId, { rating, description }, dispatch);
       toast.success("Thanks for your Feedback", {
         position: "top-center",
         style: { width: "auto", height: "auto" },
         duration: 3000,
       });
+      setfeedback(!feedback);
     } else {
       toast.error("Your rating help us Improve our service", {
         position: "top-center",
@@ -96,14 +110,14 @@ const FeedbackRating = ({ feedback, setfeedback }: Props) => {
               id="feedbackInput"
               cols={29}
               rows={5}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               className="mt-1 rounded-lg border px-2 py-1  border-yellow-500 w-full outline-none"
             ></textarea>
           </div>
           {/* feedback submit button */}
           <button
-            onClick={() => {
-              ToastifyNotifiction();
-            }}
+            onClick={handleFeedback}
             className="w-full py-2 text-lg font-bold rounded-lg shadow-lg bg-green-600 text-white text-center"
           >
             Submit

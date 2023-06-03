@@ -1,34 +1,37 @@
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaUsers } from "react-icons/fa";
+import { MdSpaceDashboard, MdFeedback } from "react-icons/md";
+import { SiFiles } from "react-icons/si";
+import { HiUsers } from "react-icons/hi";
 
 export const items = [
   {
     id: 0,
     name: "Dashboard",
     to: "/",
-    icon: <FaUserCircle />,
+    icon: <MdSpaceDashboard />,
   },
   {
     id: 1,
     name: "Complaints",
     to: "/complaint",
-    icon: <FaUserCircle />,
+    icon: <SiFiles />,
   },
   {
     id: 2,
     name: "Supervisors",
     to: "/supervisors",
-    icon: <FaUserCircle />,
+    icon: <HiUsers />,
   },
   {
     id: 3,
-    name: "Users",
+    name: "Citizens",
     to: "/users",
-    icon: <FaUserCircle />,
+    icon: <FaUsers />,
   },
   {
     id: 4,
     name: "Feedback",
     to: "/feedback",
-    icon: <FaUserCircle />,
+    icon: <MdFeedback />,
   },
 ];

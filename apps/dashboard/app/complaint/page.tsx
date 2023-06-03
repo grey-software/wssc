@@ -15,7 +15,7 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
-  const userId:any = useSelector((state: RootState) => state.User.SignInData);
+  const userId: any = useSelector((state: RootState) => state.User.SignInData);
   useEffect(() => {
     FetchAllComplaints(dispatch, userId._id);
   }, []);
@@ -121,18 +121,18 @@ const Page = () => {
                 ) => (
                   <tr
                     key={index}
-                    className="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    className="cursor-pointer bg-white border-b  hover:bg-gray-50 "
                     onClick={() => navigate.push(`/complaint/${_id}`)}
                   >
                     <th
                       scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white uppercase"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
                     >
                       {index + 1}
                     </th>
                     <td
                       scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white uppercase"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
                     >
                       {_id.slice(-8)}
                     </td>
@@ -176,8 +176,11 @@ const Page = () => {
                     </td>
 
                     <td className="px-6 py-4">
-                      <button className="font-medium text-white bg-primaryColor-500 uppercase py-1 px-3 rounded-lg">
-                        proceed
+                      <button
+                        onClick={() => navigate.push(`/complaint/${_id}`)}
+                        className="font-medium text-white bg-primaryColor-500 uppercase py-1 px-3 rounded-lg"
+                      >
+                        View
                       </button>
                     </td>
                   </tr>

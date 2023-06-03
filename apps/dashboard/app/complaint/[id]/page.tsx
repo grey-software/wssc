@@ -30,38 +30,58 @@ const Page = ({ params }: any) => {
   const complaint = complaints.find((c) => c._id == id);
   return (
     <div className="container flex flex-col gap-6 mb-3">
-      <div className="flex items-center gap-4 text-md">
-        <span
-          className="cursor-pointer flex items-center justify-center p-[10px] rounded-full hover:bg-gray-100 active:bg-gray-300 transition-all"
-          title="Dashboard"
-          onClick={() => {
-            navigate.push("/");
-            dispatch(setActiveTab(0));
-          }}
-        >
-          <AiFillHome />
-        </span>
-        <span className="text-[10px] font-bold text-gray-500">
-          <MdOutlineArrowForwardIos />
-        </span>
-        <span
-          onClick={() => {
-            navigate.push("/complaint");
-          }}
-          title="Complaints"
-          className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full transition-all hover:bg-primaryColor-300 bg-gray-100"
-        >
-          <span>Complaints</span>
-        </span>
-        <span className="text-[10px] font-bold text-gray-500">
-          <MdOutlineArrowForwardIos />
-        </span>
-        <span
-          title="Complaint"
-          className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full bg-primaryColor-300"
-        >
-          <span>Complaint</span>
-        </span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4 text-md">
+          <span
+            className="cursor-pointer flex items-center justify-center p-[10px] rounded-full hover:bg-gray-100 active:bg-gray-300 transition-all"
+            title="Dashboard"
+            onClick={() => {
+              navigate.push("/");
+              dispatch(setActiveTab(0));
+            }}
+          >
+            <AiFillHome />
+          </span>
+          <span className="text-[10px] font-bold text-gray-500">
+            <MdOutlineArrowForwardIos />
+          </span>
+          <span
+            onClick={() => {
+              navigate.push("/complaint");
+            }}
+            title="Complaints"
+            className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full transition-all hover:bg-primaryColor-300 bg-gray-200"
+          >
+            <span>Complaints</span>
+          </span>
+          <span className="text-[10px] font-bold text-gray-500">
+            <MdOutlineArrowForwardIos />
+          </span>
+          <span
+            title="Complaint"
+            className="flex items-center justify-center cursor-pointer text-sm text-primary-default px-3 py-1 rounded-full bg-primaryColor-300"
+          >
+            <span>Complaint</span>
+          </span>
+        </div>
+        {complaint?.status[complaint.status.length - 1].state ===
+          "Initiated" && (
+          <form className="flex items-center gap-4">
+            <select
+              name="supervisor"
+              id="supervisor"
+              className="px-3 py-1 border-2 border-gray-400 rounded focus:border-primaryColor-500"
+            >
+              <option value="Select supervisor">Select Supervisor</option>
+              <option value="Select supervisor">Ihtisham</option>
+              <option value="Select supervisor">Hikmat</option>
+              <option value="Select supervisor">Ahmad</option>
+            </select>
+            <button className="text-white  px-3 py-1 rounded bg-inprogessColor shadow-sm hover:shadow-md transition-all">
+              Assign
+            </button>
+          </form>
+        )}
       </div>
       {/* showing single  Complaint */}
       <div className="grid grid-cols-2 w-full gap-6 text-sm">
@@ -107,7 +127,7 @@ const Page = ({ params }: any) => {
               </span>
             </div>
             <div className="flex items-start gap-2">
-              <span className="font-semibold">intiated</span>
+              <span className="font-semibold">Intiated At</span>
               <span>{complaint?.createdAt.split("T")[0]}</span>
             </div>
             <div className="flex items-start gap-2">
@@ -118,10 +138,13 @@ const Page = ({ params }: any) => {
               <span className="font-semibold">Address</span>
               <span>{complaint?.complaintAddress}</span>
             </div>
-            <div className="flex items-start gap-2 col-span-2">
-              <span className="font-semibold">Description</span>
-              <span>{complaint?.complaintDes}</span>
-            </div>
+            {complaint?.complaintDes && (
+              <div className="flex items-start gap-2 col-span-2">
+                <span className="font-semibold">Description</span>
+                <span>{complaint.complaintDes}</span>
+              </div>
+            )}
+
             <div className="flex items-center gap-2 col-span-2">
               <span className="font-semibold">Statement</span>
               {complaint?.wsscStatement ? (
@@ -153,7 +176,7 @@ const Page = ({ params }: any) => {
               <span>{complaint?.phone}</span>
             </div>
             <div></div>
-            {complaint?.feedback && (
+            {complaint?.feedback ? (
               <div className="p-4 shadow-md flex flex-col gap-2">
                 <h1 className="text-md font-bold">Feedback</h1>
                 <div className="flex items-center gap-1 text-2xl">
@@ -173,6 +196,8 @@ const Page = ({ params }: any) => {
                 </div>
                 <p className="text-sm">{complaint.feedback.description}</p>
               </div>
+            ) : (
+              <>No feedback yet</>
             )}
           </div>
         </div>
@@ -182,18 +207,27 @@ const Page = ({ params }: any) => {
           <h1 className="mb-1 font-bold text-md">Complaint Media</h1>
           <div className="w-full border-[1px] border-gray-300 mb-4"></div>
           <div className="grid grid-cols-2 gap-4 mt-4 h-80 w-full">
-            {complaint?.ImageUrl && (
-              <Image
-                src={complaint?.ImageUrl}
-                className="h-full "
-                width={300}
-                height={100}
-                alt="Complaint Picture"
-              />
+            {complaint?.ImageUrl && complaint.VideoUrl ? (
+              <>
+                {" "}
+                {complaint?.ImageUrl && (
+                  <Image
+                    src={complaint?.ImageUrl}
+                    className="h-full "
+                    width={300}
+                    height={100}
+                    alt="Complaint Picture"
+                  />
+                )}
+                {complaint?.VideoUrl && (
+                  <video className="h-full" controls>
+                    <source src={complaint?.VideoUrl} />
+                  </video>
+                )}
+              </>
+            ) : (
+              <h1>The Citizen have not provided any Media</h1>
             )}
-            <video className="h-full" controls>
-              <source src={complaint?.VideoUrl} />
-            </video>
           </div>
         </div>
       </div>

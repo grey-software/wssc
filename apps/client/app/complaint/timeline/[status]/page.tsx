@@ -114,7 +114,7 @@ const Timeline = ({ params }: any) => {
             } top-0 left-0 absolute`}
           ></div>
         </div>
-        <Complaint_stages status={status} />
+        <Complaint_stages status={status} complaintId={_id} />
       </div>
     </>
   );

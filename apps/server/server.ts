@@ -11,6 +11,7 @@ import Citizen from "./Routes/citizen.route";
 import WSSC from "./Routes/WSSCs.route";
 import mongoose, { ConnectOptions } from "mongoose";
 import testingRouter from "./dummyRoute";
+import Supervisor from "./Routes/supervisor.route";
 
 dotenv.config();
 
@@ -36,8 +37,12 @@ mongoose
   });
 
 //-------- MIDDLEWARES ---------
-app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:3001"], credentials: true }));
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:3001"],
+    credentials: true,
+  })
+);
 app.use(helmet());
 app.use(morgan("tiny"));
 app.use(cookieParser());
@@ -55,6 +60,7 @@ app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/wssc", WSSC);
 app.use("/api/v1/citizens", Citizen);
 app.use("/api/v1/complaints", complaint);
+app.use("/api/v1/supervisors", Supervisor);
 
 // ----- Errors handler ------
 app.all("*", (req: Request, res: Response) => {

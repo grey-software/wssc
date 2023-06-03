@@ -76,55 +76,61 @@ const Complaints = ({ params }: any) => {
                 }: complaintTypes,
                 index
               ) => (
-                <div key={index}>
+                <>
                   {/* show all the complaints */}
                   {states === "AllComplaints" ? (
-                    <Complaint
-                      type={complaintType}
-                      status={status}
-                      complaintID={_id}
-                      submitedOn={createdAt}
-                      address={complaintAddress}
-                      garbage={garbage}
-                      ImageUrl={ImageUrl}
-                    />
+                    <div key={index}>
+                      <Complaint
+                        type={complaintType}
+                        status={status}
+                        complaintID={_id}
+                        submitedOn={createdAt}
+                        address={complaintAddress}
+                        garbage={garbage}
+                        ImageUrl={ImageUrl}
+                      />
+                    </div>
                   ) : (
-                    <div>
+                    <>
                       {/* filter complaints based on provided filter */}
                       {states === status[status.length - 1]?.state ? (
-                        <Complaint
-                          type={complaintType}
-                          status={status}
-                          complaintID={_id}
-                          submitedOn={createdAt}
-                          address={complaintAddress}
-                          garbage={garbage}
-                          ImageUrl={ImageUrl}
-                        />
+                        <div key={index}>
+                          <Complaint
+                            type={complaintType}
+                            status={status}
+                            complaintID={_id}
+                            submitedOn={createdAt}
+                            address={complaintAddress}
+                            garbage={garbage}
+                            ImageUrl={ImageUrl}
+                          />
+                        </div>
                       ) : (
-                        <div>
+                        <>
                           {/* show only pending complaints: initiated an inProgress */}
                           {states === "Pending" &&
                           (status[status.length - 1]?.state === "Initiated" ||
                             status[status.length - 1]?.state ===
                               "InProgress") ? (
-                            <Complaint
-                              type={complaintType}
-                              status={status}
-                              complaintID={_id}
-                              submitedOn={createdAt}
-                              address={complaintAddress}
-                              garbage={garbage}
-                              ImageUrl={ImageUrl}
-                            />
+                            <div key={index}>
+                              <Complaint
+                                type={complaintType}
+                                status={status}
+                                complaintID={_id}
+                                submitedOn={createdAt}
+                                address={complaintAddress}
+                                garbage={garbage}
+                                ImageUrl={ImageUrl}
+                              />
+                            </div>
                           ) : (
                             ""
                           )}
-                        </div>
+                        </>
                       )}
-                    </div>
+                    </>
                   )}
-                </div>
+                </>
               )
             )}
           </div>

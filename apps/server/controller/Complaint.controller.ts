@@ -16,7 +16,7 @@ export const CreateComplaint = async (
   const { error }: any = ComplaintValidation(req.body);
   // below statement will call if there is invalid data recieved in req.body
   if (error) return res.send(error.details[0].message);
-  const userId  = req.params.id;
+  const userId = req.params.id;
   const citizenId = req.user.id;
 
   if (userId == citizenId) {
@@ -83,7 +83,6 @@ export const UpdateComplaint = async (
         | null = await ComplaintModel.findById(complaintId);
       let status;
       let statusLength = complaint?.status.length;
-      console.log(statusLength);
       // pushing the next status based on the previous status
       if (statusLength == 1) {
         status = {
@@ -192,5 +191,58 @@ export const DeleteAllcomplaints = async (
       success: false,
       message: "You are not authorized to delete complaints",
     });
+  }
+};
+
+export const CitizenFeedback = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const LoggedId = req.user.id;
+  const complaintId = req.params.id;
+  const { rating, description } = req.body;
+  let feedback = {
+    rating: rating,
+    description: description,
+  };
+  try {
+    const complaint:
+      | (IComplaint & {
+          _id: Types.ObjectId;
+          _doc: any;
+        })
+      | null = await ComplaintModel.findById(complaintId);
+
+    if (complaint.userId == LoggedId) {
+      const updated = await ComplaintModel.findByIdAndUpdate(
+        complaintId,
+        { $set: { feedback } },
+        { new: true }
+      );
+      console.log(updated);
+      let status = {
+        state: "Closed",
+        updateAt: new Date().toLocaleDateString(),
+      };
+      await ComplaintModel.findByIdAndUpdate(complaintId, {
+        $addToSet: { status: status },
+      });
+      res.status(200).json({
+        status: 200,
+        success: true,
+        message: "Feedback Provided successfully",
+        data: updated,
+      });
+    } else {
+      res.status(401).json({
+        status: 401,
+        success: false,
+        message: "You are not authorized to provide feedback on this complaint",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ status: 404, success: false, message: error });
   }
 };
