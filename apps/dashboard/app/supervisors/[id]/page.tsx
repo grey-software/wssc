@@ -42,21 +42,6 @@ const page = ({ params }: any) => {
         {
           state: "Initiated",
         },
-      ],
-      complaintType: "waster-water",
-      complaintDes: "there is water problem",
-      complaintAddress: "Near UET mardan",
-      createdAt: "2023-06-01T17:09:01.076Z",
-      wsscStatement: "testin tesitnas dkf sdf",
-    },
-    {
-      _id: "28734hh2i34983askd3d23",
-      userName: "Umair khan",
-
-      status: [
-        {
-          state: "Initiated",
-        },
         {
           state: "InProgress",
         },
@@ -86,6 +71,24 @@ const page = ({ params }: any) => {
         },
         {
           state: "Closed",
+        },
+      ],
+      complaintType: "waster-water",
+      complaintDes: "there is water problem",
+      complaintAddress: "Near UET mardan",
+      createdAt: "2023-06-01T17:09:01.076Z",
+      wsscStatement: "testin tesitnas dkf sdf",
+    },
+    {
+      _id: "28734hh2i34983askd3d23",
+      userName: "Umair khan",
+
+      status: [
+        {
+          state: "Initiated",
+        },
+        {
+          state: "InProgress",
         },
       ],
       complaintType: "waster-water",
@@ -156,9 +159,9 @@ const page = ({ params }: any) => {
 
       <div className="grid grid-cols-3 w-full gap-6">
         <div className="flex items-center justify-between col-span-2">
-          <h1 className=" text-md font-bold">
+          <h1 className=" text-lg font-bold">
             Complaints
-            <span className="ml-2 px-2 py-1 bg-primaryColor-500 text-white rounded-md">
+            <span className="ml-2 px-3 py-1 bg-primaryColor-500 text-white rounded-md">
               {complaints.length}
             </span>
           </h1>
@@ -167,7 +170,6 @@ const page = ({ params }: any) => {
             onChange={(e) => setState(e.target.value)}
           >
             <option value="AllComplaints">All Complaints</option>
-            <option value="Initiated">Initiated</option>
             <option value="InProgress">InProgress</option>
             <option value="Completed">Completed</option>
             <option value="Closed">Closed</option>

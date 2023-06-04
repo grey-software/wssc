@@ -1,6 +1,8 @@
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const TableRow = ({ complaint, index }) => {
+  const navigate = useRouter();
   const { _id, complaintType, userName, complaintAddress, createdAt, status } =
     complaint;
   return (
