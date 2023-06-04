@@ -13,8 +13,8 @@ import {
 import { config } from "./config";
 import { ComplainForm } from "@/@types/complainForm.types";
 
-// const API = axios.create({ baseURL: "http://localhost:7000" });
-const API = axios.create({ baseURL: "https://fyp-wssc-backend-production.up.railway.app/" });
+const API = axios.create({ baseURL: "http://localhost:7000" });
+// const API = axios.create({ baseURL: "https://fyp-wssc-backend-production.up.railway.app" });
 
 
 // Citizen feedback
