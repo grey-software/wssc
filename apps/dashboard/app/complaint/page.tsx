@@ -8,12 +8,14 @@ import { BsCaretLeftSquareFill, BsCaretRightSquareFill } from "react-icons/bs";
 import { RootState } from "../GlobalState/store";
 import { FetchAllComplaints } from "../GlobalState/ApiCalls/complaintApiCalls";
 import { setActiveTab } from "../GlobalState/TabSlice";
+import TableRow from "../../components/complaint/TableRow";
 
 const Page = () => {
   const dispatch = useDispatch();
   const navigate = useRouter();
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
+  const [page, setPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
+  const [state, setState] = useState<string>("AllComplaints");
 
   const userId: any = useSelector((state: RootState) => state.User.SignInData);
   useEffect(() => {
@@ -57,18 +59,31 @@ const Page = () => {
             <span>Complaints</span>
           </span>
         </div>
-        <div className="flex items-center border-2 border-gray-300 rounded-full">
-          <input
-            type="text"
-            placeholder="Search here               "
-            className="text-sm rounded-l-full outline-none py-1 px-4 w-52 "
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <div className="border-[1px] border-gray-300 h-8"></div>
-          <button className="py-1 px-4 rounded-r-full transition-all text-white bg-feedbackColor cursor-pointer">
-            Search
-          </button>
+        <div className="flex items-center gap-4">
+          <p>Filter By</p>
+          <select
+            className="px-3 py-1 border-2 border-gray-400 rounded focus:border-primaryColor-500"
+            onChange={(e) => setState(e.target.value)}
+          >
+            <option value="AllComplaints">All Complaints</option>
+            <option value="Initiated">Initiated</option>
+            <option value="InProgress">InProgress</option>
+            <option value="Completed">Completed</option>
+            <option value="Closed">Closed</option>
+          </select>
+          <div className="flex items-center border-2 border-gray-300 rounded-full">
+            <input
+              type="text"
+              placeholder="Search here               "
+              className="text-sm rounded-l-full outline-none py-1 px-4 w-52 "
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <div className="border-[1px] border-gray-300 h-8"></div>
+            <button className="py-1 px-4 rounded-r-full transition-all text-white bg-feedbackColor cursor-pointer">
+              Search
+            </button>
+          </div>
         </div>
       </div>
 
@@ -107,85 +122,21 @@ const Page = () => {
           <tbody>
             {compliants
               .slice(page * 10 - 10, page * 10)
-              .map(
-                (
-                  {
-                    _id,
-                    complaintType,
-                    userName,
-                    complaintAddress,
-                    createdAt,
-                    status,
-                  },
-                  index
-                ) => (
-                  <tr
-                    key={index}
-                    className="cursor-pointer bg-white border-b  hover:bg-gray-50 "
-                    onClick={() => navigate.push(`/complaint/${_id}`)}
-                  >
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
-                    >
-                      {index + 1}
-                    </th>
-                    <td
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
-                    >
-                      {_id.slice(-8)}
-                    </td>
-                    <td
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white "
-                    >
-                      {complaintType}
-                    </td>
-                    <td className="px-6 py-4">
-                      {complaintAddress.slice(0, 20)}
-                    </td>
-                    <td className="px-6 py-4">
-                      {!userName ? "NILL" : userName}
-                    </td>
-                    <td className="px-6 py-4">
-                      {createdAt.split("T").join(" ")}
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`p-2  text-white rounded-lg ${
-                          status[status.length - 1].state === "Initiated"
-                            ? "bg-initiatedColor"
-                            : ""
-                        }  ${
-                          status[status.length - 1].state === "InProgress"
-                            ? "bg-inprogessColor"
-                            : ""
-                        } ${
-                          status[status.length - 1].state === "Completed"
-                            ? "bg-completedColor"
-                            : ""
-                        } ${
-                          status[status.length - 1].state === "Closed"
-                            ? "bg-closedColor"
-                            : ""
-                        }`}
-                      >
-                        {status[status.length - 1]?.state}
-                      </span>
-                    </td>
-
-                    <td className="px-6 py-4">
-                      <button
-                        onClick={() => navigate.push(`/complaint/${_id}`)}
-                        className="font-medium text-white bg-primaryColor-500 uppercase py-1 px-3 rounded-lg"
-                      >
-                        View
-                      </button>
-                    </td>
-                  </tr>
-                )
-              )}
+              .map((complaint, index) => (
+                <>
+                  {state === "AllComplaints" ? (
+                    <TableRow complaint={complaint} index={index} />
+                  ) : (
+                    <>
+                      {state ===
+                        complaint?.status[complaint.status.length - 1]
+                          .state && (
+                        <TableRow complaint={complaint} index={index} />
+                      )}
+                    </>
+                  )}
+                </>
+              ))}
           </tbody>
         </table>
       </div>
