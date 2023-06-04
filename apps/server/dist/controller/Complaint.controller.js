@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteAllcomplaints = exports.GetAllComplaints = exports.UpdateComplaint = exports.GetComplaint = exports.CreateComplaint = void 0;
+exports.CitizenFeedback = exports.DeleteAllcomplaints = exports.GetAllComplaints = exports.UpdateComplaint = exports.GetComplaint = exports.CreateComplaint = void 0;
 const complaint_schema_1 = require("../Models/complaint.schema");
 const Complaint_Validation_1 = require("../Schema_validation/Complaint_Validation");
 const node_1 = require("@novu/node");
@@ -70,7 +70,6 @@ const UpdateComplaint = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
             const complaint = yield complaint_schema_1.ComplaintModel.findById(complaintId);
             let status;
             let statusLength = complaint === null || complaint === void 0 ? void 0 : complaint.status.length;
-            console.log(statusLength);
             // pushing the next status based on the previous status
             if (statusLength == 1) {
                 status = {
@@ -178,4 +177,45 @@ const DeleteAllcomplaints = (req, res, next) => __awaiter(void 0, void 0, void 0
     }
 });
 exports.DeleteAllcomplaints = DeleteAllcomplaints;
+const CitizenFeedback = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const LoggedId = req.user.id;
+    const complaintId = req.params.id;
+    const { rating, description } = req.body;
+    let feedback = {
+        rating: rating,
+        description: description,
+    };
+    try {
+        const complaint = yield complaint_schema_1.ComplaintModel.findById(complaintId);
+        if (complaint.userId == LoggedId) {
+            const updated = yield complaint_schema_1.ComplaintModel.findByIdAndUpdate(complaintId, { $set: { feedback } }, { new: true });
+            console.log(updated);
+            let status = {
+                state: "Closed",
+                updateAt: new Date().toLocaleDateString(),
+            };
+            yield complaint_schema_1.ComplaintModel.findByIdAndUpdate(complaintId, {
+                $addToSet: { status: status },
+            });
+            res.status(200).json({
+                status: 200,
+                success: true,
+                message: "Feedback Provided successfully",
+                data: updated,
+            });
+        }
+        else {
+            res.status(401).json({
+                status: 401,
+                success: false,
+                message: "You are not authorized to provide feedback on this complaint",
+            });
+        }
+    }
+    catch (error) {
+        console.log(error);
+        res.status(404).json({ status: 404, success: false, message: error });
+    }
+});
+exports.CitizenFeedback = CitizenFeedback;
 //# sourceMappingURL=Complaint.controller.js.map

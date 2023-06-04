@@ -15,6 +15,7 @@ const citizen_route_1 = __importDefault(require("./Routes/citizen.route"));
 const WSSCs_route_1 = __importDefault(require("./Routes/WSSCs.route"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dummyRoute_1 = __importDefault(require("./dummyRoute"));
+const supervisor_route_1 = __importDefault(require("./Routes/supervisor.route"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = Number(process.env.PORT);
@@ -36,7 +37,8 @@ mongoose_1.default
 });
 //-------- MIDDLEWARES ---------
 app.use((0, cors_1.default)({
-    origin: ["http://localhost:3000", "http://localhost:3001"], credentials: true
+    origin: ["http://localhost:3000", "http://localhost:3001"],
+    credentials: true,
 }));
 app.use((0, helmet_1.default)());
 app.use((0, morgan_1.default)("tiny"));
@@ -53,6 +55,7 @@ app.use("/api/v1/auth", auth_route_1.default);
 app.use("/api/v1/wssc", WSSCs_route_1.default);
 app.use("/api/v1/citizens", citizen_route_1.default);
 app.use("/api/v1/complaints", Complaint_route_1.default);
+app.use("/api/v1/supervisors", supervisor_route_1.default);
 // ----- Errors handler ------
 app.all("*", (req, res) => {
     res.status(500).json({

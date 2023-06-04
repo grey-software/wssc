@@ -4,6 +4,7 @@ import { SupervisorModel } from "../Models/supervisor.schema";
 import { SupervisorTypes } from "../@types/supervisorSchema.type";
 import bycrypt from "bcryptjs";
 
+// eslint-disable-next-line turbo/no-undeclared-env-vars
 const SECRET_KEY: any = process.env.JWT_KEY;
 
 // REGESTER SUPERVISOR
