@@ -2,6 +2,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import UserReducer from "./UserSlice";
 import TabReducer from "./TabSlice";
+import SupervisorReducer from "./supervisorSlice";
 import ComplaintReducer from "./complatintSlice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import {
@@ -43,6 +44,7 @@ const reducer = combineReducers({
   User: UserReducer,
   Tab: TabReducer,
   Complaint: ComplaintReducer,
+  Supervisor: SupervisorReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

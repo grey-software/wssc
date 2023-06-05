@@ -66,6 +66,34 @@ export const GetComplaint = async (
   }
 };
 
+export const AssignComplaint = async (req: Request, res: Response) => {
+  try {
+    const supervisorId = req.params.supervisorId;
+    const complaintId = req.params.complaintId;
+
+    const assigned = await ComplaintModel.findByIdAndUpdate(
+      complaintId,
+      {
+        $set: { supervisorId: supervisorId },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      status: 200,
+      success: true,
+      message: "Complaint assigned successfully",
+      data: assigned.data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 400,
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 export const UpdateComplaint = async (
   req: Request,
   res: Response,
@@ -143,7 +171,7 @@ export const GetAllComplaints = async (
   next: NextFunction
 ) => {
   const userId = req.user.id;
-  console.log(req.user.id == req.params.id);
+  // console.log(req.user.id == req.params.id);
   let allComplaints;
   try {
     if (req.user.isAdmin) {
