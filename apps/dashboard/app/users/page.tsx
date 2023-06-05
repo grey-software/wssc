@@ -146,7 +146,7 @@ function Users({}: Props) {
                         setModal(true);
                         setUserId(_id);
                       }}
-                      className="font-medium text-white bg-primaryColor-500 uppercase py-1 px-3 rounded-lg"
+                      className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all"
                     >
                       View
                     </button>
@@ -163,7 +163,7 @@ function Users({}: Props) {
           className="absolute mt-10 h-[80vh] w-full flex items-center justify-center backdrop-blur-sm"
         >
           <div className="flex items-start justify-start">
-            <div className="flex flex-col items-center p-10 rounded shadow-2xl bg-white border-[1px] border-gray-400">
+            <div className="flex flex-col items-center p-10 rounded-md shadow-2xl bg-white border-[1px] border-gray-200">
               <img
                 src="/user.jpg"
                 className="h-32 w-32 rounded-full"

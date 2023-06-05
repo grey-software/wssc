@@ -86,7 +86,7 @@ const Page = ({ params }: any) => {
       {/* showing single  Complaint */}
       <div className="grid grid-cols-2 w-full gap-6 text-sm">
         {/* Complaint details */}
-        <div className=" shadow-md p-5 rounded ">
+        <div className=" shadow-md p-5 rounded-md border-2 border-gray-50">
           <div className="flex items-center justify-between mb-1">
             <h1 className=" font-bold text-md">Complaint Details</h1>
             <div className="flex items-center gap-2 ">
@@ -159,7 +159,7 @@ const Page = ({ params }: any) => {
         </div>
 
         {/* User details */}
-        <div className="shadow-md p-5 rounded">
+        <div className="shadow-md p-5 rounded-md border-2 border-gray-50">
           <h1 className="mb-1 font-bold text-md">User Details</h1>
           <div className="w-full border-[1px] border-gray-300"></div>
           <div className="grid grid-cols-2 gap-4 mt-4">
@@ -203,7 +203,7 @@ const Page = ({ params }: any) => {
         </div>
 
         {/* complaint media */}
-        <div className="shadow-md p-5 col-span-2 rounded">
+        <div className="shadow-md p-5 col-span-2 rounded-md border-2 border-gray-50">
           <h1 className="mb-1 font-bold text-md">Complaint Media</h1>
           <div className="w-full border-[1px] border-gray-300 mb-4"></div>
           <div className="grid grid-cols-2 gap-4 mt-4 h-80 w-full">
