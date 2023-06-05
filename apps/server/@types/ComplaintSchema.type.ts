@@ -1,6 +1,7 @@
 export interface IComplaint {
   userId: string;
   userName: string;
+  supervisorId?: string;
   phone: string;
   complaintAddress: string;
   complaintType: string;

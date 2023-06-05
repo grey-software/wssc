@@ -21,6 +21,8 @@ import {
 import { config } from "./config";
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
+// const API = axios.create({ baseURL: "https://fyp-wssc-backend-production.up.railway.app" });
+
 
 // RegisterUser ApiCall
 export const RegisterUser = async (

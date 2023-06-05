@@ -7,6 +7,7 @@ const ComplaintRouter = (0, express_1.Router)();
 ComplaintRouter.route("/:id")
     .get(verifyToken_1.verifyUser, Complaint_controller_1.GetAllComplaints)
     .get(Complaint_controller_1.GetComplaint)
+    .patch(Complaint_controller_1.CitizenFeedback)
     .patch(verifyToken_1.verifyAdmin, Complaint_controller_1.UpdateComplaint)
     .post(verifyToken_1.verifyUser, Complaint_controller_1.CreateComplaint)
     .delete(verifyToken_1.verifyAdmin, Complaint_controller_1.DeleteAllcomplaints);

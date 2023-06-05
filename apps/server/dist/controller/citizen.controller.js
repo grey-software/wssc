@@ -139,7 +139,7 @@ const DeleteAccount = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         });
 });
 exports.DeleteAccount = DeleteAccount;
-// change password controller 
+// change password controller
 const ChangePassword = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.params.id; //getting user_Id through params/url
     const LoggedId = req.user.id; // getting user current logged id.
@@ -152,12 +152,12 @@ const ChangePassword = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         console.log(req.body.password);
         try {
             yield citizen_schema_1.citizenModel.findByIdAndUpdate(userId, { password: HashedPassword }, {
-                new: true
+                new: true,
             });
             res.status(200).json({
                 status: 200,
                 success: true,
-                message: "Password changed successfully"
+                message: "Password changed successfully",
             });
         }
         catch (error) {
