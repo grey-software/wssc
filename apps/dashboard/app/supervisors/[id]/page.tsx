@@ -15,6 +15,10 @@ const page = ({ params }: any) => {
   const navigate = useRouter();
   const [state, setState] = useState<string>("AllComplaints");
 
+  const supervisor = useSelector((state: RootState) =>
+    state.Supervisor.supervisorsAll.find((c) => c._id == id)
+  );
+
   const complaints = [
     {
       _id: "kjherh2i34983askd3d23",
@@ -98,26 +102,26 @@ const page = ({ params }: any) => {
       wsscStatement: "testin tesitnas dkf sdf",
     },
   ];
-  const supervisor = {
-    _id: "23487641234124",
-    name: "umair",
-    phone: "03113456218",
-    WSSC_CODE: "wsscm247810",
-    assignComplaints: [
-      {
-        _id: "kjh2sdf43534453",
-      },
-      {
-        _id: "jwdsg435344sdf3",
-      },
-      {
-        _id: "8sdf2sdf4353dfgs",
-      },
-      {
-        _id: "kjh2sdf43534453",
-      },
-    ],
-  };
+  // const supervisor = {
+  //   _id: "23487641234124",
+  //   name: "umair",
+  //   phone: "03113456218",
+  //   WSSC_CODE: "wsscm247810",
+  //   assignComplaints: [
+  //     {
+  //       _id: "kjh2sdf43534453",
+  //     },
+  //     {
+  //       _id: "jwdsg435344sdf3",
+  //     },
+  //     {
+  //       _id: "8sdf2sdf4353dfgs",
+  //     },
+  //     {
+  //       _id: "kjh2sdf43534453",
+  //     },
+  //   ],
+  // };
 
   return (
     <div className="container flex flex-col gap-6">
@@ -204,7 +208,7 @@ const page = ({ params }: any) => {
 
         {/* SUPERVISOR PROFILE CARD */}
         <div className="flex items-start justify-start">
-          <div className="flex flex-col items-center p-10 rounded shadow-md border-2 border-gray-500">
+          <div className="flex flex-col items-center p-10 rounded shadow-md border-[1px] border-gray-50">
             <img
               src="/user.jpg"
               className="h-32 w-32 rounded-full"

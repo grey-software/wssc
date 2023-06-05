@@ -31,7 +31,11 @@ const TableRow = ({ complaint, index }) => {
       </td>
       <td className="px-6 py-4">{complaintAddress.slice(0, 20)}</td>
       <td className="px-6 py-4">{!userName ? "NILL" : userName}</td>
-      <td className="px-6 py-4">{createdAt.split("T").join(" ")}</td>
+      <td className="px-6 py-4">
+        {`
+        ${createdAt.split("T")[0]} ${createdAt.split("T")[1].split(".")[0]}
+      `}
+      </td>
       <td className="px-6 py-4">
         <span
           className={`p-2  text-white rounded-lg ${
@@ -57,7 +61,7 @@ const TableRow = ({ complaint, index }) => {
       <td className="px-6 py-4">
         <button
           onClick={() => navigate.push(`/complaint/${_id}`)}
-          className="font-medium text-white bg-primaryColor-500 uppercase py-1 px-3 rounded-lg"
+          className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all"
         >
           View
         </button>

@@ -6,7 +6,7 @@ const SingleComplaintSupervisor = ({ complaint, index }) => {
   return (
     <div
       key={index}
-      className=" shadow-md p-5 rounded cursor-pointer"
+      className=" shadow-md p-5 rounded cursor-pointer border-2 border-gray-50"
       onClick={() => navigate.push(`/complaint/${complaint._id}`)}
     >
       <div className="flex items-center justify-between mb-1">
