@@ -15,93 +15,95 @@ const page = ({ params }: any) => {
   const navigate = useRouter();
   const [state, setState] = useState<string>("AllComplaints");
 
-  const supervisor = useSelector((state: RootState) =>
+  const supervisor: any = useSelector((state: RootState) =>
     state.Supervisor.supervisorsAll.find((c) => c._id == id)
   );
+  const complaints: any = useSelector((state: RootState) =>
+    state.Complaint.complaintsAll.filter((c) => c.supervisorId == id)
+  );
+  // const complaints = [
+  //   {
+  //     _id: "kjherh2i34983askd3d23",
+  //     userName: "Hikmat Khan",
 
-  const complaints = [
-    {
-      _id: "kjherh2i34983askd3d23",
-      userName: "Hikmat Khan",
+  //     status: [
+  //       {
+  //         state: "Initiated",
+  //       },
+  //       {
+  //         state: "InProgress",
+  //       },
+  //     ],
+  //     complaintType: "waster-water",
+  //     complaintDes: "there is water problem",
+  //     complaintAddress: "Near UET mardan",
+  //     createdAt: "2023-06-01T17:09:01.076Z",
+  //     wsscStatement: "testin tesitnas dkf sdf",
+  //   },
+  //   {
+  //     _id: "28734hh2i34983askd3d23",
+  //     userName: "Umair khan",
 
-      status: [
-        {
-          state: "Initiated",
-        },
-        {
-          state: "InProgress",
-        },
-      ],
-      complaintType: "waster-water",
-      complaintDes: "there is water problem",
-      complaintAddress: "Near UET mardan",
-      createdAt: "2023-06-01T17:09:01.076Z",
-      wsscStatement: "testin tesitnas dkf sdf",
-    },
-    {
-      _id: "28734hh2i34983askd3d23",
-      userName: "Umair khan",
+  //     status: [
+  //       {
+  //         state: "Initiated",
+  //       },
+  //       {
+  //         state: "InProgress",
+  //       },
+  //       {
+  //         state: "Completed",
+  //       },
+  //     ],
+  //     complaintType: "waster-water",
+  //     complaintDes: "there is water problem",
+  //     complaintAddress: "Near UET mardan",
+  //     createdAt: "2023-06-01T17:09:01.076Z",
+  //     wsscStatement: "testin tesitnas dkf sdf",
+  //   },
+  //   {
+  //     _id: "28734hh2i34983askd3d23",
+  //     userName: "Umair khan",
 
-      status: [
-        {
-          state: "Initiated",
-        },
-        {
-          state: "InProgress",
-        },
-        {
-          state: "Completed",
-        },
-      ],
-      complaintType: "waster-water",
-      complaintDes: "there is water problem",
-      complaintAddress: "Near UET mardan",
-      createdAt: "2023-06-01T17:09:01.076Z",
-      wsscStatement: "testin tesitnas dkf sdf",
-    },
-    {
-      _id: "28734hh2i34983askd3d23",
-      userName: "Umair khan",
+  //     status: [
+  //       {
+  //         state: "Initiated",
+  //       },
+  //       {
+  //         state: "InProgress",
+  //       },
+  //       {
+  //         state: "Completed",
+  //       },
+  //       {
+  //         state: "Closed",
+  //       },
+  //     ],
+  //     complaintType: "waster-water",
+  //     complaintDes: "there is water problem",
+  //     complaintAddress: "Near UET mardan",
+  //     createdAt: "2023-06-01T17:09:01.076Z",
+  //     wsscStatement: "testin tesitnas dkf sdf",
+  //   },
+  //   {
+  //     _id: "28734hh2i34983askd3d23",
+  //     userName: "Umair khan",
 
-      status: [
-        {
-          state: "Initiated",
-        },
-        {
-          state: "InProgress",
-        },
-        {
-          state: "Completed",
-        },
-        {
-          state: "Closed",
-        },
-      ],
-      complaintType: "waster-water",
-      complaintDes: "there is water problem",
-      complaintAddress: "Near UET mardan",
-      createdAt: "2023-06-01T17:09:01.076Z",
-      wsscStatement: "testin tesitnas dkf sdf",
-    },
-    {
-      _id: "28734hh2i34983askd3d23",
-      userName: "Umair khan",
-
-      status: [
-        {
-          state: "Initiated",
-        },
-        {
-          state: "InProgress",
-        },
-      ],
-      complaintType: "waster-water",
-      complaintDes: "there is water problem",
-      complaintAddress: "Near UET mardan",
-      createdAt: "2023-06-01T17:09:01.076Z",
-      wsscStatement: "testin tesitnas dkf sdf",
-    },
-  ];
+  //     status: [
+  //       {
+  //         state: "Initiated",
+  //       },
+  //       {
+  //         state: "InProgress",
+  //       },
+  //     ],
+  //     complaintType: "waster-water",
+  //     complaintDes: "there is water problem",
+  //     complaintAddress: "Near UET mardan",
+  //     createdAt: "2023-06-01T17:09:01.076Z",
+  //     wsscStatement: "testin tesitnas dkf sdf",
+  //   },
+  // ];
   // const supervisor = {
   //   _id: "23487641234124",
   //   name: "umair",
@@ -166,7 +168,7 @@ const page = ({ params }: any) => {
           <h1 className=" text-lg font-bold">
             Complaints
             <span className="ml-2 px-3 py-1 bg-primaryColor-500 text-white rounded-md">
-              {complaints.length}
+              {complaints?.length}
             </span>
           </h1>
           <select

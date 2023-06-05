@@ -10,13 +10,14 @@ interface complaintTypes {
   phone: string;
   userName: string;
   userId: string;
+  supervisorId?: string;
   complaintType: string;
   complaintAddress: string;
-  complaintDes: string;
-  wsscStatement: string;
-  ImageUrl: string;
-  feedback: any;
-  VideoUrl: string;
+  complaintDes?: string;
+  wsscStatement?: string;
+  ImageUrl?: string;
+  feedback?: any;
+  VideoUrl?: string;
   status: any;
   createdAt: string;
 }

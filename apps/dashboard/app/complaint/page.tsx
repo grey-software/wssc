@@ -22,14 +22,14 @@ const Page = () => {
     FetchAllComplaints(dispatch, userId._id);
   }, []);
 
-  const compliants = useSelector(
+  const complaints = useSelector(
     (state: RootState) => state.Complaint.complaintsAll
   );
 
   const selectPagehandler = (selectedPage: any) => {
     if (
       selectedPage >= 1 &&
-      selectedPage <= Math.ceil(compliants.length / 10) &&
+      selectedPage <= Math.ceil(complaints.length / 10) &&
       selectedPage !== page
     )
       setPage(selectedPage);
@@ -120,8 +120,8 @@ const Page = () => {
             </tr>
           </thead>
           <tbody>
-            {compliants
-              .slice(page * 10 - 10, page * 10)
+            {complaints
+              ?.slice(page * 10 - 10, page * 10)
               .map((complaint, index) => (
                 <>
                   {state === "AllComplaints" ? (
@@ -140,7 +140,7 @@ const Page = () => {
           </tbody>
         </table>
       </div>
-      {compliants.length > 10 && (
+      {complaints?.length > 10 && (
         <div className="flex items-center justify-center w-full">
           <div className="my-10 flex items-center gap-2 text-2xl">
             <span
@@ -153,8 +153,8 @@ const Page = () => {
             >
               <BsCaretLeftSquareFill />
             </span>
-            {compliants.length > 10 &&
-              [...Array(Math.ceil(compliants.length / 10))].map((_, index) => (
+            {complaints.length > 10 &&
+              [...Array(Math.ceil(complaints?.length / 10))].map((_, index) => (
                 <span
                   key={index}
                   className={
@@ -169,7 +169,7 @@ const Page = () => {
               ))}
             <span
               className={
-                page < Math.ceil(compliants.length / 10)
+                page < Math.ceil(complaints?.length / 10)
                   ? "hover:text-primaryColor-500 transition-all cursor-pointer text-gray-700"
                   : "opacity-0"
               }
