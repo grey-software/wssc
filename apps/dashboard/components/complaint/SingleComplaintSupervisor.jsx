@@ -70,11 +70,12 @@ const SingleComplaintSupervisor = ({ complaint, index }) => {
             <span>{complaint.complaintDes}</span>
           </div>
         )}
-
-        <div className="flex items-center gap-2 col-span-2">
-          <span className="font-semibold">Statement</span>
-          {complaint?.wsscStatement && <span>{complaint.wsscStatement}</span>}
-        </div>
+        {complaint?.wsscStatement && (
+          <div className="flex items-center gap-2 col-span-2">
+            <span className="font-semibold">Statement</span>
+            <span>{complaint.wsscStatement}</span>
+          </div>
+        )}
       </div>
     </div>
   );

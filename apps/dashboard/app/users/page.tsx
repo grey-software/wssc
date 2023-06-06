@@ -196,7 +196,7 @@ function Users() {
           <div className="flex items-start justify-start">
             <div className="flex flex-col items-center p-10 rounded-md shadow-2xl bg-white border-[1px] border-gray-200">
               <img
-                src="/user.jpg"
+                src={user?.profile_image || "/user.jpg"}
                 className="h-32 w-32 rounded-full"
                 alt={user?.name}
               />

@@ -126,7 +126,9 @@ const Page = ({ params }: any) => {
               <div className="flex items-center gap-3 font-semibold">
                 <span>Supervisor:</span>{" "}
                 <span
-                  onClick={() => navigate.push(`/supervisors/${supervisor.id}`)}
+                  onClick={() =>
+                    navigate.push(`/supervisors/${supervisor._id}`)
+                  }
                   className="py-1 px-2 bg-cyan-500 text-white rounded cursor-pointer"
                 >
                   {supervisor?.name}

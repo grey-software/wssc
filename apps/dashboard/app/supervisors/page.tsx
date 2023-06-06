@@ -46,59 +46,6 @@ function Supervisors({}: Props) {
     setModal(false);
   };
 
-  // const supervisors: any = [
-  //   {
-  //     _id: "12341241234124",
-  //     name: "ihtisham",
-  //     phone: "03124568521",
-  //     WSSC_CODE: "wsscm247810",
-  //     assignComplaints: [
-  //       {
-  //         _id: "kjh2sdf43534453",
-  //       },
-  //       {
-  //         _id: "jwdsg435344sdf3",
-  //       },
-  //       {
-  //         _id: "8sdf2sdf4353dfgs",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     _id: "23487641234124",
-  //     name: "umair",
-  //     phone: "03113456218",
-  //     WSSC_CODE: "wsscm247810",
-  //     assignComplaints: [
-  //       {
-  //         _id: "kjh2sdf43534453",
-  //       },
-  //       {
-  //         _id: "jwdsg435344sdf3",
-  //       },
-  //       {
-  //         _id: "8sdf2sdf4353dfgs",
-  //       },
-  //       {
-  //         _id: "kjh2sdf43534453",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     _id: "80287381234124",
-  //     name: "hikmat",
-  //     phone: "03124568521",
-  //     WSSC_CODE: "wsscm247810",
-  //     assignComplaints: [
-  //       {
-  //         _id: "kjh2sdf43534453",
-  //       },
-  //       {
-  //         _id: "8sdf2sdf4353dfgs",
-  //       },
-  //     ],
-  //   },
-  // ];
   return (
     <div className="relative container flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -128,7 +75,7 @@ function Supervisors({}: Props) {
             onClick={() => setModal(true)}
             className="font-medium text-white bg-inprogessColor py-1 px-3 rounded-lg hover:shadow-lg transition-all"
           >
-            New Supervisor
+            Add Supervisor
           </button>
           <div className="flex items-center border-2 border-gray-300 rounded-full">
             <input
