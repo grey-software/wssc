@@ -14,6 +14,7 @@ import {
   AssignComplaint,
   FetchComplaint,
   FetchAllComplaints,
+  AddStatement,
 } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
 import { GetSingleSupervisor } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
 
@@ -21,6 +22,7 @@ const Page = ({ params }: any) => {
   const id = params.id;
   const dispatch = useDispatch();
   const navigate = useRouter();
+  const [wsscStatement, setWsscStatement] = useState<string>("");
   const [supervisorId, setSupervisorId] = useState<string>("");
 
   const supervisors = useSelector(
@@ -50,6 +52,10 @@ const Page = ({ params }: any) => {
   const handleAssign = () => {
     AssignComplaint(dispatch, supervisorId, id);
     FetchAllComplaints(dispatch);
+  };
+
+  const handleStatment = () => {
+    AddStatement(complaint._id, wsscStatement, dispatch);
   };
 
   const RatingInWords: string[] = [
@@ -126,7 +132,9 @@ const Page = ({ params }: any) => {
               <div className="flex items-center gap-3 font-semibold">
                 <span>Supervisor:</span>{" "}
                 <span
-                  onClick={() => navigate.push(`/supervisors/${supervisor.id}`)}
+                  onClick={() =>
+                    navigate.push(`/supervisors/${supervisor._id}`)
+                  }
                   className="py-1 px-2 bg-cyan-500 text-white rounded cursor-pointer"
                 >
                   {supervisor?.name}
@@ -199,13 +207,31 @@ const Page = ({ params }: any) => {
             )}
 
             <div className="flex items-center gap-2 col-span-2">
-              <span className="font-semibold">Statement</span>
               {complaint?.wsscStatement ? (
-                <span>{complaint.wsscStatement}</span>
+                <>
+                  <span className="font-semibold">Statement</span>
+                  <span>{complaint.wsscStatement}</span>
+                </>
               ) : (
-                <button className="px-2 py-1 bg-primaryColor-300 rounded-md hover:bg-primaryColor-500 hover:text-white transition-all text-feedbackColor text-[10px] font-bold">
-                  Add Statement
-                </button>
+                <>
+                  <textarea
+                    cols={30}
+                    rows={2}
+                    placeholder="Enter Statement"
+                    onChange={(e) => setWsscStatement(e.target.value)}
+                    value={wsscStatement}
+                    className="bg-gray-50 border-2 border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                    outline-none
+                    block w-full px-2 p-1
+                    focus:border-primaryColor-500"
+                  ></textarea>
+                  <button
+                    onClick={handleStatment}
+                    className="px-2 py-1 bg-primaryColor-300 rounded-md hover:bg-primaryColor-500 hover:text-white transition-all text-feedbackColor text-[10px] font-bold"
+                  >
+                    {loading ? "Processing..." : "Add Statement"}
+                  </button>
+                </>
               )}
             </div>
           </div>

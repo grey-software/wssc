@@ -66,6 +66,36 @@ export const GetComplaint = async (
   }
 };
 
+// ADD STATEMENT TO COMPLAINT
+export const AddStatement = async (req: Request, res: Response) => {
+  const complaintId = req.params.id;
+  const statement = req.body.wsscStatement;
+
+  try {
+    const updated = await ComplaintModel.findByIdAndUpdate(
+      complaintId,
+      {
+        $set: { wsscStatement: statement },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      status: 200,
+      success: true,
+      message: "Statement added successfully",
+      data: updated,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 400,
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// ASSIGN COMPLAINT TO SUPERVISOR
 export const AssignComplaint = async (req: Request, res: Response) => {
   try {
     const supervisorId = req.params.supervisorId;
@@ -91,7 +121,7 @@ export const AssignComplaint = async (req: Request, res: Response) => {
       status: 200,
       success: true,
       message: "Complaint assigned successfully",
-      data: assigned.data,
+      data: assigned,
     });
   } catch (error) {
     res.status(400).json({

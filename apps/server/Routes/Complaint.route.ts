@@ -8,6 +8,7 @@ import {
   CitizenFeedback,
   AssignComplaint,
   GetSupervisorComplaints,
+  AddStatement,
 } from "../controller/Complaint.controller";
 import { verifyAdmin, verifyToken } from "../middleware/verifyToken";
 
@@ -17,7 +18,7 @@ ComplaintRouter.route("/").get(verifyToken, GetAllComplaints);
 
 ComplaintRouter.route("/:id")
   .get(verifyToken, GetComplaint)
-  .patch(verifyToken, UpdateComplaint)
+  .patch(verifyToken, AddStatement)
   .post(verifyToken, CreateComplaint)
   .delete(verifyAdmin, DeleteAllcomplaints);
 

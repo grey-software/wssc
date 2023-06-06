@@ -64,7 +64,7 @@ const Page = () => {
             className="px-3 py-1 border-2 border-gray-400 rounded focus:border-primaryColor-500"
             onChange={(e) => setState(e.target.value)}
           >
-            <option value="AllComplaints">All Complaints</option>
+            <option value="AllComplaints">Status</option>
             <option value="Initiated">Initiated</option>
             <option value="InProgress">InProgress</option>
             <option value="Completed">Completed</option>
