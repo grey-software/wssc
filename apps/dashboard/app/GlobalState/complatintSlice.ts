@@ -27,21 +27,18 @@ const complaintSlice = createSlice({
   initialState: {
     complaintsAll: <complaintTypes[]>(<unknown>[]),
     newComplaint: [],
+    complaint: <complaintTypes>{},
     loading: false,
     error: false,
   },
   reducers: {
     //  Fetching all complaints data
-    GetComplaintsStart: (state) => {
+    ApiRequestStart: (state) => {
       state.loading = true;
     },
     GetComplaintsSuccess: (state, action) => {
       state.loading = false;
       state.complaintsAll = action.payload;
-    },
-
-    AssignComplaintStart: (state) => {
-      state.loading = true;
     },
     AssignComplaintSuccess: (state) => {
       state.loading = false;
@@ -50,6 +47,10 @@ const complaintSlice = createSlice({
         style: { width: "auto", height: "auto" },
         duration: 3000,
       });
+    },
+    GetSingleComplaintSuccess: (state, action) => {
+      state.loading = false;
+      state.complaint = action.payload;
     },
     APIRequestError: (state, action) => {
       state.error = true;
@@ -63,10 +64,10 @@ const complaintSlice = createSlice({
 });
 
 export const {
-  GetComplaintsStart,
+  ApiRequestStart,
   GetComplaintsSuccess,
-  AssignComplaintStart,
   AssignComplaintSuccess,
+  GetSingleComplaintSuccess,
   APIRequestError,
 } = complaintSlice.actions;
 export default complaintSlice.reducer;

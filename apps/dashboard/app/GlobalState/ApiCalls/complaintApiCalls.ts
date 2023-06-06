@@ -1,14 +1,35 @@
 import axios from "axios";
 import {
-  GetComplaintsStart,
+  ApiRequestStart,
   GetComplaintsSuccess,
-  AssignComplaintStart,
   AssignComplaintSuccess,
+  GetSingleComplaintSuccess,
   APIRequestError,
 } from "../complatintSlice";
 import { config } from "./config";
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
+
+// GET SINGLE COMPLAINT
+export const FetchComplaint = async (
+  dispatch: any,
+  complaintId: any
+): Promise<any> => {
+  dispatch(ApiRequestStart());
+  try {
+    const res = await API.get(`api/v1/complaints/${complaintId}`, config);
+    dispatch(GetSingleComplaintSuccess(res.data.complaint));
+    return res.data;
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      dispatch(APIRequestError(err.response.data));
+      return err.response;
+    } else if (err.response.status == 500) {
+      dispatch(APIRequestError(err.response.statusText));
+      return err.response;
+    }
+  }
+};
 
 // ASSIGN COMPLAINT
 export const AssignComplaint = async (
@@ -16,7 +37,7 @@ export const AssignComplaint = async (
   supervisorId: any,
   complaintId: any
 ): Promise<any> => {
-  dispatch(AssignComplaintStart());
+  dispatch(ApiRequestStart());
   try {
     const res = await API.patch(
       `api/v1/complaints/${supervisorId}/${complaintId}`,
@@ -38,7 +59,7 @@ export const AssignComplaint = async (
 
 // Fetching Complaints from Server
 export const FetchAllComplaints = async (dispatch: any): Promise<any> => {
-  dispatch(GetComplaintsStart());
+  dispatch(ApiRequestStart());
   try {
     const res = await API.get(`api/v1/complaints`, config);
     dispatch(GetComplaintsSuccess(res.data.allComplaints));

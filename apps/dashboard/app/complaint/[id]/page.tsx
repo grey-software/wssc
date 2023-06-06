@@ -10,9 +10,12 @@ import { RootState } from "@/app/GlobalState/store";
 import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import Image from "next/image";
 import { FetchAllSupervisors } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
-import { AssignComplaint } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
+import {
+  AssignComplaint,
+  FetchComplaint,
+  FetchAllComplaints,
+} from "@/app/GlobalState/ApiCalls/complaintApiCalls";
 import { GetSingleSupervisor } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
-import { cp } from "fs";
 
 const Page = ({ params }: any) => {
   const id = params.id;
@@ -20,34 +23,33 @@ const Page = ({ params }: any) => {
   const navigate = useRouter();
   const [supervisorId, setSupervisorId] = useState<string>("");
 
+  const supervisors = useSelector(
+    (state: RootState) => state.Supervisor.supervisorsAll
+  );
+
   useEffect(() => {
     FetchAllSupervisors(dispatch);
-    GetSingleSupervisor(dispatch, supervisorId);
+    FetchComplaint(dispatch, id);
+    GetSingleSupervisor(dispatch, complaint.supervisorId);
   }, []);
 
   const { loading, error }: any = useSelector(
     (state: RootState) => state.Complaint
   );
 
-  const supervisors = useSelector(
-    (state: RootState) => state.Supervisor.supervisorsAll
-  );
-
   const rates: number[] = [1, 2, 3, 4, 5];
-  const complaints = useSelector(
-    (state: RootState) => state.Complaint.complaintsAll
+
+  const complaint = useSelector(
+    (state: RootState) => state.Complaint.complaint
   );
 
-  const complaint = complaints.find((c) => c._id == id);
-
-  const supervisor: any = useSelector((state: RootState) =>
-    state.Supervisor.supervisorsAll.find(
-      (s) => s._id == complaint?.supervisorId
-    )
+  const supervisor: any = useSelector(
+    (state: RootState) => state.Supervisor.supervisor
   );
 
   const handleAssign = () => {
     AssignComplaint(dispatch, supervisorId, id);
+    FetchAllComplaints(dispatch);
   };
 
   const RatingInWords: string[] = [
@@ -120,7 +122,14 @@ const Page = ({ params }: any) => {
           </div>
         ) : (
           <div className="flex items-center gap-2">
-            Assigned To: {supervisor.name}
+            {supervisor.name && (
+              <div className="flex items-center gap-3 font-semibold">
+                <span>Supervisor:</span>{" "}
+                <span className="py-1 px-2 bg-cyan-500 text-white rounded">
+                  {supervisor?.name}
+                </span>
+              </div>
+            )}
           </div>
         )}
       </div>

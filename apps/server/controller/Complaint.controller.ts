@@ -200,6 +200,34 @@ export const GetAllComplaints = async (
   }
 };
 
+// GET ALL COMPLAINT FOR SPECIFIC SUPERVISOR
+
+export const GetSupervisorComplaints = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const userId = req.user.id;
+  console.log(userId);
+  // console.log(req.user.id == req.params.id);
+  try {
+    const allComplaints = await ComplaintModel.find({
+      supervisorId: userId,
+    }).sort({
+      _id: -1,
+    });
+
+    res.status(200).json({
+      status: 200,
+      success: true,
+      TotalComplaints: allComplaints.length,
+      allComplaints,
+    });
+  } catch (error) {
+    res.status(404).json({ status: 404, success: false, message: error });
+  }
+};
+
 // delete all complaints
 
 export const DeleteAllcomplaints = async (

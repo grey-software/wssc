@@ -93,14 +93,10 @@ export const CreateComplaint = async (
 };
 
 // Fetching Complaints from Server
-export const FetchAllComplaints = async (
-  dispatch: any,
-  userId: any
-): Promise<any> => {
+export const FetchAllComplaints = async (dispatch: any): Promise<any> => {
   dispatch(GetComplaintsStart());
-  console.log(userId);
   try {
-    const res = await API.get(`api/v1/complaints/${userId}`, config);
+    const res = await API.get(`api/v1/complaints`, config);
     dispatch(GetComplaintsSuccess(res.data.allComplaints));
     return res.data;
   } catch (err: any) {
