@@ -12,17 +12,21 @@ import { verifyAdmin, verifyToken } from "../middleware/verifyToken";
 
 const ComplaintRouter: Router = Router();
 
+ComplaintRouter.route("/").get(verifyToken, GetAllComplaints);
+
 ComplaintRouter.route("/:id")
-  .get(verifyToken,GetComplaint)
+  .get(verifyToken, GetComplaint)
   .patch(verifyToken, UpdateComplaint)
   .post(verifyToken, CreateComplaint)
   .delete(verifyAdmin, DeleteAllcomplaints);
 
-ComplaintRouter.patch("/feedback/:id", verifyToken, CitizenFeedback)
-ComplaintRouter.get("/", verifyToken, GetAllComplaints);
+ComplaintRouter.patch("/feedback/:id", verifyToken, CitizenFeedback);
 
 // ASSIGN COMPLAINT ROUTE
-ComplaintRouter.route("/:supervisorId/:complaintId").patch(AssignComplaint);
+ComplaintRouter.route("/:supervisorId/:complaintId").patch(
+  // verifyToken,
+  AssignComplaint
+);
 
 ComplaintRouter;
 

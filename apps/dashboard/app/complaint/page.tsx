@@ -17,9 +17,8 @@ const Page = () => {
   const [search, setSearch] = useState<string>("");
   const [state, setState] = useState<string>("AllComplaints");
 
-  const userId: any = useSelector((state: RootState) => state.User.SignInData);
   useEffect(() => {
-    FetchAllComplaints(dispatch, userId._id);
+    FetchAllComplaints(dispatch);
   }, []);
 
   const complaints = useSelector(

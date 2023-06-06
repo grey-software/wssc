@@ -39,7 +39,19 @@ const complaintSlice = createSlice({
       state.loading = false;
       state.complaintsAll = action.payload;
     },
-    GetComplaintsError: (state, action) => {
+
+    AssignComplaintStart: (state) => {
+      state.loading = true;
+    },
+    AssignComplaintSuccess: (state) => {
+      state.loading = false;
+      toast.success("Complaint Assigned Successfully", {
+        position: "top-center",
+        style: { width: "auto", height: "auto" },
+        duration: 3000,
+      });
+    },
+    APIRequestError: (state, action) => {
       state.error = true;
       toast.error(action.payload, {
         position: "top-center",
@@ -50,6 +62,11 @@ const complaintSlice = createSlice({
   },
 });
 
-export const { GetComplaintsError, GetComplaintsStart, GetComplaintsSuccess } =
-  complaintSlice.actions;
+export const {
+  GetComplaintsStart,
+  GetComplaintsSuccess,
+  AssignComplaintStart,
+  AssignComplaintSuccess,
+  APIRequestError,
+} = complaintSlice.actions;
 export default complaintSlice.reducer;

@@ -78,6 +78,14 @@ export const AssignComplaint = async (req: Request, res: Response) => {
       },
       { new: true }
     );
+    //  CHANGE THE STATUS TO INPROGRESS
+    let status = {
+      state: "InProgress",
+      updateAt: new Date().toLocaleDateString(),
+    };
+    await ComplaintModel.findByIdAndUpdate(complaintId, {
+      $addToSet: { status: status },
+    });
 
     res.status(200).json({
       status: 200,
