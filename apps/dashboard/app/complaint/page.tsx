@@ -86,7 +86,8 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto shadow-md sm:rounded-lg">
+      {/* SHOWING ALL COMPLAINTS */}
+      <div className="overflow-x-auto shadow-md sm:rounded-lg h-[75vh] py-1">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -140,8 +141,8 @@ const Page = () => {
         </table>
       </div>
       {complaints?.length > 10 && (
-        <div className="flex items-center justify-center w-full">
-          <div className="my-10 flex items-center gap-2 text-2xl">
+        <div className="flex items-center justify-center w-full -mt-4">
+          <div className="flex items-center gap-2 text-2xl">
             <span
               className={
                 page > 1

@@ -89,7 +89,7 @@ export const RetreiveAllUsers = async (
       status: 200,
       success: true,
       TotalUsers: allUsers.length,
-      data: { allUsers },
+      data: allUsers,
     });
   } catch (error) {
     res.status(404).json({ status: 404, success: false, message: error });
