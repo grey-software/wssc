@@ -10,9 +10,10 @@ import moment from "moment";
 type Props = {
   status: any;
   complaintId: any;
+  isfeedback: any;
 };
 
-function Complaint_stages({ status, complaintId }: Props) {
+function Complaint_stages({ status, complaintId, isfeedback }: Props) {
   const [feedback, setfeedback] = useState(false);
 
   return (
@@ -76,7 +77,7 @@ function Complaint_stages({ status, complaintId }: Props) {
                 } ${stage.state === "Closed" ? "bg-closedColor" : ""}`}
               ></div>
             </VerticalTimelineElement>
-            {stage.state == "Completed" ? (
+            {stage.state == "Completed" && isfeedback ? (
               <VerticalTimelineElement
                 className="relative "
                 contentStyle={{

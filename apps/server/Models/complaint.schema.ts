@@ -6,6 +6,7 @@ const ComplaintSchema = new mongoose.Schema(
     userId: { type: String, required: [true, "CurrentUser_Id is required"] },
     supervisorId: {
       type: String,
+      default: "",
     },
     userName: { type: String },
     phone: { type: String },

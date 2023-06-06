@@ -24,6 +24,7 @@ const Timeline = ({ params }: any) => {
     createdAt,
     status,
     ImageUrl,
+    feedback,
   }: any = complaints.find((c) => c?._id == complaintID);
 
   const back = () => {
@@ -114,7 +115,11 @@ const Timeline = ({ params }: any) => {
             } top-0 left-0 absolute`}
           ></div>
         </div>
-        <Complaint_stages status={status} complaintId={_id} />
+        <Complaint_stages
+          status={status}
+          complaintId={_id}
+          isfeedback={feedback}
+        />
       </div>
     </>
   );

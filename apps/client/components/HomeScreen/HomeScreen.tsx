@@ -15,7 +15,7 @@ const HomeScreen = () => {
   const user: any = useSelector((state: RootState) => state.users.UserInfo);
   const handleClick = (stage: string) => {
     navigate.push(`/complaint/stages/${stage}`);
-    FetchAllComplaints(dispatch, user._id);
+    FetchAllComplaints(dispatch);
   };
   return (
     <div className="container py-3">

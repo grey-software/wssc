@@ -9,18 +9,23 @@ const supervisorSlice = createSlice({
   initialState: {
     supervisorsAll: <supervisorTypes[]>(<unknown>[]),
     newSupervisor: [],
+    supervisor: {},
     loading: false,
     error: false,
   },
   reducers: {
-    GetSupervisorsStart: (state) => {
+    ApiRequestStart: (state) => {
       state.loading = true;
     },
-    GetSupervisorSuccess: (state, action) => {
+    GetSupervisorsSuccess: (state, action) => {
       state.loading = false;
       state.supervisorsAll = action.payload;
     },
-    GetSupervisorsError: (state, action) => {
+    GetSingleSupervisorSuccess: (state, action) => {
+      state.loading = false;
+      state.supervisor = action.payload;
+    },
+    ApiRequestError: (state, action) => {
       state.error = true;
       toast.error(action.payload, {
         position: "top-center",
@@ -32,8 +37,9 @@ const supervisorSlice = createSlice({
 });
 
 export const {
-  GetSupervisorsStart,
-  GetSupervisorSuccess,
-  GetSupervisorsError,
+  ApiRequestStart,
+  GetSupervisorsSuccess,
+  ApiRequestError,
+  GetSingleSupervisorSuccess,
 } = supervisorSlice.actions;
 export default supervisorSlice.reducer;

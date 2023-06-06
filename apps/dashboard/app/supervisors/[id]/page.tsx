@@ -8,6 +8,7 @@ import { BsCaretLeftSquareFill, BsCaretRightSquareFill } from "react-icons/bs";
 import { RootState } from "@/app/GlobalState/store";
 import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import SingleComplaintSupervisor from "@/components/complaint/SingleComplaintSupervisor";
+import { GetSingleSupervisor } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
 
 const page = ({ params }: any) => {
   const id = params.id;
@@ -15,115 +16,16 @@ const page = ({ params }: any) => {
   const navigate = useRouter();
   const [state, setState] = useState<string>("AllComplaints");
 
-  const supervisor: any = useSelector((state: RootState) =>
-    state.Supervisor.supervisorsAll.find((c) => c._id == id)
+  useEffect(() => {
+    GetSingleSupervisor(dispatch, id);
+  }, []);
+
+  const supervisor: any = useSelector(
+    (state: RootState) => state.Supervisor.supervisor
   );
   const complaints: any = useSelector((state: RootState) =>
     state.Complaint.complaintsAll.filter((c) => c.supervisorId == id)
   );
-  // const complaints = [
-  //   {
-  //     _id: "kjherh2i34983askd3d23",
-  //     userName: "Hikmat Khan",
-
-  //     status: [
-  //       {
-  //         state: "Initiated",
-  //       },
-  //       {
-  //         state: "InProgress",
-  //       },
-  //     ],
-  //     complaintType: "waster-water",
-  //     complaintDes: "there is water problem",
-  //     complaintAddress: "Near UET mardan",
-  //     createdAt: "2023-06-01T17:09:01.076Z",
-  //     wsscStatement: "testin tesitnas dkf sdf",
-  //   },
-  //   {
-  //     _id: "28734hh2i34983askd3d23",
-  //     userName: "Umair khan",
-
-  //     status: [
-  //       {
-  //         state: "Initiated",
-  //       },
-  //       {
-  //         state: "InProgress",
-  //       },
-  //       {
-  //         state: "Completed",
-  //       },
-  //     ],
-  //     complaintType: "waster-water",
-  //     complaintDes: "there is water problem",
-  //     complaintAddress: "Near UET mardan",
-  //     createdAt: "2023-06-01T17:09:01.076Z",
-  //     wsscStatement: "testin tesitnas dkf sdf",
-  //   },
-  //   {
-  //     _id: "28734hh2i34983askd3d23",
-  //     userName: "Umair khan",
-
-  //     status: [
-  //       {
-  //         state: "Initiated",
-  //       },
-  //       {
-  //         state: "InProgress",
-  //       },
-  //       {
-  //         state: "Completed",
-  //       },
-  //       {
-  //         state: "Closed",
-  //       },
-  //     ],
-  //     complaintType: "waster-water",
-  //     complaintDes: "there is water problem",
-  //     complaintAddress: "Near UET mardan",
-  //     createdAt: "2023-06-01T17:09:01.076Z",
-  //     wsscStatement: "testin tesitnas dkf sdf",
-  //   },
-  //   {
-  //     _id: "28734hh2i34983askd3d23",
-  //     userName: "Umair khan",
-
-  //     status: [
-  //       {
-  //         state: "Initiated",
-  //       },
-  //       {
-  //         state: "InProgress",
-  //       },
-  //     ],
-  //     complaintType: "waster-water",
-  //     complaintDes: "there is water problem",
-  //     complaintAddress: "Near UET mardan",
-  //     createdAt: "2023-06-01T17:09:01.076Z",
-  //     wsscStatement: "testin tesitnas dkf sdf",
-  //   },
-  // ];
-  // const supervisor = {
-  //   _id: "23487641234124",
-  //   name: "umair",
-  //   phone: "03113456218",
-  //   WSSC_CODE: "wsscm247810",
-  //   assignComplaints: [
-  //     {
-  //       _id: "kjh2sdf43534453",
-  //     },
-  //     {
-  //       _id: "jwdsg435344sdf3",
-  //     },
-  //     {
-  //       _id: "8sdf2sdf4353dfgs",
-  //     },
-  //     {
-  //       _id: "kjh2sdf43534453",
-  //     },
-  //   ],
-  // };
 
   return (
     <div className="container flex flex-col gap-6">
@@ -186,7 +88,13 @@ const page = ({ params }: any) => {
       {/* showing supervisor and complaints data */}
       <div className="grid grid-cols-3 w-full gap-6 text-sm">
         <div className="col-span-2 flex flex-col gap-4 overflow-y-scroll h-[73vh] px-2 pb-4">
-          {complaints.map((complaint, index) => (
+          {complaints.length == 0 && (
+            <h1 className="text-lg font-semibold text-gray-400">
+              No Complaints to show
+            </h1>
+          )}
+
+          {complaints.map((complaint: any, index: any) => (
             <>
               {state === "AllComplaints" ? (
                 <SingleComplaintSupervisor

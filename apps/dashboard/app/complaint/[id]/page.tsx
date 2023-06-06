@@ -9,11 +9,49 @@ import { BsCaretLeftSquareFill, BsCaretRightSquareFill } from "react-icons/bs";
 import { RootState } from "@/app/GlobalState/store";
 import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import Image from "next/image";
+import { FetchAllSupervisors } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
+import {
+  AssignComplaint,
+  FetchComplaint,
+  FetchAllComplaints,
+} from "@/app/GlobalState/ApiCalls/complaintApiCalls";
+import { GetSingleSupervisor } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
 
 const Page = ({ params }: any) => {
   const id = params.id;
   const dispatch = useDispatch();
   const navigate = useRouter();
+  const [supervisorId, setSupervisorId] = useState<string>("");
+
+  const supervisors = useSelector(
+    (state: RootState) => state.Supervisor.supervisorsAll
+  );
+
+  useEffect(() => {
+    FetchAllSupervisors(dispatch);
+    FetchComplaint(dispatch, id);
+    GetSingleSupervisor(dispatch, complaint.supervisorId);
+  }, []);
+
+  const { loading, error }: any = useSelector(
+    (state: RootState) => state.Complaint
+  );
+
+  const rates: number[] = [1, 2, 3, 4, 5];
+
+  const complaint = useSelector(
+    (state: RootState) => state.Complaint.complaint
+  );
+
+  const supervisor: any = useSelector(
+    (state: RootState) => state.Supervisor.supervisor
+  );
+
+  const handleAssign = () => {
+    AssignComplaint(dispatch, supervisorId, id);
+    FetchAllComplaints(dispatch);
+  };
+
   const RatingInWords: string[] = [
     "",
     "Very Bad",
@@ -22,12 +60,7 @@ const Page = ({ params }: any) => {
     "Very Good",
     "Excellent",
   ];
-  const rates: number[] = [1, 2, 3, 4, 5];
-  const complaints = useSelector(
-    (state: RootState) => state.Complaint.complaintsAll
-  );
 
-  const complaint = complaints.find((c) => c._id == id);
   return (
     <div className="container flex flex-col gap-6 mb-3">
       <div className="flex items-center justify-between">
@@ -65,22 +98,42 @@ const Page = ({ params }: any) => {
           </span>
         </div>
         {complaint?.status[complaint.status.length - 1].state ===
-          "Initiated" && (
-          <form className="flex items-center gap-4">
+        "Initiated" ? (
+          <div className="flex items-center gap-4">
             <select
               name="supervisor"
               id="supervisor"
               className="px-3 py-1 border-2 border-gray-400 rounded focus:border-primaryColor-500"
+              onChange={(e) => setSupervisorId(e.target.value)}
             >
               <option value="Select supervisor">Select Supervisor</option>
-              <option value="Select supervisor">Ihtisham</option>
-              <option value="Select supervisor">Hikmat</option>
-              <option value="Select supervisor">Ahmad</option>
+              {supervisors.map(({ _id, name }, index) => (
+                <option key={index} value={_id}>
+                  {name}
+                </option>
+              ))}
             </select>
-            <button className="text-white  px-3 py-1 rounded bg-inprogessColor shadow-sm hover:shadow-md transition-all">
-              Assign
+            <button
+              onClick={handleAssign}
+              className="text-white  px-3 py-1 rounded bg-inprogessColor shadow-sm hover:shadow-md transition-all"
+            >
+              {loading ? "Processing..." : "Assign"}
             </button>
-          </form>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            {supervisor.name && (
+              <div className="flex items-center gap-3 font-semibold">
+                <span>Supervisor:</span>{" "}
+                <span
+                  onClick={() => navigate.push(`/supervisors/${supervisor.id}`)}
+                  className="py-1 px-2 bg-cyan-500 text-white rounded cursor-pointer"
+                >
+                  {supervisor?.name}
+                </span>
+              </div>
+            )}
+          </div>
         )}
       </div>
       {/* showing single  Complaint */}

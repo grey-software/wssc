@@ -35,8 +35,7 @@ export const RegisterSupervisor = async (
       });
       await register.save();
       res.status(200).json(register);
-    }
-    {
+    } else {
       res.status(400).json({
         status: 400,
         success: false,
@@ -134,6 +133,58 @@ export const GetSupervisor = async (
   }
 };
 
+export const UpdateSupervisor = async (req: Request, res: Response) => {
+  const supervisorId: string = req.params.id;
+
+  try {
+    const supervisor = await SupervisorModel.findByIdAndUpdate(
+      supervisorId,
+      req.body,
+      { new: true }
+    );
+
+    res.status(200).json({
+      status: 200,
+      success: true,
+      message: "Supervisor Updated Successfully",
+      data: supervisor,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      success: false,
+      message: error,
+    });
+  }
+};
+
+// DELETING SUPERVISOR
+export const DeleteSupervisor = async (req: Request, res: Response) => {
+  const supervisorId: string = req.params.id;
+
+  try {
+    await SupervisorModel.findByIdAndUpdate(supervisorId, {
+      $set: { isDeleted: true },
+    });
+    res
+      .clearCookie("access_token", {
+        sameSite: "none",
+      })
+      .status(200)
+      .json({
+        status: 200,
+        success: true,
+        message: "Supervisor Deleted Successfully",
+      });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      success: false,
+      message: error,
+    });
+  }
+};
+
 // GET ALL SUPERVISORS
 export const GetAllSupervisors = async (
   req: Request,
@@ -141,7 +192,9 @@ export const GetAllSupervisors = async (
   next: NextFunction
 ) => {
   try {
-    const allSupervisors = await SupervisorModel.find().sort({ _id: -1 });
+    const allSupervisors = await SupervisorModel.find({
+      isDeleted: false,
+    }).sort({ _id: -1 });
 
     res.status(200).json({
       status: 200,
@@ -149,6 +202,7 @@ export const GetAllSupervisors = async (
       Results: allSupervisors.length,
       data: allSupervisors,
     });
+    next();
   } catch (error) {
     res.status(404).json({ status: 404, success: false, message: error });
   }

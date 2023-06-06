@@ -1,47 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { AiFillHome } from "react-icons/ai";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { BsCaretLeftSquareFill, BsCaretRightSquareFill } from "react-icons/bs";
 import { setActiveTab } from "@/app/GlobalState/TabSlice";
+import { FetchUsers } from "../GlobalState/ApiCalls/userApiCalls";
+import { RootState } from "../GlobalState/store";
 
-type Props = {};
-
-function Users({}: Props) {
+function Users() {
   const dispatch = useDispatch();
   const navigate = useRouter();
+  const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [userId, setUserId] = useState<string>();
   const [modal, setModal] = useState<boolean>(false);
-  const [users, setUsers] = useState([
-    {
-      _id: "kjh934823984h22fads",
-      name: "Hikmat Khan",
-      phone: "03245689852",
-      email: "hikmat@gmail.com",
-      address: "Umarzai Charsadda",
-      profile_image: "/user.jpg",
-    },
-    {
-      _id: "kjh934823984sdfs8y8",
-      name: "Ihtisham Ul Haq",
-      phone: "03118523658",
-      email: "sham@gmail.com",
-      address: "Uet mardan",
-      profile_image: "/user.jpg",
-    },
-    {
-      _id: "kjh93482398kajhsd8a",
-      name: "Talha khan",
-      phone: "03256985694",
-      email: "talha@gmail.com",
-      address: "Katlan mardan",
-      profile_image: "/user.jpg",
-    },
-  ]);
 
-  const user = users.find((c) => c?._id == userId);
+  useEffect(() => {
+    FetchUsers(dispatch);
+  }, []);
+
+  const users = useSelector((state: RootState) => state.User.users);
+
+  const user = users.find((u) => u?._id == userId);
+
+  const selectPagehandler = (selectedPage: any) => {
+    if (
+      selectedPage >= 1 &&
+      selectedPage <= Math.ceil(users.length / 10) &&
+      selectedPage !== page
+    )
+      setPage(selectedPage);
+  };
 
   return (
     <div className="relative container flex flex-col gap-6">
@@ -70,7 +61,7 @@ function Users({}: Props) {
         <div className="flex items-center border-2 border-gray-300 rounded-full">
           <input
             type="text"
-            placeholder={`Search in ${users.length} Users`}
+            placeholder={`Search in ${users?.length} Users`}
             className="text-sm rounded-l-full outline-none py-1 px-4 w-52 "
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -83,7 +74,7 @@ function Users({}: Props) {
       </div>
 
       {/* SHOWING ALL USERS */}
-      <div className="overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="overflow-x-auto shadow-md sm:rounded-lg h-[75vh] py-1">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -112,8 +103,9 @@ function Users({}: Props) {
             </tr>
           </thead>
           <tbody>
-            {users.map(
-              ({ _id, name, phone, address, email }: any, index: any) => (
+            {users
+              .slice(page * 10 - 10, page * 10)
+              .map(({ _id, name, phone, address, email }: any, index: any) => (
                 <tr
                   key={index}
                   className="cursor-pointer bg-white border-b  hover:bg-gray-50 "
@@ -152,11 +144,50 @@ function Users({}: Props) {
                     </button>
                   </td>
                 </tr>
-              )
-            )}
+              ))}
           </tbody>
         </table>
       </div>
+      {users?.length > 10 && (
+        <div className="flex items-center justify-center w-full -mt-4">
+          <div className="flex items-center gap-2 text-2xl">
+            <span
+              className={
+                page > 1
+                  ? "hover:text-primaryColor-500 transition-all cursor-pointer text-gray-700"
+                  : "opacity-0"
+              }
+              onClick={() => selectPagehandler(page - 1)}
+            >
+              <BsCaretLeftSquareFill />
+            </span>
+            {users.length > 10 &&
+              [...Array(Math.ceil(users?.length / 10))].map((_, index) => (
+                <span
+                  key={index}
+                  className={
+                    page === index + 1
+                      ? "bg-primaryColor-300 text-sm font-semibold  rounded-md px-2 py-1 cursor-pointer"
+                      : "bg-transparent text-sm rounded-md px-2 py-1  cursor-pointer"
+                  }
+                  onClick={() => selectPagehandler(index + 1)}
+                >
+                  {index + 1}
+                </span>
+              ))}
+            <span
+              className={
+                page < Math.ceil(users?.length / 10)
+                  ? "hover:text-primaryColor-500 transition-all cursor-pointer text-gray-700"
+                  : "opacity-0"
+              }
+              onClick={() => selectPagehandler(page + 1)}
+            >
+              <BsCaretRightSquareFill />
+            </span>
+          </div>
+        </div>
+      )}
       {modal && (
         <div
           onClick={() => setModal(false)}
@@ -175,11 +206,11 @@ function Users({}: Props) {
 
               <div className="flex flex-col gap-2 items-start mt-6">
                 <div className="flex items-center gap-4">
-                  <span>Contact</span>
+                  <span className="text-gray-500">Contact</span>
                   <h1>{user?.phone}</h1>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span>email</span>
+                  <span className="text-gray-500">Email</span>
                   <h1>{user?.email}</h1>
                 </div>
               </div>

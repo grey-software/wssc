@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { SupervisorTypes } from "../@types/supervisorSchema.type";
+import { boolean } from "joi";
 
 const SupervisorSchema = new mongoose.Schema(
   {
@@ -21,6 +22,7 @@ const SupervisorSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required!"],
     },
+    isDeleted: { type: Boolean, default: false },
     profile_image: { type: String },
   },
   { timestamps: true }

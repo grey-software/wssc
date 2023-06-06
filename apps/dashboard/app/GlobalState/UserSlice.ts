@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
 
 export interface user {
+  _id?: string;
   name?: string;
   phone?: string;
   email?: string;
   address?: string;
   password?: string;
+  profile_image?: string;
 }
 
 export const UserSlice = createSlice({
@@ -16,6 +18,7 @@ export const UserSlice = createSlice({
     pending: false,
     error: false,
     SignInData: {},
+    users: <user[]>(<unknown>[]),
   },
   reducers: {
     SignInStart: (state) => {
@@ -46,9 +49,32 @@ export const UserSlice = createSlice({
     SignOutUser: (state) => {
       // state.SignInData = {};
     },
+    ApiRequestStart: (state) => {
+      state.pending = true;
+    },
+    GetUsersSuccess: (state, action) => {
+      state.pending = false;
+      state.users = action.payload;
+    },
+    ApiRequestError: (state, action) => {
+      state.pending = false;
+      state.error = true;
+      toast.error(action.payload, {
+        position: "top-center",
+        style: { width: "auto", height: "auto" },
+        duration: 3000,
+      });
+    },
   },
 });
 
-export const { SignInStart, SignInSuccess, SignInError, SignOutUser } =
-  UserSlice.actions;
+export const {
+  SignInStart,
+  SignInSuccess,
+  SignInError,
+  SignOutUser,
+  ApiRequestStart,
+  ApiRequestError,
+  GetUsersSuccess,
+} = UserSlice.actions;
 export default UserSlice.reducer;
