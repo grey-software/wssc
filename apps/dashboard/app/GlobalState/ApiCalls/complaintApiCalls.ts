@@ -57,6 +57,33 @@ export const AssignComplaint = async (
   }
 };
 
+// ADD STATEMENT TO COMPLAINT
+export const AddStatement = async (
+  complaintId: any,
+  wsscStatement: any,
+  dispatch: any
+): Promise<any> => {
+  dispatch(ApiRequestStart());
+  try {
+    const res = await API.patch(
+      `api/v1/complaints/${complaintId}`,
+      { wsscStatement },
+      config
+    );
+
+    dispatch(AssignComplaintSuccess());
+    return res.data;
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      dispatch(APIRequestError(err.response.data));
+      return err.response;
+    } else if (err.response.status == 500) {
+      dispatch(APIRequestError(err.response.statusText));
+      return err.response;
+    }
+  }
+};
+
 // Fetching Complaints from Server
 export const FetchAllComplaints = async (dispatch: any): Promise<any> => {
   dispatch(ApiRequestStart());
