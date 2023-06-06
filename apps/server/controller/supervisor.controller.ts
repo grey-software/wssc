@@ -35,6 +35,7 @@ export const RegisterSupervisor = async (
       });
       await register.save();
       res.status(200).json(register);
+      next();
     } else {
       res.status(400).json({
         status: 400,
