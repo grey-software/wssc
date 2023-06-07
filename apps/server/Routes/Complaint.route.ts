@@ -9,6 +9,7 @@ import {
   AssignComplaint,
   GetSupervisorComplaints,
   AddStatement,
+  SupervisorResponse,
 } from "../controller/Complaint.controller";
 import { verifyAdmin, verifyToken } from "../middleware/verifyToken";
 
@@ -23,6 +24,7 @@ ComplaintRouter.route("/:id")
   .delete(verifyAdmin, DeleteAllcomplaints);
 
 ComplaintRouter.patch("/feedback/:id", verifyToken, CitizenFeedback);
+ComplaintRouter.patch("/response/:id", verifyToken, SupervisorResponse);
 
 ComplaintRouter.get("/supervisor", verifyToken, GetSupervisorComplaints);
 

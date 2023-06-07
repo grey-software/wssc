@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, response } from "express";
 import { ComplaintModel } from "../Models/complaint.schema";
 
 import { Types } from "mongoose";
@@ -288,6 +288,7 @@ export const DeleteAllcomplaints = async (
   }
 };
 
+// CITIZEN FEEDBACK
 export const CitizenFeedback = async (
   req: Request,
   res: Response,
@@ -333,6 +334,55 @@ export const CitizenFeedback = async (
         status: 401,
         success: false,
         message: "You are not authorized to provide feedback on this complaint",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ status: 404, success: false, message: error });
+  }
+};
+
+// SUPERVISOR RESPONSE
+export const SupervisorResponse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const LoggedId = req.user.id;
+  const complaintId = req.params.id;
+  try {
+    const complaint:
+      | (IComplaint & {
+          _id: Types.ObjectId;
+          _doc: any;
+        })
+      | null = await ComplaintModel.findById(complaintId);
+
+    if (complaint.supervisorId == LoggedId) {
+      const responded = await ComplaintModel.findByIdAndUpdate(
+        complaintId,
+        { $set: { response: req.body } },
+        { new: true }
+      );
+      let status = {
+        state: "Completed",
+        updateAt: new Date().toLocaleDateString(),
+      };
+      await ComplaintModel.findByIdAndUpdate(complaintId, {
+        $addToSet: { status: status },
+      });
+      res.status(200).json({
+        status: 200,
+        success: true,
+        message: "Response Provided successfully",
+        data: responded,
+      });
+      // next();
+    } else {
+      res.status(401).json({
+        status: 401,
+        success: false,
+        message: "You are not authorized to provide response to this complaint",
       });
     }
   } catch (error) {

@@ -6,6 +6,8 @@ export interface IComplaint {
   complaintAddress: string;
   complaintType: string;
   complaintDes?: string;
+  feedback?: any;
+  response?: any;
   ImageUrl?: string;
   VideoUrl?: string;
   status: Object[];

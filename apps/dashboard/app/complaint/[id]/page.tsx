@@ -32,7 +32,6 @@ const Page = ({ params }: any) => {
   useEffect(() => {
     FetchAllSupervisors(dispatch);
     FetchComplaint(dispatch, id);
-    GetSingleSupervisor(dispatch, complaint.supervisorId);
   }, []);
 
   const { loading, error }: any = useSelector(
@@ -45,13 +44,12 @@ const Page = ({ params }: any) => {
     (state: RootState) => state.Complaint.complaint
   );
 
-  const supervisor: any = useSelector(
-    (state: RootState) => state.Supervisor.supervisor
+  const supervisor: any = useSelector((state: RootState) =>
+    state.Supervisor.supervisorsAll.find((s) => s._id == complaint.supervisorId)
   );
 
   const handleAssign = () => {
     AssignComplaint(dispatch, supervisorId, id);
-    FetchAllComplaints(dispatch);
   };
 
   const handleStatment = () => {
@@ -128,7 +126,7 @@ const Page = ({ params }: any) => {
           </div>
         ) : (
           <div className="flex items-center gap-2">
-            {supervisor.name && (
+            {supervisor?.name && (
               <div className="flex items-center gap-3 font-semibold">
                 <span>Supervisor:</span>{" "}
                 <span
@@ -206,7 +204,7 @@ const Page = ({ params }: any) => {
               </div>
             )}
 
-            <div className="flex items-center gap-2 col-span-2">
+            <div className="flex items-start gap-2 col-span-2">
               {complaint?.wsscStatement ? (
                 <>
                   <span className="font-semibold">Statement</span>
@@ -272,20 +270,61 @@ const Page = ({ params }: any) => {
                       )}
                     </div>
                   ))}
+                  {RatingInWords.map((w, index) => (
+                    <>
+                      {index == complaint.feedback.rating && (
+                        <span className="text-sm text-initiatedColor font-bold ml-2">
+                          {w}
+                        </span>
+                      )}
+                    </>
+                  ))}
                 </div>
                 <p className="text-sm">{complaint.feedback.description}</p>
               </div>
             ) : (
-              <>No feedback yet</>
+              <h1 className="font-semibold text-gray-400">No Feedback yet</h1>
+            )}
+          </div>
+        </div>
+
+        {/* Supervisor details */}
+        <div
+          onClick={() => navigate.push(`/supervisors/${supervisor._id}`)}
+          className="cursor-pointer shadow-md p-5 rounded-md border-2 border-gray-50"
+        >
+          <h1 className="mb-1 font-bold text-md">Supervisor Details</h1>
+          <div className="w-full border-[1px] border-gray-300"></div>
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="flex items-start gap-2">
+              <span className="font-semibold">Name</span>
+              <span>{supervisor?.name}</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="font-semibold">User ID</span>
+              <span className="uppercase">{supervisor?._id?.slice(-8)}</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="font-semibold">Contact</span>
+              <span>{supervisor?.phone}</span>
+            </div>
+            <div></div>
+            {complaint?.response ? (
+              <div className="p-4 col-span-2 shadow-md flex flex-col gap-2">
+                <h1 className="text-md font-bold">Response</h1>
+                <p className="text-sm">{complaint?.response?.description}</p>
+              </div>
+            ) : (
+              <h1 className="font-semibold text-gray-400">No Response yet</h1>
             )}
           </div>
         </div>
 
         {/* complaint media */}
-        <div className="shadow-md p-5 col-span-2 rounded-md border-2 border-gray-50">
+        <div className="shadow-md p-5 rounded-md border-2 border-gray-50">
           <h1 className="mb-1 font-bold text-md">Complaint Media</h1>
           <div className="w-full border-[1px] border-gray-300 mb-4"></div>
-          <div className="grid grid-cols-2 gap-4 mt-4 h-80 w-full">
+          <div className="grid grid-cols-2 gap-4 mt-4 w-full">
             {complaint?.ImageUrl && complaint.VideoUrl ? (
               <>
                 {" "}
@@ -305,7 +344,9 @@ const Page = ({ params }: any) => {
                 )}
               </>
             ) : (
-              <h1>The Citizen have not provided any Media</h1>
+              <h1 className="font-semibold text-gray-400">
+                The Citizen have not provided any Media
+              </h1>
             )}
           </div>
         </div>

@@ -42,6 +42,15 @@ const ComplaintSchema = new mongoose.Schema(
         description: String,
       },
     },
+    response: {
+      type: {
+        ImageUrl: {
+          type: String,
+          // required: [true, "Image is required in responce"],
+        },
+        description: String,
+      },
+    },
     ImageUrl: { type: String },
     VideoUrl: { type: String },
   },
