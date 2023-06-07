@@ -1,17 +1,36 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { AiFillHome } from "react-icons/ai";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { AiFillStar } from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
 import { setActiveTab } from "@/app/GlobalState/TabSlice";
+import { FetchAllComplaints } from "../GlobalState/ApiCalls/complaintApiCalls";
+import { RootState } from "../GlobalState/store";
 
-type Props = {};
-
-function Feedback({}: Props) {
+function Feedback() {
   const dispatch = useDispatch();
   const navigate = useRouter();
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    FetchAllComplaints(dispatch);
+  }, []);
+
+  const complaints = useSelector(
+    (state: RootState) => state.Complaint.complaintsAll
+  );
+  const rates: number[] = [1, 2, 3, 4, 5];
+  const RatingInWords: string[] = [
+    "",
+    "Very Bad",
+    "Bad",
+    "Good",
+    "Very Good",
+    "Excellent",
+  ];
+
   return (
     <div className="container flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -36,6 +55,42 @@ function Feedback({}: Props) {
             <span>Feedbacks</span>
           </span>
         </div>
+      </div>
+      <div className="grid grid-cols-4 gap-4">
+        {complaints.map((complaint, index) => (
+          <>
+            {complaint.feedback && (
+              <div className="p-4 shadow-md flex flex-col gap-2 border-[1px] border-gray-100">
+                <h1 className="text-md font-bold">Feedback</h1>
+                <div className="flex items-center gap-1 text-2xl">
+                  {rates.map((value, index) => (
+                    <div key={index}>
+                      {value <= complaint?.feedback.rating ? (
+                        <span className="text-initiatedColor">
+                          <AiFillStar />
+                        </span>
+                      ) : (
+                        <span className="text-gray-300">
+                          <AiFillStar />
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                  {RatingInWords.map((w, index) => (
+                    <>
+                      {index == complaint?.feedback.rating && (
+                        <span className="text-sm text-initiatedColor font-bold ml-2">
+                          {w}
+                        </span>
+                      )}
+                    </>
+                  ))}
+                </div>
+                <p className="text-sm">{complaint?.feedback.description}</p>
+              </div>
+            )}
+          </>
+        ))}
       </div>
     </div>
   );

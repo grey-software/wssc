@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { AiFillStar } from "react-icons/ai";
 import { AiFillHome } from "react-icons/ai";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { BsCaretLeftSquareFill, BsCaretRightSquareFill } from "react-icons/bs";
 import { RootState } from "@/app/GlobalState/store";
 import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import Image from "next/image";
@@ -13,7 +12,6 @@ import { FetchAllSupervisors } from "@/app/GlobalState/ApiCalls/supervisorApiCal
 import {
   AssignComplaint,
   FetchComplaint,
-  FetchAllComplaints,
   AddStatement,
 } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
 import { GetSingleSupervisor } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
@@ -301,7 +299,7 @@ const Page = ({ params }: any) => {
               <span>{supervisor?.name}</span>
             </div>
             <div className="flex items-start gap-2">
-              <span className="font-semibold">User ID</span>
+              <span className="font-semibold">Supervisor ID</span>
               <span className="uppercase">{supervisor?._id?.slice(-8)}</span>
             </div>
             <div className="flex items-start gap-2">
