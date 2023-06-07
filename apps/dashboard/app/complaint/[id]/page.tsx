@@ -293,29 +293,36 @@ const Page = ({ params }: any) => {
         >
           <h1 className="mb-1 font-bold text-md">Supervisor Details</h1>
           <div className="w-full border-[1px] border-gray-300"></div>
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            <div className="flex items-start gap-2">
-              <span className="font-semibold">Name</span>
-              <span>{supervisor?.name}</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="font-semibold">Supervisor ID</span>
-              <span className="uppercase">{supervisor?._id?.slice(-8)}</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="font-semibold">Contact</span>
-              <span>{supervisor?.phone}</span>
-            </div>
-            <div></div>
-            {complaint?.response ? (
-              <div className="p-4 col-span-2 shadow-md flex flex-col gap-2">
-                <h1 className="text-md font-bold">Response</h1>
-                <p className="text-sm">{complaint?.response?.description}</p>
+          {complaint?.status[complaint.status.length - 1].state !==
+          "Initiated" ? (
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="flex items-start gap-2">
+                <span className="font-semibold">Name</span>
+                <span>{supervisor?.name}</span>
               </div>
-            ) : (
-              <h1 className="font-semibold text-gray-400">No Response yet</h1>
-            )}
-          </div>
+              <div className="flex items-start gap-2">
+                <span className="font-semibold">Supervisor ID</span>
+                <span className="uppercase">{supervisor?._id?.slice(-8)}</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="font-semibold">Contact</span>
+                <span>{supervisor?.phone}</span>
+              </div>
+              <div></div>
+              {complaint?.response ? (
+                <div className="p-4 col-span-2 shadow-md flex flex-col gap-2">
+                  <h1 className="text-md font-bold">Response</h1>
+                  <p className="text-sm">{complaint?.response?.description}</p>
+                </div>
+              ) : (
+                <h1 className="font-semibold text-gray-400">No Response yet</h1>
+              )}
+            </div>
+          ) : (
+            <h1 className="mt-4 font-semibold text-gray-400">
+              Not assigned yet
+            </h1>
+          )}
         </div>
 
         {/* complaint media */}
