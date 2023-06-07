@@ -5,4 +5,5 @@ export interface supervisorTypes {
   WSSC_CODE: string;
   password?: string;
   profile_image?: string;
+  response?: any;
 }

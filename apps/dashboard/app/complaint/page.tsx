@@ -65,8 +65,8 @@ const Page = () => {
             onChange={(e) => setState(e.target.value)}
           >
             <option value="AllComplaints">Status</option>
-            <option value="Initiated">Initiated</option>
-            <option value="InProgress">InProgress</option>
+            <option value="Initiated">UnAssigned</option>
+            <option value="InProgress">Assigned</option>
             <option value="Completed">Completed</option>
             <option value="Closed">Closed</option>
           </select>
