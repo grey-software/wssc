@@ -24,7 +24,7 @@ export const SignUp = async (
   // below statement will call if there is data not valid
   if (error) return res.send(error.details[0].message);
 
-  const { name, phone, password }: any = req.body;
+  const { name, phone, password, wssc_code }: any = req.body;
   // encrypt password by using bcrypt algorithm
   const salt: string = bcrypt.genSaltSync(10);
   const hash: string = bcrypt.hashSync(password, salt);
@@ -41,6 +41,7 @@ export const SignUp = async (
       const createUser = new citizenModel({
         name: name,
         phone: phone,
+        wssc_code,
         password: hash,
       });
       await createUser.save();
