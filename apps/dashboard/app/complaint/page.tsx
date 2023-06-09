@@ -9,6 +9,7 @@ import { RootState } from "../GlobalState/store";
 import { FetchAllComplaints } from "../GlobalState/ApiCalls/complaintApiCalls";
 import { setActiveTab } from "../GlobalState/TabSlice";
 import TableRow from "../../components/complaint/TableRow";
+import { ColorRing, RotatingLines } from "react-loader-spinner";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Page = () => {
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [state, setState] = useState<string>("AllComplaints");
+  const { loading, error } = useSelector((state: RootState) => state.Complaint);
 
   useEffect(() => {
     FetchAllComplaints(dispatch);
@@ -87,60 +89,85 @@ const Page = () => {
       </div>
 
       {/* SHOWING ALL COMPLAINTS */}
-      <div className="overflow-x-auto shadow-md sm:rounded-lg h-[75vh] py-1">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                S. NO.
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Complaint ID
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Type
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Address
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Filed By
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Date and Time
-              </th>
+      <div
+        className={`overflow-x-auto shadow-md sm:rounded-lg h-[75vh] py-1 ${
+          loading && "flex items-center justify-center"
+        }`}
+      >
+        {loading ? (
+          // <RotatingLines
+          //   strokeColor="green"
+          //   strokeWidth="5"
+          //   animationDuration="0.75"
+          //   width="96"
+          //   visible={true}
+          // />
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+          />
+        ) : (
+          <table
+            className={` w-full text-sm text-left text-gray-500 dark:text-gray-400`}
+          >
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  S. NO.
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Complaint ID
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Type
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Address
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Filed By
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Date and Time
+                </th>
 
-              <th scope="col" className="px-6 py-3">
-                status
-              </th>
+                <th scope="col" className="px-6 py-3">
+                  status
+                </th>
 
-              <th scope="col" className="px-6 py-3">
-                <span>Actions</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {complaints
-              ?.slice(page * 10 - 10, page * 10)
-              .map((complaint, index) => (
-                <>
-                  {state === "AllComplaints" ? (
-                    <TableRow complaint={complaint} index={index} />
-                  ) : (
-                    <>
-                      {state ===
-                        complaint?.status[complaint.status.length - 1]
-                          .state && (
-                        <TableRow complaint={complaint} index={index} />
-                      )}
-                    </>
-                  )}
-                </>
-              ))}
-          </tbody>
-        </table>
+                <th scope="col" className="px-6 py-3">
+                  <span>Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {complaints
+                ?.slice(page * 10 - 10, page * 10)
+                .map((complaint, index) => (
+                  <>
+                    {state === "AllComplaints" ? (
+                      <TableRow complaint={complaint} index={index} />
+                    ) : (
+                      <>
+                        {state ===
+                          complaint?.status[complaint.status.length - 1]
+                            .state && (
+                          <TableRow complaint={complaint} index={index} />
+                        )}
+                      </>
+                    )}
+                  </>
+                ))}
+            </tbody>
+          </table>
+        )}
       </div>
-      {complaints?.length > 10 && (
+      {complaints?.length > 10 && !loading && (
         <div className="flex items-center justify-center w-full -mt-4">
           <div className="flex items-center gap-2 text-2xl">
             <span

@@ -11,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { MdClose } from "react-icons/md";
 import { FetchAllSupervisors } from "../GlobalState/ApiCalls/supervisorApiCalls";
 import { RootState } from "../GlobalState/store";
+import { ColorRing, RotatingLines } from "react-loader-spinner";
 type Props = {};
 
 function Supervisors({}: Props) {
@@ -27,6 +28,9 @@ function Supervisors({}: Props) {
 
   const supervisors = useSelector(
     (state: RootState) => state.Supervisor.supervisorsAll
+  );
+  const { loading, error } = useSelector(
+    (state: RootState) => state.Supervisor
   );
 
   const {
@@ -93,90 +97,106 @@ function Supervisors({}: Props) {
         </div>
       </div>
 
-      <div className="overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                S. NO.
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Supervisor ID
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Phone
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Asigned Complaints
-              </th>
-              <th scope="col" className="px-6 py-3">
-                WSSC_CODE
-              </th>
+      <div
+        className={`overflow-x-auto shadow-md sm:rounded-lg py-1 ${
+          loading && "flex items-center justify-center h-[75vh]"
+        }`}
+      >
+        {loading ? (
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+          />
+        ) : (
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  S. NO.
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Supervisor ID
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Phone
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Asigned Complaints
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  WSSC_CODE
+                </th>
 
-              <th scope="col" className="px-6 py-3">
-                <span>Actions</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {supervisors?.map(
-              (
-                { _id, name, phone, WSSC_CODE, assignComplaints }: any,
-                index: any
-              ) => (
-                <tr
-                  key={index}
-                  className="cursor-pointer bg-white border-b  hover:bg-gray-50 "
-                >
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
+                <th scope="col" className="px-6 py-3">
+                  <span>Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {supervisors?.map(
+                (
+                  { _id, name, phone, WSSC_CODE, assignComplaints }: any,
+                  index: any
+                ) => (
+                  <tr
+                    key={index}
+                    className="cursor-pointer bg-white border-b  hover:bg-gray-50 "
                   >
-                    {index + 1}
-                  </th>
-                  <td
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
-                  >
-                    {_id.slice(-8)}
-                  </td>
-                  <td
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white "
-                  >
-                    {name}
-                  </td>
-                  <td className="px-6 py-4">{phone}</td>
-                  <td className="px-6 py-4">
-                    {assignComplaints ? assignComplaints.length : "NILL"}
-                  </td>
-                  <td className="px-6 py-4 uppercase">{WSSC_CODE}</td>
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
+                    >
+                      {index + 1}
+                    </th>
+                    <td
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
+                    >
+                      {_id.slice(-8)}
+                    </td>
+                    <td
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white "
+                    >
+                      {name}
+                    </td>
+                    <td className="px-6 py-4">{phone}</td>
+                    <td className="px-6 py-4">
+                      {assignComplaints ? assignComplaints.length : "NILL"}
+                    </td>
+                    <td className="px-6 py-4 uppercase">{WSSC_CODE}</td>
 
-                  <td className="px-6 py-4 flex items-center gap-2">
-                    <button
-                      onClick={() => navigate.push(`/supervisors/${_id}`)}
-                      className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all"
-                    >
-                      View
-                    </button>
-                    <button
-                      onClick={() => {
-                        setUpdateModal(true);
-                        setUpdateId(_id);
-                      }}
-                      className="font-bold text-[12px] uppercase text-white bg-inprogessColor py-1 px-3 rounded-lg hover:shadow-lg transition-all"
-                    >
-                      Update
-                    </button>
-                  </td>
-                </tr>
-              )
-            )}
-          </tbody>
-        </table>
+                    <td className="px-6 py-4 flex items-center gap-2">
+                      <button
+                        onClick={() => navigate.push(`/supervisors/${_id}`)}
+                        className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all"
+                      >
+                        View
+                      </button>
+                      <button
+                        onClick={() => {
+                          setUpdateModal(true);
+                          setUpdateId(_id);
+                        }}
+                        className="font-bold text-[12px] uppercase text-white bg-inprogessColor py-1 px-3 rounded-lg hover:shadow-lg transition-all"
+                      >
+                        Update
+                      </button>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
       {modal && (
         <div className="absolute mt-10 h-[80vh] w-full flex items-center justify-center backdrop-blur-sm">
