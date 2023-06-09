@@ -8,12 +8,16 @@ import { AiFillHome } from "react-icons/ai";
 import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import { FetchAllComplaints } from "../GlobalState/ApiCalls/complaintApiCalls";
 import { RootState } from "../GlobalState/store";
+import { ColorRing, RotatingLines } from "react-loader-spinner";
 
 function Feedback() {
   const dispatch = useDispatch();
   const navigate = useRouter();
   const [search, setSearch] = useState("");
 
+  const { loading, error }: any = useSelector(
+    (state: RootState) => state.Complaint
+  );
   useEffect(() => {
     FetchAllComplaints(dispatch);
   }, []);
@@ -56,41 +60,62 @@ function Feedback() {
           </span>
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-4">
-        {complaints.map((complaint, index) => (
+      <div
+        className={`${
+          loading
+            ? "flex items-center justify-center h-[70vh] w-full"
+            : "grid grid-cols-4 gap-4"
+        }`}
+      >
+        {loading ? (
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+          />
+        ) : (
           <>
-            {complaint.feedback && (
-              <div className="p-4 shadow-md flex flex-col gap-2 border-[1px] border-gray-100">
-                <h1 className="text-md font-bold">Feedback</h1>
-                <div className="flex items-center gap-1 text-2xl">
-                  {rates.map((value, index) => (
-                    <div key={index}>
-                      {value <= complaint?.feedback.rating ? (
-                        <span className="text-initiatedColor">
-                          <AiFillStar />
-                        </span>
-                      ) : (
-                        <span className="text-gray-300">
-                          <AiFillStar />
-                        </span>
-                      )}
+            {" "}
+            {complaints.map((complaint, index) => (
+              <>
+                {complaint.feedback && (
+                  <div className="p-4 shadow-md flex flex-col gap-2 border-[1px] border-gray-100">
+                    <h1 className="text-md font-bold">Feedback</h1>
+                    <div className="flex items-center gap-1 text-2xl">
+                      {rates.map((value, index) => (
+                        <div key={index}>
+                          {value <= complaint?.feedback.rating ? (
+                            <span className="text-initiatedColor">
+                              <AiFillStar />
+                            </span>
+                          ) : (
+                            <span className="text-gray-300">
+                              <AiFillStar />
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                      {RatingInWords.map((w, index) => (
+                        <>
+                          {index == complaint?.feedback.rating && (
+                            <span className="text-sm text-initiatedColor font-bold ml-2">
+                              {w}
+                            </span>
+                          )}
+                        </>
+                      ))}
                     </div>
-                  ))}
-                  {RatingInWords.map((w, index) => (
-                    <>
-                      {index == complaint?.feedback.rating && (
-                        <span className="text-sm text-initiatedColor font-bold ml-2">
-                          {w}
-                        </span>
-                      )}
-                    </>
-                  ))}
-                </div>
-                <p className="text-sm">{complaint?.feedback.description}</p>
-              </div>
-            )}
+                    <p className="text-sm">{complaint?.feedback.description}</p>
+                  </div>
+                )}
+              </>
+            ))}
           </>
-        ))}
+        )}
       </div>
     </div>
   );
