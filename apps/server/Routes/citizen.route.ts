@@ -5,6 +5,7 @@ import {
   RetreiveAllUsers,
   DeleteAccount,
   ChangePassword,
+
 } from "../controller/citizen.controller";
 import {
   verifyAdmin,
@@ -19,6 +20,7 @@ Citizen.route("/:id")
   .patch(verifyUser, UpdateUser)
   .delete(verifyUser, DeleteAccount);
 Citizen.patch("/changepassword/:id", verifyUser, ChangePassword);
-Citizen.get("/", verifyToken, RetreiveAllUsers);
+Citizen.get("/", verifyAdmin, RetreiveAllUsers);
+
 
 export default Citizen;

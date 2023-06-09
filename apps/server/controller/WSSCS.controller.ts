@@ -5,6 +5,9 @@ import { WSSC_TYPES } from "../@types/WSSC'sSchema.type";
 import { Types } from "mongoose";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { citizenModel } from "../Models/citizen.schema";
+import { SupervisorModel } from "../Models/supervisor.schema";
+import { ComplaintModel } from "../Models/complaint.schema";
 dotenv.config();
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
@@ -113,5 +116,50 @@ export const AdminLogout = async (
             success: false,
             message: error,
         });
+    }
+};
+
+export const AllRecords = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        
+        const users = await citizenModel.find(); // retrieve no of registered users
+        const supervisors = await SupervisorModel.find(); // retrieve no of superisors registered
+        const complaints = await ComplaintModel.find(); // retrieve no of registered complaints
+
+        // find no of type of complaints registered
+        const solidWasteComplaints = complaints.filter(complaint => complaint.complaintType === 'Solid waste').length;
+        const waterSupplyComplaints = complaints.filter(complaint => complaint.complaintType === 'Water Supply').length;
+        const wasteWaterComplaints = complaints.filter(complaint => complaint.complaintType === 'Waste water').length;
+        const staffComplaints = complaints.filter(complaint => complaint.complaintType === 'Staff').length;
+        const otherComplaints = complaints.filter(complaint => complaint.complaintType === 'Other').length;
+
+        console.log('Solid Waste Complaints:', solidWasteComplaints);
+        console.log('Water Supply Complaints:', waterSupplyComplaints);
+        console.log('Waste Water Complaints:', wasteWaterComplaints);
+        console.log('Staff Complaints:', staffComplaints);
+        console.log('Other Complaints:', otherComplaints);
+
+        res.status(200).json({
+            status: 200,
+            success: true,
+            record: {
+                users: users.length, 
+                suprvisors: supervisors.length,
+                complaints: complaints.length,
+            },
+            complaints: {
+                solidWaste: solidWasteComplaints,
+                waterSupply: waterSupplyComplaints,
+                wasteWater: wasteWaterComplaints,
+                Staff: staffComplaints,
+                Other: otherComplaints
+            }
+        });
+    } catch (error) {
+        res.status(404).json({ status: 404, success: false, message: error });
     }
 };
