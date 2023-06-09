@@ -17,12 +17,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/global_state/store";
 
 const Page: React.FC = ({ params }: any) => {
-  const complaintType = decodeURI(params.complaint);
 
+  const complaintType = decodeURI(params.complaint); // getting complaint type through params and then decoded to show properly
+// getting user data from redux store
   const { name, _id, phone }: any = useSelector(
     (state: RootState) => state.users.UserInfo
   );
-  const { loading } = useSelector((state: RootState) => state.complaints);
+  
+  const { loading } = useSelector((state: RootState) => state.complaints); // loading state 
   const Navigate = useRouter();
   const dispatch = useDispatch();
 
@@ -42,6 +44,7 @@ const Page: React.FC = ({ params }: any) => {
   let [ImageUrl, setImageUrl] = useState<string>();
   let [VideoUrl, setVideoUrl] = useState<string>();
   const [load, setload] = useState(false);
+  
   // Submit Form
   const onSubmit = async (data: ComplainForm) => {
     const { address, desc } = data;

@@ -3,6 +3,8 @@ import { Types } from "mongoose";
 import { citizenModel } from "../Models/citizen.schema";
 import { ICitizen } from "../@types/userSchema.type";
 import bcrypt from "bcryptjs";
+import { SupervisorModel } from "../Models/supervisor.schema";
+import { ComplaintModel } from "../Models/complaint.schema";
 
 // update user info
 export const UpdateUser = async (
@@ -83,7 +85,7 @@ export const RetreiveAllUsers = async (
 ) => {
   try {
     // Only Admin can retrieve all the users data
-    const allUsers = await citizenModel.find().sort({ _id: -1 });
+    const allUsers = await citizenModel.find().sort({ updatedAt: -1 });
 
     res.status(200).json({
       status: 200,

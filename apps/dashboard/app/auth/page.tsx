@@ -34,7 +34,7 @@ const Auth = (props: Props) => {
     <div className="-mt-20 -ml-[280px] h-screen w-screen flex items-center justify-center bg-gray-100">
       <div className="flex items-center rounded-lg overflow-hidden shadow-md shadow-primaryColor-300 p-16 h-[70vh] w-[30%] bg-white">
         <div className="flex flex-col w-full">
-          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-8">
+          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
             Sign in to WSSC Dashboard
           </h1>
           <form
@@ -45,7 +45,7 @@ const Auth = (props: Props) => {
             <div>
               <label
                 htmlFor="username"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Enter WSSC Code
               </label>
@@ -58,7 +58,7 @@ const Auth = (props: Props) => {
                 outline-none
                 block w-full p-2.5 
                 focus:border-primaryColor-500
-                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  
+               
                 ${errors.WSSC_CODE ? "focus:border-red-500" : ""}
                 `}
                 placeholder="wss*******"
@@ -70,7 +70,7 @@ const Auth = (props: Props) => {
             <div>
               <label
                 htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Your Password
               </label>
@@ -84,7 +84,7 @@ const Auth = (props: Props) => {
                     outline-none
                     block w-full p-2.5 
                     focus:border-primaryColor-500
-                    dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  
+                     
                     ${errors.password ? "focus:border-red-500" : ""}
                     `}
               />

@@ -20,9 +20,9 @@ ComplaintRouter.route("/").get(verifyToken, GetAllComplaints);
 ComplaintRouter.route("/:id")
   .get(verifyToken, GetComplaint)
   .patch(verifyToken, AddStatement)
-  .post(verifyToken, CreateComplaint)
   .delete(verifyAdmin, DeleteAllcomplaints);
 
+ComplaintRouter.post("/",verifyToken, CreateComplaint)
 ComplaintRouter.patch("/feedback/:id", verifyToken, CitizenFeedback);
 ComplaintRouter.patch("/response/:id", verifyToken, SupervisorResponse);
 

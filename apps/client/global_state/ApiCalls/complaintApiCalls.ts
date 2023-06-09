@@ -66,7 +66,7 @@ export const CreateComplaint = async (
   // calling API to create complaint in database
   try {
     const res = await API.post(
-      `api/v1/complaints/${userId}`,
+      `api/v1/complaints`,
       {
         userId,
         userName,
@@ -79,6 +79,7 @@ export const CreateComplaint = async (
       },
       config
     );
+    console.log(`this is complaintApi console: ${res.data}`)
     dispatch(NewComplaintSuccess(res.data.CreateComplaint));
     return res.data;
   } catch (err: any) {
@@ -112,3 +113,7 @@ export const FetchAllComplaints = async (dispatch: any): Promise<any> => {
     }
   }
 };
+
+
+
+

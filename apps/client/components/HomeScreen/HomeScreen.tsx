@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { IoIosArrowForward } from "react-icons/io";
 import { complaints_types } from "@/public/Data/data";
@@ -5,7 +6,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FetchAllComplaints } from "@/global_state/ApiCalls/complaintApiCalls";
 import { useDispatch } from "react-redux";
-import { useContext } from "react";
 import { useSelector } from "react-redux";
 import { RootState, store } from "@/global_state/store";
 

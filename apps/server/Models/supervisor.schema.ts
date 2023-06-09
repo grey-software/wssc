@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { SupervisorTypes } from "../@types/supervisorSchema.type";
-import { boolean } from "joi";
 
 const SupervisorSchema = new mongoose.Schema(
   {

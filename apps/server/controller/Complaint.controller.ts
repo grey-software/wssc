@@ -16,9 +16,10 @@ export const CreateComplaint = async (
   const { error }: any = ComplaintValidation(req.body);
   // below statement will call if there is invalid data recieved in req.body
   if (error) return res.send(error.details[0].message);
-  const userId = req.params.id;
+  const userId = req.body.userId;
   const citizenId = req.user.id;
 
+   console.log(req.body)
   if (userId == citizenId) {
     try {
       const CreateComplaint = new ComplaintModel(req.body);
@@ -215,9 +216,7 @@ export const GetAllComplaints = async (
     if (req.user.isAdmin) {
       allComplaints = await ComplaintModel.find().sort({ _id: -1 });
     } else {
-      allComplaints = await ComplaintModel.find({ userId: userId }).sort({
-        _id: -1,
-      });
+      allComplaints = await ComplaintModel.find({ userId: userId }).sort({ updatedAt: -1 });
     }
     res.status(200).json({
       status: 200,

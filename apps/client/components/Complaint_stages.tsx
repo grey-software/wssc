@@ -16,6 +16,7 @@ type Props = {
 function Complaint_stages({ status, complaintId, isfeedback }: Props) {
   const [feedback, setfeedback] = useState(false);
 
+  // JSX section
   return (
     <>
       <VerticalTimeline layout="1-column-left" lineColor="#aaa">

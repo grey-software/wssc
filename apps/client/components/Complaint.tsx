@@ -23,6 +23,7 @@ const Complaint = ({
   ImageUrl,
 }: props) => {
   const complaintPic: any = ImageUrl != undefined ? ImageUrl : DefaultPic;
+  
   const navigate = useRouter();
   const handleClick = (id: any) => {
     navigate.push(`/complaint/timeline/${id}`);

@@ -24,6 +24,7 @@ export const SignUp_validate = (data: ICitizen): Joi.ValidationResult<any> => {
             .required(),
         
         profile_image: Joi.string(),
+        wssc_code: Joi.string(),
     })
 
     const valid = schema.validate(data);

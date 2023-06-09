@@ -7,7 +7,7 @@ import bycrypt from "bcryptjs";
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const SECRET_KEY: any = process.env.JWT_KEY;
 
-// REGESTER SUPERVISOR
+// REGESTER SUPERVISOR CONTROLLER 
 export const RegisterSupervisor = async (
   req: Request,
   res: Response,
@@ -34,8 +34,10 @@ export const RegisterSupervisor = async (
         password: hash,
       });
       await register.save();
-      res.status(200).json(register);
-      next();
+      const { password, ...detail } = register._doc;
+
+      res.status(200).json(detail);
+
     } else {
       res.status(400).json({
         status: 400,
@@ -52,7 +54,7 @@ export const RegisterSupervisor = async (
   }
 };
 
-// SIGN IN SUPERVISOR
+// SIGN IN SUPERVISOR CONTROLLER
 export const SignInSupervisor = async (
   req: Request,
   res: Response,
@@ -91,7 +93,7 @@ export const SignInSupervisor = async (
     const token: string = jwt.sign(
       {
         id: verifySupervisor._id,
-        phone: verifySupervisor.phone,
+        isSupervisor: true,
         WSSC_CODE: verifySupervisor.WSSC_CODE,
       },
       SECRET_KEY
@@ -134,6 +136,7 @@ export const GetSupervisor = async (
   }
 };
 
+// UPDATE SUPERVISOR INFO CONTROLLER
 export const UpdateSupervisor = async (req: Request, res: Response) => {
   const supervisorId: string = req.params.id;
 
@@ -147,7 +150,7 @@ export const UpdateSupervisor = async (req: Request, res: Response) => {
     res.status(200).json({
       status: 200,
       success: true,
-      message: "Supervisor Updated Successfully",
+      message: "Supervisor information Updated Successfully",
       data: supervisor,
     });
   } catch (error) {
@@ -195,7 +198,7 @@ export const GetAllSupervisors = async (
   try {
     const allSupervisors = await SupervisorModel.find({
       isDeleted: false,
-    }).sort({ _id: -1 });
+    }).sort({ updatedAt: -1 });
 
     res.status(200).json({
       status: 200,
@@ -203,7 +206,6 @@ export const GetAllSupervisors = async (
       Results: allSupervisors.length,
       data: allSupervisors,
     });
-    next();
   } catch (error) {
     res.status(404).json({ status: 404, success: false, message: error });
   }

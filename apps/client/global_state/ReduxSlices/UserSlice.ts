@@ -7,6 +7,7 @@ export interface user {
   name?: string;
   phone?: string;
   email?: string;
+  wssc_code: string;
   address?: string;
   password?: string;
 }
