@@ -5,6 +5,7 @@ import {
   AssignComplaintSuccess,
   GetSingleComplaintSuccess,
   APIRequestError,
+  AddStatementSuccess,
 } from "../complatintSlice";
 import { config } from "./config";
 
@@ -70,8 +71,8 @@ export const AddStatement = async (
       { wsscStatement },
       config
     );
-
-    dispatch(AssignComplaintSuccess());
+    console.log(res.data);
+    dispatch(AddStatementSuccess(wsscStatement));
     return res.data;
   } catch (err: any) {
     if (err.response?.status == 401) {

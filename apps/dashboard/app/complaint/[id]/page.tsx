@@ -15,6 +15,7 @@ import {
   AddStatement,
 } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
 import { GetSingleSupervisor } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
+import { ColorRing, RotatingLines } from "react-loader-spinner";
 
 const Page = ({ params }: any) => {
   const id = params.id;
@@ -99,7 +100,7 @@ const Page = ({ params }: any) => {
             <span>Complaint</span>
           </span>
         </div>
-        {complaint?.status[complaint.status.length - 1].state ===
+        {complaint?.status[complaint?.status?.length - 1].state ===
         "Initiated" ? (
           <div className="flex items-center gap-4">
             <select
@@ -141,213 +142,250 @@ const Page = ({ params }: any) => {
         )}
       </div>
       {/* showing single  Complaint */}
-      <div className="grid grid-cols-2 w-full gap-6 text-sm">
+      <div
+        className={`${
+          loading
+            ? "flex items-center justify-center h-[70vh]"
+            : "grid grid-cols-2 w-full gap-6 text-sm"
+        } `}
+      >
         {/* Complaint details */}
-        <div className=" shadow-md p-5 rounded-md border-2 border-gray-50">
-          <div className="flex items-center justify-between mb-1">
-            <h1 className=" font-bold text-md">Complaint Details</h1>
-            <div className="flex items-center gap-2 ">
-              <span>Status</span>
-              <span
-                className={`text-white  px-2 py-1 rounded ${
-                  complaint?.status[complaint.status.length - 1].state ===
-                  "Initiated"
-                    ? "bg-initiatedColor"
-                    : ""
-                }  ${
-                  complaint?.status[complaint.status.length - 1].state ===
-                  "InProgress"
-                    ? "bg-inprogessColor"
-                    : ""
-                } ${
-                  complaint?.status[complaint.status.length - 1].state ===
-                  "Completed"
-                    ? "bg-completedColor"
-                    : ""
-                } ${
-                  complaint?.status[complaint.status.length - 1].state ===
-                  "Closed"
-                    ? "bg-closedColor"
-                    : ""
-                }`}
-              >
-                {complaint?.status[complaint.status.length - 1].state}
-              </span>
-            </div>
-          </div>
-          <div className="w-full border-[1px] border-gray-300"></div>
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            <div className="flex items-center gap-2">
-              <span className="font-semibold">Type</span>
-              <span className="bg-feedbackColor px-2 py-1 rounded text-white">
-                {complaint?.complaintType}
-              </span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="font-semibold">Intiated At</span>
-              <span>{complaint?.createdAt.split("T")[0]}</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="font-semibold">ID</span>
-              <span className="uppercase">{complaint?._id.slice(-8)}</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="font-semibold">Address</span>
-              <span>{complaint?.complaintAddress}</span>
-            </div>
-            {complaint?.complaintDes && (
-              <div className="flex items-start gap-2 col-span-2">
-                <span className="font-semibold">Description</span>
-                <span>{complaint.complaintDes}</span>
+        {loading ? (
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+          />
+        ) : (
+          <>
+            <div className=" shadow-md p-5 rounded-md border-2 border-gray-50">
+              <div className="flex items-center justify-between mb-1">
+                <h1 className=" font-bold text-md">Complaint Details</h1>
+                <div className="flex items-center gap-2 ">
+                  <span>Status</span>
+                  <span
+                    className={`text-white  px-2 py-1 rounded ${
+                      complaint?.status[complaint.status.length - 1].state ===
+                      "Initiated"
+                        ? "bg-initiatedColor"
+                        : ""
+                    }  ${
+                      complaint?.status[complaint.status.length - 1].state ===
+                      "InProgress"
+                        ? "bg-inprogessColor"
+                        : ""
+                    } ${
+                      complaint?.status[complaint.status.length - 1].state ===
+                      "Completed"
+                        ? "bg-completedColor"
+                        : ""
+                    } ${
+                      complaint?.status[complaint.status.length - 1].state ===
+                      "Closed"
+                        ? "bg-closedColor"
+                        : ""
+                    }`}
+                  >
+                    {complaint?.status[complaint.status.length - 1].state}
+                  </span>
+                </div>
               </div>
-            )}
+              <div className="w-full border-[1px] border-gray-300"></div>
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold">Type</span>
+                  <span className="bg-feedbackColor px-2 py-1 rounded text-white">
+                    {complaint?.complaintType}
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold">Intiated At</span>
+                  <span>{complaint?.createdAt.split("T")[0]}</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold">ID</span>
+                  <span className="uppercase">{complaint?._id.slice(-8)}</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold">Address</span>
+                  <span>{complaint?.complaintAddress}</span>
+                </div>
+                {complaint?.complaintDes && (
+                  <div className="flex items-start gap-2 col-span-2">
+                    <span className="font-semibold">Description</span>
+                    <span>{complaint.complaintDes}</span>
+                  </div>
+                )}
 
-            <div className="flex items-start gap-2 col-span-2">
-              {complaint?.wsscStatement ? (
-                <>
-                  <span className="font-semibold">Statement</span>
-                  <span>{complaint.wsscStatement}</span>
-                </>
-              ) : (
-                <>
-                  <textarea
-                    cols={30}
-                    rows={2}
-                    placeholder="Enter Statement"
-                    onChange={(e) => setWsscStatement(e.target.value)}
-                    value={wsscStatement}
-                    className="bg-gray-50 border-2 border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                <div className="flex items-start gap-2 col-span-2">
+                  {complaint?.wsscStatement ? (
+                    <>
+                      <span className="font-semibold">Statement</span>
+                      <span>{complaint.wsscStatement}</span>
+                    </>
+                  ) : (
+                    <>
+                      <textarea
+                        cols={30}
+                        rows={2}
+                        placeholder="Enter Statement"
+                        onChange={(e) => setWsscStatement(e.target.value)}
+                        value={wsscStatement}
+                        className="bg-gray-50 border-2 border-gray-300 text-gray-900 sm:text-sm rounded-lg
                     outline-none
                     block w-full px-2 p-1
                     focus:border-primaryColor-500"
-                  ></textarea>
-                  <button
-                    onClick={handleStatment}
-                    className="px-2 py-1 bg-primaryColor-300 rounded-md hover:bg-primaryColor-500 hover:text-white transition-all text-feedbackColor text-[10px] font-bold"
-                  >
-                    {loading ? "Processing..." : "Add Statement"}
-                  </button>
-                </>
+                      ></textarea>
+                      <button
+                        onClick={handleStatment}
+                        className="px-2 py-1 bg-primaryColor-300 rounded-md hover:bg-primaryColor-500 hover:text-white transition-all text-feedbackColor text-[10px] font-bold"
+                      >
+                        {loading ? "Processing..." : "Add Statement"}
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* User details */}
+            <div className="shadow-md p-5 rounded-md border-2 border-gray-50">
+              <h1 className="mb-1 font-bold text-md">User Details</h1>
+              <div className="w-full border-[1px] border-gray-300"></div>
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold">UserName</span>
+                  <span>{complaint?.userName}</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold">User ID</span>
+                  <span className="uppercase">
+                    {complaint?.userId.slice(-8)}
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold">Contact</span>
+                  <span>{complaint?.phone}</span>
+                </div>
+                <div></div>
+                {complaint?.feedback ? (
+                  <div className="p-4 shadow-md flex flex-col gap-2">
+                    <h1 className="text-md font-bold">Feedback</h1>
+                    <div className="flex items-center gap-1 text-2xl">
+                      {rates.map((value, index) => (
+                        <div key={index}>
+                          {value <= complaint.feedback.rating ? (
+                            <span className="text-initiatedColor">
+                              <AiFillStar />
+                            </span>
+                          ) : (
+                            <span className="text-gray-300">
+                              <AiFillStar />
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                      {RatingInWords.map((w, index) => (
+                        <>
+                          {index == complaint.feedback.rating && (
+                            <span className="text-sm text-initiatedColor font-bold ml-2">
+                              {w}
+                            </span>
+                          )}
+                        </>
+                      ))}
+                    </div>
+                    <p className="text-sm">{complaint.feedback.description}</p>
+                  </div>
+                ) : (
+                  <h1 className="font-semibold text-gray-400">
+                    No Feedback yet
+                  </h1>
+                )}
+              </div>
+            </div>
+
+            {/* Supervisor details */}
+            <div
+              onClick={() => navigate.push(`/supervisors/${supervisor._id}`)}
+              className="cursor-pointer shadow-md p-5 rounded-md border-2 border-gray-50"
+            >
+              <h1 className="mb-1 font-bold text-md">Supervisor Details</h1>
+              <div className="w-full border-[1px] border-gray-300"></div>
+              {complaint?.status[complaint.status.length - 1].state !==
+              "Initiated" ? (
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div className="flex items-start gap-2">
+                    <span className="font-semibold">Name</span>
+                    <span>{supervisor?.name}</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="font-semibold">Supervisor ID</span>
+                    <span className="uppercase">
+                      {supervisor?._id?.slice(-8)}
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="font-semibold">Contact</span>
+                    <span>{supervisor?.phone}</span>
+                  </div>
+                  <div></div>
+                  {complaint?.response ? (
+                    <div className="p-4 col-span-2 shadow-md flex flex-col gap-2">
+                      <h1 className="text-md font-bold">Response</h1>
+                      <p className="text-sm">
+                        {complaint?.response?.description}
+                      </p>
+                    </div>
+                  ) : (
+                    <h1 className="font-semibold text-gray-400">
+                      No Response yet
+                    </h1>
+                  )}
+                </div>
+              ) : (
+                <h1 className="mt-4 font-semibold text-gray-400">
+                  Not assigned yet
+                </h1>
               )}
             </div>
-          </div>
-        </div>
 
-        {/* User details */}
-        <div className="shadow-md p-5 rounded-md border-2 border-gray-50">
-          <h1 className="mb-1 font-bold text-md">User Details</h1>
-          <div className="w-full border-[1px] border-gray-300"></div>
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            <div className="flex items-start gap-2">
-              <span className="font-semibold">UserName</span>
-              <span>{complaint?.userName}</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="font-semibold">User ID</span>
-              <span className="uppercase">{complaint?.userId.slice(-8)}</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="font-semibold">Contact</span>
-              <span>{complaint?.phone}</span>
-            </div>
-            <div></div>
-            {complaint?.feedback ? (
-              <div className="p-4 shadow-md flex flex-col gap-2">
-                <h1 className="text-md font-bold">Feedback</h1>
-                <div className="flex items-center gap-1 text-2xl">
-                  {rates.map((value, index) => (
-                    <div key={index}>
-                      {value <= complaint.feedback.rating ? (
-                        <span className="text-initiatedColor">
-                          <AiFillStar />
-                        </span>
-                      ) : (
-                        <span className="text-gray-300">
-                          <AiFillStar />
-                        </span>
-                      )}
-                    </div>
-                  ))}
-                  {RatingInWords.map((w, index) => (
-                    <>
-                      {index == complaint.feedback.rating && (
-                        <span className="text-sm text-initiatedColor font-bold ml-2">
-                          {w}
-                        </span>
-                      )}
-                    </>
-                  ))}
-                </div>
-                <p className="text-sm">{complaint.feedback.description}</p>
-              </div>
-            ) : (
-              <h1 className="font-semibold text-gray-400">No Feedback yet</h1>
-            )}
-          </div>
-        </div>
-
-        {/* Supervisor details */}
-        <div
-          onClick={() => navigate.push(`/supervisors/${supervisor._id}`)}
-          className="cursor-pointer shadow-md p-5 rounded-md border-2 border-gray-50"
-        >
-          <h1 className="mb-1 font-bold text-md">Supervisor Details</h1>
-          <div className="w-full border-[1px] border-gray-300"></div>
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            <div className="flex items-start gap-2">
-              <span className="font-semibold">Name</span>
-              <span>{supervisor?.name}</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="font-semibold">Supervisor ID</span>
-              <span className="uppercase">{supervisor?._id?.slice(-8)}</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="font-semibold">Contact</span>
-              <span>{supervisor?.phone}</span>
-            </div>
-            <div></div>
-            {complaint?.response ? (
-              <div className="p-4 col-span-2 shadow-md flex flex-col gap-2">
-                <h1 className="text-md font-bold">Response</h1>
-                <p className="text-sm">{complaint?.response?.description}</p>
-              </div>
-            ) : (
-              <h1 className="font-semibold text-gray-400">No Response yet</h1>
-            )}
-          </div>
-        </div>
-
-        {/* complaint media */}
-        <div className="shadow-md p-5 rounded-md border-2 border-gray-50">
-          <h1 className="mb-1 font-bold text-md">Complaint Media</h1>
-          <div className="w-full border-[1px] border-gray-300 mb-4"></div>
-          <div className="grid grid-cols-2 gap-4 mt-4 w-full">
-            {complaint?.ImageUrl && complaint.VideoUrl ? (
-              <>
-                {" "}
-                {complaint?.ImageUrl && (
-                  <Image
-                    src={complaint?.ImageUrl}
-                    className="h-full "
-                    width={300}
-                    height={100}
-                    alt="Complaint Picture"
-                  />
+            {/* complaint media */}
+            <div className="shadow-md p-5 rounded-md border-2 border-gray-50">
+              <h1 className="mb-1 font-bold text-md">Complaint Media</h1>
+              <div className="w-full border-[1px] border-gray-300 mb-4"></div>
+              <div className="grid grid-cols-2 gap-4 mt-4 w-full">
+                {complaint?.ImageUrl && complaint.VideoUrl ? (
+                  <>
+                    {" "}
+                    {complaint?.ImageUrl && (
+                      <Image
+                        src={complaint?.ImageUrl}
+                        className="h-full "
+                        width={300}
+                        height={100}
+                        alt="Complaint Picture"
+                      />
+                    )}
+                    {complaint?.VideoUrl && (
+                      <video className="h-full" controls>
+                        <source src={complaint?.VideoUrl} />
+                      </video>
+                    )}
+                  </>
+                ) : (
+                  <h1 className="font-semibold text-gray-400">
+                    The Citizen have not provided any Media
+                  </h1>
                 )}
-                {complaint?.VideoUrl && (
-                  <video className="h-full" controls>
-                    <source src={complaint?.VideoUrl} />
-                  </video>
-                )}
-              </>
-            ) : (
-              <h1 className="font-semibold text-gray-400">
-                The Citizen have not provided any Media
-              </h1>
-            )}
-          </div>
-        </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

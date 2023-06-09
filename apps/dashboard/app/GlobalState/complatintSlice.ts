@@ -25,11 +25,11 @@ const complaintSlice = createSlice({
     },
     AssignComplaintSuccess: (state) => {
       state.loading = false;
-      toast.success("Complaint Assigned Successfully", {
-        position: "top-center",
-        style: { width: "auto", height: "auto" },
-        duration: 3000,
-      });
+    },
+
+    AddStatementSuccess: (state, action) => {
+      state.loading = false;
+      state.complaint.wsscStatement = action.payload;
     },
     GetSingleComplaintSuccess: (state, action) => {
       state.loading = false;
@@ -50,6 +50,7 @@ export const {
   ApiRequestStart,
   GetComplaintsSuccess,
   AssignComplaintSuccess,
+  AddStatementSuccess,
   GetSingleComplaintSuccess,
   APIRequestError,
 } = complaintSlice.actions;

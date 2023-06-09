@@ -8,6 +8,7 @@ import { BsCaretLeftSquareFill, BsCaretRightSquareFill } from "react-icons/bs";
 import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import { FetchUsers } from "../GlobalState/ApiCalls/userApiCalls";
 import { RootState } from "../GlobalState/store";
+import { ColorRing, RotatingLines } from "react-loader-spinner";
 
 function Users() {
   const dispatch = useDispatch();
@@ -20,6 +21,8 @@ function Users() {
   useEffect(() => {
     FetchUsers(dispatch);
   }, []);
+
+  const { pending, error }: any = useSelector((state: RootState) => state.User);
 
   const users = useSelector((state: RootState) => state.User.users);
 
@@ -74,81 +77,99 @@ function Users() {
       </div>
 
       {/* SHOWING ALL USERS */}
-      <div className="overflow-x-auto shadow-md sm:rounded-lg h-[75vh] py-1">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                S. NO.
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Citizen ID
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Phone
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Address
-              </th>
-              <th scope="col" className="px-6 py-3">
-                email
-              </th>
+      <div
+        className={`overflow-x-auto shadow-md sm:rounded-lg h-[75vh] py-1 ${
+          pending && "flex items-center justify-center"
+        }`}
+      >
+        {pending ? (
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+          />
+        ) : (
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  S. NO.
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Citizen ID
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Phone
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Address
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  email
+                </th>
 
-              <th scope="col" className="px-6 py-3">
-                <span>Actions</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {users
-              .slice(page * 10 - 10, page * 10)
-              .map(({ _id, name, phone, address, email }: any, index: any) => (
-                <tr
-                  key={index}
-                  className="cursor-pointer bg-white border-b  hover:bg-gray-50 "
-                >
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
-                  >
-                    {index + 1}
-                  </th>
-                  <td
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
-                  >
-                    {_id.slice(-8)}
-                  </td>
-                  <td
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white "
-                  >
-                    {name}
-                  </td>
-                  <td className="px-6 py-4">{phone}</td>
-                  <td className="px-6 py-4">{address}</td>
-                  <td className="px-6 py-4">{email}</td>
-
-                  <td className="px-6 py-4">
-                    <button
-                      onClick={() => {
-                        setModal(true);
-                        setUserId(_id);
-                      }}
-                      className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all"
+                <th scope="col" className="px-6 py-3">
+                  <span>Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {users
+                .slice(page * 10 - 10, page * 10)
+                .map(
+                  ({ _id, name, phone, address, email }: any, index: any) => (
+                    <tr
+                      key={index}
+                      className="cursor-pointer bg-white border-b  hover:bg-gray-50 "
                     >
-                      View
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
+                      >
+                        {index + 1}
+                      </th>
+                      <td
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
+                      >
+                        {_id.slice(-8)}
+                      </td>
+                      <td
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white "
+                      >
+                        {name}
+                      </td>
+                      <td className="px-6 py-4">{phone}</td>
+                      <td className="px-6 py-4">{address}</td>
+                      <td className="px-6 py-4">{email}</td>
+
+                      <td className="px-6 py-4">
+                        <button
+                          onClick={() => {
+                            setModal(true);
+                            setUserId(_id);
+                          }}
+                          className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all"
+                        >
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                )}
+            </tbody>
+          </table>
+        )}
       </div>
-      {users?.length > 10 && (
+      {users?.length > 10 && !pending && (
         <div className="flex items-center justify-center w-full -mt-4">
           <div className="flex items-center gap-2 text-2xl">
             <span
