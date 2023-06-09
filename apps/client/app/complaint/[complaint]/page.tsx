@@ -127,12 +127,14 @@ const Page: React.FC = ({ params }: any) => {
       {load ? (
         <Loading />
       ) : (
-        <div className="md:w-[20%] mt-20 w-[93%] mx-3">
-          <div className="flex items-center justify-between">
-            <HiArrowLeft
-              onClick={GoHomePage}
-              className="text-[28px] text-primaryColor-500"
-            />
+        <div className="w-[370px] sm:w-[450px]">
+          <div className="flex items-center justify-between mb-4 ">
+            <span className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all cursor-pointer">
+              <HiArrowLeft
+                onClick={GoHomePage}
+                className="text-[28px] text-primaryColor-500"
+              />
+            </span>
             <h3 className="flex gap-2 text-lg text-primaryColor-500">
               <span className="text-headingColor-400 opacity-75 font-bold">
                 Complaint:
@@ -146,7 +148,7 @@ const Page: React.FC = ({ params }: any) => {
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-4 mt-6 rounded-3xl px-[20px] pt-6 pb-8"
+            className="flex flex-col gap-4 mt-6 rounded-3xl pt-6 pb-8 px-4"
           >
             <div className="flex flex-col">
               <label className="text-gray-500 text-[18px]">

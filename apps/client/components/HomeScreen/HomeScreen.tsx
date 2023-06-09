@@ -18,8 +18,8 @@ const HomeScreen = () => {
     FetchAllComplaints(dispatch);
   };
   return (
-    <div className="container py-3">
-      <div className="complaints-record bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-md shadow-gray-200 rounded-full p-2 mt-20">
+    <>
+      <div className="complaints-record bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-md shadow-gray-200 rounded-full p-2">
         <span
           onClick={() => handleClick("Pending")}
           className="pending cursor-pointer hover:bg-gray-100 flex flex-col justify-center items-center border-r border-gray-300  flex-1 "
@@ -75,7 +75,7 @@ const HomeScreen = () => {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
