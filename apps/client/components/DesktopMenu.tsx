@@ -5,6 +5,7 @@ import { BiUserCircle } from "react-icons/bi";
 import { FiShare2 } from "react-icons/fi";
 import { MdOutlinePrivacyTip } from "react-icons/md";
 import { AiOutlineFileProtect } from "react-icons/ai";
+import { TbFileStack } from "react-icons/tb";
 import { TbLogout } from "react-icons/tb";
 import { FaEdit } from "react-icons/fa";
 import { MdOutlineContactPhone } from "react-icons/md";
@@ -72,6 +73,13 @@ const DesktopMenu = () => {
           >
             <BiUserCircle className="text-[24px] text-primaryColor-500" />
             <span className="text-gray-700">View Profile</span>
+          </Link>
+          <Link
+            href={`/complaint/stages/AllComplaints`}
+            className="flex items-center gap-2 text-sm font-semibold px-4 py-2 hover:bg-gray-100 rounded-full transition-all w-40"
+          >
+            <TbFileStack className="text-[24px] text-primaryColor-500" />
+            <span className="text-gray-700">Complaints</span>
           </Link>
 
           <button

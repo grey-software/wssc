@@ -19,17 +19,17 @@ const HomeScreen = () => {
   };
   return (
     <>
-      <div className="complaints-record bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-md shadow-gray-200 rounded-full p-2">
+      <div className="complaints-record bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-md shadow-gray-200 rounded-full">
         <span
           onClick={() => handleClick("Pending")}
-          className="pending cursor-pointer hover:bg-gray-100 flex flex-col justify-center items-center border-r border-gray-300  flex-1 "
+          className="p-2 pending cursor-pointer hover:bg-gray-100 flex flex-col justify-center items-center border-r border-gray-300  flex-1 "
         >
           <h3 className="font-bold">02</h3>
           <p className="text-sm">Pending complaints</p>
         </span>
         <span
           onClick={() => handleClick("Resolved")}
-          className="all-complaints cursor-pointer hover:bg-gray-200  flex flex-col justify-center items-center border-r border-gray-300 flex-1"
+          className="p-2 all-complaints cursor-pointer hover:bg-gray-200  flex flex-col justify-center items-center border-r border-gray-300 flex-1"
         >
           <h3 className="font-bold">03</h3>
           <p className="text-sm">Resolved complaints</p>
@@ -37,7 +37,7 @@ const HomeScreen = () => {
 
         <span
           onClick={() => handleClick("AllComplaints")}
-          className="arrow cursor-pointer hover:bg-gray-200 w-10 flex justify-center items-center"
+          className="p-2 arrow cursor-pointer hover:bg-gray-200 w-10 flex justify-center items-center"
         >
           <IoIosArrowForward className="text-3xl text-green-500 font-extrabold" />
         </span>
@@ -49,11 +49,11 @@ const HomeScreen = () => {
         </h2>
 
         {/* complaint-types */}
-        <div className="complaint-types flex justify-around flex-wrap">
+        <div className="complaint-types grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 justify-center mx-4">
           {complaints_types.map((complaint, index) => (
             <div
               key={index}
-              className="wrapper overflow-hidden cursor-pointer mt-5 w-[38%] border-1 border-gray-300 rounded-lg shadow-sm shadow-gray-400 flex flex-col justify-center items-center"
+              className={`wrapper overflow-hidden cursor-pointer mt-5 border-1 border-gray-300 rounded-lg shadow-sm shadow-gray-400 flex flex-col  items-center hover:shadow-md transition-all`}
             >
               <Link
                 className="h-[60%] w-[100%]"
