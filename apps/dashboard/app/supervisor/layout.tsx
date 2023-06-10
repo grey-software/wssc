@@ -17,15 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={` ${inter.className}`}>
+      <section className={`-ml-[280px] -mt-14 ${inter.className}`}>
         <Providers>
           {/* React-Toast notification */}
           <Notification />
           <Navbar />
             <main className=" ">{children}</main>
         </Providers>
-      </body>
-    </html>
+      </section>
   );
 }
