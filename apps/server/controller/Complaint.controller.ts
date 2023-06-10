@@ -19,7 +19,7 @@ export const CreateComplaint = async (
   const userId = req.body.userId;
   const citizenId = req.user.id;
 
-  console.log(req.body)
+  console.log(req.body);
   if (userId == citizenId) {
     try {
       const CreateComplaint = new ComplaintModel(req.body);
@@ -47,12 +47,12 @@ export const GetComplaint = async (
   try {
     const complaint:
       | (IComplaint & {
-        _id: Types.ObjectId;
-        _doc: any;
-      })
+          _id: Types.ObjectId;
+          _doc: any;
+        })
       | null = await ComplaintModel.findById({
-        _id: complaintId,
-      });
+      _id: complaintId,
+    });
     res.status(200).json({
       status: 200,
       success: true,
@@ -144,9 +144,9 @@ export const UpdateComplaint = async (
     if (req.user.isAdmin) {
       const complaint:
         | (IComplaint & {
-          _id: Types.ObjectId;
-          _doc: any;
-        })
+            _id: Types.ObjectId;
+            _doc: any;
+          })
         | null = await ComplaintModel.findById(complaintId);
       let status;
       let statusLength = complaint?.status.length;
@@ -214,12 +214,9 @@ export const GetAllComplaints = async (
     let allComplaints;
     let query = {}; // query variable is used to store the userType and will fetch all complaints according to the logged User
 
-    if (req.user.isAdmin)
-      query = {};
-    else if (req.user.isSupervisor)
-      query = { supervisorId: userId };
-    else
-      query = { userId: userId };
+    if (req.user.isAdmin) query = {};
+    else if (req.user.isSupervisor) query = { supervisorId: userId };
+    else query = { userId: userId };
 
     allComplaints = await ComplaintModel.find(query).sort({ updatedAt: -1 });
 
@@ -308,9 +305,9 @@ export const CitizenFeedback = async (
   try {
     const complaint:
       | (IComplaint & {
-        _id: Types.ObjectId;
-        _doc: any;
-      })
+          _id: Types.ObjectId;
+          _doc: any;
+        })
       | null = await ComplaintModel.findById(complaintId);
 
     if (complaint.userId == LoggedId) {
@@ -357,9 +354,9 @@ export const SupervisorResponse = async (
   try {
     const complaint:
       | (IComplaint & {
-        _id: Types.ObjectId;
-        _doc: any;
-      })
+          _id: Types.ObjectId;
+          _doc: any;
+        })
       | null = await ComplaintModel.findById(complaintId);
 
     if (complaint.supervisorId == LoggedId) {

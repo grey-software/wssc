@@ -22,7 +22,7 @@ const HomeScreen = () => {
       <div className="bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-md shadow-gray-200 rounded-full">
         <span
           onClick={() => handleClick("Pending")}
-          className="p-2 pending cursor-pointer hover:bg-gray-100 flex flex-col justify-center items-center border-r border-gray-300  flex-1 "
+          className="p-[6px] sm:p-2 md:p-2 lg:p-2 pending cursor-pointer hover:bg-gray-100 flex flex-col justify-center items-center border-r border-gray-300  flex-1 "
         >
           <h3 className="font-bold">02</h3>
           <p className="text-sm">Pending complaints</p>

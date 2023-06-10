@@ -96,7 +96,12 @@ export const SignIn = async (
       });
     // if the user credential is okay then we assign/send jwt token for authentication and authorization
     const token: string = jwt.sign(
-      { id: User._id, name: User.name, phone: User.phone },
+      {
+        id: User._id,
+        name: User.name,
+        phone: User.phone,
+        orgCode: User.wssc_code,
+      },
       SECRET_KEY
     );
 

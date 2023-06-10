@@ -85,7 +85,10 @@ export const RetreiveAllUsers = async (
 ) => {
   try {
     // Only Admin can retrieve all the users data
-    const allUsers = await citizenModel.find().sort({ updatedAt: -1 });
+    const code = req.user.orgCode;
+    const allUsers = await citizenModel
+      .find({ wssc_code: code })
+      .sort({ updatedAt: -1 });
 
     res.status(200).json({
       status: 200,

@@ -5,6 +5,8 @@ import {
   GetSupervisorsSuccess,
   GetSingleSupervisorSuccess,
   ApiRequestError,
+  RegisterNewSupervisor,
+  DeleteSupervisorSuccess,
 } from "../supervisorSlice";
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
@@ -27,6 +29,60 @@ export const GetSingleSupervisor = async (
       } else {
         dispatch(ApiRequestError("Something went wrong"));
         return error.response.status;
+      }
+    }
+  }
+};
+
+// REGISTER SUPEVISOR
+export const RegisterSupervisor = async (
+  userData: any,
+  dispatch: any
+): Promise<any> => {
+  console.log(userData);
+  const { name, phone, password } = userData;
+  dispatch(ApiRequestStart());
+
+  try {
+    const res = await API.post(
+      "api/v1/supervisors/register",
+      { name, phone, password },
+      { withCredentials: true }
+    );
+    console.log(res.data);
+    dispatch(RegisterNewSupervisor(res.data));
+    return res.status;
+  } catch (err: any) {
+    if (err.response) {
+      if (err.response.status == 400) {
+        dispatch(ApiRequestError(err.response.data));
+        return err.response.status;
+      } else if (err.response.status == 500) {
+        dispatch(ApiRequestError(err.response.statusText));
+        return err.response.status;
+      }
+    }
+  }
+};
+
+// DELETE SUPERVISOR
+export const DeleteSupervisor = async (
+  supervisorId: any,
+  dispatch: any
+): Promise<any> => {
+  dispatch(ApiRequestStart());
+  try {
+    const res = await API.delete(`api/v1/supervisors/${supervisorId}`, config);
+    dispatch(DeleteSupervisorSuccess());
+    console.log(res);
+    return res.data;
+  } catch (err: any) {
+    if (err.response) {
+      if (err.response.status == 401) {
+        dispatch(ApiRequestError(err.response.data));
+        return err.response.status;
+      } else if (err.response.status == 500) {
+        return err.response.status;
       }
     }
   }
