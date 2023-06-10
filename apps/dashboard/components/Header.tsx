@@ -17,7 +17,6 @@ const Header = () => {
   );
   const activeTab = useSelector((state: RootState) => state.Tab.index);
   const currentTab = items.find((x) => x.id === activeTab);
-  console.log(activeTab, currentTab);
   const dispatch = useDispatch();
   return (
     <div>

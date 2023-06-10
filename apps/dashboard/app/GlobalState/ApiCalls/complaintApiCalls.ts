@@ -7,30 +7,9 @@ import {
   APIRequestError,
   AddStatementSuccess,
 } from "../complatintSlice";
-import { config } from "./config";
+import { config } from "../config";
 
-const API = axios.create({ baseURL: "http://localhost:7000" });
-
-// GET SINGLE COMPLAINT
-export const FetchComplaint = async (
-  dispatch: any,
-  complaintId: any
-): Promise<any> => {
-  dispatch(ApiRequestStart());
-  try {
-    const res = await API.get(`api/v1/complaints/${complaintId}`, config);
-    dispatch(GetSingleComplaintSuccess(res.data.complaint));
-    return res.data;
-  } catch (err: any) {
-    if (err.response?.status == 401) {
-      dispatch(APIRequestError(err.response.data));
-      return err.response;
-    } else if (err.response.status == 500) {
-      dispatch(APIRequestError(err.response.statusText));
-      return err.response;
-    }
-  }
-};
+export const API = axios.create({ baseURL: "http://localhost:7000" });
 
 // ASSIGN COMPLAINT
 export const AssignComplaint = async (

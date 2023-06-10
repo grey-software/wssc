@@ -59,7 +59,7 @@ function Aside() {
     dispatch(setActiveTab(index));
   };
 
-  const { WSSC_CODE }: any = useSelector(
+  const {WSSC_CODE }: any = useSelector(
     (state: RootState) => state.User.SignInData
   );
 

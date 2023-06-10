@@ -11,7 +11,7 @@ interface props {
   submitedOn: String;
   address: String;
   garbage: any;
-  ImageUrl: any,
+  ImageUrl: any;
 }
 
 const Complaint = ({
@@ -21,10 +21,9 @@ const Complaint = ({
   submitedOn,
   address,
   ImageUrl,
-  garbage,
 }: props) => {
   const complaintPic: any = ImageUrl != undefined ? ImageUrl : DefaultPic;
-  
+
   const navigate = useRouter();
   const handleClick = (id: any) => {
     navigate.push(`/complaint/timeline/${id}`);
@@ -32,7 +31,7 @@ const Complaint = ({
   return (
     <div
       onClick={() => handleClick(complaintID)}
-      className="flex items-center justify-between rounded-lg border-2 border-gray-100 p-4 shadow-lg relative overflow-hidden"
+      className="flex items-center justify-between cursor-pointer rounded-lg border-2 border-gray-100 p-4 active:shadow-none active:scale-[0.97] transition-all shadow-lg relative overflow-hidden"
     >
       <div className="flex flex-col justify-center ml-1">
         <h3 className="text-lg font-bold text-gray-600">{type}</h3>
@@ -75,7 +74,7 @@ const Complaint = ({
       </div>
       <Image
         src={complaintPic}
-        className="h-70% w-[30%]"
+        className="h-40 w-36"
         width={80}
         height={50}
         alt=""

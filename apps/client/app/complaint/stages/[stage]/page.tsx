@@ -22,11 +22,14 @@ const Complaints = ({ params }: any) => {
 
   // JSX section
   return (
-    <>
+    <div>
       {UserInfo?.phone ? (
-        <div className="mt-20 mx-3">
-          <div className="flex items-center justify-between">
-            <Link href="/">
+        <>
+          <div className="flex items-center justify-between mb-4">
+            <Link
+              href="/"
+              className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all cursor-pointer"
+            >
               <HiArrowLeft className="text-[28px] text-primaryColor-500" />
             </Link>
             <h3 className="text-md -ml-5 px-2 py-1 rounded-md bg-feedbackColor text-white font-bold">
@@ -134,11 +137,11 @@ const Complaints = ({ params }: any) => {
               )
             )}
           </div>
-        </div>
+        </>
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 };
 

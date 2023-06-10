@@ -1,5 +1,8 @@
-'use client'
-import { ChangedPassword, UserAccountDelete } from "@/global_state/ApiCalls/authApiCalls";
+"use client";
+import {
+  ChangedPassword,
+  UserAccountDelete,
+} from "@/global_state/ApiCalls/authApiCalls";
 import { RootState } from "@/global_state/store";
 import { useRouter } from "next/navigation";
 import React, { useRef } from "react";
@@ -12,40 +15,41 @@ type Props = {
   userId: any;
 };
 
-
-const DeleteAccountModal = ({ SetdeleteAccount, DeleteAccount, userId }: 
-    Props) => {
+const DeleteAccountModal = ({
+  SetdeleteAccount,
+  DeleteAccount,
+  userId,
+}: Props) => {
   const dispatch = useDispatch();
   const { pending }: any = useSelector((state: RootState) => state.users);
-    const navigate = useRouter();
+  const navigate = useRouter();
   // Delete Account method definition
-    const DeleteUserAccount = async (e: any) => {
-        e.preventDefault();
+  const DeleteUserAccount = async (e: any) => {
+    e.preventDefault();
 
-        const res = await UserAccountDelete(dispatch, userId);
-        if (res.status == 200) {
-            navigate.push('/')
-             toast.success("Account deleted successfully", {
-               position: "top-center",
-               style: { width: "auto", height: "auto" },
-               duration: 3000,
-             });
-            SetdeleteAccount(!DeleteAccount)
-        }
+    const res = await UserAccountDelete(dispatch, userId);
+    if (res.status == 200) {
+      navigate.push("/");
+      toast.success("Account deleted successfully", {
+        position: "top-center",
+        style: { width: "auto", height: "auto" },
+        duration: 3000,
+      });
+      SetdeleteAccount(!DeleteAccount);
+    }
   };
 
   return (
-    <div className="fixed top-0 flex justify-center items-center w-full h-screen bg-gray-700 bg-opacity-60 transition-all z-10">
+    <div className="fixed top-0 right-0 bottom-0 left-0 flex justify-center items-center w-screen h-screen bg-gray-400 bg-opacity-60 transition-all z-10">
       <form
         onSubmit={DeleteUserAccount}
         className={`${
           pending ? "bg-gray-300" : "bg-gray-50"
-        }  p-6 flex flex-col gap-3 w-[96%] absolute center rounded-lg`}
+        }  p-6 flex flex-col gap-3 w-[96%] sm:w-[96%] md:max-w-lg absolute center rounded-lg`}
       >
         <label className="text-md text-gray-600">
           Do you really want to delete your account permanently?
         </label>
-      
 
         <div className="flex gap-10 mt-3 items-center justify-end text-md">
           <button

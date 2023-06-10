@@ -9,7 +9,11 @@ import { register_supervisor_validate } from "@/components/Auth/login.validate";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { MdClose } from "react-icons/md";
-import { FetchAllSupervisors } from "../GlobalState/ApiCalls/supervisorApiCalls";
+import {
+  DeleteSupervisor,
+  FetchAllSupervisors,
+  RegisterSupervisor,
+} from "../GlobalState/ApiCalls/supervisorApiCalls";
 import { RootState } from "../GlobalState/store";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
 type Props = {};
@@ -20,7 +24,13 @@ function Supervisors({}: Props) {
   const [search, setSearch] = useState<string>("");
   const [modal, setModal] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [updateId, setUpdateId] = useState<string>("");
+
+  const { loading, error } = useSelector(
+    (state: RootState) => state.Supervisor
+  );
+  const [success, setSuccess] = useState(error);
 
   useEffect(() => {
     FetchAllSupervisors(dispatch);
@@ -28,9 +38,6 @@ function Supervisors({}: Props) {
 
   const supervisors = useSelector(
     (state: RootState) => state.Supervisor.supervisorsAll
-  );
-  const { loading, error } = useSelector(
-    (state: RootState) => state.Supervisor
   );
 
   const {
@@ -44,10 +51,22 @@ function Supervisors({}: Props) {
     console.log(data);
 
     // CALLING API FUNCTION
+    RegisterSupervisor(data, dispatch);
 
     // AFTER CALLING API RESET FORM AND CLOSE MODAL
     reset();
     setModal(false);
+  };
+
+  const Delete = (id: any) => {
+    const status = DeleteSupervisor(id, dispatch);
+    console.log(status);
+    // if (status != 200)
+    //   toast.error("Something went wrong", {
+    //     position: "top-center",
+    //     style: { width: "auto", height: "auto" },
+    //     duration: 3000,
+    //   });
   };
 
   return (
@@ -96,6 +115,17 @@ function Supervisors({}: Props) {
           </div>
         </div>
       </div>
+      {success && (
+        <div className="flex items-center justify-between p-2 text-[#D8000C] bg-[#FFBABA]">
+          <span>Unable to fetch Data, Please refresh the page 🙂</span>
+          <span
+            onClick={() => setSuccess(false)}
+            className="text-2xl cursor-pointer"
+          >
+            <MdClose />
+          </span>
+        </div>
+      )}
 
       <div
         className={`overflow-x-auto shadow-md sm:rounded-lg py-1 ${
@@ -114,7 +144,7 @@ function Supervisors({}: Props) {
           />
         ) : (
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3">
                   S. NO.
@@ -164,7 +194,7 @@ function Supervisors({}: Props) {
                     </td>
                     <td
                       scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white "
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                     >
                       {name}
                     </td>
@@ -190,6 +220,15 @@ function Supervisors({}: Props) {
                       >
                         Update
                       </button>
+                      <button
+                        onClick={() => {
+                          setDeleteModal(true);
+                          Delete(_id);
+                        }}
+                        className="font-bold text-[12px] uppercase text-white bg-closedColor py-1 px-3 rounded-lg hover:shadow-lg transition-all"
+                      >
+                        Remove
+                      </button>
                     </td>
                   </tr>
                 )
@@ -200,7 +239,7 @@ function Supervisors({}: Props) {
       </div>
       {modal && (
         <div className="absolute mt-10 h-[80vh] w-full flex items-center justify-center backdrop-blur-sm">
-          <div className="flex flex-col bg-white shadow-2xl px-16 py-8 w-[30%] rounded-md border-[1px] border-gray-200">
+          <div className="flex flex-col bg-white shadow-2xl px-16 py-8 w-full sm:w-full md:w-2/3 lg:w-[40%] rounded-md border-[1px] border-gray-200">
             <div className="flex items-center justify-between mb-4">
               <h1 className="text-lg font-bold text-inprogessColor">
                 Register Supervisor
@@ -220,7 +259,7 @@ function Supervisors({}: Props) {
               <div>
                 <label
                   htmlFor="name"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Enter Supervisor Name
                 </label>
@@ -245,7 +284,7 @@ function Supervisors({}: Props) {
               <div>
                 <label
                   htmlFor="phone"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Enter Contact Number
                 </label>
@@ -269,7 +308,7 @@ function Supervisors({}: Props) {
               <div>
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Enter Password
                 </label>
@@ -303,7 +342,7 @@ function Supervisors({}: Props) {
       )}
       {updateModal && (
         <div className="absolute mt-10 h-[80vh] w-full flex items-center justify-center backdrop-blur-sm">
-          <div className="flex flex-col bg-white shadow-2xl px-16 py-8 w-[30%] rounded-md border-[1px] border-gray-200">
+          <div className="flex flex-col bg-white shadow-2xl px-16 py-8 w-full sm:w-full md:w-2/3 lg:w-[40%] rounded-md border-[1px] border-gray-200">
             <div className="flex items-center justify-between mb-4">
               <h1 className="text-lg font-bold text-inprogessColor">
                 Update Supervisor

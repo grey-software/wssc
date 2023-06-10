@@ -1,6 +1,6 @@
 import axios from "axios";
 import { SignInStart, SignInSuccess, SignInError } from "../UserSlice";
-import { config } from "./config";
+import { config } from "../config";
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
 

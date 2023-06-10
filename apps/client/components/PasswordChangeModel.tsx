@@ -1,66 +1,63 @@
-'use client'
+"use client";
 import { ChangedPassword } from "@/global_state/ApiCalls/authApiCalls";
 import { RootState } from "@/global_state/store";
 import React, { useRef } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 type Props = {
-    SetChangePass: React.Dispatch<React.SetStateAction<boolean>>;
+  SetChangePass: React.Dispatch<React.SetStateAction<boolean>>;
   changePass: boolean;
-    userId: any
+  userId: any;
 };
 
-const PasswordChangeModel = ({SetChangePass, changePass, userId}: Props) => {
-    const changePssRef = useRef<HTMLInputElement>(null);
-    const ConfirmPssRef = useRef<HTMLInputElement>(null);
-    const dispatch = useDispatch();
-  const { pending }: any = useSelector((state: RootState) => state.users)
-  
+const PasswordChangeModel = ({ SetChangePass, changePass, userId }: Props) => {
+  const changePssRef = useRef<HTMLInputElement>(null);
+  const ConfirmPssRef = useRef<HTMLInputElement>(null);
+  const dispatch = useDispatch();
+  const { pending }: any = useSelector((state: RootState) => state.users);
+
   // update password method definition
-    const UpdatedPassword = async (e: any) => {
-        e.preventDefault();
+  const UpdatedPassword = async (e: any) => {
+    e.preventDefault();
     const password = changePssRef.current?.value;
-      const confirmpassword = ConfirmPssRef.current?.value;
-      
-      if (password != confirmpassword) {
-           toast.error("Passwords are not matched", {
-             position: "top-center",
-             style: { width: "auto", height: "auto" },
-             duration: 3000,
-           }); 
-        }
-      else {
-        const updatedPass:any = { 
-           password: password
-        }
-        // calling changePassword api method to change password
-        const res = await ChangedPassword(dispatch, updatedPass, userId)
-        if (res.status == 200) {
-          
-          toast.success("Password changed successfully", {
-            position: "top-center",
-            style: { width: "auto", height: "auto" },
-            duration: 3000,
-          });
-          SetChangePass(!changePass)
-        }
-        else {
-          toast.error("Something went wrong, try again", {
-            position: "top-center",
-            style: { width: "auto", height: "auto" },
-            duration: 3000,
-          });
-        }
+    const confirmpassword = ConfirmPssRef.current?.value;
+
+    if (password != confirmpassword) {
+      toast.error("Passwords are not matched", {
+        position: "top-center",
+        style: { width: "auto", height: "auto" },
+        duration: 3000,
+      });
+    } else {
+      const updatedPass: any = {
+        password: password,
+      };
+      // calling changePassword api method to change password
+      const res = await ChangedPassword(dispatch, updatedPass, userId);
+      if (res.status == 200) {
+        toast.success("Password changed successfully", {
+          position: "top-center",
+          style: { width: "auto", height: "auto" },
+          duration: 3000,
+        });
+        SetChangePass(!changePass);
+      } else {
+        toast.error("Something went wrong, try again", {
+          position: "top-center",
+          style: { width: "auto", height: "auto" },
+          duration: 3000,
+        });
       }
+    }
   };
   // JSX section
   return (
-    <div className="fixed top-0 flex justify-center items-center w-full h-screen bg-gray-700 bg-opacity-60 transition-all z-10">
+    <div className="fixed top-0 right-0 left-0 bottom-0 flex justify-center items-center w-screen h-screen bg-gray-400 bg-opacity-60 transition-all z-10">
       <form
         onSubmit={UpdatedPassword}
         className={`${
           pending ? "bg-gray-300" : "bg-gray-50"
-        }  p-6 flex flex-col gap-3 w-[96%] absolute center rounded-lg`}
+        }  p-6 flex flex-col gap-3 w-[96%] md:max-w-lg absolute center rounded-lg`}
       >
         <label htmlFor="password" className="text-md text-gray-400">
           Enter Password

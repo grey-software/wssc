@@ -7,13 +7,14 @@ import bycrypt from "bcryptjs";
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const SECRET_KEY: any = process.env.JWT_KEY;
 
-// REGESTER SUPERVISOR CONTROLLER 
+// REGESTER SUPERVISOR CONTROLLER
 export const RegisterSupervisor = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { name, WSSC_CODE, phone, password } = req.body;
+  const WSSC_CODE = req.user.orgCode;
+  const { name, phone, password } = req.body;
 
   // ENCRYPTING PASSWORD
   const salt: string = bycrypt.genSaltSync(10);
@@ -37,7 +38,6 @@ export const RegisterSupervisor = async (
       const { password, ...detail } = register._doc;
 
       res.status(200).json(detail);
-
     } else {
       res.status(400).json({
         status: 400,
@@ -61,6 +61,7 @@ export const SignInSupervisor = async (
   next: NextFunction
 ) => {
   const { phone, password } = req.body;
+  console.log(req.body);
   try {
     const verifySupervisor:
       | (SupervisorTypes & {
@@ -79,7 +80,7 @@ export const SignInSupervisor = async (
     }
 
     const verifyPassword: boolean = await bycrypt.compare(
-      password,
+      req.body.password,
       verifySupervisor.password
     );
     // CHECKING IF THE PASSWORD IS CORRECT
@@ -99,7 +100,7 @@ export const SignInSupervisor = async (
       SECRET_KEY
     );
 
-    const supervisor = verifySupervisor._doc;
+    const { password, ...supervisor } = verifySupervisor._doc;
     res
       .cookie("access_token", token, {
         httpOnly: true,
@@ -195,8 +196,11 @@ export const GetAllSupervisors = async (
   res: Response,
   next: NextFunction
 ) => {
+  const orgCode = req.user.orgCode;
+  console.log(orgCode);
   try {
     const allSupervisors = await SupervisorModel.find({
+      WSSC_CODE: orgCode,
       isDeleted: false,
     }).sort({ updatedAt: -1 });
 

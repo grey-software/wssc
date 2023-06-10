@@ -9,6 +9,7 @@ import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import { FetchAllComplaints } from "../GlobalState/ApiCalls/complaintApiCalls";
 import { RootState } from "../GlobalState/store";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
+import { MdClose } from "react-icons/md";
 
 function Feedback() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function Feedback() {
   const { loading, error }: any = useSelector(
     (state: RootState) => state.Complaint
   );
+  const [success, setSuccess] = useState(error);
   useEffect(() => {
     FetchAllComplaints(dispatch);
   }, []);
@@ -60,6 +62,20 @@ function Feedback() {
           </span>
         </div>
       </div>
+
+      {success ||
+        (error && (
+          <div className="flex items-center justify-between p-2 text-[#D8000C] bg-[#FFBABA]">
+            <span>Unable to fetch Data, Please refresh the page 🙂</span>
+            <span
+              onClick={() => setSuccess(false)}
+              className="text-2xl cursor-pointer"
+            >
+              <MdClose />
+            </span>
+          </div>
+        ))}
+
       <div
         className={`${
           loading

@@ -9,6 +9,7 @@ import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import { FetchUsers } from "../GlobalState/ApiCalls/userApiCalls";
 import { RootState } from "../GlobalState/store";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
+import { MdClose } from "react-icons/md";
 
 function Users() {
   const dispatch = useDispatch();
@@ -17,12 +18,12 @@ function Users() {
   const [search, setSearch] = useState<string>("");
   const [userId, setUserId] = useState<string>();
   const [modal, setModal] = useState<boolean>(false);
+  const { pending, error }: any = useSelector((state: RootState) => state.User);
+  const [success, setSuccess] = useState(error);
 
   useEffect(() => {
     FetchUsers(dispatch);
   }, []);
-
-  const { pending, error }: any = useSelector((state: RootState) => state.User);
 
   const users = useSelector((state: RootState) => state.User.users);
 
@@ -76,6 +77,19 @@ function Users() {
         </div>
       </div>
 
+      {success ||
+        (error && (
+          <div className="flex items-center justify-between p-2 text-[#D8000C] bg-[#FFBABA]">
+            <span>Unable to fetch Data, Please refresh the page 🙂</span>
+            <span
+              onClick={() => setSuccess(false)}
+              className="text-2xl cursor-pointer"
+            >
+              <MdClose />
+            </span>
+          </div>
+        ))}
+
       {/* SHOWING ALL USERS */}
       <div
         className={`overflow-x-auto shadow-md sm:rounded-lg h-[75vh] py-1 ${
@@ -93,8 +107,8 @@ function Users() {
             colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
           />
         ) : (
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full text-sm text-left text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3">
                   S. NO.
@@ -143,7 +157,7 @@ function Users() {
                       </td>
                       <td
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white "
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                       >
                         {name}
                       </td>
