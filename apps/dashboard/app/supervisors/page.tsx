@@ -22,15 +22,17 @@ function Supervisors({}: Props) {
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [updateId, setUpdateId] = useState<string>("");
 
+  const { loading, error } = useSelector(
+    (state: RootState) => state.Supervisor
+  );
+  const [success, setSuccess] = useState(error);
+
   useEffect(() => {
     FetchAllSupervisors(dispatch);
   }, []);
 
   const supervisors = useSelector(
     (state: RootState) => state.Supervisor.supervisorsAll
-  );
-  const { loading, error } = useSelector(
-    (state: RootState) => state.Supervisor
   );
 
   const {
@@ -96,6 +98,17 @@ function Supervisors({}: Props) {
           </div>
         </div>
       </div>
+      {success && (
+        <div className="flex items-center justify-between p-2 text-[#D8000C] bg-[#FFBABA]">
+          <span>Unable to fetch Data, Please refresh the page 🙂</span>
+          <span
+            onClick={() => setSuccess(false)}
+            className="text-2xl cursor-pointer"
+          >
+            <MdClose />
+          </span>
+        </div>
+      )}
 
       <div
         className={`overflow-x-auto shadow-md sm:rounded-lg py-1 ${
@@ -114,7 +127,7 @@ function Supervisors({}: Props) {
           />
         ) : (
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3">
                   S. NO.
@@ -164,7 +177,7 @@ function Supervisors({}: Props) {
                     </td>
                     <td
                       scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white "
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                     >
                       {name}
                     </td>
@@ -220,7 +233,7 @@ function Supervisors({}: Props) {
               <div>
                 <label
                   htmlFor="name"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Enter Supervisor Name
                 </label>
@@ -245,7 +258,7 @@ function Supervisors({}: Props) {
               <div>
                 <label
                   htmlFor="phone"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Enter Contact Number
                 </label>
@@ -269,7 +282,7 @@ function Supervisors({}: Props) {
               <div>
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Enter Password
                 </label>

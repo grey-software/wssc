@@ -10,6 +10,7 @@ import { FetchAllComplaints } from "../GlobalState/ApiCalls/complaintApiCalls";
 import { setActiveTab } from "../GlobalState/TabSlice";
 import TableRow from "../../components/complaint/TableRow";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
+import { MdClose } from "react-icons/md";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const Page = () => {
   const [search, setSearch] = useState<string>("");
   const [state, setState] = useState<string>("AllComplaints");
   const { loading, error } = useSelector((state: RootState) => state.Complaint);
+  const [success, setSuccess] = useState(error);
 
   useEffect(() => {
     FetchAllComplaints(dispatch);
@@ -87,6 +89,21 @@ const Page = () => {
           </div>
         </div>
       </div>
+      {success ||
+        (error && (
+          <div className="flex items-center justify-between p-2 text-[#D8000C] bg-[#FFBABA]">
+            <span>
+              {" "}
+              Unable to fetch new complaints, Please refresh the page 🙂
+            </span>
+            <span
+              onClick={() => setSuccess(false)}
+              className="text-2xl cursor-pointer"
+            >
+              <MdClose />
+            </span>
+          </div>
+        ))}
 
       {/* SHOWING ALL COMPLAINTS */}
       <div
@@ -112,10 +129,8 @@ const Page = () => {
             colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
           />
         ) : (
-          <table
-            className={` w-full text-sm text-left text-gray-500 dark:text-gray-400`}
-          >
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table className={` w-full text-sm text-left text-gray-500`}>
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3">
                   S. NO.

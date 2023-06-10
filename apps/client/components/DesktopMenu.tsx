@@ -21,9 +21,8 @@ import { RootState } from "@/global_state/store";
 import { LOGOUT } from "@/global_state/ApiCalls/authApiCalls";
 
 const DesktopMenu = () => {
-  const { name, profile_image, _id, email }: any = useSelector(
-    (state: RootState) => state.users.UserInfo
-  );
+  const user: any = useSelector((state: RootState) => state.users?.UserInfo);
+  console.log(user);
   const [sharePop, setsharePop] = useState(false);
   const dispatch = useDispatch();
   const navigate = useRouter();
@@ -48,15 +47,17 @@ const DesktopMenu = () => {
       <div className="flex flex-col justify-between gap-8 px-6">
         <div className="flex flex-col gap-3 mt-4">
           <Image
-            src={profile_image ? profile_image : user}
+            src={user?.profile_image || user}
             className="h-28 w-28 rounded-full border-1 border-gray-300 "
             width={128}
             height={128}
             alt=""
           />
-          <h1 className="text-xl text-headingColor-400 font-bold">{name}</h1>
-          <span className="-mt-3">{email}</span>
-          <Link href={`/profile/${_id}`}>
+          <h1 className="text-xl text-headingColor-400 font-bold">
+            {user?.name}
+          </h1>
+          <span className="-mt-3">{user?.email}</span>
+          <Link href={`/profile/${user?._id}`}>
             <button className="flex items-center text-sm font-semibold gap-2 px-2 bg-[#A4C9D1] rounded-md">
               <span>Update</span>
               <FaEdit />
@@ -68,7 +69,7 @@ const DesktopMenu = () => {
         {/* NavBar */}
         <div className="flex flex-col gap-1">
           <Link
-            href={`/profile/${_id}`}
+            href={`/profile/${user?._id}`}
             className="flex items-center gap-2 text-sm font-semibold px-4 py-2 hover:bg-gray-100 rounded-full transition-all w-40"
           >
             <BiUserCircle className="text-[24px] text-primaryColor-500" />

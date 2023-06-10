@@ -11,11 +11,14 @@ import Image from "next/image";
 import { FetchAllSupervisors } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
 import {
   AssignComplaint,
-  FetchComplaint,
   AddStatement,
 } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
 import { GetSingleSupervisor } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
+import { API } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
+import { config } from "@/app/GlobalState/config";
+import { toast } from "react-hot-toast";
+import { complaintTypes } from "@/@types/complaintTypes.types";
 
 const Page = ({ params }: any) => {
   const id = params.id;
@@ -23,29 +26,53 @@ const Page = ({ params }: any) => {
   const navigate = useRouter();
   const [wsscStatement, setWsscStatement] = useState<string>("");
   const [supervisorId, setSupervisorId] = useState<string>("");
+  const [complaint, setComplaint] = useState<complaintTypes>({});
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   const supervisors = useSelector(
     (state: RootState) => state.Supervisor.supervisorsAll
   );
 
-  useEffect(() => {
-    FetchAllSupervisors(dispatch);
-    FetchComplaint(dispatch, id);
-  }, []);
+  const FetchComplaint = async (complaintId: any): Promise<any> => {
+    setLoading(true);
+    try {
+      const res = await API.get(`api/v1/complaints/${complaintId}`, config);
+      console.log(res);
+      setLoading(false);
+      setComplaint(res.data.complaint);
+      return res.data;
+    } catch (err: any) {
+      setError(true);
+      if (err.response?.status == 401) {
+        toast.error("401, Complaint not found", {
+          position: "top-center",
+          style: { width: "auto", height: "auto" },
+          duration: 3000,
+        });
+        return err.response;
+      } else if (err.response.status == 500) {
+        toast.error("500, Something went wrong", {
+          position: "top-center",
+          style: { width: "auto", height: "auto" },
+          duration: 3000,
+        });
+        return err.response;
+      }
+    }
+  };
 
-  const { loading, error }: any = useSelector(
-    (state: RootState) => state.Complaint
-  );
+  useEffect(() => {
+    FetchComplaint(id);
+    FetchAllSupervisors(dispatch);
+  }, []);
 
   const rates: number[] = [1, 2, 3, 4, 5];
 
-  const complaint = useSelector(
-    (state: RootState) => state.Complaint.complaint
-  );
-
-  console.log(complaint)
   const supervisor: any = useSelector((state: RootState) =>
-    state.Supervisor.supervisorsAll.find((s) => s._id == complaint.supervisorId)
+    state.Supervisor.supervisorsAll.find(
+      (s) => s._id == complaint?.supervisorId
+    )
   );
 
   const handleAssign = () => {
@@ -169,28 +196,28 @@ const Page = ({ params }: any) => {
                   <span>Status</span>
                   <span
                     className={`text-white  px-2 py-1 rounded ${
-                      complaint?.status[complaint?.status.length - 1].state ===
+                      complaint?.status[complaint?.status?.length - 1].state ===
                       "Initiated"
                         ? "bg-initiatedColor"
                         : ""
                     }  ${
-                      complaint?.status[complaint?.status.length - 1].state ===
+                      complaint?.status[complaint?.status?.length - 1].state ===
                       "InProgress"
                         ? "bg-inprogessColor"
                         : ""
                     } ${
-                      complaint?.status[complaint?.status.length - 1].state ===
+                      complaint?.status[complaint?.status?.length - 1].state ===
                       "Completed"
                         ? "bg-completedColor"
                         : ""
                     } ${
-                      complaint?.status[complaint?.status.length - 1].state ===
+                      complaint?.status[complaint?.status?.length - 1].state ===
                       "Closed"
                         ? "bg-closedColor"
                         : ""
                     }`}
                   >
-                    {complaint?.status[complaint?.status.length - 1].state}
+                    {complaint?.status[complaint?.status?.length - 1].state}
                   </span>
                 </div>
               </div>
