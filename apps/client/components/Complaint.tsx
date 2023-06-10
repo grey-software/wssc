@@ -23,7 +23,7 @@ const Complaint = ({
   ImageUrl,
 }: props) => {
   const complaintPic: any = ImageUrl != undefined ? ImageUrl : DefaultPic;
-  
+
   const navigate = useRouter();
   const handleClick = (id: any) => {
     navigate.push(`/complaint/timeline/${id}`);
@@ -74,7 +74,7 @@ const Complaint = ({
       </div>
       <Image
         src={complaintPic}
-        className="h-70% w-[30%]"
+        className="h-40 w-36"
         width={80}
         height={50}
         alt=""

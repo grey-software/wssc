@@ -18,8 +18,8 @@ const HomeScreen = () => {
     FetchAllComplaints(dispatch);
   };
   return (
-    <>
-      <div className="complaints-record bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-md shadow-gray-200 rounded-full">
+    <div>
+      <div className="bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-md shadow-gray-200 rounded-full">
         <span
           onClick={() => handleClick("Pending")}
           className="p-2 pending cursor-pointer hover:bg-gray-100 flex flex-col justify-center items-center border-r border-gray-300  flex-1 "
@@ -75,7 +75,7 @@ const HomeScreen = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

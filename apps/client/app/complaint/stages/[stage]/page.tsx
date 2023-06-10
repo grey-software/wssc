@@ -22,7 +22,7 @@ const Complaints = ({ params }: any) => {
 
   // JSX section
   return (
-    <>
+    <div>
       {UserInfo?.phone ? (
         <>
           <div className="flex items-center justify-between mb-4">
@@ -141,7 +141,7 @@ const Complaints = ({ params }: any) => {
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 };
 

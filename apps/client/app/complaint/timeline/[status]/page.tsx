@@ -32,7 +32,7 @@ const Timeline = ({ params }: any) => {
   };
   // TSX Section
   return (
-    <div className="w-[400px] sm:w-[450px]">
+    <div className="">
       <div className="flex items-center justify-between mb-4">
         <span className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all cursor-pointer">
           <HiArrowLeft
@@ -89,7 +89,7 @@ const Timeline = ({ params }: any) => {
           src={`${ImageUrl ? ImageUrl : "/assets/complaintDefaultPic.png"}`}
           width={80}
           height={50}
-          className="h-70% w-[30%]"
+          className="h-40 w-36"
           alt=""
         />
         <div

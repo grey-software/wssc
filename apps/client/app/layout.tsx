@@ -23,7 +23,7 @@ export default function RootLayout({
             <Notification />
 
             <Header />
-            <main className="flex items-center justify-center m-auto w-full">
+            <main className="flex items-center justify-center m-auto w-screen">
               <div className="grid grid-cols-3 mx-0  sm:mx-0 md:mx-3 lg:mx-3 xl:mx-3 items-start justify-center gap-3 sm:gap-6 md:gap-6 lg:gap-8 xl:gap-10 max-w-5xl">
                 <div className="sticky top-0">
                   <DesktopMenu />

@@ -6,7 +6,6 @@ import {
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import FeedbackRating from "@/components/FeedbackRating";
-import moment from "moment";
 type Props = {
   status: any;
   complaintId: any;
@@ -78,6 +77,8 @@ function Complaint_stages({ status, complaintId, isfeedback }: Props) {
                 } ${stage.state === "Closed" ? "bg-closedColor" : ""}`}
               ></div>
             </VerticalTimelineElement>
+
+            {/* show feedback option */}
             {stage.state == "Completed" ? (
               <VerticalTimelineElement
                 className="relative "
