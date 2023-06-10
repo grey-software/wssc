@@ -15,11 +15,22 @@ export default function Home() {
   const { WSSC_CODE }: any = useSelector(
     (state: RootState) => state.User.SignInData
   );
-
+// getting supervisor data from global store
+  const {phone }:any = useSelector((state: RootState) => state.suprvisor.SupervisorSiginData);
   useEffect(() => {
-    if (!WSSC_CODE) {
+    // when none of user signedIn then redirect to the auth page
+    if (!WSSC_CODE && !phone) {
       navigate.push("/auth");
       // dispatch(setActiveTab(0));
+    }
+    //-------- conditions to redirect user to their according page ---------
+    // when supervisor signedIn Successfully
+    if (!WSSC_CODE && phone) {
+      navigate.push("/supervisor");
+    }
+    // when admin signedIn Successfully
+    if (WSSC_CODE && !phone) {
+      navigate.push("/");
     }
   }, []);
 
@@ -27,8 +38,13 @@ export default function Home() {
     <>
       <div className="container w-full h-auto overflow-x-hidden">
         {/* card section */}
-        <CardsPage />
-        <ChartSection/>
+        {/* if the admin has loggedIn successfully then render these compnents */}
+        {WSSC_CODE && (
+          <>
+            <CardsPage />
+            <ChartSection />
+          </>
+        )}
       </div>
     </>
   );

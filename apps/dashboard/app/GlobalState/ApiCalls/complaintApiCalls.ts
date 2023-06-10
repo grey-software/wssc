@@ -7,7 +7,7 @@ import {
   APIRequestError,
   AddStatementSuccess,
 } from "../complatintSlice";
-import { config } from "./config";
+import { config } from "../config";
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
 
@@ -20,6 +20,7 @@ export const FetchComplaint = async (
   try {
     const res = await API.get(`api/v1/complaints/${complaintId}`, config);
     dispatch(GetSingleComplaintSuccess(res.data.complaint));
+    console.log(res)
     return res.data;
   } catch (err: any) {
     if (err.response?.status == 401) {

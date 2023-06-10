@@ -33,7 +33,8 @@ const storage = typeof window !== 'undefined' ? createWebStorage('local') : crea
 const persistConfig = {
   key: "root",
   version: 1,
-  storage
+  storage,
+  blacklist: ["complaints"],
 };
 
 const reducer = combineReducers({

@@ -21,6 +21,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={ ` ${inter.className}`} >
         <Providers>
+          {/* React-Toast Notifiction  */}
+          <Notification />
           <Header />
           <div className="w-full mt-14 absolute ">
             <Aside />

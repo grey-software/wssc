@@ -43,6 +43,7 @@ const Page = ({ params }: any) => {
     (state: RootState) => state.Complaint.complaint
   );
 
+  console.log(complaint)
   const supervisor: any = useSelector((state: RootState) =>
     state.Supervisor.supervisorsAll.find((s) => s._id == complaint.supervisorId)
   );
@@ -100,8 +101,7 @@ const Page = ({ params }: any) => {
             <span>Complaint</span>
           </span>
         </div>
-        {complaint?.status[complaint?.status?.length - 1].state ===
-        "Initiated" ? (
+        {complaint.supervisorId == "" ? (
           <div className="flex items-center gap-4">
             <select
               name="supervisor"
@@ -150,7 +150,7 @@ const Page = ({ params }: any) => {
         } `}
       >
         {/* Complaint details */}
-        {loading ? (
+        {loading && !error ? (
           <ColorRing
             visible={true}
             height="80"
@@ -169,28 +169,28 @@ const Page = ({ params }: any) => {
                   <span>Status</span>
                   <span
                     className={`text-white  px-2 py-1 rounded ${
-                      complaint?.status[complaint.status.length - 1].state ===
+                      complaint?.status[complaint?.status.length - 1].state ===
                       "Initiated"
                         ? "bg-initiatedColor"
                         : ""
                     }  ${
-                      complaint?.status[complaint.status.length - 1].state ===
+                      complaint?.status[complaint?.status.length - 1].state ===
                       "InProgress"
                         ? "bg-inprogessColor"
                         : ""
                     } ${
-                      complaint?.status[complaint.status.length - 1].state ===
+                      complaint?.status[complaint?.status.length - 1].state ===
                       "Completed"
                         ? "bg-completedColor"
                         : ""
                     } ${
-                      complaint?.status[complaint.status.length - 1].state ===
+                      complaint?.status[complaint?.status.length - 1].state ===
                       "Closed"
                         ? "bg-closedColor"
                         : ""
                     }`}
                   >
-                    {complaint?.status[complaint.status.length - 1].state}
+                    {complaint?.status[complaint?.status.length - 1].state}
                   </span>
                 </div>
               </div>
@@ -316,7 +316,7 @@ const Page = ({ params }: any) => {
             >
               <h1 className="mb-1 font-bold text-md">Supervisor Details</h1>
               <div className="w-full border-[1px] border-gray-300"></div>
-              {complaint?.status[complaint.status.length - 1].state !==
+              {complaint?.status[complaint?.status.length - 1].state !==
               "Initiated" ? (
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   <div className="flex items-start gap-2">

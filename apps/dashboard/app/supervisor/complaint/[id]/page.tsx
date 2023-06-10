@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React, { useRef, useState } from 'react'
 import { BsFile, BsFillCameraVideoFill, BsImage } from 'react-icons/bs';
 import { TbFilePlus } from "react-icons/tb";
-
+import {toast } from 'react-hot-toast';
 type Props = {}
 
 const Page = (props: Props) => {
@@ -13,8 +13,25 @@ const Page = (props: Props) => {
   const [video, setvideo] = useState<string>();
    let [ImageUrl, setImageUrl] = useState<string>();
    let [VideoUrl, setVideoUrl] = useState<string>();
+   let [desc, setdesc] = useState<string>("");
    const [load, setload] = useState(false);
+  const DescRef = useRef<HTMLTextAreaElement>(null);
+  // SubmiResponse method definition express supervisor response on complaint resolution
+  const SubmitResponse = () => {
+    console.log(`desc: ${DescRef?.current?.value} || imageURL: ${ImageUrl} | VideoUrl: ${VideoUrl}`)
+    if (!ImageUrl && !VideoUrl) {
+      window.alert("upload media is mandatory one")
+    }
+    if (DescRef.current?.value == "") {
+      window.alert("description should be given on complaint resolution")
+    }
 
+    if (DescRef.current?.value && (ImageUrl || VideoUrl)) {
+      toast.success("response submitted successfull", {
+        position: 'top-center'
+      })
+    }
+  } 
   // upload media attachments in optimized way
   const UploadAttachments = async (event: any) => {
     if (event.target.files && event.target.files[0]) {
@@ -65,33 +82,43 @@ const Page = (props: Props) => {
     <div className="text-red mt-16 text-xl">
       <div className="wrapper">
         {/* complaint detail */}
-        <p className="text-[16px] -mb-2 text-center text-gray-400">
+        <p className="text-[16px]  -mb-2 text-center text-gray-500">
           Complaint Detail
         </p>
         <div className="complaintDetail px-3 py-2 m-3 gap-2 text-[15px] shadow-sm border border-gray-300 flex flex-col flex-wrap justify-between">
           <p className="flex justify-between">
             <p>
-              Type: <span className="font-bold"> Water Supply</span>
+              <span className="text-gray-500">Type:</span>
+              <span className="font-bold"> Water Supply</span>
             </p>
             <p>
-              Status: <span className="text-blue-600 font-bold"> Pending</span>
+              <span className="text-gray-500">Status:</span>
+              <span className="text-blue-600 font-bold"> Pending</span>
             </p>
           </p>
           <p className="flex justify-between">
-            <p>ID: 353454</p>
-            <p>Date: 8 jun, 023</p>
+            <p>
+              <span className="text-gray-500">ID:</span> 353454
+            </p>
+            <p>
+              <span className="text-gray-500">Date:</span> 8 jun, 023
+            </p>
           </p>
           {/* adming description */}
           <div className="desc flex flex-col">
-            <h5>Description</h5>
+            <h5 className="text-gray-500">Description</h5>
+
             <p className="border border-gray-300 p-2">
-              Please resolve this complaint as soon as possible
+              Please resolve this complaint as soon as possible.Please resolve
+              this complaint as soon as possible.Please resolve this complaint
+              as soon as possible.Please resolve this complaint as soon as
+              possible.
             </p>
           </div>
           {/* attached media */}
           <div className="attachment">
             <p>Attached media</p>
-            <div className="media  flex gap-2 justify-around border border-gray-400 p-2">
+            <div className="media  flex gap-2 justify-around border border-gray-300 p-2">
               <div className="pic w-[40vw] h-[10vh] bg-gray-500 text-white border border-gray-300">
                 image
               </div>
@@ -113,7 +140,8 @@ const Page = (props: Props) => {
           {/* adming description */}
           <div className="desc flex flex-col">
             <h5 className="text-gray-500">
-              Description<span className="text-red-500">*</span>
+              Statement<span className="text-red-500">*</span>
+              <span className="ml-3">شکایت کے حل کی تفصیل</span>
             </h5>
             <textarea
               name="query"
@@ -122,6 +150,7 @@ const Page = (props: Props) => {
               rows={5}
               className="border border-gray-300 p-2 flex-wrap"
               placeholder="please write your query"
+              ref={DescRef}
             ></textarea>
           </div>
 
@@ -219,6 +248,7 @@ const Page = (props: Props) => {
             <button
               type="submit"
               className="flex items-center justify-center gap-3 text-white mt-4 w-[80%] uppercase bg-primaryColor-500 rounded-sm transition-all outline-none cursor-pointer py-2 px-4 text-[18px] font-bold shadow-md"
+              onClick={SubmitResponse}
             >
               <TbFilePlus className="text-xl font-bold text-white" />
 

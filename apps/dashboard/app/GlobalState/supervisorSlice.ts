@@ -14,17 +14,22 @@ const supervisorSlice = createSlice({
     error: false,
   },
   reducers: {
+    // Generic API Start action called for all apis
     ApiRequestStart: (state) => {
       state.loading = true;
     },
+    // below action retrieve the all registered supervisors data
     GetSupervisorsSuccess: (state, action) => {
       state.loading = false;
       state.supervisorsAll = action.payload;
     },
+    // below action retrieve the single supervisor data
     GetSingleSupervisorSuccess: (state, action) => {
       state.loading = false;
       state.supervisor = action.payload;
     },
+
+    // Generic API Failled called notif toast for all APIs
     ApiRequestError: (state, action) => {
       state.error = true;
       toast.error(action.payload, {

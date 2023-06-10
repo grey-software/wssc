@@ -61,6 +61,7 @@ export const SignInSupervisor = async (
   next: NextFunction
 ) => {
   const { phone, password } = req.body;
+  console.log(req.body)
   try {
     const verifySupervisor:
       | (SupervisorTypes & {
@@ -79,7 +80,7 @@ export const SignInSupervisor = async (
     }
 
     const verifyPassword: boolean = await bycrypt.compare(
-      password,
+      req.body.password,
       verifySupervisor.password
     );
     // CHECKING IF THE PASSWORD IS CORRECT
@@ -99,7 +100,7 @@ export const SignInSupervisor = async (
       SECRET_KEY
     );
 
-    const supervisor = verifySupervisor._doc;
+    const {password, ...supervisor} = verifySupervisor._doc;
     res
       .cookie("access_token", token, {
         httpOnly: true,

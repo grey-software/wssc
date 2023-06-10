@@ -4,6 +4,8 @@ import UserReducer from "./UserSlice";
 import TabReducer from "./TabSlice";
 import SupervisorReducer from "./supervisorSlice";
 import ComplaintReducer from "./complatintSlice";
+import SuprvsorReducer from "./Supervisor-ApiCalls/ApiCalls/supervisorSlice/AuthSlice";
+import SupervisorComplaints from './Supervisor-ApiCalls/ApiCalls/supervisorSlice/supervisorComplaintsSlice'
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import {
   persistReducer,
@@ -38,14 +40,16 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["Tab", "TabReducer"],
+  blacklist: ["Tab", "Complaint", "Supervisor", "SupervisorReducer", "supervisorComplaints" ],
 };
 
 const reducer = combineReducers({
   User: UserReducer,
+  suprvisor: SuprvsorReducer,
   Tab: TabReducer,
   Complaint: ComplaintReducer,
   Supervisor: SupervisorReducer,
+  supervisorComplaints: SupervisorComplaints,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
