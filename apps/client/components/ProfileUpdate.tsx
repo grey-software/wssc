@@ -19,7 +19,7 @@ const ProfileUpdate = ({
   setUpdateValue,
   updateType,
   InputField,
-  userId
+  userId,
 }: Props) => {
   const [input, setInput] = useState(updateValue);
   const updatRef = useRef<HTMLInputElement>(null);
@@ -32,18 +32,16 @@ const ProfileUpdate = ({
     const value = updatRef.current?.value;
     if (InputField == "name") {
       updateData = {
-        "name": value
-       }
-    }
-    else if (InputField == "email") {
+        name: value,
+      };
+    } else if (InputField == "email") {
       updateData = {
-        "email": value
-      }
-    }
-    else if (InputField == "address") {
+        email: value,
+      };
+    } else if (InputField == "address") {
       updateData = {
-        "address": value
-      }
+        address: value,
+      };
     }
 
     // calling API method to update UserInfo
@@ -54,10 +52,10 @@ const ProfileUpdate = ({
   };
 
   return (
-    <div className="fixed top-0 flex justify-center items-center w-full h-screen bg-gray-500 bg-opacity-40 transition-all z-10">
+    <div className="fixed top-0 right-0 bottom-0 left-0 flex justify-center items-center w-screen h-screen bg-gray-500 bg-opacity-40 transition-all z-10">
       <form
         onSubmit={UpdatedProfile}
-        className="bg-white p-6 flex flex-col gap-3 w-full absolute bottom-0 rounded-t-lg"
+        className="bg-white p-6 flex flex-col gap-3 w-full sm:w-full md:max-w-lg absolute bottom-0 rounded-t-lg"
       >
         <label htmlFor="update" className="text-md text-gray-400 font-bold">
           Update your {InputField}

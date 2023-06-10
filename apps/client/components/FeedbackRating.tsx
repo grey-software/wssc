@@ -59,14 +59,14 @@ const FeedbackRating = ({ feedback, setfeedback, complaintId }: Props) => {
 
   return (
     <>
-      <div className="fixed top-0 flex justify-center items-center w-full h-[100vh] backdrop-blur-sm transition-all">
-        <div className=" flex flex-col gap-6 shadow-lg shadow-gray-300 bg-gray-50 px-5 mr-6 py-8 border border-gray-200 rounded-md w-[90%] overflow-hidden">
+      <div className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center w-screen h-[100vh] backdrop-blur-sm transition-all">
+        <div className="flex flex-col gap-6 shadow-lg shadow-gray-300 bg-gray-50 px-5 mx-2 py-8 border border-gray-200 rounded-md overflow-hidden">
           {/* close feedback icon */}
           <div className="flex items-center justify-between text-lg font-semibold">
             <span className="text-primaryColor-500 ">Complaint Feedback</span>
             <h4
               onClick={() => setfeedback(!feedback)}
-              className="flex justify-end  text-2xl text-green-600 font-bold"
+              className="flex justify-end  text-2xl text-green-600 font-bold cursor-pointer"
             >
               <IoCloseSharp />
             </h4>

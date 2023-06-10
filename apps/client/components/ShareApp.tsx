@@ -10,13 +10,8 @@ import {
 import toast from "react-hot-toast";
 
 import { HiMail } from "react-icons/hi";
-import {
-  FaFacebook,
-  FaLinkedin,
-  FaTwitter,
-  FaWhatsapp,
-} from "react-icons/fa";
-import {FiCopy} from "react-icons/fi"
+import { FaFacebook, FaLinkedin, FaTwitter, FaWhatsapp } from "react-icons/fa";
+import { FiCopy } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
 
 type Props = {
@@ -25,23 +20,20 @@ type Props = {
 };
 
 function ShareApp({ sharePop, setSharePop }: Props) {
-
   const CopiedToast = () => {
-
-
-     toast.success("Copied", {
-       position: "top-center",
-       style: { width: "auto", height: "auto" },
-     });
-  }
+    toast.success("Copied", {
+      position: "top-center",
+      style: { width: "auto", height: "auto" },
+    });
+  };
   return (
-    <div className="absolute top-0 flex justify-center items-center w-screen h-screen backdrop-blur-sm transition-all">
-      <div className="flex flex-col gap-12 shadow-lg bg-white px-5 py-5 rounded-md">
+    <div className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center w-screen h-screen bg-slate-200 bg-opacity-50 transition-all z-40">
+      <div className="flex flex-col gap-12 shadow-lg bg-white px-5 py-5 rounded-md z-50">
         {/* closing btn */}
         <div className="flex items-center justify-between font-semibold">
           <span>Share this App</span>
           <MdClose
-            className="text-headingColor-400 text-2xl font-mono"
+            className="text-headingColor-400 text-2xl font-mono cursor-pointer"
             onClick={() => setSharePop(!sharePop)}
           />
         </div>
@@ -86,12 +78,13 @@ function ShareApp({ sharePop, setSharePop }: Props) {
           <button
             className="text-sm px-2 py-1 bg-primaryColor-500 text-white rounded-md"
             onClick={() => {
-              navigator.clipboard.writeText("https://fyp-front-end.vercel.app/");
+              navigator.clipboard.writeText(
+                "https://fyp-front-end.vercel.app/"
+              );
               CopiedToast();
-            }
-            }
+            }}
           >
-            <FiCopy className="font-bold text-lg"/>
+            <FiCopy className="font-bold text-lg" />
           </button>
         </div>
       </div>

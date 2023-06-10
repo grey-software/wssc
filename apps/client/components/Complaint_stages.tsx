@@ -78,7 +78,7 @@ function Complaint_stages({ status, complaintId, isfeedback }: Props) {
                 } ${stage.state === "Closed" ? "bg-closedColor" : ""}`}
               ></div>
             </VerticalTimelineElement>
-            {stage.state == "Completed" && isfeedback ? (
+            {stage.state == "Completed" ? (
               <VerticalTimelineElement
                 className="relative "
                 contentStyle={{

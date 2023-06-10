@@ -20,29 +20,29 @@ const ProfileCard = () => {
   const [updateType, setUpdateType] = useState("");
   const imageRef = useRef<HTMLInputElement>(null);
   const [ProfilePhoto, setProfilePhoto] = useState();
-  const [InputField, SetInputField] = useState("")
-  const [loading, setloading] = useState(false)
-  const [changePass, SetChangePass] = useState(false)
+  const [InputField, SetInputField] = useState("");
+  const [loading, setloading] = useState(false);
+  const [changePass, SetChangePass] = useState(false);
   const [deleteAccount, SetdeleteAccount] = useState(false);
   const dispatch = useDispatch();
 
   // getting global user data
-  const { UserInfo, pending }: any = useSelector((state: RootState) => state.users);
-  
+  const { UserInfo, pending }: any = useSelector(
+    (state: RootState) => state.users
+  );
+
   const InProgress = () => {
     SetdeleteAccount(true);
   };
 
-// ---------- changing password------------
+  // ---------- changing password------------
   const ChangePassword = () => {
-     SetChangePass(true)
-  }
-
-
+    SetChangePass(true);
+  };
 
   // upload profile pic
   const UpdatePhoto = async (e: any) => {
-    setloading(true)
+    setloading(true);
 
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -62,45 +62,44 @@ const ProfileCard = () => {
         );
         const photo = await response.json();
         setProfilePhoto(photo.secure_url);
-        const updatedpic:any = {
-          profile_image: photo.secure_url
+        const updatedpic: any = {
+          profile_image: photo.secure_url,
         };
         // calling updateProfile apiCall to update userInfo
         const res = await UpdateUserProfile(dispatch, updatedpic, UserInfo._id);
-        console.log(res.status)
+        console.log(res.status);
         if (res.status == 200 && pending == false) {
-          setloading(false)
-          }
+          setloading(false);
+        }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
   };
 
-
-  const handleUpdate = (value: any, type: any, InputField:string) => {
+  const handleUpdate = (value: any, type: any, InputField: string) => {
     setUpdate(!update);
     setUpdateValue(value);
-    SetInputField(InputField)
-
-  };  
+    SetInputField(InputField);
+  };
 
   // JSX Section
   return (
     <>
-      <div className="relative">
-        <div className="flex items-center gap-28 mt-20 mb-2">
-          <Link href="/">
-            <HiArrowLeft
-              className="text-[28px] text-primaryColor-500 ml-2"
-              // onClick={handleBack}
-            />
+      <div className="relative w-[374px] sm:w-[450px]">
+        <div className="flex items-center justify-between mb-2">
+          <Link
+            href="/"
+            className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all cursor-pointer"
+          >
+            <HiArrowLeft className="text-[28px] text-primaryColor-500" />
           </Link>
           <h3 className="text-lg -ml-3 font-bold text-primaryColor-500">
             <span className=" text-headingColor-400 opacity-50 font-black">
               Profile Card
             </span>
           </h3>
+          <div className="w-11"></div>
         </div>
         {/* below code for user image */}
         <div className="relative flex flex-col gap-2 items-center">
@@ -132,22 +131,21 @@ const ProfileCard = () => {
               loading ? "opacity-40" : "opacity-100"
             } h-36 w-36 object-cover rounded-full mt-2`}
             alt=""
-            />
-            {!loading && (
-          <span className="absolute translate-x-[50px] translate-y-[120px] flex items-center justify-center p-2 bg-primaryColor-500 rounded-full text-white">
-              
-            <input
-              className="hidden"
-              accept="image/*"
-              ref={imageRef}
-              onChange={UpdatePhoto}
-              type="file"
-              capture="environment"
-              name="image"
-            />
-            <FaCamera onClick={() => imageRef.current!.click()} />
-              </span>
-)}
+          />
+          {!loading && (
+            <span className="absolute translate-x-[50px] translate-y-[120px] flex items-center justify-center p-2 bg-primaryColor-500 rounded-full text-white">
+              <input
+                className="hidden"
+                accept="image/*"
+                ref={imageRef}
+                onChange={UpdatePhoto}
+                type="file"
+                capture="environment"
+                name="image"
+              />
+              <FaCamera onClick={() => imageRef.current!.click()} />
+            </span>
+          )}
           <h1 className="text-xl text-headingColor-400 font-bold">
             {UserInfo?.name || "Jhoe Doe"}
           </h1>
@@ -174,10 +172,7 @@ const ProfileCard = () => {
             <h2 className="text-lg text-gray-500">
               0{UserInfo?.phone || "3319395175"}
             </h2>
-            <BiEdit
-              // onClick={() => handleUpdate(UserInfo.phone, "number", "phone")}
-              className="text-gray-500 text-2xl"
-            />
+            <BiEdit className="text-gray-500 text-2xl" />
           </div>
         </div>
         {/* Email */}
