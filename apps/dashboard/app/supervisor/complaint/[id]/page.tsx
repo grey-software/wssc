@@ -16,6 +16,7 @@ const Page = (props: Props) => {
    let [desc, setdesc] = useState<string>("");
    const [load, setload] = useState(false);
   const DescRef = useRef<HTMLTextAreaElement>(null);
+
   // SubmiResponse method definition express supervisor response on complaint resolution
   const SubmitResponse = () => {
     console.log(`desc: ${DescRef?.current?.value} || imageURL: ${ImageUrl} | VideoUrl: ${VideoUrl}`)
@@ -79,14 +80,14 @@ const Page = (props: Props) => {
 
   // JSX SECTION
   return (
-    <div className="text-red mt-16 text-xl">
-      <div className="wrapper">
+    <div className="text-red mt-16 border w-[100vw] border-blue-500">
+      <div className="wrapper w-full border border-red-400">
         {/* complaint detail */}
-        <p className="text-[16px]  -mb-2 text-center text-gray-500">
+        <p className="text-[16px] -mb-2 text-center text-gray-500">
           Complaint Detail
         </p>
-        <div className="complaintDetail px-3 py-2 m-3 gap-2 text-[15px] shadow-sm border border-gray-300 flex flex-col flex-wrap justify-between">
-          <p className="flex justify-between">
+        <div className="complaintDetail px-3 py-3 m-3 gap-3 text-[15px] shadow-sm border border-gray-300 flex flex-col flex-wrap justify-between">
+          <div className="flex justify-between">
             <p>
               <span className="text-gray-500">Type:</span>
               <span className="font-bold"> Water Supply</span>
@@ -95,15 +96,15 @@ const Page = (props: Props) => {
               <span className="text-gray-500">Status:</span>
               <span className="text-blue-600 font-bold"> Pending</span>
             </p>
-          </p>
-          <p className="flex justify-between">
+          </div>
+          <div className="flex justify-between">
             <p>
               <span className="text-gray-500">ID:</span> 353454
             </p>
             <p>
               <span className="text-gray-500">Date:</span> 8 jun, 023
             </p>
-          </p>
+          </div>
           {/* adming description */}
           <div className="desc flex flex-col">
             <h5 className="text-gray-500">Description</h5>
@@ -134,7 +135,7 @@ const Page = (props: Props) => {
 
         {/* Supervisor feeback */}
         <p className="text-[16px] mt-2 text-center text-gray-500">
-          Complaint resolved response
+          Supervisor response
         </p>
         <div className="complaintDetail px-3 py-2 mx-3 mt-1 gap-2 text-[15px] shadow-sm border border-gray-300 flex flex-col flex-wrap justify-between">
           {/* adming description */}
@@ -156,7 +157,7 @@ const Page = (props: Props) => {
 
           {/* testing section of attached media */}
           <div className="flex flex-col mt-2 mb-2">
-            <label className="text-gray-500 text-[18px]">
+            <label className="text-gray-500 text-[15px]">
               <span>
                 Attachment<span className="text-red-500">*</span>
               </span>
@@ -194,10 +195,10 @@ const Page = (props: Props) => {
           <div className="flex justify-between mt-1">
             {/* for image to upload */}
             <div
-              className="border-2 border-primaryColor-300 rounded-md hover:bg-primaryColor-300 transition-all cursor-pointer py-1 px-3 text-[18px] text-secondarycolor-500 font-bold"
+              className="border-2 border-primaryColor-300 rounded-md hover:bg-primaryColor-300 transition-all cursor-pointer py-1 px-3 text-[19px] text-secondarycolor-500 font-bold"
               onClick={() => imageRef.current!.click()}
             >
-              <div className="flex justify-center items-center gap-1 text-[20px]">
+              <div className="flex justify-center items-center gap-1 text-[18px]">
                 <span>
                   <BsImage />
                 </span>
@@ -209,7 +210,7 @@ const Page = (props: Props) => {
               className="border-2 border-primaryColor-300 rounded-md active:bg-primarycolor-500 hover:bg-primaryColor-300 transition-all cursor-pointer py-1 px-3 text-[18px] text-secondarycolor-500 font-bold"
               onClick={() => videoRef.current!.click()}
             >
-              <div className="flex justify-center items-center gap-1 text-[20px]">
+              <div className="flex justify-center items-center gap-1 text-[18px]">
                 <span>
                   <BsFillCameraVideoFill />
                 </span>
