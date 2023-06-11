@@ -22,7 +22,7 @@ ComplaintRouter.route("/:id")
   .patch(verifyToken, AddStatement)
   .delete(verifyAdmin, DeleteAllcomplaints);
 
-ComplaintRouter.post("/", verifyToken, CreateComplaint)
+ComplaintRouter.post("/", verifyToken, CreateComplaint);
 ComplaintRouter.patch("/feedback/:id", verifyToken, CitizenFeedback);
 ComplaintRouter.patch("/response/:id", verifyToken, SupervisorResponse);
 

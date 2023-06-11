@@ -13,7 +13,6 @@ import {
   AssignComplaint,
   AddStatement,
 } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
-import { GetSingleSupervisor } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
 import { API } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
 import { config } from "@/app/GlobalState/config";
@@ -26,8 +25,8 @@ const Page = ({ params }: any) => {
   const navigate = useRouter();
   const [wsscStatement, setWsscStatement] = useState<string>("");
   const [supervisorId, setSupervisorId] = useState<string>("");
-  const [complaint, setComplaint] = useState<complaintTypes>({});
-  const [loading, setLoading] = useState<boolean>(false);
+  const [complaint, setComplaint] = useState<complaintTypes>();
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<boolean>(false);
 
   const supervisors = useSelector(
@@ -38,9 +37,12 @@ const Page = ({ params }: any) => {
     setLoading(true);
     try {
       const res = await API.get(`api/v1/complaints/${complaintId}`, config);
-      console.log(res);
-      setLoading(false);
-      setComplaint(res.data.complaint);
+      console.log(res.data.complaint);
+      if (res.data.complaint) {
+        setTimeout(() => setLoading(false), 1000);
+        setComplaint(res.data.complaint);
+      }
+      // setLoading(false);
       return res.data;
     } catch (err: any) {
       setError(true);
@@ -80,7 +82,7 @@ const Page = ({ params }: any) => {
   };
 
   const handleStatment = () => {
-    AddStatement(complaint._id, wsscStatement, dispatch);
+    AddStatement(complaint?._id, wsscStatement, dispatch);
   };
 
   const RatingInWords: string[] = [
@@ -128,7 +130,7 @@ const Page = ({ params }: any) => {
             <span>Complaint</span>
           </span>
         </div>
-        {complaint.supervisorId == "" ? (
+        {complaint?.supervisorId == "" ? (
           <div className="flex items-center gap-4">
             <select
               name="supervisor"
@@ -177,7 +179,7 @@ const Page = ({ params }: any) => {
         } `}
       >
         {/* Complaint details */}
-        {loading && !error ? (
+        {loading ? (
           <ColorRing
             visible={true}
             height="80"
@@ -343,8 +345,7 @@ const Page = ({ params }: any) => {
             >
               <h1 className="mb-1 font-bold text-md">Supervisor Details</h1>
               <div className="w-full border-[1px] border-gray-300"></div>
-              {complaint?.status[complaint?.status.length - 1].state !==
-              "Initiated" ? (
+              {complaint?.supervisorId != "" ? (
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   <div className="flex items-start gap-2">
                     <span className="font-semibold">Name</span>
@@ -386,7 +387,7 @@ const Page = ({ params }: any) => {
               <h1 className="mb-1 font-bold text-md">Complaint Media</h1>
               <div className="w-full border-[1px] border-gray-300 mb-4"></div>
               <div className="grid grid-cols-2 gap-4 mt-4 w-full">
-                {complaint?.ImageUrl && complaint.VideoUrl ? (
+                {complaint?.ImageUrl || complaint?.VideoUrl ? (
                   <>
                     {" "}
                     {complaint?.ImageUrl && (
