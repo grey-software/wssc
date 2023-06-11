@@ -46,20 +46,21 @@ const Header = () => {
                 </div>
               </div>
 
+              {/* show for mobile screen */}
               <Image
                 src={UserInfo?.profile_image ? UserInfo?.profile_image : userdp}
                 width={32}
                 height={32}
-                className={`block sm:block md:hidden lg:hidden xl:hidden w-8 h-8 rounded-full object-cover`}
+                className={`block sm:block md:hidden lg:hidden xl:hidden w-8 h-8 rounded-full object-cover cursor-pointer`}
                 alt="profileIcon"
                 onClick={() => setMenuActive(!menuActive)}
               />
-
+              {/* show for tablets and desktops */}
               <Image
                 src={UserInfo?.profile_image ? UserInfo?.profile_image : userdp}
                 width={32}
                 height={32}
-                className={`hidden sm:hidden md:block lg:block xl:block w-8 h-8 rounded-full object-cover`}
+                className={`hidden sm:hidden md:block lg:block xl:block w-8 h-8 rounded-full object-cover cursor-pointer`}
                 alt="profileIcon"
                 onClick={() => navigate.push(`profile/${UserInfo._id}`)}
               />

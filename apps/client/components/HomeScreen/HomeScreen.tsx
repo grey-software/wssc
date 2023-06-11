@@ -18,7 +18,7 @@ const HomeScreen = () => {
     FetchAllComplaints(dispatch);
   };
   return (
-    <div>
+    <div className="w-[365px] sm:w-[450px] md:w-full lg-full xl-w-full">
       <div className="bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-md shadow-gray-200 rounded-full">
         <span
           onClick={() => handleClick("Pending")}
