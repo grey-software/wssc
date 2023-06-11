@@ -15,6 +15,9 @@ type Props = {
 function Complaint_stages({ status, complaintId, isfeedback }: Props) {
   const [feedback, setfeedback] = useState(false);
 
+  // current time for feedback
+  const date = new Date();
+
   // JSX section
   return (
     <>
@@ -102,7 +105,9 @@ function Complaint_stages({ status, complaintId, isfeedback }: Props) {
                 <div className="flex flex-col">
                   <div className="parent flex justify-between text-lg font-bold">
                     <h3 className="text-[#1A5980]">Feedback</h3>
-                    <h3 className="text-sm text-gray-400">04:00 pm</h3>
+                    <h3 className="text-sm text-gray-400">
+                      `${date.getHours()}:${date.getMinutes()}`
+                    </h3>
                   </div>
                   <div className="flex flex-col mt-4">
                     <span className="text-gray-500 mb-1">

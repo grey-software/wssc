@@ -238,16 +238,17 @@ export const GetSupervisorComplaints = async (
   res: Response,
   next: NextFunction
 ) => {
-  const userId = req.user.id;
-  console.log(userId);
-  // console.log(req.user.id == req.params.id);
+  // Get the supervisor id from params
+  const supervisorId = req.params.id;
   try {
+    // get only those complaint in which supervisorId is equal to sent id
     const allComplaints = await ComplaintModel.find({
-      supervisorId: userId,
+      supervisorId: supervisorId,
     }).sort({
       _id: -1,
     });
 
+    // send response
     res.status(200).json({
       status: 200,
       success: true,

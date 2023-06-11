@@ -89,7 +89,7 @@ const Timeline = ({ params }: any) => {
           src={`${ImageUrl ? ImageUrl : "/assets/complaintDefaultPic.png"}`}
           width={80}
           height={50}
-          className="h-40 w-36"
+          className="h-36 w-32 rounded-md"
           alt=""
         />
         <div
