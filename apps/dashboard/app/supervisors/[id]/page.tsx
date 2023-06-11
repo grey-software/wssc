@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { AiFillHome } from "react-icons/ai";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { BsCaretLeftSquareFill, BsCaretRightSquareFill } from "react-icons/bs";
 import { RootState } from "@/app/GlobalState/store";
 import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import SingleComplaintSupervisor from "@/components/complaint/SingleComplaintSupervisor";
 import { GetSingleSupervisor } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
+import { FetchSupervisorComplaints } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
 
 const page = ({ params }: any) => {
   const id = params.id;
@@ -18,14 +18,20 @@ const page = ({ params }: any) => {
 
   useEffect(() => {
     GetSingleSupervisor(dispatch, id);
+    FetchSupervisorComplaints(id, dispatch);
   }, []);
 
   const supervisor: any = useSelector(
     (state: RootState) => state.Supervisor.supervisor
   );
-  const complaints: any = useSelector((state: RootState) =>
-    state.Complaint.complaintsAll.filter((c) => c.supervisorId == id)
+  // const complaints: any = useSelector((state: RootState) =>
+  //   state.Complaint.complaintsAll.filter((c) => c.supervisorId == id)
+  // );
+  const complaints: any = useSelector(
+    (state: RootState) => state.Complaint.supervisorComplaints
   );
+
+  console.log(complaints, supervisor);
 
   return (
     <div className="container flex flex-col gap-6">

@@ -19,8 +19,10 @@ interface Prop {
 const Signin = ({ setAuthState }: Prop) => {
   const dispatch = useDispatch();
   const [showPassword, setshowPassword] = useState(false);
-// access global user data
-  const {pending, UserInfo, error}:any = useSelector((state: RootState)=>state.users)
+  // access global user data
+  const { pending, UserInfo, error }: any = useSelector(
+    (state: RootState) => state.users
+  );
   const {
     register,
     handleSubmit,
@@ -32,15 +34,15 @@ const Signin = ({ setAuthState }: Prop) => {
 
   const onSubmit = async (data: UserSubmitForm) => {
     const { phone, password } = data;
-// calling SignIn ApiCall to check credentials
-   SignIn({phone, password}, dispatch)
+    // calling SignIn ApiCall to check credentials
+    SignIn({ phone, password }, dispatch);
   };
 
   // ------- JSX Section --------------
   return (
     <>
-      <div className="flex items-center justify-center h-screen w-full">
-        <div className="flex justify-center flex-col w-[80%] sm:w-[40%] ">
+      <div className="flex items-center justify-center w-full px-0 md:px-20 lg:px-20 xl:px-20">
+        <div className="flex justify-center flex-col">
           <div className="flex flex-col items-center justify-center gap-4">
             <Image src={logo} className="w-40" alt="Wsscm-logo" priority />
             <p className="text-md text-gray-500 font-semibold text-center">
@@ -111,9 +113,7 @@ const Signin = ({ setAuthState }: Prop) => {
                 className=" w-[100%] text-lg hover:bg-primaryColor-400 rounded-xl bg-primaryColor-500 active:scale-95 transition-all text-white py-3 font-semibold mb-3"
               >
                 {!pending ? (
-
                   "LOGIN | لاگ ان"
-                    
                 ) : (
                   <div role="status">
                     <svg
@@ -134,7 +134,6 @@ const Signin = ({ setAuthState }: Prop) => {
                     </svg>
                   </div>
                 )}
-
               </button>
             </div>
 

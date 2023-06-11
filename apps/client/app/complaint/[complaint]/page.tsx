@@ -125,7 +125,7 @@ const Page: React.FC = ({ params }: any) => {
 
   // ---------- JSX SECTION STARTED ---------
   return (
-    <div className="">
+    <div className="w-[365px] sm:w-[450px] md:w-full lg-full xl-w-full">
       <div className="flex items-center justify-between mb-4 ">
         <span className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all cursor-pointer">
           <HiArrowLeft

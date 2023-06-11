@@ -15,7 +15,6 @@ const PasswordChangeModel = ({ SetChangePass, changePass, userId }: Props) => {
   const ConfirmPssRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const { pending }: any = useSelector((state: RootState) => state.users);
-
   // update password method definition
   const UpdatedPassword = async (e: any) => {
     e.preventDefault();
@@ -92,7 +91,7 @@ const PasswordChangeModel = ({ SetChangePass, changePass, userId }: Props) => {
             cancel
           </button>
           <button type="submit" className="text-primaryColor-500 font-medium ">
-            Change
+            change
           </button>
         </div>
       </form>

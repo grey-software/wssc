@@ -22,7 +22,7 @@ const Complaints = ({ params }: any) => {
 
   // JSX section
   return (
-    <div>
+    <div className="w-[365px] sm:w-[450px] md:w-full lg-full xl-w-full">
       {UserInfo?.phone ? (
         <>
           <div className="flex items-center justify-between mb-4">

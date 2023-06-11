@@ -55,7 +55,7 @@ const ProfileUpdate = ({
     <div className="fixed top-0 right-0 bottom-0 left-0 flex justify-center items-center w-screen h-screen bg-gray-500 bg-opacity-40 transition-all z-10">
       <form
         onSubmit={UpdatedProfile}
-        className="bg-white p-6 flex flex-col gap-3 w-full sm:w-full md:max-w-lg absolute bottom-0 rounded-t-lg"
+        className="bg-white p-6 flex flex-col gap-3 w-full sm:w-full md:max-w-lg absolute rounded-lg"
       >
         <label htmlFor="update" className="text-md text-gray-400 font-bold">
           Update your {InputField}

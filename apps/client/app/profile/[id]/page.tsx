@@ -86,7 +86,7 @@ const ProfileCard = () => {
   // JSX Section
   return (
     <>
-      <div className="relative w-[374px] sm:w-[450px]">
+      <div className="relative w-[365px] sm:w-[450px] md:w-full lg-full xl-w-full">
         <div className="flex items-center justify-between mb-2">
           <Link
             href="/"
@@ -133,7 +133,7 @@ const ProfileCard = () => {
             alt=""
           />
           {!loading && (
-            <span className="absolute translate-x-[50px] translate-y-[120px] flex items-center justify-center p-2 bg-primaryColor-500 rounded-full text-white">
+            <span className="absolute translate-x-[50px] translate-y-[120px] flex items-center justify-center p-2 bg-primaryColor-500 rounded-full text-white cursor-pointer hover:shadow-lg transition-all">
               <input
                 className="hidden"
                 accept="image/*"
@@ -158,8 +158,9 @@ const ProfileCard = () => {
           <div className="flex items-center justify-between font-semibold">
             <h2 className="text-lg">{UserInfo?.name || "Jhoe Doe"}</h2>
             <BiEdit
+              title="Update Your Name"
               onClick={() => handleUpdate(UserInfo.name, "text", "name")}
-              className="text-primaryColor-500 text-2xl"
+              className="text-primaryColor-500 text-2xl cursor-pointer"
             />
           </div>
         </div>
@@ -168,11 +169,14 @@ const ProfileCard = () => {
           <label htmlFor="Name" className="text-sm text-gray-400">
             Contact Number
           </label>
-          <div className="flex items-center justify-between font-semibold">
+          <div
+            title="Phone Number can not be updated"
+            className="flex items-center justify-between font-semibold"
+          >
             <h2 className="text-lg text-gray-500">
               0{UserInfo?.phone || "3319395175"}
             </h2>
-            <BiEdit className="text-gray-500 text-2xl" />
+            <BiEdit className="text-gray-500 text-2xl cursor-not-allowed" />
           </div>
         </div>
         {/* Email */}
@@ -185,6 +189,7 @@ const ProfileCard = () => {
               {UserInfo?.email || "example@gmail.com"}
             </h2>
             <BiEdit
+              title="Update Your Email"
               onClick={() =>
                 handleUpdate(
                   UserInfo?.email || "example@gmail.com",
@@ -192,7 +197,7 @@ const ProfileCard = () => {
                   "email"
                 )
               }
-              className="text-primaryColor-500 text-2xl"
+              className="text-primaryColor-500 text-2xl cursor-pointer"
             />
           </div>
         </div>
@@ -206,6 +211,7 @@ const ProfileCard = () => {
               {UserInfo?.address || "Your address goes here"}
             </h2>
             <BiEdit
+              title="Update Your Address"
               onClick={() =>
                 handleUpdate(
                   UserInfo?.address || "Your address goes here",
@@ -213,7 +219,7 @@ const ProfileCard = () => {
                   "address"
                 )
               }
-              className="text-primaryColor-500 text-2xl"
+              className="text-primaryColor-500 text-2xl cursor-pointer"
             />
           </div>
         </div>
@@ -228,7 +234,7 @@ const ProfileCard = () => {
         <div className="flex justify-center mt-1">
           <button
             type="submit"
-            className=" w-[75%] text-sm hover:bg-primaryColor-400 rounded-xl bg-DeleteButton-100 text-DeleteButton-300 py-3 font-medium mb-3 hover:bg-DeleteButton-300 hover:text-white"
+            className=" w-[75%] text-sm hover:bg-primaryColor-400 rounded-xl bg-DeleteButton-100 text-DeleteButton-300 py-3 font-medium mb-3 hover:bg-DeleteButton-300 hover:text-white transition-all"
             onClick={InProgress}
           >
             Delete Account

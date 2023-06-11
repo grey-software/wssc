@@ -24,7 +24,7 @@ const patternRule: ValidationRule<RegExp> = {
 const SignUp = ({ setAuthState }: Prop) => {
   const [showPassword, setshowPassword] = useState(false);
   const [confirmPassword, setconfirmPassword] = useState(false);
-  const [wssc_code, setWSSC] = useState("")
+  const [wssc_code, setWSSC] = useState("");
 
   const { UserInfo, pending, error }: any = useSelector(
     (state: RootState) => state.users
@@ -44,18 +44,18 @@ const SignUp = ({ setAuthState }: Prop) => {
     const status = await RegisterUser(
       { phone, name: username, password, wssc_code },
       dispatch
-    );    
-    if(status == 200) {
-      setAuthState("Signin")
-       reset();
+    );
+    if (status == 200) {
+      setAuthState("Signin");
+      reset();
     }
   };
 
   // ------- TSX Section --------------
   return (
     <>
-      <div className="flex items-center justify-center h-screen w-full">
-        <div className="flex justify-center flex-col w-[80%] sm:w-[40%] ">
+      <div className="flex items-center justify-center  w-full px-0 md:px-20 lg:px-20 xl:px-20">
+        <div className="flex justify-center flex-col w-full ">
           <div className="flex flex-col items-center justify-center gap-4">
             <Image src={logo} className="w-40" alt="Wsscm-logo" priority />
             <p className="text-md text-gray-500 font-semibold text-center">

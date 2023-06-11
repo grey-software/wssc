@@ -58,10 +58,10 @@ const DeleteAccountModal = ({
             }}
             className="text-gray-500"
           >
-            cancel
+            keep account
           </button>
-          <button type="submit" className="text-primaryColor-500 font-medium ">
-            Confirm
+          <button type="submit" className="text-closedColor font-medium ">
+            confirm
           </button>
         </div>
       </form>
