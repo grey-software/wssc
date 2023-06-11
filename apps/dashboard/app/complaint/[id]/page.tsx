@@ -226,6 +226,8 @@ const Page = ({ params }: any) => {
                 </div>
               </div>
               <div className="w-full border-[1px] border-gray-300"></div>
+
+              {/* COMPLAINT DETAILS */}
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div className="flex items-center gap-2">
                   <span className="font-semibold">Type</span>
@@ -304,7 +306,7 @@ const Page = ({ params }: any) => {
                 </div>
                 <div></div>
                 {complaint?.feedback ? (
-                  <div className="p-4 shadow-md flex flex-col gap-2">
+                  <div className="p-4 shadow-md flex flex-col gap-2 w-[120%]">
                     <h1 className="text-md font-bold">Feedback</h1>
                     <div className="flex items-center gap-1 text-2xl">
                       {rates.map((value, index) => (
@@ -367,9 +369,35 @@ const Page = ({ params }: any) => {
                   {complaint?.response ? (
                     <div className="p-4 col-span-2 shadow-md flex flex-col gap-2">
                       <h1 className="text-md font-bold">Response</h1>
-                      <p className="text-sm">
-                        {complaint?.response?.description}
-                      </p>
+                      <div className="flex items-center gap-2 text-sm">
+                        <span className="font-semibold">Desription</span>
+                        <p>{complaint?.response?.description}</p>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4  mt-4 w-full">
+                        {complaint?.response.ImageUrl ||
+                        complaint?.response.VideoUrl ? (
+                          <>
+                            {complaint?.response?.ImageUrl && (
+                              <Image
+                                src={complaint?.response?.ImageUrl}
+                                className="h-36 w-32"
+                                width={300}
+                                height={100}
+                                alt="Complaint Picture"
+                              />
+                            )}
+                            {complaint?.response?.VideoUrl && (
+                              <video className="h-36 w-32" controls>
+                                <source src={complaint?.response?.VideoUrl} />
+                              </video>
+                            )}
+                          </>
+                        ) : (
+                          <h1 className="font-semibold text-gray-400">
+                            The Citizen have not provided any Media
+                          </h1>
+                        )}
+                      </div>
                     </div>
                   ) : (
                     <h1 className="font-semibold text-gray-400">
