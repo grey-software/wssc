@@ -20,10 +20,11 @@ export const SupervisorComplaints = async ( dispatch: any) => {
     } catch (err: any) {
         console.log(err);
         if (err?.response?.status == 404) {
-            dispatch(ApiRequestError("Something went wrong"));
+            // dispatch(ApiRequestError("Something went wrong"));
             console.log(err.response)
         } else {
-            dispatch(ApiRequestError("Server error, please try again later"));
+            // dispatch(ApiRequestError("Server error, please try again later"));
+            console.log("Server error, please try again later")
         }
     }
 };

@@ -1,38 +1,68 @@
 'use client';
 import Image from 'next/image';
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { BsFile, BsFillCameraVideoFill, BsImage } from 'react-icons/bs';
 import { TbFilePlus } from "react-icons/tb";
-import {toast } from 'react-hot-toast';
-type Props = {}
+import { toast } from 'react-hot-toast';
+import defaultPic from "../../../../public/complaintDefaultPic.png"
+import { FetchSingleComplaint, SupervisorComplaintResponse } from '@/app/GlobalState/ApiCalls/complaintApiCalls';
+import { useRouter } from 'next/navigation';
+import { MdDone } from 'react-icons/md'
 
-const Page = (props: Props) => {
+const Page = ({ params }: any) => {
+  const navigate = useRouter();
   const imageRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<string>();
   const videoRef = useRef<HTMLInputElement>(null);
   const [video, setvideo] = useState<string>();
    let [ImageUrl, setImageUrl] = useState<string>();
    let [VideoUrl, setVideoUrl] = useState<string>();
-   let [desc, setdesc] = useState<string>("");
-   const [load, setload] = useState(false);
+   let [complaint, setcomplaint] = useState<any>(null);
+   const [complaintDes, setcomplaintDes] = useState("");
   const DescRef = useRef<HTMLTextAreaElement>(null);
 
+
   // SubmiResponse method definition express supervisor response on complaint resolution
-  const SubmitResponse = () => {
-    console.log(`desc: ${DescRef?.current?.value} || imageURL: ${ImageUrl} | VideoUrl: ${VideoUrl}`)
-    if (!ImageUrl && !VideoUrl) {
-      window.alert("upload media is mandatory one")
+  const SubmitResponse = async () => {
+    // console.log(`desc: ${DescRef?.current?.value} || imageURL: ${ImageUrl} | VideoUrl: ${VideoUrl}`)
+
+    if (DescRef.current?.value === "") {
+      toast.error("please add resolution statement", {
+        position: "top-center"
+      });
+      return;
     }
-    if (DescRef.current?.value == "") {
-      window.alert("description should be given on complaint resolution")
+// 
+    if (!ImageUrl && !VideoUrl) {
+      toast.error("please upload at least one media", {
+        position: "top-center"
+      });
+     
     }
 
-    if (DescRef.current?.value && (ImageUrl || VideoUrl)) {
-      toast.success("response submitted successfull", {
-        position: 'top-center'
-      })
+// when both media and des have been provided supervisor then api will be called to update the complaint status
+    try {
+      const response = {
+        complaintId: complaint?._id,
+        ImageUrl: ImageUrl,
+        description: DescRef?.current?.value
+      };
+  
+      // Call Supervisor response API to update the complaint status
+      const res = await SupervisorComplaintResponse(response);
+      if (res.status == 200) {
+        toast.success("Response submitted Successfully", {
+          position: "top-center",
+        });
+        // navigate to the home page
+        navigate.push("/supervisor");
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } 
+  }
+
+
   // upload media attachments in optimized way
   const UploadAttachments = async (event: any) => {
     if (event.target.files && event.target.files[0]) {
@@ -78,54 +108,134 @@ const Page = (props: Props) => {
     }
   };
 
+  // fetch single method definition
+  const FetchComplaint = async() => {
+     try {
+       const res = await FetchSingleComplaint(params.id);
+       if (res.status == 200) {
+         console.log(res.complaint)
+         setcomplaint(res.complaint)
+
+        //checking complaint response
+         if (res.complaint?.response) {
+           setImage(res.complaint?.response.ImageUrl);
+          //  setting complaint description
+           setcomplaintDes(res.complaint?.response?.description);
+          console.log("complaint response is availble")
+        }
+          
+       }
+     } catch (error) {
+       console.log(error)
+     }
+  }
+// using useEffect to call the getSingleComplaint API instant to the fetch the complaint instant when page is rendered
+  useEffect(() => {
+    FetchComplaint();
+  }, [params])
+  
   // JSX SECTION
   return (
-    <div className="text-red mt-16 border w-[100vw] border-blue-500">
-      <div className="wrapper w-full border border-red-400">
+    <div className="mt-14 w-[100vw]">
+      <div className="wrapper w-full ">
         {/* complaint detail */}
-        <p className="text-[16px] -mb-2 text-center text-gray-500">
+        <p className="text-[16px] z-10 font-semibold tracking-wide py-2  text-center bg-green-500 text-white">
           Complaint Detail
         </p>
-        <div className="complaintDetail px-3 py-3 m-3 gap-3 text-[15px] shadow-sm border border-gray-300 flex flex-col flex-wrap justify-between">
+        <div className="complaintDetail bg-gray-50 px-3 py-3 my-1 mx-1 gap-3 text-[15px] shadow-sm  flex flex-col flex-wrap justify-between">
           <div className="flex justify-between">
             <p>
               <span className="text-gray-500">Type:</span>
-              <span className="font-bold"> Water Supply</span>
+              <span className="font-bold"> {complaint?.complaintType}</span>
             </p>
             <p>
-              <span className="text-gray-500">Status:</span>
-              <span className="text-blue-600 font-bold"> Pending</span>
+              <span className="text-gray-500">Status: </span>
+              <span
+                className={`font-bold ${
+                  complaint?.status[complaint?.status.length - 1]?.state ===
+                  "Initiated"
+                    ? "text-initiatedColor"
+                    : ""
+                }  ${
+                  complaint?.status[complaint?.status.length - 1]?.state ===
+                  "InProgress"
+                    ? "text-inprogessColor"
+                    : ""
+                } ${
+                  complaint?.status[complaint?.status.length - 1]?.state ===
+                  "Completed"
+                    ? "text-completedColor"
+                    : ""
+                } ${
+                  complaint?.status[complaint?.status.length - 1]?.state ===
+                  "Closed"
+                    ? "text-closedColor"
+                    : ""
+                }`}
+              >
+                {complaint?.status[complaint?.status.length - 1]?.state}
+              </span>
             </p>
           </div>
           <div className="flex justify-between">
-            <p>
-              <span className="text-gray-500">ID:</span> 353454
+            <p className="capitalize">
+              <span className="text-gray-500 ">ID: </span>
+              {complaint?._id.slice(-8)}
             </p>
             <p>
-              <span className="text-gray-500">Date:</span> 8 jun, 023
+              <span className="text-gray-500">Date: </span>
+              {complaint?.updatedAt.split("T")[0]}
             </p>
           </div>
           {/* adming description */}
           <div className="desc flex flex-col">
             <h5 className="text-gray-500">Description</h5>
 
-            <p className="border border-gray-300 p-2">
-              Please resolve this complaint as soon as possible.Please resolve
-              this complaint as soon as possible.Please resolve this complaint
-              as soon as possible.Please resolve this complaint as soon as
-              possible.
+            <p className="border border-gray-300 p-2 bg-white">
+              {complaint?.complaintDes}
             </p>
           </div>
+
+          {/* admin statement */}
+          {complaint?.wsscStatement && (
+            <div className="desc flex flex-col">
+              <h5 className="text-gray-500">Admin statement</h5>
+
+              <p className="border border-gray-300 bg-white p-2">
+                {complaint?.wsscStatement}
+              </p>
+            </div>
+          )}
           {/* attached media */}
           <div className="attachment">
             <p>Attached media</p>
             <div className="media  flex gap-2 justify-around border border-gray-300 p-2">
-              <div className="pic w-[40vw] h-[10vh] bg-gray-500 text-white border border-gray-300">
-                image
+              <div className="pic w-[36vw] h-[14vh] text-white ">
+                <Image
+                  src={complaint?.ImageUrl ? complaint?.ImageUrl : defaultPic}
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="object-contain  w-[36vw] h-[14vh]"
+                />
               </div>
               {/* video */}
-              <div className="video w-[40vw] h-[10vh] bg-green-500 text-white border border-gray-300">
-                video
+              <div className="video w-[36vw] h-[13vh] text-white ">
+                {complaint?.VideoUrl ? (
+                  <video
+                    src={video}
+                    controls
+                    className="object-contain  w-[36vw] h-[14vh]"
+                  />
+                ) : (
+                  <Image
+                    src={defaultPic}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="object-cover  w-[36vw] h-[14vh]"
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -134,13 +244,13 @@ const Page = (props: Props) => {
         <hr />
 
         {/* Supervisor feeback */}
-        <p className="text-[16px] mt-2 text-center text-gray-500">
-          Supervisor response
+        <p className="text-[16px] tracking-wide py-2 font-semibold mt-2 text-center text-white bg-blue-600 ">
+          Supervisor Response
         </p>
-        <div className="complaintDetail px-3 py-2 mx-3 mt-1 gap-2 text-[15px] shadow-sm border border-gray-300 flex flex-col flex-wrap justify-between">
-          {/* adming description */}
+        <div className="complaintDetail px-3 py-3 my-0 gap-2 text-[15px] shadow-sm bg-slate-50 flex flex-col flex-wrap justify-between">
+          {/* admin description */}
           <div className="desc flex flex-col">
-            <h5 className="text-gray-500">
+            <h5 className="text-gray-700">
               Statement<span className="text-red-500">*</span>
               <span className="ml-3">شکایت کے حل کی تفصیل</span>
             </h5>
@@ -152,25 +262,27 @@ const Page = (props: Props) => {
               className="border border-gray-300 p-2 flex-wrap"
               placeholder="please write your query"
               ref={DescRef}
+              defaultValue={complaintDes}
+              readOnly={complaintDes !== ""}
             ></textarea>
           </div>
 
           {/* testing section of attached media */}
           <div className="flex flex-col mt-2 mb-2">
-            <label className="text-gray-500 text-[15px]">
+            <label className="text-gray-700 text-[15px]">
               <span>
                 Attachment<span className="text-red-500">*</span>
               </span>
               <span className=" ml-2 font-serif">تصویر / ویڈیو</span>
             </label>
             <div
-              className={`flex gap-3 w-full h-[6rem] p-[3px] overflow-hidden border-2 rounded-lg border-gray-300 outline-none
+              className={`flex gap-3 w-full h-[7rem] p-[3px]  overflow-hidden border-2 rounded-lg border-gray-300 outline-none bg-white
           `}
             >
               {image && (
-                <div className="w-[120px] h-[120px] object-cover">
+                <div className="w-[160px] h-[105px] object-cover">
                   <Image
-                    className="rounded-md"
+                    className="rounded-sm object-cover w-full h-full"
                     src={image}
                     width={100}
                     height={100}
@@ -180,7 +292,7 @@ const Page = (props: Props) => {
               )}
 
               {video && (
-                <div className="w-[120px] h-[120px] object-cover">
+                <div className="w-[120px] h-[120px] border border-orange-400 object-cover">
                   <video
                     src={video}
                     controls
@@ -195,8 +307,14 @@ const Page = (props: Props) => {
           <div className="flex justify-between mt-1">
             {/* for image to upload */}
             <div
-              className="border-2 border-primaryColor-300 rounded-md hover:bg-primaryColor-300 transition-all cursor-pointer py-1 px-3 text-[19px] text-secondarycolor-500 font-bold"
-              onClick={() => imageRef.current!.click()}
+              className={`border-2 border-primaryColor-300 rounded-md hover:bg-primaryColor-300 transition-all  py-1 px-3 text-[19px] text-secondarycolor-500 font-bold ${
+                !complaint?.response ? "cursor-pointer" : "cursor-not-allowed"
+              }`}
+              onClick={() => {
+                if (!complaint?.response) {
+                  imageRef.current!.click();
+                }
+              }}
             >
               <div className="flex justify-center items-center gap-1 text-[18px]">
                 <span>
@@ -207,8 +325,14 @@ const Page = (props: Props) => {
             </div>
             {/* for video to upload */}
             <div
-              className="border-2 border-primaryColor-300 rounded-md active:bg-primarycolor-500 hover:bg-primaryColor-300 transition-all cursor-pointer py-1 px-3 text-[18px] text-secondarycolor-500 font-bold"
-              onClick={() => videoRef.current!.click()}
+              className={`border-2 border-primaryColor-300 rounded-md active:bg-primarycolor-500 hover:bg-primaryColor-300 transition-all py-1 px-3 text-[18px] text-secondarycolor-500 font-bold ${
+                !complaint?.response ? "cursor-pointer" : "cursor-not-allowed"
+              }`}
+              onClick={() => {
+                if (!complaint?.response) {
+                  imageRef.current!.click();
+                }
+              }}
             >
               <div className="flex justify-center items-center gap-1 text-[18px]">
                 <span>
@@ -246,15 +370,32 @@ const Page = (props: Props) => {
 
           {/* submit button */}
           <div className="flex justify-center mt-2 w-full">
-            <button
-              type="submit"
-              className="flex items-center justify-center gap-3 text-white mt-4 w-[80%] uppercase bg-primaryColor-500 rounded-sm transition-all outline-none cursor-pointer py-2 px-4 text-[18px] font-bold shadow-md"
-              onClick={SubmitResponse}
-            >
-              <TbFilePlus className="text-xl font-bold text-white" />
+            {complaint?.status[complaint?.status.length - 1]?.state ===
+            "InProgress" ? (
+              <button
+                type="submit"
+                className="flex items-center justify-center gap-3 text-white mt-4 w-[70%] uppercase bg-primaryColor-500 rounded-sm transition-all outline-none cursor-pointer py-2 px-4 text-[18px] font-bold shadow-md"
+                onClick={SubmitResponse}
+              >
+                <TbFilePlus className="text-xl font-bold text-white" />
 
-              <span>Submit</span>
-            </button>
+                <span>Submit</span>
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className={`flex items-center justify-center gap-3 text-white mt-4 w-[70%] bg-primaryColor-500 rounded-sm transition-all outline-none py-2 px-4 text-[18px] font-bold shadow-md  ${
+                  complaint?.response
+                    ? "cursor-pointer"
+                    : "cursor-not-allowed hover:bg-slate-400"
+                }`}
+              >
+                <span>Submitted</span>
+                <span className='text-2xl font-extrabold'>
+                  <MdDone />
+                </span>
+              </button>
+            )}
           </div>
         </div>
       </div>

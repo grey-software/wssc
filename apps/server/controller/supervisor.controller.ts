@@ -214,3 +214,31 @@ export const GetAllSupervisors = async (
     res.status(404).json({ status: 404, success: false, message: error });
   }
 };
+
+
+// In case of logout, we remove or deleted jwt token from user machine.
+export const Logout = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    console.log("inside try section")
+    res
+      .clearCookie("access_token", {
+        sameSite: "none",
+      })
+      .status(200)
+      .json({
+        status: 200,
+        success: true,
+        message: "Supervisor Signed Out Successfully",
+      });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      success: false,
+      message: error,
+    });
+  }
+};

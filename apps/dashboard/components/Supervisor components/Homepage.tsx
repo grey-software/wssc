@@ -6,35 +6,58 @@ import { useDispatch } from "react-redux";
 
 import { SupervisorComplaints } from "../../app/GlobalState/Supervisor-ApiCalls/ApiCalls/supervisorComplaintsApiCalls";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/GlobalState/store";
 
 
 export const FiltersBtns = [
   {
+    name: "All",
+    index: 0,
+    filter: "AllComplaints"
+  },
+  {
     name: "Pending",
     index: 1,
+    filter: "InProgress"
   },
   {
     name: "Resolved",
     index: 2,
+    filter: "Completed"
   },
   {
     name: "Closed",
     index: 3,
+    filter: "Closed"
   },
 ];
 
 const HomeScreen = () => {
-  const dispatch = useDispatch();
-  const [selected, setselected] = useState<Number>(0);
-  const [complaints, setcomplaints] = useState([]);
+  // retreiving complaints from store
+  const allcomplaints = useSelector((state: RootState) => state.supervisorComplaints.SupervisorComplaints);
 
-//   const complaints: any = useSelector(
-//     (state: RootState) => state.supervisorComplaints.SupervisorComplaints
-//   );
-  const handleClick = (index: any) => {};
+  const dispatch = useDispatch();
+  const [complaints, setcomplaints] = useState<any>(allcomplaints);
+  const [selected, setselected] = useState<Number>(0); 
+
+  // A method to filtered the complaints on the click
+  const FilteredComplaints = (index: string) => {
+    if (index === "AllComplaints") {
+      setcomplaints(allcomplaints);
+      return;
+    }
+    
+      const filteredComplaints = allcomplaints.filter((complaint: any) => {
+        let lastStatus = complaint.status[complaint.status.length - 1].state;
+        return lastStatus === index;
+      });
+    setcomplaints(filteredComplaints);
+  };
+
 
   // FetchSupervisorComplaints method definition to fetch all complaints that are assigned to supervisor
-  const FetchSupervisorComplaints = async () => {
+  const FetchSupervisorComplaints = async () => { 
     try {
         const allcomplaints = await SupervisorComplaints(dispatch);
         setcomplaints(allcomplaints)
@@ -43,12 +66,12 @@ const HomeScreen = () => {
     }
   };
 
-  // used useEffect to call supervisor assigned complaints api to fetch and retrieve to the supervisor
+  // used useEffect to call supervisor_assigned_complaints API to fetch and retrieve the data accordingly
   useEffect(() => {
     FetchSupervisorComplaints();
+    setselected(0);
   }, []);
 
-  console.log(`fetch all complaints from complaintSlice: ${complaints} `);
   // JSX section
   return (
     <div className="container w-full h-screen ml-3 ">
@@ -56,7 +79,7 @@ const HomeScreen = () => {
         {FiltersBtns.map((e, index) => (
             <span
               key={index}
-              onClick={() => setselected(e.index)}
+            onClick={() => { setselected(e.index); FilteredComplaints(e.filter);}}
               className={`pending cursor-pointer py-3  hover:bg-green-500 flex flex-col justify-center items-center border-r border-gray-300  flex-1  ${
                 e.index == selected && "bg-green-500 text-white"
               } `}
@@ -69,16 +92,17 @@ const HomeScreen = () => {
 
       <div className="complaints-types m-3 mt-2">
         <h2 className="text-md text-center font-semibold text-gray-600">
-          Recent complaints
+          Assigned complaints
         </h2>
       </div>
 
       {complaints.map((complaint: any, index: any) => (
         <div key={index}>
           <Link href={`/supervisor/complaint/${complaint?._id}`}>
-            <div className="flex items-center justify-between rounded-lg border-2 border-gray-100 mb-1 mx-2 p-2 px-4 shadow-sm relative overflow-hidden">
+            <div className="flex items-center justify-between rounded-lg border-2 border-gray-200 mb-1 mx-2 p-2 px-4 shadow-md relative overflow-hidden">
               <div className="flex flex-col justify-center ml-1">
                 <h3 className="text-md font-bold text-gray-600">
+                  
                   {complaint?.complaintType}
                 </h3>
                 <div className="flex items-center gap-3 text-sm text-gray-600">
