@@ -6,8 +6,9 @@ import {
   GetSupervisor,
   UpdateSupervisor,
   DeleteSupervisor,
+  Logout,
 } from "../controller/supervisor.controller";
-import { verifyAdmin, verifySupervisor } from "../middleware/verifyToken";
+import { verifyAdmin, verifySupervisor, verifyToken } from "../middleware/verifyToken";
 
 const Supervisor: Router = Router();
 
@@ -19,6 +20,8 @@ Supervisor.route("/:id")
   .get(verifySupervisor, GetSupervisor)
   .patch(verifySupervisor, UpdateSupervisor)
   .delete(verifyAdmin, DeleteSupervisor);
+
+  Supervisor.post("/logout", Logout)
 
 // below is the general route defined to fetch all the record such as: no of users, complaints, supervisors along with no of complaint types registered
 

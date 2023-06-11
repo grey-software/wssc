@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Image from "next/image";
 import garbage from "../../../../public/garbage.png";
 import { HiArrowLeft } from "react-icons/hi";
@@ -9,15 +9,21 @@ import { RootState } from "@/global_state/store";
 import Complaint from "@/components/Complaint";
 import { useDispatch } from "react-redux";
 import { complaintTypes } from "@/Types";
+import { FetchAllComplaints } from "@/global_state/ApiCalls/complaintApiCalls";
 
 const Complaints = ({ params }: any) => {
   let statesValue = params.stage;
+  const dispatch = useDispatch();
   const [states, setStates] = useState(statesValue);
   if (states === "Resolved") setStates("Closed");
+
+  useEffect(() => {
+    FetchAllComplaints(dispatch);
+  }, []);
+
   const complaintsAll = useSelector((state: RootState) => {
     return state.complaints.complaintsAll;
   });
-  console.log(complaintsAll);
   const { UserInfo }: any = useSelector((state: RootState) => state.users);
 
   // JSX section

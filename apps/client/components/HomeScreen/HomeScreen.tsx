@@ -15,7 +15,6 @@ const HomeScreen = () => {
   const user: any = useSelector((state: RootState) => state.users.UserInfo);
   const handleClick = (stage: string) => {
     navigate.push(`/complaint/stages/${stage}`);
-    FetchAllComplaints(dispatch);
   };
   return (
     <div className="w-[365px] sm:w-[450px] md:w-full lg-full xl-w-full">

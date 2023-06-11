@@ -26,6 +26,7 @@ function Supervisors({}: Props) {
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [updateId, setUpdateId] = useState<string>("");
+  const [deleteId, setDeleteId] = useState<string>("");
 
   const { loading, error } = useSelector(
     (state: RootState) => state.Supervisor
@@ -39,6 +40,8 @@ function Supervisors({}: Props) {
   const supervisors = useSelector(
     (state: RootState) => state.Supervisor.supervisorsAll
   );
+
+  const supervisor = supervisors.find((s) => s._id == deleteId);
 
   const {
     register,
@@ -58,8 +61,8 @@ function Supervisors({}: Props) {
     setModal(false);
   };
 
-  const Delete = (id: any) => {
-    const status = DeleteSupervisor(id, dispatch);
+  const DeleteUpervisor = () => {
+    const status = DeleteSupervisor(deleteId, dispatch);
     console.log(status);
     // if (status != 200)
     //   toast.error("Something went wrong", {
@@ -223,7 +226,7 @@ function Supervisors({}: Props) {
                       <button
                         onClick={() => {
                           setDeleteModal(true);
-                          Delete(_id);
+                          setDeleteId(_id);
                         }}
                         className="font-bold text-[12px] uppercase text-white bg-closedColor py-1 px-3 rounded-lg hover:shadow-lg transition-all"
                       >
@@ -237,6 +240,8 @@ function Supervisors({}: Props) {
           </table>
         )}
       </div>
+
+      {/* ADD SUPERVISOR MODAL */}
       {modal && (
         <div className="absolute mt-10 h-[80vh] w-full flex items-center justify-center backdrop-blur-sm">
           <div className="flex flex-col bg-white shadow-2xl px-16 py-8 w-full sm:w-full md:w-2/3 lg:w-[40%] rounded-md border-[1px] border-gray-200">
@@ -340,6 +345,8 @@ function Supervisors({}: Props) {
           </div>
         </div>
       )}
+
+      {/* UPDATE SUPERVISOR MODAL*/}
       {updateModal && (
         <div className="absolute mt-10 h-[80vh] w-full flex items-center justify-center backdrop-blur-sm">
           <div className="flex flex-col bg-white shadow-2xl px-16 py-8 w-full sm:w-full md:w-2/3 lg:w-[40%] rounded-md border-[1px] border-gray-200">
@@ -444,6 +451,34 @@ function Supervisors({}: Props) {
               </button>
             </form>
           </div>
+        </div>
+      )}
+
+      {/* DELETE SUPERVISOR MODAL */}
+      {deleteModal && (
+        <div className="fixed top-0 right-0 bottom-0 left-0 flex justify-center items-center w-screen h-screen bg-gray-400 bg-opacity-60 transition-all z-10">
+          <form
+            onSubmit={DeleteUpervisor}
+            className={`bg-gray-50 p-6 flex flex-col gap-3 w-[96%] sm:w-[96%] md:max-w-lg absolute center rounded-lg`}
+          >
+            <label className="text-md text-gray-600">
+              Are you really want to delete?
+            </label>
+
+            <div className="flex gap-10 mt-3 items-center justify-end text-md">
+              <button
+                onClick={() => {
+                  setDeleteModal(!deleteModal);
+                }}
+                className="text-gray-500"
+              >
+                keep account
+              </button>
+              <button type="submit" className="text-closedColor font-medium ">
+                confirm
+              </button>
+            </div>
+          </form>
         </div>
       )}
     </div>

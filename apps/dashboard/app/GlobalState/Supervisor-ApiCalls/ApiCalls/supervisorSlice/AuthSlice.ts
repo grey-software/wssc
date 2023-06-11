@@ -27,6 +27,17 @@ export const Suprvisor_Slice = createSlice({
             });
         },
 
+// supervisor logout 
+        SupervisorLogout: (state, action) => {
+            state.pending = false;
+            state.SupervisorSiginData = {};
+                toast.success("Logout Successfully", {
+                    position: "top-center",
+                    style: { width: "auto", height: "auto" },
+                    duration: 3000,
+                });
+        },
+
 // below is the generic action which calls when API endpoint failed
         ApiFetchingError: (state, action) => {
             state.error = true;
@@ -45,6 +56,6 @@ export const {
     ApiFetchingStart,
     SignInSuccess,
     ApiFetchingError,
-  
+    SupervisorLogout
 } = Suprvisor_Slice.actions;
 export default Suprvisor_Slice.reducer;

@@ -13,7 +13,7 @@ import {
 import { config } from "./config";
 import { ComplainForm } from "@/@types/complainForm.types";
 
-const API = axios.create({ baseURL: "http://localhost:7000" });
+export const API = axios.create({ baseURL: "http://localhost:7000" });
 // const API = axios.create({ baseURL: "https://fyp-wssc-backend-production.up.railway.app" });
 
 // Citizen feedback
@@ -79,7 +79,7 @@ export const CreateComplaint = async (
       },
       config
     );
-    console.log(`this is complaintApi console: ${res.data}`)
+    console.log(`this is complaintApi console: ${res.data}`);
     dispatch(NewComplaintSuccess(res.data.CreateComplaint));
     return res.data;
   } catch (err: any) {
@@ -113,7 +113,3 @@ export const FetchAllComplaints = async (dispatch: any): Promise<any> => {
     }
   }
 };
-
-
-
-

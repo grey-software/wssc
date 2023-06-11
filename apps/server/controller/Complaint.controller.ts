@@ -18,8 +18,7 @@ export const CreateComplaint = async (
   if (error) return res.send(error.details[0].message);
   const userId = req.body.userId;
   const citizenId = req.user.id;
-
-  console.log(req.body);
+  
   if (userId == citizenId) {
     try {
       const CreateComplaint = new ComplaintModel(req.body);
