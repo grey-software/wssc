@@ -26,20 +26,21 @@ const Page = ({ params }: any) => {
   const [wsscStatement, setWsscStatement] = useState<string>("");
   const [supervisorId, setSupervisorId] = useState<string>("");
   const [complaint, setComplaint] = useState<complaintTypes>();
-  const [loading, setLoading] = useState(true);
+  const [pending, setPending] = useState(true);
   const [error, setError] = useState<boolean>(false);
+  const loading = useSelector((state: RootState) => state.Complaint.loading);
 
   const supervisors = useSelector(
     (state: RootState) => state.Supervisor.supervisorsAll
   );
 
   const FetchComplaint = async (complaintId: any): Promise<any> => {
-    setLoading(true);
+    setPending(true);
     try {
       const res = await API.get(`api/v1/complaints/${complaintId}`, config);
       console.log(res.data.complaint);
       if (res.data.complaint) {
-        setTimeout(() => setLoading(false), 1000);
+        setTimeout(() => setPending(false), 1000);
         setComplaint(res.data.complaint);
       }
       // setLoading(false);
@@ -83,6 +84,7 @@ const Page = ({ params }: any) => {
 
   const handleStatment = () => {
     AddStatement(complaint?._id, wsscStatement, dispatch);
+    complaint && setComplaint({ ...complaint, wsscStatement: wsscStatement });
   };
 
   const RatingInWords: string[] = [
@@ -173,13 +175,13 @@ const Page = ({ params }: any) => {
       {/* showing single  Complaint */}
       <div
         className={`${
-          loading
+          pending
             ? "flex items-center justify-center h-[70vh]"
             : "grid grid-cols-2 w-full gap-6 text-sm"
         } `}
       >
         {/* Complaint details */}
-        {loading ? (
+        {pending ? (
           <ColorRing
             visible={true}
             height="80"
@@ -224,6 +226,8 @@ const Page = ({ params }: any) => {
                 </div>
               </div>
               <div className="w-full border-[1px] border-gray-300"></div>
+
+              {/* COMPLAINT DETAILS */}
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div className="flex items-center gap-2">
                   <span className="font-semibold">Type</span>
@@ -302,7 +306,7 @@ const Page = ({ params }: any) => {
                 </div>
                 <div></div>
                 {complaint?.feedback ? (
-                  <div className="p-4 shadow-md flex flex-col gap-2">
+                  <div className="p-4 shadow-md flex flex-col gap-2 w-[120%]">
                     <h1 className="text-md font-bold">Feedback</h1>
                     <div className="flex items-center gap-1 text-2xl">
                       {rates.map((value, index) => (
@@ -365,9 +369,35 @@ const Page = ({ params }: any) => {
                   {complaint?.response ? (
                     <div className="p-4 col-span-2 shadow-md flex flex-col gap-2">
                       <h1 className="text-md font-bold">Response</h1>
-                      <p className="text-sm">
-                        {complaint?.response?.description}
-                      </p>
+                      <div className="flex items-center gap-2 text-sm">
+                        <span className="font-semibold">Desription</span>
+                        <p>{complaint?.response?.description}</p>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4  mt-4 w-full">
+                        {complaint?.response.ImageUrl ||
+                        complaint?.response.VideoUrl ? (
+                          <>
+                            {complaint?.response?.ImageUrl && (
+                              <Image
+                                src={complaint?.response?.ImageUrl}
+                                className="h-36 w-32"
+                                width={300}
+                                height={100}
+                                alt="Complaint Picture"
+                              />
+                            )}
+                            {complaint?.response?.VideoUrl && (
+                              <video className="h-36 w-32" controls>
+                                <source src={complaint?.response?.VideoUrl} />
+                              </video>
+                            )}
+                          </>
+                        ) : (
+                          <h1 className="font-semibold text-gray-400">
+                            The Citizen have not provided any Media
+                          </h1>
+                        )}
+                      </div>
                     </div>
                   ) : (
                     <h1 className="font-semibold text-gray-400">
@@ -386,21 +416,20 @@ const Page = ({ params }: any) => {
             <div className="shadow-md p-5 rounded-md border-2 border-gray-50">
               <h1 className="mb-1 font-bold text-md">Complaint Media</h1>
               <div className="w-full border-[1px] border-gray-300 mb-4"></div>
-              <div className="grid grid-cols-2 gap-4 mt-4 w-full">
+              <div className="grid grid-cols-2 gap-4  mt-4 w-full">
                 {complaint?.ImageUrl || complaint?.VideoUrl ? (
                   <>
-                    {" "}
                     {complaint?.ImageUrl && (
                       <Image
                         src={complaint?.ImageUrl}
-                        className="h-full "
+                        className="h-56 w-48"
                         width={300}
                         height={100}
                         alt="Complaint Picture"
                       />
                     )}
                     {complaint?.VideoUrl && (
-                      <video className="h-full" controls>
+                      <video className="h-56 w-48" controls>
                         <source src={complaint?.VideoUrl} />
                       </video>
                     )}

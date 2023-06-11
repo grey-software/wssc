@@ -26,7 +26,7 @@ ComplaintRouter.post("/", verifyToken, CreateComplaint);
 ComplaintRouter.patch("/feedback/:id", verifyToken, CitizenFeedback);
 ComplaintRouter.patch("/response/:id", verifyToken, SupervisorResponse);
 
-ComplaintRouter.get("/supervisor", verifyToken, GetSupervisorComplaints);
+ComplaintRouter.get("/supervisor/:id", verifyToken, GetSupervisorComplaints);
 
 // ASSIGN COMPLAINT ROUTE
 ComplaintRouter.route("/:supervisorId/:complaintId").patch(

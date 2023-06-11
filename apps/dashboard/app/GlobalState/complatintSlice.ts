@@ -11,6 +11,7 @@ const complaintSlice = createSlice({
     complaintsAll: <complaintTypes[]>(<unknown>[]),
     newComplaint: [],
     complaint: <complaintTypes>{},
+    supervisorComplaints: <complaintTypes[]>(<unknown>[]),
     loading: false,
     error: false,
   },
@@ -23,6 +24,14 @@ const complaintSlice = createSlice({
       state.loading = false;
       state.complaintsAll = action.payload;
     },
+
+    // Get specific supervisor complaints
+    GetSupervisorComplaintsSuccess: (state, action) => {
+      state.loading = false;
+      state.supervisorComplaints = action.payload;
+    },
+
+    // Assign complaint to supervisor
     AssignComplaintSuccess: (state) => {
       state.loading = false;
     },
@@ -52,6 +61,7 @@ export const {
   AssignComplaintSuccess,
   AddStatementSuccess,
   GetSingleComplaintSuccess,
+  GetSupervisorComplaintsSuccess,
   APIRequestError,
 } = complaintSlice.actions;
 export default complaintSlice.reducer;

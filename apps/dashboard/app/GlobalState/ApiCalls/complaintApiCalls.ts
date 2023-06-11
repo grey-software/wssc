@@ -6,8 +6,10 @@ import {
   GetSingleComplaintSuccess,
   APIRequestError,
   AddStatementSuccess,
+  GetSupervisorComplaintsSuccess,
 } from "../complatintSlice";
 import { config } from "../config";
+import { GetSingleSupervisorSuccess } from "../supervisorSlice";
 
 export const API = axios.create({ baseURL: "http://localhost:7000" });
 
@@ -60,6 +62,34 @@ export const AddStatement = async (
     } else if (err.response.status == 500) {
       dispatch(APIRequestError(err.response.statusText));
       return err.response;
+    }
+  }
+};
+
+// Fetch Specific supervisor complaints
+export const FetchSupervisorComplaints = async (
+  supervisorId: any,
+  dispatch: any
+): Promise<any> => {
+  dispatch(ApiRequestStart());
+  try {
+    const res = await API.get(
+      `api/v1/complaints/supervisor/${supervisorId}`,
+      config
+    );
+    dispatch(GetSupervisorComplaintsSuccess(res.data.allComplaints));
+    console.log(res.data);
+    return res.data;
+  } catch (err: any) {
+    console.log(err);
+    if (err.response) {
+      if (err.response.status == 404) {
+        dispatch(APIRequestError(err.response.status));
+        return err.response.status;
+      } else {
+        dispatch(APIRequestError("Something went wrong"));
+        return err.response.status;
+      }
     }
   }
 };
