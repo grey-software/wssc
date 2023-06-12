@@ -35,7 +35,7 @@ const Timeline = ({ params }: any) => {
     FetchSingleComplaint();
   }, []);
 
-  console.log(complaint);
+  console.log(complaint?.feedback);
   console.log(complaint?.status);
 
   const back = () => {
@@ -91,7 +91,7 @@ const Timeline = ({ params }: any) => {
           </div>
           <div className="flex items-center gap-3 text-sm text-gray-600">
             <p>Compliant ID:</p>
-            <span>{complaint?._id.slice(-8)}</span>
+            <span className="uppercase">{complaint?._id.slice(-8)}</span>
           </div>
           <div className="flex items-center gap-3 text-sm text-gray-600">
             <p>Submited On:</p>

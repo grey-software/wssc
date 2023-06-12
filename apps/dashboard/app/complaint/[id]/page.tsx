@@ -302,7 +302,7 @@ const Page = ({ params }: any) => {
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="font-semibold">Contact</span>
-                  <span>{complaint?.phone}</span>
+                  <span>0{complaint?.phone}</span>
                 </div>
                 <div></div>
                 {complaint?.feedback ? (

@@ -61,7 +61,7 @@ const Complaint = ({
         </div>
         <div className="flex items-center gap-3 text-sm text-gray-600">
           <p>Compliant ID:</p>
-          <span>{complaintID.slice(-8)}</span>
+          <span className="uppercase">{complaintID.slice(-8)}</span>
         </div>
         <div className="flex items-center gap-3 text-sm text-gray-600">
           <p>Submited On:</p>

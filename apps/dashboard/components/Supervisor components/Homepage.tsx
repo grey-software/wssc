@@ -9,37 +9,38 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/GlobalState/store";
 
-
 export const FiltersBtns = [
   {
     name: "All",
     index: 0,
-    filter: "AllComplaints"
+    filter: "AllComplaints",
   },
   {
     name: "Pending",
     index: 1,
-    filter: "InProgress"
+    filter: "InProgress",
   },
   {
     name: "Resolved",
     index: 2,
-    filter: "Completed"
+    filter: "Completed",
   },
   {
     name: "Closed",
     index: 3,
-    filter: "Closed"
+    filter: "Closed",
   },
 ];
 
 const HomeScreen = () => {
   // retreiving complaints from store
-  const allcomplaints = useSelector((state: RootState) => state.supervisorComplaints.SupervisorComplaints);
+  const allcomplaints = useSelector(
+    (state: RootState) => state.supervisorComplaints.SupervisorComplaints
+  );
 
   const dispatch = useDispatch();
   const [complaints, setcomplaints] = useState<any>(allcomplaints);
-  const [selected, setselected] = useState<Number>(0); 
+  const [selected, setselected] = useState<Number>(0);
 
   // A method to filtered the complaints on the click
   const FilteredComplaints = (index: string) => {
@@ -47,20 +48,19 @@ const HomeScreen = () => {
       setcomplaints(allcomplaints);
       return;
     }
-    
-      const filteredComplaints = allcomplaints.filter((complaint: any) => {
-        let lastStatus = complaint.status[complaint.status.length - 1].state;
-        return lastStatus === index;
-      });
+
+    const filteredComplaints = allcomplaints.filter((complaint: any) => {
+      let lastStatus = complaint.status[complaint.status.length - 1].state;
+      return lastStatus === index;
+    });
     setcomplaints(filteredComplaints);
   };
 
-
   // FetchSupervisorComplaints method definition to fetch all complaints that are assigned to supervisor
-  const FetchSupervisorComplaints = async () => { 
+  const FetchSupervisorComplaints = async () => {
     try {
-        const allcomplaints = await SupervisorComplaints(dispatch);
-        setcomplaints(allcomplaints)
+      const allcomplaints = await SupervisorComplaints(dispatch);
+      setcomplaints(allcomplaints);
     } catch (error) {
       console.log(error);
     }
@@ -77,16 +77,18 @@ const HomeScreen = () => {
     <div className="container w-full h-screen ml-3 ">
       <div className="complaints-record bg-gray-50 flex justify-center items-center  overflow-hidden border border-gray-300 shadow-sm shadow-gray-200 rounded-sm mx-2 mt-20">
         {FiltersBtns.map((e, index) => (
-            <span
-              key={index}
-            onClick={() => { setselected(e.index); FilteredComplaints(e.filter);}}
-              className={`pending cursor-pointer py-3  hover:bg-green-500 flex flex-col justify-center items-center border-r border-gray-300  flex-1  ${
-                e.index == selected && "bg-green-500 text-white"
-              } `}
-            >
-              <p className="text-sm">{e.name}</p>
-            </span>
-        
+          <span
+            key={index}
+            onClick={() => {
+              setselected(e.index);
+              FilteredComplaints(e.filter);
+            }}
+            className={`pending cursor-pointer py-3  hover:bg-green-500 flex flex-col justify-center items-center border-r border-gray-300  flex-1  ${
+              e.index == selected && "bg-green-500 text-white"
+            } `}
+          >
+            <p className="text-sm">{e.name}</p>
+          </span>
         ))}
       </div>
 
@@ -102,7 +104,6 @@ const HomeScreen = () => {
             <div className="flex items-center justify-between rounded-lg border-2 border-gray-200 mb-1 mx-2 p-2 px-4 shadow-md relative overflow-hidden">
               <div className="flex flex-col justify-center ml-1">
                 <h3 className="text-md font-bold text-gray-600">
-                  
                   {complaint?.complaintType}
                 </h3>
                 <div className="flex items-center gap-3 text-sm text-gray-600">
@@ -145,7 +146,7 @@ const HomeScreen = () => {
               </div>
               <Image
                 src={complaint?.ImageUrl ? complaint?.ImageUrl : dummyPic}
-                className="h-[10vh] w-[30%] object-cover"
+                className="h-[10vh] w-[30%] object-cover rounded-md"
                 width={60}
                 height={40}
                 alt=""
