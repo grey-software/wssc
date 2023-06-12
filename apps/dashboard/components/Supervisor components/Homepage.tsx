@@ -74,8 +74,8 @@ const HomeScreen = () => {
 
   // JSX section
   return (
-    <div className="container w-full h-screen ml-3 ">
-      <div className="complaints-record bg-gray-50 flex justify-center items-center  overflow-hidden border border-gray-300 shadow-sm shadow-gray-200 rounded-sm mx-2 mt-20">
+    <div className="container w-screen h-screen pt-2 -mt-20 bg-slate-50">
+      <div className="complaints-record  flex  items-center  overflow-hidden border border-gray-300 shadow-sm shadow-gray-200 rounded-sm mx-2 mt-20">
         {FiltersBtns.map((e, index) => (
           <span
             key={index}
@@ -101,7 +101,7 @@ const HomeScreen = () => {
       {complaints.map((complaint: any, index: any) => (
         <div key={index}>
           <Link href={`/supervisor/complaint/${complaint?._id}`}>
-            <div className="flex items-center justify-between rounded-lg border-2 border-gray-200 mb-1 mx-2 p-2 px-4 shadow-md relative overflow-hidden">
+            <div className="flex items-center justify-between rounded-lg border-2 bg-white border-gray-200 mb-1 mx-2 p-2 px-4 shadow-md relative overflow-hidden">
               <div className="flex flex-col justify-center ml-1">
                 <h3 className="text-md font-bold text-gray-600">
                   {complaint?.complaintType}

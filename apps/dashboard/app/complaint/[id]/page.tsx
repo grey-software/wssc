@@ -79,10 +79,31 @@ const Page = ({ params }: any) => {
   );
 
   const handleAssign = () => {
+    if (!supervisorId || supervisorId == "NotSelected") {
+      toast.error("Please Select Supervisor", {
+        position: "top-center",
+        style: { width: "auto", height: "auto" },
+        duration: 3000,
+      });
+      return;
+    }
     AssignComplaint(dispatch, supervisorId, id);
   };
 
   const handleStatment = () => {
+    if (
+      wsscStatement == "" ||
+      wsscStatement == " " ||
+      wsscStatement.length <= 15
+    ) {
+      toast.error("Statement should be explaining problem in detail", {
+        position: "top-center",
+        style: { width: "auto", height: "auto" },
+        duration: 3000,
+      });
+      return;
+    }
+
     AddStatement(complaint?._id, wsscStatement, dispatch);
     complaint && setComplaint({ ...complaint, wsscStatement: wsscStatement });
   };
@@ -140,7 +161,7 @@ const Page = ({ params }: any) => {
               className="px-3 py-1 border-2 border-gray-400 rounded focus:border-primaryColor-500"
               onChange={(e) => setSupervisorId(e.target.value)}
             >
-              <option value="Select supervisor">Select Supervisor</option>
+              <option value="NotSelected">Select Supervisor</option>
               {supervisors.map(({ _id, name }, index) => (
                 <option key={index} value={_id}>
                   {name}
@@ -394,7 +415,7 @@ const Page = ({ params }: any) => {
                           </>
                         ) : (
                           <h1 className="font-semibold text-gray-400">
-                            The Citizen have not provided any Media
+                            The Supervisor have not provided any Media
                           </h1>
                         )}
                       </div>
