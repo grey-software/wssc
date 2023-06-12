@@ -1,13 +1,17 @@
-'use client';
-import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react'
-import { BsFile, BsFillCameraVideoFill, BsImage } from 'react-icons/bs';
+"use client";
+import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
+import { BsFile, BsFillCameraVideoFill, BsImage } from "react-icons/bs";
 import { TbFilePlus } from "react-icons/tb";
-import { toast } from 'react-hot-toast';
-import defaultPic from "../../../../public/complaintDefaultPic.png"
-import { FetchSingleComplaint, SupervisorComplaintResponse } from '@/app/GlobalState/ApiCalls/complaintApiCalls';
-import { useRouter } from 'next/navigation';
-import { MdDone } from 'react-icons/md'
+import { toast } from "react-hot-toast";
+import defaultPic from "../../../../public/complaintDefaultPic.png";
+import {
+  FetchSingleComplaint,
+  SupervisorComplaintResponse,
+} from "@/app/GlobalState/ApiCalls/complaintApiCalls";
+import { useRouter } from "next/navigation";
+import { MdDone } from "react-icons/md";
+import { HiArrowLeft } from "react-icons/hi";
 
 const Page = ({ params }: any) => {
   const navigate = useRouter();
@@ -15,12 +19,11 @@ const Page = ({ params }: any) => {
   const [image, setImage] = useState<string>();
   const videoRef = useRef<HTMLInputElement>(null);
   const [video, setvideo] = useState<string>();
-   let [ImageUrl, setImageUrl] = useState<string>();
-   let [VideoUrl, setVideoUrl] = useState<string>();
-   let [complaint, setcomplaint] = useState<any>(null);
-   const [complaintDes, setcomplaintDes] = useState("");
+  let [ImageUrl, setImageUrl] = useState<string>();
+  let [VideoUrl, setVideoUrl] = useState<string>();
+  let [complaint, setcomplaint] = useState<any>(null);
+  const [complaintDes, setcomplaintDes] = useState("");
   const DescRef = useRef<HTMLTextAreaElement>(null);
-
 
   // SubmiResponse method definition express supervisor response on complaint resolution
   const SubmitResponse = async () => {
@@ -28,26 +31,25 @@ const Page = ({ params }: any) => {
 
     if (DescRef.current?.value === "") {
       toast.error("please add resolution statement", {
-        position: "top-center"
+        position: "top-center",
       });
       return;
     }
-// 
+    //
     if (!ImageUrl && !VideoUrl) {
       toast.error("please upload at least one media", {
-        position: "top-center"
+        position: "top-center",
       });
-     
     }
 
-// when both media and des have been provided supervisor then api will be called to update the complaint status
+    // when both media and des have been provided supervisor then api will be called to update the complaint status
     try {
       const response = {
         complaintId: complaint?._id,
         ImageUrl: ImageUrl,
-        description: DescRef?.current?.value
+        description: DescRef?.current?.value,
       };
-  
+
       // Call Supervisor response API to update the complaint status
       const res = await SupervisorComplaintResponse(response);
       if (res.status == 200) {
@@ -60,8 +62,7 @@ const Page = ({ params }: any) => {
     } catch (error) {
       console.log(error);
     }
-  }
-
+  };
 
   // upload media attachments in optimized way
   const UploadAttachments = async (event: any) => {
@@ -109,40 +110,56 @@ const Page = ({ params }: any) => {
   };
 
   // fetch single method definition
-  const FetchComplaint = async() => {
-     try {
-       const res = await FetchSingleComplaint(params.id);
-       if (res.status == 200) {
-         console.log(res.complaint)
-         setcomplaint(res.complaint)
+  const FetchComplaint = async () => {
+    try {
+      const res = await FetchSingleComplaint(params.id);
+      if (res.status == 200) {
+        console.log(res.complaint);
+        setcomplaint(res.complaint);
 
         //checking complaint response
-         if (res.complaint?.response) {
-           setImage(res.complaint?.response.ImageUrl);
+        if (res.complaint?.response) {
+          setImage(res.complaint?.response.ImageUrl);
           //  setting complaint description
-           setcomplaintDes(res.complaint?.response?.description);
-          console.log("complaint response is availble")
+          setcomplaintDes(res.complaint?.response?.description);
+          console.log("complaint response is availble");
         }
-          
-       }
-     } catch (error) {
-       console.log(error)
-     }
-  }
-// using useEffect to call the getSingleComplaint API instant to the fetch the complaint instant when page is rendered
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // using useEffect to call the getSingleComplaint API instant to the fetch the complaint instant when page is rendered
   useEffect(() => {
     FetchComplaint();
-  }, [params])
-  
+  }, [params]);
+
   // JSX SECTION
   return (
     <div className="mt-14 w-[100vw]">
       <div className="wrapper w-full ">
         {/* complaint detail */}
-        <p className="text-[16px] z-10 font-semibold tracking-wide py-2  text-center bg-green-500 text-white">
+        {/* <p className="text-[16px] z-10 font-semibold tracking-wide py-2  text-center bg-green-500 text-white">
           Complaint Detail
-        </p>
-        <div className="complaintDetail bg-gray-50 px-3 py-3 my-1 mx-1 gap-3 text-[15px] shadow-sm  flex flex-col flex-wrap justify-between">
+        </p> */}
+        {/* NAVIGATION */}
+        <div className="flex items-center justify-between mt-16 mb-2">
+          <span className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all cursor-pointer">
+            <HiArrowLeft
+              onClick={() => navigate.push("/supervisor")}
+              className="text-[28px] text-primaryColor-500"
+            />
+          </span>
+          <h3 className="flex gap-2 text-lg text-primaryColor-500">
+            <span className="px-2 bg-[#1A5980] text-white rounded-lg">
+              Complaint Details
+            </span>
+          </h3>
+          <div className="w-7"></div>
+        </div>
+
+        {/* COMPLAINT DETAILS */}
+        <div className="px-3 py-3 my-1 mx-2 gap-3 text-[15px] rounded-md flex flex-col flex-wrap justify-between border-2 border-gray-200 shadow-md">
           <div className="flex justify-between">
             <p>
               <span className="text-gray-500">Type:</span>
@@ -178,7 +195,7 @@ const Page = ({ params }: any) => {
             </p>
           </div>
           <div className="flex justify-between">
-            <p className="capitalize">
+            <p className="uppercase">
               <span className="text-gray-500 ">ID: </span>
               {complaint?._id.slice(-8)}
             </p>
@@ -191,7 +208,7 @@ const Page = ({ params }: any) => {
           <div className="desc flex flex-col">
             <h5 className="text-gray-500">Description</h5>
 
-            <p className="border border-gray-300 p-2 bg-white">
+            <p className="border border-gray-200 p-2 rounded-md bg-white">
               {complaint?.complaintDes}
             </p>
           </div>
@@ -201,7 +218,7 @@ const Page = ({ params }: any) => {
             <div className="desc flex flex-col">
               <h5 className="text-gray-500">Admin statement</h5>
 
-              <p className="border border-gray-300 bg-white p-2">
+              <p className="border border-gray-200 rounded-md bg-white p-2">
                 {complaint?.wsscStatement}
               </p>
             </div>
@@ -209,7 +226,7 @@ const Page = ({ params }: any) => {
           {/* attached media */}
           <div className="attachment">
             <p>Attached media</p>
-            <div className="media  flex gap-2 justify-around border border-gray-300 p-2">
+            <div className="media  flex gap-2 justify-around border border-gray-200 p-2 rounded-md">
               <div className="pic w-[36vw] h-[14vh] text-white ">
                 <Image
                   src={complaint?.ImageUrl ? complaint?.ImageUrl : defaultPic}
@@ -223,7 +240,7 @@ const Page = ({ params }: any) => {
               <div className="video w-[36vw] h-[13vh] text-white ">
                 {complaint?.VideoUrl ? (
                   <video
-                    src={video}
+                    src={complaint.VideoUrl}
                     controls
                     className="object-contain  w-[36vw] h-[14vh]"
                   />
@@ -241,166 +258,209 @@ const Page = ({ params }: any) => {
           </div>
         </div>
 
-        <hr />
-
+        <h3 className="flex gap-2 items-center justify-center text-lg text-primaryColor-500 mt-4 mb-2">
+          <span className="px-2 bg-[#1A5980] text-white rounded-lg">
+            Your Response
+          </span>
+        </h3>
         {/* Supervisor feeback */}
-        <p className="text-[16px] tracking-wide py-2 font-semibold mt-2 text-center text-white bg-blue-600 ">
-          Supervisor Response
-        </p>
-        <div className="complaintDetail px-3 py-3 my-0 gap-2 text-[15px] shadow-sm bg-slate-50 flex flex-col flex-wrap justify-between">
-          {/* admin description */}
-          <div className="desc flex flex-col">
-            <h5 className="text-gray-700">
-              Statement<span className="text-red-500">*</span>
-              <span className="ml-3">شکایت کے حل کی تفصیل</span>
-            </h5>
-            <textarea
-              name="query"
-              id="response"
-              cols={5}
-              rows={5}
-              className="border border-gray-300 p-2 flex-wrap"
-              placeholder="please write your query"
-              ref={DescRef}
-              defaultValue={complaintDes}
-              readOnly={complaintDes !== ""}
-            ></textarea>
-          </div>
 
-          {/* testing section of attached media */}
-          <div className="flex flex-col mt-2 mb-2">
-            <label className="text-gray-700 text-[15px]">
-              <span>
-                Attachment<span className="text-red-500">*</span>
-              </span>
-              <span className=" ml-2 font-serif">تصویر / ویڈیو</span>
-            </label>
-            <div
-              className={`flex gap-3 w-full h-[7rem] p-[3px]  overflow-hidden border-2 rounded-lg border-gray-300 outline-none bg-white
-          `}
-            >
-              {image && (
-                <div className="w-[160px] h-[105px] object-cover">
-                  <Image
-                    className="rounded-sm object-cover w-full h-full"
-                    src={image}
-                    width={100}
-                    height={100}
-                    alt="previewImage"
-                  />
-                </div>
-              )}
-
-              {video && (
-                <div className="w-[120px] h-[120px] border border-orange-400 object-cover">
+        {complaint?.response ? (
+          <div className="flex flex-col gap-2 mx-2 shadow-lg border-2 border-gray-200 rounded-md p-3">
+            <div className="flex items-center gap-2 mt-2">
+              <span className="text-gray-500">Description</span>
+              <span>{complaintDes}</span>
+            </div>
+            <div className="media  flex gap-2 justify-around  p-2">
+              <div className="pic w-[36vw] h-[14vh] text-white ">
+                <Image
+                  src={
+                    complaint?.response?.ImageUrl
+                      ? complaint?.response?.ImageUrl
+                      : defaultPic
+                  }
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="object-contain  w-[36vw] h-[14vh]"
+                />
+              </div>
+              {/* video */}
+              <div className="video w-[36vw] h-[13vh] text-white ">
+                {complaint?.response?.VideoUrl ? (
                   <video
-                    src={video}
+                    src={complaint.response.VideoUrl}
                     controls
-                    style={{ width: "120px", height: "120px" }}
+                    className="object-contain  w-[36vw] h-[14vh]"
                   />
+                ) : (
+                  <Image
+                    src={defaultPic}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="object-cover  w-[36vw] h-[14vh]"
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="complaintDetail px-3 py-3 my-0 gap-2 text-[15px] shadow-sm bg-slate-50 flex flex-col flex-wrap justify-between">
+            {/* admin description */}
+            <div className="desc flex flex-col">
+              <h5 className="text-gray-700">
+                Statement<span className="text-red-500">*</span>
+                <span className="ml-3">شکایت کے حل کی تفصیل</span>
+              </h5>
+              <textarea
+                name="query"
+                id="response"
+                cols={5}
+                rows={5}
+                className="border border-gray-300 p-2 flex-wrap"
+                placeholder="please write your query"
+                ref={DescRef}
+                defaultValue={complaintDes}
+                readOnly={complaintDes !== ""}
+              ></textarea>
+            </div>
+
+            {/* testing section of attached media */}
+            <div className="flex flex-col mt-2 mb-2">
+              <label className="text-gray-700 text-[15px]">
+                <span>
+                  Attachment<span className="text-red-500">*</span>
+                </span>
+                <span className=" ml-2 font-serif">تصویر / ویڈیو</span>
+              </label>
+              <div
+                className={`flex gap-3 w-full h-[7rem] p-[3px]  overflow-hidden border-2 rounded-lg border-gray-300 outline-none bg-white
+          `}
+              >
+                {image && (
+                  <div className="w-[160px] h-[105px] object-cover">
+                    <Image
+                      className="rounded-sm object-cover w-full h-full"
+                      src={image}
+                      width={100}
+                      height={100}
+                      alt="previewImage"
+                    />
+                  </div>
+                )}
+
+                {video && (
+                  <div className="w-[120px] h-[120px] border border-orange-400 object-cover">
+                    <video
+                      src={video}
+                      controls
+                      style={{ width: "120px", height: "120px" }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* buttons */}
+            <div className="flex justify-between mt-1">
+              {/* for image to upload */}
+              <div
+                className={`border-2 border-primaryColor-300 rounded-md hover:bg-primaryColor-300 transition-all  py-1 px-3 text-[19px] text-secondarycolor-500 font-bold ${
+                  !complaint?.response ? "cursor-pointer" : "cursor-not-allowed"
+                }`}
+                onClick={() => {
+                  if (!complaint?.response) {
+                    imageRef.current!.click();
+                  }
+                }}
+              >
+                <div className="flex justify-center items-center gap-1 text-[18px]">
+                  <span>
+                    <BsImage />
+                  </span>
+                  <span>Picture</span>
                 </div>
+              </div>
+              {/* for video to upload */}
+              <div
+                className={`border-2 border-primaryColor-300 rounded-md active:bg-primarycolor-500 hover:bg-primaryColor-300 transition-all py-1 px-3 text-[18px] text-secondarycolor-500 font-bold ${
+                  !complaint?.response ? "cursor-pointer" : "cursor-not-allowed"
+                }`}
+                onClick={() => {
+                  if (!complaint?.response) {
+                    imageRef.current!.click();
+                  }
+                }}
+              >
+                <div className="flex justify-center items-center gap-1 text-[18px]">
+                  <span>
+                    <BsFillCameraVideoFill />
+                  </span>
+                  <span>Video</span>
+                </div>
+              </div>
+
+              {/* ---------------------- input sectons ------------------ */}
+              <div className="hidden">
+                <input
+                  accept="image/*"
+                  ref={imageRef}
+                  onChange={UploadAttachments}
+                  type="file"
+                  capture="environment"
+                  name="image"
+                />
+              </div>
+
+              <div className="hidden">
+                <input
+                  accept="video/*"
+                  ref={videoRef}
+                  onChange={UploadAttachments}
+                  type="file"
+                  capture="environment"
+                  // onDurationChange={CheckingDuration()}
+                  name="video"
+                />
+              </div>
+              {/* ---------------------- END input sectons ------------------ */}
+            </div>
+
+            {/* submit button */}
+            <div className="flex justify-center mt-2 w-full">
+              {complaint?.status[complaint?.status.length - 1]?.state ===
+              "InProgress" ? (
+                <button
+                  type="submit"
+                  className="flex items-center justify-center gap-3 text-white mt-4 w-[70%] uppercase bg-primaryColor-500 rounded-sm transition-all outline-none cursor-pointer py-2 px-4 text-[18px] font-bold shadow-md"
+                  onClick={SubmitResponse}
+                >
+                  <TbFilePlus className="text-xl font-bold text-white" />
+
+                  <span>Submit</span>
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className={`flex items-center justify-center gap-3 text-white mt-4 w-[70%] bg-primaryColor-500 rounded-sm transition-all outline-none py-2 px-4 text-[18px] font-bold shadow-md  ${
+                    complaint?.response
+                      ? "cursor-pointer"
+                      : "cursor-not-allowed hover:bg-slate-400"
+                  }`}
+                >
+                  <span>Submitted</span>
+                  <span className="text-2xl font-extrabold">
+                    <MdDone />
+                  </span>
+                </button>
               )}
             </div>
           </div>
-
-          {/* buttons */}
-          <div className="flex justify-between mt-1">
-            {/* for image to upload */}
-            <div
-              className={`border-2 border-primaryColor-300 rounded-md hover:bg-primaryColor-300 transition-all  py-1 px-3 text-[19px] text-secondarycolor-500 font-bold ${
-                !complaint?.response ? "cursor-pointer" : "cursor-not-allowed"
-              }`}
-              onClick={() => {
-                if (!complaint?.response) {
-                  imageRef.current!.click();
-                }
-              }}
-            >
-              <div className="flex justify-center items-center gap-1 text-[18px]">
-                <span>
-                  <BsImage />
-                </span>
-                <span>Picture</span>
-              </div>
-            </div>
-            {/* for video to upload */}
-            <div
-              className={`border-2 border-primaryColor-300 rounded-md active:bg-primarycolor-500 hover:bg-primaryColor-300 transition-all py-1 px-3 text-[18px] text-secondarycolor-500 font-bold ${
-                !complaint?.response ? "cursor-pointer" : "cursor-not-allowed"
-              }`}
-              onClick={() => {
-                if (!complaint?.response) {
-                  imageRef.current!.click();
-                }
-              }}
-            >
-              <div className="flex justify-center items-center gap-1 text-[18px]">
-                <span>
-                  <BsFillCameraVideoFill />
-                </span>
-                <span>Video</span>
-              </div>
-            </div>
-
-            {/* ---------------------- input sectons ------------------ */}
-            <div className="hidden">
-              <input
-                accept="image/*"
-                ref={imageRef}
-                onChange={UploadAttachments}
-                type="file"
-                capture="environment"
-                name="image"
-              />
-            </div>
-
-            <div className="hidden">
-              <input
-                accept="video/*"
-                ref={videoRef}
-                onChange={UploadAttachments}
-                type="file"
-                capture="environment"
-                // onDurationChange={CheckingDuration()}
-                name="video"
-              />
-            </div>
-            {/* ---------------------- END input sectons ------------------ */}
-          </div>
-
-          {/* submit button */}
-          <div className="flex justify-center mt-2 w-full">
-            {complaint?.status[complaint?.status.length - 1]?.state ===
-            "InProgress" ? (
-              <button
-                type="submit"
-                className="flex items-center justify-center gap-3 text-white mt-4 w-[70%] uppercase bg-primaryColor-500 rounded-sm transition-all outline-none cursor-pointer py-2 px-4 text-[18px] font-bold shadow-md"
-                onClick={SubmitResponse}
-              >
-                <TbFilePlus className="text-xl font-bold text-white" />
-
-                <span>Submit</span>
-              </button>
-            ) : (
-              <button
-                type="submit"
-                className={`flex items-center justify-center gap-3 text-white mt-4 w-[70%] bg-primaryColor-500 rounded-sm transition-all outline-none py-2 px-4 text-[18px] font-bold shadow-md  ${
-                  complaint?.response
-                    ? "cursor-pointer"
-                    : "cursor-not-allowed hover:bg-slate-400"
-                }`}
-              >
-                <span>Submitted</span>
-                <span className='text-2xl font-extrabold'>
-                  <MdDone />
-                </span>
-              </button>
-            )}
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
-}
+};
 
-export default Page
+export default Page;

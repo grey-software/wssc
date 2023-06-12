@@ -161,7 +161,7 @@ function Users() {
                       >
                         {name}
                       </td>
-                      <td className="px-6 py-4">{phone}</td>
+                      <td className="px-6 py-4">0{phone}</td>
                       <td className="px-6 py-4">{address}</td>
                       <td className="px-6 py-4">{email}</td>
 
@@ -242,7 +242,7 @@ function Users() {
               <div className="flex flex-col gap-2 items-start mt-6">
                 <div className="flex items-center gap-4">
                   <span className="text-gray-500">Contact</span>
-                  <h1>{user?.phone}</h1>
+                  <h1>0{user?.phone}</h1>
                 </div>
                 <div className="flex items-center gap-4">
                   <span className="text-gray-500">Email</span>
