@@ -119,7 +119,22 @@ function Feedback() {
           />
         ) : (
           <>
-            <div className="grid grid-cols-2 items-start justify-between gap-4 border-2 w-72 border-gray-200 rounded-md  p-4 mb-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-lg font-bold text-primaryColor-500">
+                {totalRating}
+              </span>
+              <span className="text-2xl">
+                <Rating
+                  initialRating={totalRating}
+                  readonly
+                  fullSymbol={<AiFillStar className="text-initiatedColor" />}
+                  emptySymbol={<AiFillStar className="text-gray-300" />}
+                />
+              </span>
+              <span>&#40;{totalFeedbacks} feedbacks&#41; </span>
+              <span>{complaints.length} Complaints</span>
+            </div>
+            <div className="grid grid-cols-2 items-start justify-between gap-4 border-2 w-72 border-gray-200 rounded-md  p-4 mb-6">
               <div>
                 {rates.map((value, index) => (
                   <div
@@ -150,7 +165,7 @@ function Feedback() {
                 <span>&#40;{five}&#41;</span>
               </div>
             </div>
-            <Rating initialRating={totalRating} readonly />
+
             <div className="grid grid-cols-4 gap-4">
               {complaints.map((complaint, index) => (
                 <>
