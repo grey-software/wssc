@@ -32,12 +32,28 @@ const Page = () => {
   const selectPagehandler = (selectedPage: any) => {
     if (
       selectedPage >= 1 &&
-      selectedPage <= Math.ceil(complaints.length / 10) &&
+      selectedPage <= Math.ceil(complaints.length / 8) &&
       selectedPage !== page
     )
       setPage(selectedPage);
   };
 
+  // setState and Reset Page in order to show all complaints from first page
+  const setStateAndResetPage = (value: string) => {
+    setState(value);
+    setPage(1); // Reset the page to 1 when the state is changed
+  };
+
+  // Filter complaints based on the selected state
+  const filteredComplaints =
+    state === "AllComplaints"
+      ? complaints
+      : complaints.filter(
+          (complaint) =>
+            state === complaint?.status[complaint.status.length - 1].state
+        );
+
+  // JSX SECTION
   return (
     <div className="container flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -66,7 +82,7 @@ const Page = () => {
           <p>Filter By</p>
           <select
             className="px-3 py-1 border-2 border-gray-400 rounded focus:border-primaryColor-500"
-            onChange={(e) => setState(e.target.value)}
+            onChange={(e) => setStateAndResetPage(e.target.value)}
           >
             <option value="AllComplaints">Status</option>
             <option value="Initiated">UnAssigned</option>
@@ -93,7 +109,6 @@ const Page = () => {
         (error && (
           <div className="flex items-center justify-between p-2 text-[#D8000C] bg-[#FFBABA]">
             <span>
-              {" "}
               Unable to fetch new complaints, Please refresh the page 🙂
             </span>
             <span
@@ -161,8 +176,8 @@ const Page = () => {
               </tr>
             </thead>
             <tbody>
-              {complaints
-                ?.slice(page * 10 - 10, page * 10)
+              {filteredComplaints
+                ?.slice(page * 8 - 8, page * 8)
                 .map((complaint, index) => (
                   <>
                     {state === "AllComplaints" ? (
@@ -182,7 +197,7 @@ const Page = () => {
           </table>
         )}
       </div>
-      {complaints?.length > 10 && !loading && (
+      {filteredComplaints?.length > 8 && !loading && (
         <div className="flex items-center justify-center w-full -mt-4">
           <div className="flex items-center gap-2 text-2xl">
             <span
@@ -195,23 +210,25 @@ const Page = () => {
             >
               <BsCaretLeftSquareFill />
             </span>
-            {complaints.length > 10 &&
-              [...Array(Math.ceil(complaints?.length / 10))].map((_, index) => (
-                <span
-                  key={index}
-                  className={
-                    page === index + 1
-                      ? "bg-primaryColor-300 text-sm font-semibold  rounded-md px-2 py-1 cursor-pointer"
-                      : "bg-transparent text-sm rounded-md px-2 py-1  cursor-pointer"
-                  }
-                  onClick={() => selectPagehandler(index + 1)}
-                >
-                  {index + 1}
-                </span>
-              ))}
+            {filteredComplaints.length > 8 &&
+              [...Array(Math.ceil(filteredComplaints?.length / 8))].map(
+                (_, index) => (
+                  <span
+                    key={index}
+                    className={
+                      page === index + 1
+                        ? "bg-primaryColor-300 text-sm font-semibold  rounded-md px-2 py-1 cursor-pointer"
+                        : "bg-transparent text-sm rounded-md px-2 py-1  cursor-pointer"
+                    }
+                    onClick={() => selectPagehandler(index + 1)}
+                  >
+                    {index + 1}
+                  </span>
+                )
+              )}
             <span
               className={
-                page < Math.ceil(complaints?.length / 10)
+                page < Math.ceil(filteredComplaints?.length / 8)
                   ? "hover:text-primaryColor-500 transition-all cursor-pointer text-gray-700"
                   : "opacity-0"
               }
