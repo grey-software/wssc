@@ -210,7 +210,7 @@ function Supervisors({}: Props) {
                     <td className="px-6 py-4 flex items-center gap-2">
                       <button
                         onClick={() => navigate.push(`/supervisors/${_id}`)}
-                        className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all"
+                        className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 hover:bg-gray-50 border-completedColor hover:text-completedColor"
                       >
                         View
                       </button>
@@ -219,7 +219,7 @@ function Supervisors({}: Props) {
                           setUpdateModal(true);
                           setUpdateId(_id);
                         }}
-                        className="font-bold text-[12px] uppercase text-white bg-inprogessColor py-1 px-3 rounded-lg hover:shadow-lg transition-all"
+                        className="font-bold text-[12px] uppercase text-white bg-inprogessColor py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 border-inprogessColor hover:text-inprogessColor hover:bg-gray-50"
                       >
                         Update
                       </button>
@@ -228,7 +228,7 @@ function Supervisors({}: Props) {
                           setDeleteModal(true);
                           setDeleteId(_id);
                         }}
-                        className="font-bold text-[12px] uppercase text-white bg-closedColor py-1 px-3 rounded-lg hover:shadow-lg transition-all"
+                        className="font-bold text-[12px] uppercase text-white bg-closedColor py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 border-closedColor hover:bg-gray-50  hover:text-closedColor"
                       >
                         Remove
                       </button>

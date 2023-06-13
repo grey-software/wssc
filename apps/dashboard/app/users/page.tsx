@@ -171,7 +171,7 @@ function Users() {
                             setModal(true);
                             setUserId(_id);
                           }}
-                          className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all"
+                          className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 hover:bg-gray-50 border-completedColor hover:text-completedColor"
                         >
                           View
                         </button>

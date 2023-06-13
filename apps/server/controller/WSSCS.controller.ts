@@ -54,6 +54,7 @@ export const SignIn = async (
     // if (error) return res.send(error.details[0].message);
 
     try {
+        console.log("inside admin page")
         const admin:
             | (WSSC_TYPES & {
                 _id: Types.ObjectId;
@@ -89,7 +90,7 @@ export const SignIn = async (
             .status(200)
             .json(detail);
     }catch(error) {
-        res.status(500).json({success: false, status: 500, errorMessage: error})
+        res.status(500).json({success: false, status: 500, error})
     }
 };
 
