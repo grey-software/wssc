@@ -254,7 +254,7 @@ const Page = ({ params }: any) => {
           </div>
         </div>
 
-        <h3 className="flex gap-2 items-center justify-center text-lg text-primaryColor-500 mt-4 mb-2">
+        <h3 className="flex gap-2 items-center justify-center text-lg text-primaryColor-500 mt-6 mb-2">
           <span className="px-2 bg-completedColor text-white rounded-lg">
             Your Response
           </span>
@@ -304,7 +304,7 @@ const Page = ({ params }: any) => {
             </div>
           </div>
         ) : (
-          <div className="complaintDetail p-3 my-0 gap-2 text-[15px] shadow-md border-2 border-gray-200 mx-2 mb-2 bg-white flex flex-col flex-wrap justify-between">
+          <div className="complaintDetail p-3 my-0 gap-2 text-[15px] shadow-lg  rounded-md border-2 border-gray-200 mx-2 mb-2 bg-white flex flex-col flex-wrap justify-between">
             {/* admin description */}
             <div className="desc flex flex-col">
               <h5 className="text-gray-700">

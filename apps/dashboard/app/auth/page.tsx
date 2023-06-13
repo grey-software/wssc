@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 import { SignIn } from "../../app/GlobalState/ApiCalls/authApiCalls";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/GlobalState/store";
-import { MdSupervisorAccount } from "react-icons/md"
-import {RiAdminFill} from "react-icons/ri"
+import { MdSupervisorAccount } from "react-icons/md";
+import { RiAdminFill } from "react-icons/ri";
 import Link from "next/link";
 import { SupervisorSignIn } from "../GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
 
@@ -31,25 +31,24 @@ const Auth = (props: Props) => {
   } = useForm({ resolver: yupResolver(login_validate) });
 
   const onSubmit = async (data: any) => {
-
     if (admin) {
       SignIn(data, dispatch);
       navigate.push("/");
       reset();
     } else {
       try {
-       const res = await SupervisorSignIn({ phone: data.WSSC_CODE, password: data.password }, dispatch);
+        const res = await SupervisorSignIn(
+          { phone: data.WSSC_CODE, password: data.password },
+          dispatch
+        );
         if (res?.status == 200) {
-          
           navigate.push("/supervisor");
-           reset();
+          reset();
         }
-          
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
-    
   };
 
   return (

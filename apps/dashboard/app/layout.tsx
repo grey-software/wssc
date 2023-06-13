@@ -26,7 +26,7 @@ export default function RootLayout({
           <Header />
           <div className="w-full mt-12 absolute ">
             <Aside />
-            <main className="ml-[280px] mt-4">{children}</main>
+            <main className="ml-[280px] mt-8 mr-10">{children}</main>
           </div>
         </Providers>
       </body>

@@ -9,12 +9,20 @@ import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import SingleComplaintSupervisor from "@/components/complaint/SingleComplaintSupervisor";
 import { GetSingleSupervisor } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
 import { FetchSupervisorComplaints } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
+import { AiFillStar } from "react-icons/ai";
+import Rating from "react-rating";
 
 const page = ({ params }: any) => {
   const id = params.id;
   const dispatch = useDispatch();
   const navigate = useRouter();
   const [state, setState] = useState<string>("AllComplaints");
+  let one = 0;
+  let two = 0;
+  let three = 0;
+  let four = 0;
+  let five = 0;
+  let totalFeedbacks = 0;
 
   useEffect(() => {
     GetSingleSupervisor(dispatch, id);
@@ -31,10 +39,29 @@ const page = ({ params }: any) => {
     (state: RootState) => state.Complaint.supervisorComplaints
   );
 
-  console.log(complaints, supervisor);
+  const rates: number[] = [1, 2, 3, 4, 5];
+
+  complaints &&
+    complaints.forEach((complaint: any, index: any) => {
+      console.log(complaint?.feedback?.rating);
+      if (complaint.feedback) {
+        totalFeedbacks += 1;
+      }
+
+      if (complaint?.feedback?.rating == 1) one += 1;
+      if (complaint?.feedback?.rating == 2) two += 1;
+      if (complaint?.feedback?.rating == 3) three += 1;
+      if (complaint?.feedback?.rating == 4) four += 1;
+      if (complaint?.feedback?.rating == 5) five += 1;
+    });
+
+  let rate = one * 1 + two * 2 + three * 3 + four * 4 + five * 5;
+
+  let totalRating = 0;
+  if (rate != 0) totalRating = rate / totalFeedbacks;
 
   return (
-    <div className="container flex flex-col gap-6">
+    <div className="container flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4  text-md">
           <span
@@ -134,12 +161,29 @@ const page = ({ params }: any) => {
               <h1 className="text-xl font-bold">{supervisor.name}</h1>
               <div className="flex items-center gap-4">
                 <span>Contact</span>
-                <h1>{supervisor.phone}</h1>
+                <h1 className="font-semibold">{supervisor.phone}</h1>
               </div>
               <div className="flex items-center gap-4">
                 <span>WSSC_CODE</span>
-                <h1 className="uppercase">{supervisor.WSSC_CODE}</h1>
+                <h1 className="uppercase font-semibold">
+                  {supervisor.WSSC_CODE}
+                </h1>
               </div>
+              <span className="flex items-center gap-2">
+                <p className="text-lg font-bold text-primaryColor-500">
+                  {totalRating.toFixed(1)}
+                </p>
+                <Rating
+                  initialRating={totalRating}
+                  readonly
+                  fullSymbol={
+                    <AiFillStar className="text-initiatedColor text-2xl" />
+                  }
+                  emptySymbol={
+                    <AiFillStar className="text-gray-300 text-2xl" />
+                  }
+                />
+              </span>
             </div>
           </div>
         </div>

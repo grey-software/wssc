@@ -118,7 +118,7 @@ const Page = ({ params }: any) => {
   ];
 
   return (
-    <div className="container flex flex-col gap-6 mb-3">
+    <div className="container flex flex-col gap-3 mb-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4 text-md">
           <span

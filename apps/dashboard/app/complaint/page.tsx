@@ -55,7 +55,7 @@ const Page = () => {
 
   // JSX SECTION
   return (
-    <div className="container flex flex-col gap-6">
+    <div className="container flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4  text-md">
           <span
@@ -122,7 +122,7 @@ const Page = () => {
 
       {/* SHOWING ALL COMPLAINTS */}
       <div
-        className={`overflow-x-auto shadow-md sm:rounded-lg h-[75vh] py-1 ${
+        className={`overflow-x-auto shadow-md sm:rounded-lg h-[77vh] py-1 ${
           loading && "flex items-center justify-center"
         }`}
       >
@@ -198,7 +198,7 @@ const Page = () => {
         )}
       </div>
       {filteredComplaints?.length > 8 && !loading && (
-        <div className="flex items-center justify-center w-full -mt-4">
+        <div className="flex items-center justify-center w-full -mt-2">
           <div className="flex items-center gap-2 text-2xl">
             <span
               className={
