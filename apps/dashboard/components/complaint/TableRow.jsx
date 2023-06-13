@@ -36,22 +36,22 @@ const TableRow = ({ complaint, index }) => {
         ${createdAt.split("T")[0]} ${createdAt.split("T")[1].split(".")[0]}
       `}
       </td>
-      <td className="px-6 py-4">
+      <td className="px-6 py-4  ">
         <span
-          className={`p-2  text-white rounded-lg ${
+          className={`p-2  text-white rounded-lg border-2 ${
             status[status.length - 1].state === "Initiated"
-              ? "bg-initiatedColor"
+            ? "bg-initiatedColor border-initiatedColor hover:text-initiatedColor hover:bg-gray-50"
               : ""
           }  ${
             status[status.length - 1].state === "InProgress"
-              ? "bg-inprogessColor"
+            ? "bg-inprogessColor border-inprogessColor hover:text-inprogessColor hover:bg-gray-50"
               : ""
           } ${
             status[status.length - 1].state === "Completed"
-              ? "bg-completedColor"
+              ? "bg-completedColor hover:bg-gray-50 border-completedColor hover:text-completedColor"
               : ""
           } ${
-            status[status.length - 1].state === "Closed" ? "bg-closedColor" : ""
+            status[status.length - 1].state === "Closed" ? "bg-closedColor border-closedColor hover:text-closedColor hover:bg-gray-50" : ""
           }`}
         >
           {status[status.length - 1]?.state}
@@ -61,7 +61,7 @@ const TableRow = ({ complaint, index }) => {
       <td className="px-6 py-4">
         <button
           onClick={() => navigate.push(`/complaint/${_id}`)}
-          className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all"
+          className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg transition-all border-2 border-primaryColor-500 hover:bg-gray-50  hover:text-primaryColor-500"
         >
           View
         </button>
