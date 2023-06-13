@@ -26,7 +26,6 @@ const Page = ({ params }: any) => {
   const [wsscStatement, setWsscStatement] = useState<string>("");
   const [supervisorId, setSupervisorId] = useState<string>("");
   const [complaint, setComplaint] = useState<complaintTypes>();
-  const [updatedComplaint, setupdatedComplaint] = useState<complaintTypes>();
 
   const [pending, setPending] = useState(true);
   const [error, setError] = useState<boolean>(false);
@@ -47,7 +46,6 @@ const Page = ({ params }: any) => {
       if (res.data.complaint) {
         setTimeout(() => setPending(false), 1000);
         setComplaint(res.data.complaint);
-        setupdatedComplaint(res.data.complaint)
       }
       // setLoading(false);
       return res.data.complaint;
@@ -97,8 +95,7 @@ const Page = ({ params }: any) => {
     try {
         const res: any = await AssignComplaint(dispatch, supervisorId, id);
         if (res.status == 200) {
-          const updated = await FetchComplaint(id);
-          setupdatedComplaint(updated)
+           await FetchComplaint(id);
       }
         else {
            toast.error("something went wrong", {
@@ -178,7 +175,7 @@ const Page = ({ params }: any) => {
             <span>Complaint</span>
           </span>
         </div>
-        {updatedComplaint?.supervisorId == "" ? (
+        {complaint?.supervisorId == "" ? (
           <div className="flex items-center gap-4">
             <select
               name="supervisor"
