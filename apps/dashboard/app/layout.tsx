@@ -19,14 +19,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={ ` ${inter.className}`} >
+      <body className={` ${inter.className}`}>
         <Providers>
           {/* React-Toast Notifiction  */}
           <Notification />
           <Header />
-          <div className="w-full mt-14 absolute ">
+          <div className="w-full mt-12 absolute ">
             <Aside />
-            <main className="ml-[280px] mt-4 mr-5">{children}</main>
+            <main className="ml-[280px] mt-4">{children}</main>
           </div>
         </Providers>
       </body>

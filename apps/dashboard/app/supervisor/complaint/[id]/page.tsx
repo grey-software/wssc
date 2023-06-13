@@ -136,14 +136,10 @@ const Page = ({ params }: any) => {
 
   // JSX SECTION
   return (
-    <div className="mt-14 w-[100vw]">
+    <div className="pt-14 w-[100vw] bg-slate-50">
       <div className="wrapper w-full ">
-        {/* complaint detail */}
-        {/* <p className="text-[16px] z-10 font-semibold tracking-wide py-2  text-center bg-green-500 text-white">
-          Complaint Detail
-        </p> */}
         {/* NAVIGATION */}
-        <div className="flex items-center justify-between mt-16 mb-2">
+        <div className="flex items-center justify-between mb-2">
           <span className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all cursor-pointer">
             <HiArrowLeft
               onClick={() => navigate.push("/supervisor")}
@@ -159,7 +155,7 @@ const Page = ({ params }: any) => {
         </div>
 
         {/* COMPLAINT DETAILS */}
-        <div className="px-3 py-3 my-1 mx-2 gap-3 text-[15px] rounded-md flex flex-col flex-wrap justify-between border-2 border-gray-200 shadow-md">
+        <div className="px-3 py-3 my-1 mx-2 gap-3 text-[15px] rounded-md flex flex-col flex-wrap justify-between border-2 border-gray-200 shadow-md bg-white">
           <div className="flex justify-between">
             <p>
               <span className="text-gray-500">Type:</span>
@@ -259,17 +255,19 @@ const Page = ({ params }: any) => {
         </div>
 
         <h3 className="flex gap-2 items-center justify-center text-lg text-primaryColor-500 mt-4 mb-2">
-          <span className="px-2 bg-[#1A5980] text-white rounded-lg">
+          <span className="px-2 bg-completedColor text-white rounded-lg">
             Your Response
           </span>
         </h3>
         {/* Supervisor feeback */}
 
         {complaint?.response ? (
-          <div className="flex flex-col gap-2 mx-2 shadow-lg border-2 border-gray-200 rounded-md p-3">
-            <div className="flex items-center gap-2 mt-2">
-              <span className="text-gray-500">Description</span>
-              <span>{complaintDes}</span>
+          <div className="flex flex-col gap-2 mx-2 shadow-lg mb-2 border-2 border-gray-200 rounded-md p-3 bg-white">
+            <div className="desc flex flex-col">
+              <h5 className="text-gray-500">Description</h5>
+              <p className="border border-gray-200 p-2 rounded-md bg-white">
+                {complaintDes}
+              </p>
             </div>
             <div className="media  flex gap-2 justify-around  p-2">
               <div className="pic w-[36vw] h-[14vh] text-white ">
@@ -306,7 +304,7 @@ const Page = ({ params }: any) => {
             </div>
           </div>
         ) : (
-          <div className="complaintDetail px-3 py-3 my-0 gap-2 text-[15px] shadow-sm bg-slate-50 flex flex-col flex-wrap justify-between">
+          <div className="complaintDetail p-3 my-0 gap-2 text-[15px] shadow-md border-2 border-gray-200 mx-2 mb-2 bg-white flex flex-col flex-wrap justify-between">
             {/* admin description */}
             <div className="desc flex flex-col">
               <h5 className="text-gray-700">
@@ -429,32 +427,15 @@ const Page = ({ params }: any) => {
 
             {/* submit button */}
             <div className="flex justify-center mt-2 w-full">
-              {complaint?.status[complaint?.status.length - 1]?.state ===
-              "InProgress" ? (
-                <button
-                  type="submit"
-                  className="flex items-center justify-center gap-3 text-white mt-4 w-[70%] uppercase bg-primaryColor-500 rounded-sm transition-all outline-none cursor-pointer py-2 px-4 text-[18px] font-bold shadow-md"
-                  onClick={SubmitResponse}
-                >
-                  <TbFilePlus className="text-xl font-bold text-white" />
+              <button
+                type="submit"
+                className="flex items-center justify-center gap-3 text-white mt-4 w-full uppercase bg-primaryColor-500 rounded-lg active:scale-[0.98] transition-all outline-none cursor-pointer py-2 px-4 text-[18px] font-bold shadow-md"
+                onClick={SubmitResponse}
+              >
+                <TbFilePlus className="text-xl font-bold text-white" />
 
-                  <span>Submit</span>
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  className={`flex items-center justify-center gap-3 text-white mt-4 w-[70%] bg-primaryColor-500 rounded-sm transition-all outline-none py-2 px-4 text-[18px] font-bold shadow-md  ${
-                    complaint?.response
-                      ? "cursor-pointer"
-                      : "cursor-not-allowed hover:bg-slate-400"
-                  }`}
-                >
-                  <span>Submitted</span>
-                  <span className="text-2xl font-extrabold">
-                    <MdDone />
-                  </span>
-                </button>
-              )}
+                <span>Submit</span>
+              </button>
             </div>
           </div>
         )}
