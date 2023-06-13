@@ -26,6 +26,8 @@ const Page = ({ params }: any) => {
   const [wsscStatement, setWsscStatement] = useState<string>("");
   const [supervisorId, setSupervisorId] = useState<string>("");
   const [complaint, setComplaint] = useState<complaintTypes>();
+  const [updatedComplaint, setupdatedComplaint] = useState<complaintTypes>();
+
   const [pending, setPending] = useState(true);
   const [error, setError] = useState<boolean>(false);
   const loading = useSelector((state: RootState) => state.Complaint.loading);
@@ -33,7 +35,10 @@ const Page = ({ params }: any) => {
   const supervisors = useSelector(
     (state: RootState) => state.Supervisor.supervisorsAll
   );
+  
+    const rates: number[] = [1, 2, 3, 4, 5];
 
+  // A method that call complaint api to fetch specific complaint
   const FetchComplaint = async (complaintId: any): Promise<any> => {
     setPending(true);
     try {
@@ -42,9 +47,10 @@ const Page = ({ params }: any) => {
       if (res.data.complaint) {
         setTimeout(() => setPending(false), 1000);
         setComplaint(res.data.complaint);
+        setupdatedComplaint(res.data.complaint)
       }
       // setLoading(false);
-      return res.data;
+      return res.data.complaint;
     } catch (err: any) {
       setError(true);
       if (err.response?.status == 401) {
@@ -65,20 +71,20 @@ const Page = ({ params }: any) => {
     }
   };
 
-  useEffect(() => {
-    FetchComplaint(id);
-    FetchAllSupervisors(dispatch);
-  }, []);
-
-  const rates: number[] = [1, 2, 3, 4, 5];
-
+  
+  
   const supervisor: any = useSelector((state: RootState) =>
-    state.Supervisor.supervisorsAll.find(
-      (s) => s._id == complaint?.supervisorId
+  state.Supervisor.supervisorsAll.find(
+    (s) => s._id == complaint?.supervisorId
     )
-  );
-
-  const handleAssign = () => {
+    );
+    
+    useEffect(() => {
+      FetchComplaint(id);
+      FetchAllSupervisors(dispatch);
+    }, []);
+  
+  const handleAssign = async() => {
     if (!supervisorId || supervisorId == "NotSelected") {
       toast.error("Please Select Supervisor", {
         position: "top-center",
@@ -87,9 +93,27 @@ const Page = ({ params }: any) => {
       });
       return;
     }
-    AssignComplaint(dispatch, supervisorId, id);
+
+    try {
+        const res: any = await AssignComplaint(dispatch, supervisorId, id);
+        if (res.status == 200) {
+          const updated = await FetchComplaint(id);
+          setupdatedComplaint(updated)
+      }
+        else {
+           toast.error("something went wrong", {
+             position: "top-center",
+             style: { width: "auto", height: "auto" },
+             duration: 3000,
+           });
+      }
+    } catch (error) {
+      
+    }
+  
   };
 
+  // 
   const handleStatment = () => {
     if (
       wsscStatement == "" ||
@@ -117,6 +141,7 @@ const Page = ({ params }: any) => {
     "Excellent",
   ];
 
+  // JSX Section
   return (
     <div className="container flex flex-col gap-3 mb-3">
       <div className="flex items-center justify-between">
@@ -153,7 +178,7 @@ const Page = ({ params }: any) => {
             <span>Complaint</span>
           </span>
         </div>
-        {complaint?.supervisorId == "" ? (
+        {updatedComplaint?.supervisorId == "" ? (
           <div className="flex items-center gap-4">
             <select
               name="supervisor"
