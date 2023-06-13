@@ -57,14 +57,16 @@ function Feedback() {
       if (complaint?.feedback?.rating == 5) five += 1;
     });
 
-  let totalRating =
-    (one * 1 + two * 2 + three * 3 + four * 4 + five * 5) / totalFeedbacks;
+  let rate = one * 1 + two * 2 + three * 3 + four * 4 + five * 5;
+
+  let totalRating = 0;
+  if (rate != 0) totalRating = rate / totalFeedbacks;
 
   console.log(totalFeedbacks);
   console.log(totalRating);
 
   return (
-    <div className="container flex flex-col gap-6">
+    <div className="container flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4  text-md">
           <span
@@ -121,7 +123,7 @@ function Feedback() {
           <>
             <div className="flex items-center gap-2 mb-2">
               <span className="text-lg font-bold text-primaryColor-500">
-                {totalRating}
+                {totalRating.toFixed(1)}
               </span>
               <span className="text-2xl">
                 <Rating
@@ -131,8 +133,13 @@ function Feedback() {
                   emptySymbol={<AiFillStar className="text-gray-300" />}
                 />
               </span>
-              <span>&#40;{totalFeedbacks} feedbacks&#41; </span>
-              <span>{complaints.length} Complaints</span>
+              <span className="flex items-center gap-1">
+                &#40;<p className="font-semibold">{totalFeedbacks}</p>{" "}
+                feedbacks&#41;{" "}
+              </span>
+              <span className="flex items-center gap-1">
+                <p className="font-semibold">{complaints.length}</p> Complaints
+              </span>
             </div>
             <div className="grid grid-cols-2 items-start justify-between gap-4 border-2 w-72 border-gray-200 rounded-md  p-4 mb-6">
               <div>

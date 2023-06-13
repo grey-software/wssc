@@ -64,15 +64,15 @@ function Aside() {
     <>
       {WSSC_CODE ? (
         <aside className="h-screen w-[250px] fixed shadow bg-slate-50 border-r">
-          <ul className=" mt-4 w-full">
+          <ul className="mt-10 w-full">
             {items.map((item, index) => (
               <li
                 key={index}
                 onClick={() => clickHander(item.to, index)}
-                className={` py-3 flex w-full justify-start cursor-pointer items-center transition-all  ${
+                className={`mx-6 my-4 px-2 py-1 flex items-center rounded-full cursor-pointer transition-all ${
                   activeTab.index === index
-                    ? "bg-primaryColor-300 font-semibold tracking-wide text-feedbackColor border-primaryColor-300"
-                    : ""
+                    ? "bg-primaryColor-300 hover:bg-primaryColor-300 font-semibold tracking-wide text-feedbackColor border-primaryColor-300"
+                    : "hover:bg-gray-200"
                 }`}
               >
                 <div className={`flex items-center justify-start ml-6`}>
