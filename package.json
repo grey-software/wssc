@@ -21,6 +21,7 @@
   "dependencies": {
     "moment": "^2.29.4",
     "next-videos": "^1.4.1",
+    "react-countup": "^6.4.2",
     "react-hook-form": "^7.44.2",
     "react-hooks-yup-form": "^0.1.5",
     "react-icons": "^4.8.0",
