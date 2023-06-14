@@ -10,20 +10,26 @@ import {
   Legend,
 } from "recharts";
 
-const colors = ["red", "blue", "#FFBB28", "#FF8042", "red", "pink"];
+const colors = ["#F15025","#2EAB43", "#2E86AB", "#F2AD35" ];
 
 const data = [
   {
-    name: "closed",
+    name: "Closed",
     uv: 5000,
     pv: 2400,
     amt: 2400,
   },
   {
-    name: "InProgress",
+    name: "Resolved",
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Pending",
     uv: 3000,
-    pv: 1398,
-    amt: 2210,
+    // pv: 1398,
+    // amt: 2210,
   },
 
   {
@@ -31,12 +37,6 @@ const data = [
     uv: 2890,
     // pv: 400,
     // amt: 2181,
-  },
-  {
-    name: "Pending",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
   },
 ];
 
@@ -92,7 +92,7 @@ const getIntroOfPage = (label: any, payload: any): React.JSX.Element => {
   }
   
 
-  return <p></p>;
+  return <></>;
 };
 
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -110,7 +110,8 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 const CustomChart = () => {
   return (
     <BarChart
-      width={350}
+      className="text-sm"
+      width={320}
       height={250}
       data={data}
       margin={{
@@ -120,14 +121,14 @@ const CustomChart = () => {
         bottom: 0,
       }}
     >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" className="text-sm" />
+      <CartesianGrid strokeDasharray="3 3"/>
+      <XAxis dataKey="name" />
       <YAxis />
       <Tooltip content={<CustomTooltip />} />
       {/* <Legend /> */}
       <Bar dataKey="uv" fill="#8884d8" label={{ position: "top" }}>
         {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={colors[index % 20]} />
+          <Cell key={`cell-${index}`} fill={colors[index % 20]} width={40}/>
         ))}
       </Bar>
     </BarChart>
