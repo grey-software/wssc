@@ -12,9 +12,10 @@ type Props = {}
 const ChartSection = (props: Props) => {
   return (
     <>
-      <div className="cards W-full flex justify-between mt-10">
+      <div className="cards W-full flex gap-x-2 justify-between mt-10">
+
         {/* bar chat */}
-        <div className="barchat w-auto p-2 h-auto border-1 border-gray-700 bg-gray-50 rounded-md shadow-sm">
+        <div className="barchat w-auto p-2 h-auto border border-gray-200 bg-gray-50 rounded-md shadow-sm">
           <h3 className="text-md text-center text-gray-700 font-semibold mb-2">
             complaints stages
           </h3>
@@ -47,7 +48,7 @@ const ChartSection = (props: Props) => {
         </div>
 
         {/*Tie Chart  */}
-        <div className="tieChart border-1 border-gray-700 bg-slate-50 rounded-md shadow-sm">
+        <div className="tieChart border border-gray-200 bg-slate-50 rounded-md shadow-sm">
           {/* title */}
           <h3 className="text-sm mt-4 text-center text-gray-700 font-semibold mb-5">
             Percentage of registered complaints
@@ -55,7 +56,7 @@ const ChartSection = (props: Props) => {
           <TieChart2 />
         </div>
         {/* complaint stage */}
-        <div className="tieChart border-1 border-gray-700 bg-slate-50 rounded-md shadow-sm">
+        <div className="tieChart border border-gray-200 bg-slate-50 rounded-md shadow-sm">
           {/* title */}
           <h3 className="text-sm mt-4 text-center text-gray-700 font-semibold mb-5">
             Monthly basis complaints record
@@ -65,7 +66,7 @@ const ChartSection = (props: Props) => {
       </div>
 
       {/* area graph */}
-      <div className="tieChart flex flex-col justify-center items-center mt-4 p-3 border-1 border-gray-700 bg-gray-50 rounded-md shadow-md">
+      <div className="tieChart flex flex-col justify-center items-center mt-4 p-3 border border-gray-200 bg-gray-50 rounded-md shadow-md">
         {/* title */}
         <h3 className="text-sm text-center text-gray-700 font-semibold mb-5">
           Area Graph of complaints on monthly basis

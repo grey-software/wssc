@@ -1,78 +1,4 @@
-// import React from "react";
-// import ReactApexChart from "react-apexcharts";
-
-// const ComplaintStage = () => {
-//   const series = [
-//     {
-//       data: [21, 22, 10, 28],
-//     },
-//   ];
-//   const colors = [
-//     "#008FFB",
-//     "#00E396",
-//     "#FEB019",
-//     "#FF4560",
-//     // "#775DD0",
-//     // "#546E7A",
-//     // "#26A69A",
-//     // "#D10CE8",
-//   ];
-
-//   const options = {
-//     chart: {
-//       height: 250,
-//       type: "bar",
-//       events: {
-//         click: function ({ chart, w, e }: any) {
-//           // console.log(chart, w, e)
-//         },
-//       },
-//     },
-//     colors: colors,
-//     plotOptions: {
-//       bar: {
-//         columnWidth: "45%",
-//         distributed: true,
-//       },
-//     },
-//     dataLabels: {
-//       enabled: false,
-//     },
-//     legend: {
-//       show: false,
-//     },
-//     xaxis: {
-//       categories: [
-//             "completed",
-//             "closed",
-//             "Delay",
-//             "In progress",
-          
-//       ],
-//       labels: {
-//         style: {
-//           colors: colors,
-//           fontSize: "12px",
-//         },
-//       },
-//     },
-//   };
-
-//   return (
-//     <div id="chart">
-//       <ReactApexChart
-//         options={options}
-//         series={series}
-//         type="bar"
-//               height={250}
-//               width={380}
-//       />
-//     </div>
-//   );
-// };
-
-// export default ComplaintStage;
-
+"use client";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
@@ -149,7 +75,7 @@ const ApexChart: React.FC = () => {
       offsetY: 40,
     },
     fill: {
-      opacity: 1,
+      opacity: 0.8,
     },
   };
 
@@ -159,8 +85,8 @@ const ApexChart: React.FC = () => {
         options={options}
         series={series}
         type="bar"
-        height={250}
-        width={450}
+        height={240}
+        width={430}
       />
     </div>
   );
