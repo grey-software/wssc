@@ -9,6 +9,12 @@ import userdp from "../public/user.jpg";
 import type { RootState } from "../global_state/store";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import {
+  NovuProvider,
+  PopoverNotificationCenter,
+  NotificationBell,
+  IMessage,
+} from "@novu/notification-center";
 
 const Header = () => {
   const navigate = useRouter();
@@ -19,6 +25,13 @@ const Header = () => {
 
   const [menuActive, setMenuActive] = useState(false);
   const [windowActive, setWindowActive] = useState(false);
+
+  function onNotificationClick(message: IMessage) {
+    // your logic to handle the notification click
+    if (message?.cta?.data?.url) {
+      window.location.href = message.cta.data.url;
+    }
+  }
 
   return (
     <>
@@ -34,18 +47,19 @@ const Header = () => {
               <h2 className="text-lg text-primaryColor-500 font-bold">WSSCM</h2>
             </div>
             <div className="flex items-center justify-center gap-4">
-              <div className="notification flex relative">
-                <BsFillBellFill
-                  className="text-[26px] text-primaryColor-500"
-                  onClick={() => setWindowActive(!windowActive)}
-                />
-                {/* notification ibatch */}
-                <div className="absolute right-1 flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-95"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                </div>
-              </div>
-
+              <NovuProvider
+                subscriberId={UserInfo._id}
+                applicationIdentifier={"yhet1-MoYIOR"}
+              >
+                <PopoverNotificationCenter
+                  onNotificationClick={onNotificationClick}
+                  colorScheme="light"
+                >
+                  {({ unseenCount }) => (
+                    <NotificationBell unseenCount={unseenCount} />
+                  )}
+                </PopoverNotificationCenter>
+              </NovuProvider>
               {/* show for mobile screen */}
               <Image
                 src={UserInfo?.profile_image ? UserInfo?.profile_image : userdp}
@@ -67,7 +81,7 @@ const Header = () => {
             </div>
           </div>
           {/* Notification window */}
-          <div
+          {/* <div
             className={`flex flex-col z-50 absolute top-12 right-3 sm:right-3 md:right-3 lg:right-44 w-2/3 transform transition-transform p-4 border-2 border-gray-300 bg-white shadow rounded-lg ${
               windowActive
                 ? "translate-x-0 sm:flex md:flex"
@@ -118,7 +132,7 @@ const Header = () => {
                 </Link>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Profile Menu */}
           <div

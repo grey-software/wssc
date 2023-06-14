@@ -66,7 +66,7 @@ function Feedback() {
   console.log(totalRating);
 
   return (
-    <div className="container flex flex-col gap-3">
+    <div className="container flex flex-col gap-3 mb-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4  text-md">
           <span
@@ -121,55 +121,60 @@ function Feedback() {
           />
         ) : (
           <>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-lg font-bold text-primaryColor-500">
-                {totalRating.toFixed(1)}
-              </span>
-              <span className="text-2xl">
-                <Rating
-                  initialRating={totalRating}
-                  readonly
-                  fullSymbol={<AiFillStar className="text-initiatedColor" />}
-                  emptySymbol={<AiFillStar className="text-gray-300" />}
-                />
-              </span>
-              <span className="flex items-center gap-1">
-                &#40;<p className="font-semibold">{totalFeedbacks}</p>{" "}
-                feedbacks&#41;{" "}
-              </span>
-              <span className="flex items-center gap-1">
-                <p className="font-semibold">{complaints.length}</p> Complaints
-              </span>
-            </div>
-            <div className="grid grid-cols-2 items-start justify-between gap-4 border-2 w-72 border-gray-200 rounded-md  p-4 mb-6">
-              <div>
-                {rates.map((value, index) => (
-                  <div
-                    className="flex items-center text-2xl mt-1 gap-1"
-                    key={index}
-                  >
-                    {rates.map((value, id) => (
-                      <>
-                        {index >= id ? (
-                          <span className="text-initiatedColor">
-                            <AiFillStar />
-                          </span>
-                        ) : (
-                          <span className="text-gray-300">
-                            <AiFillStar />
-                          </span>
-                        )}
-                      </>
-                    ))}
-                  </div>
-                ))}
+            <div className="border-2 w-72 border-gray-200 rounded-md  p-4 mb-6">
+              <div className="flex items-center justify-between mb-1">
+                <p className="font-bold">Satisfaction</p>
+                <span className="flex items-center gap-1">
+                  &#40;<p className="font-semibold">{totalFeedbacks}</p>
+                  feedbacks&#41;
+                </span>
               </div>
-              <div className="flex flex-col gap-[5px] text-center">
-                <span>&#40;{one}&#41;</span>
-                <span>&#40;{two}&#41;</span>
-                <span>&#40;{three}&#41;</span>
-                <span>&#40;{four}&#41;</span>
-                <span>&#40;{five}&#41;</span>
+              <div className="grid grid-cols-2 items-start justify-between gap-4 w-72">
+                <div>
+                  {rates.map((value, index) => (
+                    <div
+                      className="flex items-center text-2xl mt-1 gap-1"
+                      key={index}
+                    >
+                      {rates.map((value, id) => (
+                        <>
+                          {index >= id ? (
+                            <span className="text-initiatedColor">
+                              <AiFillStar />
+                            </span>
+                          ) : (
+                            <span className="text-gray-300">
+                              <AiFillStar />
+                            </span>
+                          )}
+                        </>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+                <div className="flex flex-col gap-[5px] text-center">
+                  <span>&#40;{one}&#41;</span>
+                  <span>&#40;{two}&#41;</span>
+                  <span>&#40;{three}&#41;</span>
+                  <span>&#40;{four}&#41;</span>
+                  <span>&#40;{five}&#41;</span>
+                </div>
+              </div>
+              <div className="w-full border border-gray-200 mt-2"></div>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="text-2xl">
+                  <Rating
+                    initialRating={totalRating}
+                    readonly
+                    fullSymbol={
+                      <AiFillStar className="text-initiatedColor mr-1" />
+                    }
+                    emptySymbol={<AiFillStar className="text-gray-300 mr-1" />}
+                  />
+                </span>
+                <span className="ml-14 text-lg font-bold text-primaryColor-500">
+                  &#40;{totalRating.toFixed(1)}&#41;
+                </span>
               </div>
             </div>
 

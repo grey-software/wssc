@@ -9,6 +9,12 @@ import { SignOutUser } from "@/app/GlobalState/UserSlice";
 import { RootState } from "@/app/GlobalState/store";
 import Image from "next/image";
 import logo from "../public/wsscmlogo.png";
+import {
+  NovuProvider,
+  PopoverNotificationCenter,
+  NotificationBell,
+  IMessage,
+} from "@novu/notification-center";
 
 const Header = () => {
   const [search, setSearch] = useState("");
@@ -18,6 +24,13 @@ const Header = () => {
   const activeTab = useSelector((state: RootState) => state.Tab.index);
   const currentTab = items.find((x) => x.id === activeTab);
   const dispatch = useDispatch();
+
+  function onNotificationClick(message: IMessage) {
+    // your logic to handle the notification click
+    if (message?.cta?.data?.url) {
+      window.location.href = message.cta.data.url;
+    }
+  }
   return (
     <div>
       {WSSC_CODE ? (
@@ -29,8 +42,19 @@ const Header = () => {
           {/* <h1 className="text-3xl font-semibold">{currentTab?.name}</h1> */}
           <div className="flex items-center justify-start gap-8">
             <div className="flex items-center gap-4 text-3xl text-primaryColor-500">
-              <BsFillBellFill />
-              <h1 className="text-black text-lg">WSSCM</h1>
+              <NovuProvider
+                subscriberId={WSSC_CODE}
+                applicationIdentifier={"yhet1-MoYIOR"}
+              >
+                <PopoverNotificationCenter
+                  onNotificationClick={onNotificationClick}
+                  colorScheme="light"
+                >
+                  {({ unseenCount }) => (
+                    <NotificationBell unseenCount={unseenCount} />
+                  )}
+                </PopoverNotificationCenter>
+              </NovuProvider>
               <div onClick={() => dispatch(SignOutUser)}>
                 <FaUserCircle />
               </div>

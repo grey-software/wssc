@@ -9,10 +9,14 @@ import {
   SignUp_validate,
 } from "../Schema_validation/Auth_Validation";
 import dotenv from "dotenv";
+import { Novu } from "@novu/node";
+
 dotenv.config();
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const SECRET_KEY: any = process.env.JWT_KEY;
+
+const novu = new Novu(`${process.env.NOVU_KEY}`);
 
 export const SignUp = async (
   req: Request,
@@ -45,6 +49,7 @@ export const SignUp = async (
         password: hash,
       });
       await createUser.save();
+
       res.status(200).json(createUser);
     } else {
       res.status(400).send("This phone number has already registered!");

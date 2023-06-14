@@ -16,7 +16,7 @@ export const FiltersBtns = [
     filter: "AllComplaints",
   },
   {
-    name: "Pending",
+    name: "Assigned",
     index: 1,
     filter: "InProgress",
   },
@@ -43,7 +43,6 @@ const HomeScreen = () => {
   const [selected, setselected] = useState<Number>(0);
   const [IsComplaints, setIsComplaints] = useState<Boolean>(true);
 
-
   // A method to filtered the complaints on the click
   const FilteredComplaints = (index: string) => {
     if (index === "AllComplaints") {
@@ -55,7 +54,7 @@ const HomeScreen = () => {
       let lastStatus = complaint.status[complaint.status.length - 1].state;
       return lastStatus === index;
     });
-    console.log(filteredComplaints.length)
+    console.log(filteredComplaints.length);
     setIsComplaints(filteredComplaints.length != 0 ? true : false);
     setcomplaints(filteredComplaints);
   };
@@ -69,7 +68,7 @@ const HomeScreen = () => {
       console.log(error);
     }
   };
-console.log(`checking isComplaint: ${IsComplaints}`)
+  console.log(`checking isComplaint: ${IsComplaints}`);
   // used useEffect to call supervisor_assigned_complaints API to fetch and retrieve the data accordingly
   useEffect(() => {
     FetchSupervisorComplaints();
@@ -190,7 +189,6 @@ console.log(`checking isComplaint: ${IsComplaints}`)
           <h1 className="text-2xl text-red-500">No complaints</h1>
         </div>
       )}
-
     </div>
   );
 };

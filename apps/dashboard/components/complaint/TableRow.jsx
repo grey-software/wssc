@@ -30,28 +30,30 @@ const TableRow = ({ complaint, index }) => {
         {complaintType}
       </td>
       <td className="px-6 py-4">{complaintAddress.slice(0, 20)}</td>
-      <td className="px-6 py-4">{!userName ? "NILL" : userName}</td>
+      <td className="px-6 py-4">{userName}</td>
       <td className="px-6 py-4">
         {`
         ${createdAt.split("T")[0]} ${createdAt.split("T")[1].split(".")[0]}
       `}
       </td>
-      <td className="px-6 py-4  ">
+      <td className="px-6 py-4">
         <span
-          className={`p-2  text-white rounded-lg border-2 ${
+          className={`px-1 py-1  text-white rounded-md border-2 ${
             status[status.length - 1].state === "Initiated"
-            ? "bg-initiatedColor border-initiatedColor hover:text-initiatedColor hover:bg-gray-50"
+              ? "bg-initiatedColor border-initiatedColor"
               : ""
           }  ${
             status[status.length - 1].state === "InProgress"
-            ? "bg-inprogessColor border-inprogessColor hover:text-inprogessColor hover:bg-gray-50"
+              ? "bg-inprogessColor border-inprogessColor"
               : ""
           } ${
             status[status.length - 1].state === "Completed"
-              ? "bg-completedColor hover:bg-gray-50 border-completedColor hover:text-completedColor"
+              ? "bg-completedColor border-completedColor"
               : ""
           } ${
-            status[status.length - 1].state === "Closed" ? "bg-closedColor border-closedColor hover:text-closedColor hover:bg-gray-50" : ""
+            status[status.length - 1].state === "Closed"
+              ? "bg-closedColor border-closedColor "
+              : ""
           }`}
         >
           {status[status.length - 1]?.state}
