@@ -1,24 +1,33 @@
 "use client";
+import { RootState } from "@/app/GlobalState/store";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
+import { useSelector } from "react-redux";
 
-const ApexChart: React.FC = () => {
+type Props = {
+  complaints: any;
+};
+
+const ApexChart = () => {
+  const complaints: any = useSelector(
+    (state: RootState) => state.statistics.complaints
+  );
   const series = [
     {
       name: "Solid waste",
-      data: [58, 35, 41, 47],
+      data: [complaints?.solidWaste, 0, 0, 0],
     },
     {
       name: "Water sanitation",
-      data: [13, 23, 20, 8],
+      data: [complaints?.waterSanitation, 0, 0, 0],
     },
     {
       name: "Staff related",
-      data: [11, 17, 15, 15],
+      data: [complaints?.Staff, 0, 0, 0],
     },
     {
       name: "Other complaint",
-      data: [21, 7, 25, 13],
+      data: [complaints?.Other, 0, 0, 0],
     },
   ];
 
@@ -64,10 +73,10 @@ const ApexChart: React.FC = () => {
     xaxis: {
       type: "datetime",
       categories: [
-        "03/15/2023 GMT",
-        "04/15/2023 GMT",
-        "05/15/2023 GMT",
-        "06/15/2023 GMT",
+        "06/1/2023 GMT",
+        "07/1/2023 GMT",
+        "08/1/2023 GMT",
+        "09/1/2023 GMT",
       ],
     },
     legend: {

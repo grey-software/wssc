@@ -81,7 +81,7 @@ export const SignIn = async (
                 message: "Password is incorrect",
             });
         // if the user credential is okay then we assign/send jwt token for authentication and authorization
-        const token = jwt.sign({ id: admin._id, name: admin.name, isAdmin: admin.isAdmin, orgCode:admin.WSSC_CODE }, SECRET_KEY)
+        const token = jwt.sign({ id: admin._id, name: admin.name, isAdmin: admin.isAdmin, WSSC_CODE:admin.WSSC_CODE }, SECRET_KEY)
         const { password, ...detail } = admin._doc;
 
         res.cookie("access_token", token, {
@@ -120,7 +120,8 @@ export const AdminLogout = async (
     }
 };
 
-export const AllRecords = async (
+// below controller is used to get the overall statistics on the basis of request/logged WSSC organization
+export const Statistics = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -137,27 +138,39 @@ export const AllRecords = async (
         const wasteWaterComplaints = complaints.filter(complaint => complaint.complaintType === 'Waste water').length;
         const staffComplaints = complaints.filter(complaint => complaint.complaintType === 'Staff').length;
         const otherComplaints = complaints.filter(complaint => complaint.complaintType === 'Other').length;
+        const waterSanitation = waterSupplyComplaints + wasteWaterComplaints;; 
+// -------- getting current status of each complaints --------------------
+        const lastStatusArray = complaints.map(complaint => {
+            const lastStatusIndex = complaint.status.length - 1;
+            const lastStatus = complaint.status[lastStatusIndex];
+            return lastStatus;
+        });
+// ----- below filtering is used to get the current status of each complaint ----------
+        const initiatedStatus = lastStatusArray.filter(status => status.state === 'Initiated');
+        const inProgressStatus = lastStatusArray.filter(status => status.state === 'InProgress');
+        const completedStatus = lastStatusArray.filter(status => status.state === 'Completed');
+        const closedStatus = lastStatusArray.filter(status => status.state === 'Closed');
 
-        console.log('Solid Waste Complaints:', solidWasteComplaints);
-        console.log('Water Supply Complaints:', waterSupplyComplaints);
-        console.log('Waste Water Complaints:', wasteWaterComplaints);
-        console.log('Staff Complaints:', staffComplaints);
-        console.log('Other Complaints:', otherComplaints);
-
+         
         res.status(200).json({
             status: 200,
             success: true,
             record: {
                 users: users.length, 
-                suprvisors: supervisors.length,
+                supervisors: supervisors.length,
                 complaints: complaints.length,
             },
             complaints: {
                 solidWaste: solidWasteComplaints,
-                waterSupply: waterSupplyComplaints,
-                wasteWater: wasteWaterComplaints,
+                waterSanitation: waterSanitation,
                 Staff: staffComplaints,
                 Other: otherComplaints
+            },
+            complaintsStatus: {
+                Initiated: initiatedStatus.length,
+                InProgress: inProgressStatus.length,
+                Completed: completedStatus.length,
+                Closed: closedStatus.length,
             }
         });
     } catch (error) {

@@ -1,4 +1,6 @@
+import { RootState } from "@/app/GlobalState/store";
 import React, { PureComponent } from "react";
+import { useSelector } from "react-redux";
 import {
   AreaChart,
   Area,
@@ -9,54 +11,44 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    name: "june 23",
-    complaints: 8000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "July 23",
-    complaints: 2000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "August 23",
-    complaints: 7000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "September 23",
-    complaints: 1780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "October 23",
-    complaints: 6890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "November 23",
-    complaints: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "December 23",
-    complaints: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+
 
 const AreaGraph = () => {
-
- 
+// getting all complaints 
+  const {complaints}:any = useSelector((state: RootState)=>state.statistics.data)
+//  data
+  const data = [
+    {
+      name: "June 2023",
+      complaints: complaints,
+    },
+    {
+      name: "July 2023",
+      complaints: 0,
+    },
+    {
+      name: "August 2023",
+      complaints: 0,
+    },
+    {
+      name: "September 2023",
+      complaints: 0,
+    },
+    {
+      name: "October 2023",
+      complaints: 0,
+    },
+    {
+      name: "November 2023",
+      complaints: 0,
+    },
+    {
+      name: "December 2023",
+      complaints: 0,
+    },
+  ];
+  
+  // JSX Section
     return (
       <div className="w-[60vw]">
         <ResponsiveContainer width="100%" height={200}>
@@ -73,7 +65,7 @@ const AreaGraph = () => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis dataKey="name" tick={{ fontSize: 15 }} />
             <YAxis />
             <Tooltip />
             <Area

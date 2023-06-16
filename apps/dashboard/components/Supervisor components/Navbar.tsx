@@ -3,18 +3,35 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Link from "next/link";
 import userdp from "../../public/user.jpg";
-import { BsFillBellFill } from "react-icons/bs";
 import { SupervisorLogoutApi } from "@/app/GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import {
+  NovuProvider,
+  PopoverNotificationCenter,
+  NotificationBell,
+  IMessage,
+} from "@novu/notification-center";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/GlobalState/store";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useRouter();
-const [menuActive, setMenuActive] = useState(false);
+  const [menuActive, setMenuActive] = useState(false);
   const [windowActive, setWindowActive] = useState(false);
-  
+  const { _id }: any = useSelector(
+    (state: RootState) => state.suprvisor.SupervisorSiginData
+  );
+
+  function onNotificationClick(message: IMessage) {
+    // your logic to handle the notification click
+    if (message?.cta?.data?.url) {
+      window.location.href = message.cta.data.url;
+    }
+  }
+
   // handle mthod deintiion
   const HandleClick = () => {
     toast.error("This feature is in progress", {
@@ -22,20 +39,19 @@ const [menuActive, setMenuActive] = useState(false);
       style: { width: "auto", height: "auto" },
       duration: 3000,
     });
-  }
+  };
   // logout method definition
-  const Logout = async() => {
-    
+  const Logout = async () => {
     try {
-      const res = await SupervisorLogoutApi(dispatch)
-      console.log(res)
+      const res = await SupervisorLogoutApi(dispatch);
+      console.log(res);
       if (res.status == 200) {
         navigate.push("/auth");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   return (
     <>
       <div className="flex items-center justify-between bg-gray-50 w-full px-3 py-2 border-1 shadow-md md:shadow-lg fixed top-0 border z-30">
@@ -47,17 +63,20 @@ const [menuActive, setMenuActive] = useState(false);
         </div>
         {/* notification icon and batch of notify */}
         <div className="flex items-center justify-center gap-4">
-          <div className="notification flex relative">
-            <BsFillBellFill
-              className="text-[26px] text-primaryColor-500"
-              onClick={() => setWindowActive(!windowActive)}
-            />
-            {/* notification batch */}
-            <div className="absolute right-1 flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-95"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-            </div>
-          </div>
+          {/* notification batch */}
+          <NovuProvider
+            subscriberId={_id}
+            applicationIdentifier={"yhet1-MoYIOR"}
+          >
+            <PopoverNotificationCenter
+              onNotificationClick={onNotificationClick}
+              colorScheme="light"
+            >
+              {({ unseenCount }) => (
+                <NotificationBell unseenCount={unseenCount} />
+              )}
+            </PopoverNotificationCenter>
+          </NovuProvider>
           {/* user image */}
           <Image
             src={userdp}
@@ -103,5 +122,4 @@ const [menuActive, setMenuActive] = useState(false);
   );
 };
 
-
-export default Navbar
+export default Navbar;

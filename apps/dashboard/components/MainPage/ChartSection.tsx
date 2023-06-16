@@ -1,21 +1,17 @@
+"use client";
 import React from 'react'
 import CustomChart from './CharBar';
-import TieChart from './TieChart';
-import ChartNeedle from './ChatNeedle';
-import TooltipChart from './TooltipChart';
 import TieChart2 from './TieChart2';
 import AreaGraph from './AreaGraph';
 import ComplaintStage from './ComplaintStage';
 
-type Props = {}
 
-const ChartSection = (props: Props) => {
+const ChartSection = () => {
   return (
     <>
       <div className="cards W-full flex gap-x-2 justify-between mt-10">
-
         {/* bar chat */}
-        <div className="barchat w-auto p-2 h-auto border border-gray-200 bg-gray-50 rounded-md shadow-sm">
+        <div className="barchat w-auto p-2  h-auto border border-gray-200 bg-gray-50 rounded-md shadow-sm">
           <h3 className="text-md text-center text-gray-700 font-semibold mb-2">
             complaints stages
           </h3>
@@ -23,10 +19,15 @@ const ChartSection = (props: Props) => {
           {/* abbreviation */}
           <div className="abbr mt-2 flex flex-wrap justify-center items-center gap-3">
             <div className="sw flex justify-center items-center gap-1">
-              <div className="title  w-5 h-2 bg-red-600"></div>
+              <div className="title  w-5 h-2 bg-red-500"></div>
               <p className="text-[10px]">closed</p>
             </div>
 
+            {/* Waste water */}
+            <div className="sw flex justify-center items-center gap-1">
+              <div className="color  w-5 h-2 bg-green-600"></div>
+              <p className="text-[10px]">Resolved</p>
+            </div>
             {/* WATER SUPPLY */}
             <div className="sw flex justify-center items-center gap-1">
               <div className="color  w-5 h-2 bg-blue-600"></div>
@@ -35,15 +36,9 @@ const ChartSection = (props: Props) => {
 
             {/* Waste water */}
             <div className="sw flex justify-center items-center gap-1">
-              <div className="color  w-5 h-2 bg-yellow-400"></div>
-              <p className="text-[10px]">Delay</p>
-            </div>
-            {/* Waste water */}
-            <div className="sw flex justify-center items-center gap-1">
-              <div className="color  w-5 h-2 bg-orange-600"></div>
+              <div className="color  w-5 h-2 bg-yellow-500"></div>
               <p className="text-[10px]">Pending</p>
             </div>
-
           </div>
         </div>
 
@@ -75,6 +70,6 @@ const ChartSection = (props: Props) => {
       </div>
     </>
   );
-}
+};
 
 export default ChartSection

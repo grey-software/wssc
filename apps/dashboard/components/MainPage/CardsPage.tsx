@@ -4,9 +4,15 @@ import { FcManager } from "react-icons/fc";
 import { AiFillFileAdd } from "react-icons/ai";
 import ChartNeedle from './ChatNeedle';
 import CountUp from "react-countup"
-type Props = {}
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/GlobalState/store';
 
-const CardsPage = (props: Props) => {
+
+
+const CardsPage = () => {
+  const data: any = useSelector((state: RootState) => state.statistics.data)
+console.log(data)
+
   return (
     <div className="cards W-full flex justify-between">
       {/* user cards */}
@@ -15,7 +21,7 @@ const CardsPage = (props: Props) => {
           <div className="name flex flex-col gap-3">
             <p className="text-sm">All Users</p>
             <h2 className="text-orange-400 font-bold text-3xl">
-              <CountUp start={0} end={488} duration={3} />
+              0<CountUp start={0} end={data?.users} duration={3} />
             </h2>
           </div>
           <div className="ICONS text-5xl text-orange-400 ">
@@ -23,7 +29,7 @@ const CardsPage = (props: Props) => {
           </div>
         </div>
         {/* footer */}
-        <div className="botm absolute bottom-0 w-full p-2 text-sm text-white text-center bg-orange-400 opacity-90">
+        <div className="botm absolute bottom-0 w-full p-2 text-sm text-white text-center bg-orange-500 opacity-90">
           <h5>Registered users</h5>
         </div>
       </div>
@@ -34,7 +40,7 @@ const CardsPage = (props: Props) => {
           <div className="name flex flex-col gap-3">
             <p className="text-sm">Supervisors</p>
             <h2 className="text-blue-600 font-bold text-3xl">
-              <CountUp start={0} end={108} duration={3} />
+              0<CountUp start={0} end={data?.supervisors} duration={3} />
             </h2>
           </div>
           <div className="ICONS text-5xl text-blue-600">
@@ -53,7 +59,7 @@ const CardsPage = (props: Props) => {
           <div className="name flex flex-col gap-3">
             <p className="text-sm">Complaints</p>
             <h2 className="text-green-500 font-bold text-3xl">
-              <CountUp start={0} end={522} duration={3} />
+              <CountUp start={0} end={data?.complaints} duration={3} />
             </h2>
           </div>
           <div className="ICONS text-5xl text-primaryColor-500">

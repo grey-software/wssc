@@ -1,6 +1,7 @@
 'use client'
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import CountUp from "react-countup";
 
 interface DataItem {
   name: string;
@@ -21,6 +22,7 @@ const cy = 75;
 const iR = 50;
 const oR = 80;
 const value = 90;
+<CountUp start={0} end={488} duration={3} />
 
 const needle = (
   value: number,

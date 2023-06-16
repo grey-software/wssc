@@ -1,10 +1,13 @@
-import { NextFunction, Request, Response, response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { ComplaintModel } from "../Models/complaint.schema";
 
 import { Types } from "mongoose";
 import { ComplaintValidation } from "../Schema_validation/Complaint_Validation";
 import { IComplaint } from "../@types/ComplaintSchema.type";
 import { Novu } from "@novu/node";
+
+// eslint-disable-next-line turbo/no-undeclared-env-vars
+const novu = new Novu(`${process.env.NOVU_KEY}`);
 
 // create complaint method definition
 export const CreateComplaint = async (
@@ -18,11 +21,23 @@ export const CreateComplaint = async (
   if (error) return res.send(error.details[0].message);
   const userId = req.body.userId;
   const citizenId = req.user.id;
-  
+
   if (userId == citizenId) {
     try {
       const CreateComplaint = new ComplaintModel(req.body);
       await CreateComplaint.save();
+
+      // SENDING NOTIFICATION TO ADMING
+      await novu.trigger("complaint-status-updated", {
+        to: {
+          subscriberId: `wsscp25001`,
+        },
+        payload: {
+          id: CreateComplaint?._id,
+          message: "A New Complaint is filed, Refresh Complaint page to show",
+        },
+      });
+
       res.status(200).json({ status: 200, success: true, CreateComplaint });
     } catch (error) {
       res.status(404).json({ status: 404, success: false, message: error });
@@ -117,12 +132,40 @@ export const AssignComplaint = async (req: Request, res: Response) => {
       $addToSet: { status: status },
     });
 
+    await novu.trigger("complaint-status-updated", {
+      to: {
+        subscriberId: assigned?.userId,
+      },
+      payload: {
+        id: complaintId,
+        message: "Your Complaint is being processed",
+      },
+    });
+
+    await novu.trigger("complaint-status-updated", {
+      to: {
+        subscriberId: assigned.supervisorId,
+      },
+      payload: {
+        id: complaintId,
+        message:
+          "A New Complaint is Assigned to You, Refresh Complaints page to see",
+      },
+    });
+
     res.status(200).json({
       status: 200,
       success: true,
-      message: "Complaint assigned successfully",
-      data: assigned,
+      message: "Status updated successfully",
+      data: assigned.data,
     });
+
+    // res.status(200).json({
+    //   status: 200,
+    //   success: true,
+    //   message: "Complaint assigned successfully",
+    //   data: assigned,
+    // });
   } catch (error) {
     res.status(400).json({
       status: 400,
@@ -168,16 +211,13 @@ export const UpdateComplaint = async (
       });
 
       // Sending Notification to user
-      // eslint-disable-next-line turbo/no-undeclared-env-vars
-      const novu = new Novu(`${process.env.NOVU_KEY}`);
-
       const response = await novu.trigger("complaint-status-updated", {
         to: {
-          subscriberId: `${complaint?.userId}`,
+          subscriberId: complaint?.userId,
         },
         payload: {
           // for now only this string will go to frontend, will modify it once we have connected frontend and backend
-          status: "Complaint Updated",
+          status: "Complaint Status updated Updated",
         },
       });
       res.status(200).json({
@@ -324,6 +364,39 @@ export const CitizenFeedback = async (
       await ComplaintModel.findByIdAndUpdate(complaintId, {
         $addToSet: { status: status },
       });
+
+      // SENDING NOTIFICAITON TO CITIZEN
+      await novu.trigger("complaint-status-updated", {
+        to: {
+          subscriberId: updated.userId,
+        },
+        payload: {
+          id: complaintId,
+          message: "Your Complaint is Closed",
+        },
+      });
+
+      await novu.trigger("complaint-status-updated", {
+        to: {
+          subscriberId: updated.supervisorId,
+        },
+        payload: {
+          id: complaintId,
+          message: "Your complaint Assign to you is now closed 🎉",
+        },
+      });
+
+      await novu.trigger("complaint-status-updated", {
+        to: {
+          subscriberId: "wsscp25001",
+        },
+        payload: {
+          id: complaintId,
+          message:
+            "A citizen provided Feedback on complaint, Visit Feedbacks to see",
+        },
+      });
+
       res.status(200).json({
         status: 200,
         success: true,
@@ -372,6 +445,18 @@ export const SupervisorResponse = async (
       await ComplaintModel.findByIdAndUpdate(complaintId, {
         $addToSet: { status: status },
       });
+
+      // SENDING NOTIFICATION TO CITIZEN
+      await novu.trigger("complaint-status-updated", {
+        to: {
+          subscriberId: responded.userId,
+        },
+        payload: {
+          id: complaintId,
+          message: "Your complaint is Resolved, Please give your Feedback",
+        },
+      });
+
       res.status(200).json({
         status: 200,
         success: true,
