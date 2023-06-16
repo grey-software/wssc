@@ -6,6 +6,7 @@ import { ComplaintValidation } from "../Schema_validation/Complaint_Validation";
 import { IComplaint } from "../@types/ComplaintSchema.type";
 import { Novu } from "@novu/node";
 
+// eslint-disable-next-line turbo/no-undeclared-env-vars
 const novu = new Novu(`${process.env.NOVU_KEY}`);
 
 // create complaint method definition
