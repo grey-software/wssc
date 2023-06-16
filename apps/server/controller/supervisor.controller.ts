@@ -140,7 +140,8 @@ export const GetSupervisor = async (
 // UPDATE SUPERVISOR INFO CONTROLLER
 export const UpdateSupervisor = async (req: Request, res: Response) => {
   const supervisorId: string = req.params.id;
-
+  console.log(supervisorId)
+  console.log(req.body)
   try {
     const supervisor = await SupervisorModel.findByIdAndUpdate(
       supervisorId,

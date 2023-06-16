@@ -31,6 +31,8 @@ const Header = () => {
       window.location.href = message.cta.data.url;
     }
   }
+
+  // JSX SECTION
   return (
     <div>
       {WSSC_CODE ? (

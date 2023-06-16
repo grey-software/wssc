@@ -1,6 +1,6 @@
 import axios from "axios";
 import { config } from "../../config";
-import { ApiFetchingError, ApiFetchingStart, SignInSuccess, SupervisorLogout } from "./supervisorSlice/AuthSlice";
+import { ApiFetchingError, ApiFetchingStart, SignInSuccess, SupervisorLogout, UpdateProfile } from "./supervisorSlice/AuthSlice";
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
 
@@ -35,9 +35,26 @@ export const SupervisorSignIn = async (UserData: any, dispatch: any) => {
     }
 };
 
+// ----- update supervisor profile ------------
+export const UpdateSupervisor = async (dispatch: any, data:any ) => {
+    dispatch(ApiFetchingStart);
+    try {
+        const res = await API.patch(`api/v1/supervisors/${data.suprvisorId}`, { profile_image: data.updatedpic.profile_image }, config);
+        dispatch(UpdateProfile(res.data.data))
+        return res.status;
+    } catch (err: any) {
+        console.log(err)
+        if (err?.response?.status == 500) {
+            dispatch(ApiFetchingError("Server error, please try again later"));
+            return err?.response?.status;
+       }
+    }
+}
+
+
+
 // supervisor logout
 export const SupervisorLogoutApi = async (dispatch: any) => {
-   
     // SignIn start action
     dispatch(ApiFetchingStart);
     try {
