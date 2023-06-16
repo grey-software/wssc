@@ -15,7 +15,6 @@ export const SupervisorComplaints = async ( dispatch: any) => {
             config
         );
         dispatch(SupervisorAllComplaintsSuccess(res.data.allComplaints));
-        console.log(res.data.allComplaints);
         return res.data.allComplaints;
     } catch (err: any) {
         console.log(err);

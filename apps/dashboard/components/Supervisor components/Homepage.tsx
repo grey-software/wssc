@@ -3,12 +3,11 @@ import Image from "next/image";
 import dummyPic from "../../public/wsscmlogo.png";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-
 import { SupervisorComplaints } from "../../app/GlobalState/Supervisor-ApiCalls/ApiCalls/supervisorComplaintsApiCalls";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/GlobalState/store";
-
+import {FcEmptyFilter} from "react-icons/fc"
 export const FiltersBtns = [
   {
     name: "All",
@@ -68,7 +67,6 @@ const HomeScreen = () => {
       console.log(error);
     }
   };
-  console.log(`checking isComplaint: ${IsComplaints}`);
   // used useEffect to call supervisor_assigned_complaints API to fetch and retrieve the data accordingly
   useEffect(() => {
     FetchSupervisorComplaints();
@@ -107,7 +105,7 @@ const HomeScreen = () => {
         complaints.map((complaint: any, index: any) => (
           <div key={index}>
             <Link href={`/supervisor/complaint/${complaint?._id}`}>
-              <div className="flex items-center justify-between rounded-lg border-2 bg-white border-gray-200 mb-1 mx-2 p-2 px-4 shadow-md relative overflow-hidden">
+              <div className="flex items-center justify-between rounded-lg border-2 bg-white border-gray-200 mb-2 mx-2 p-2 px-4 shadow-md relative overflow-hidden">
                 <div className="flex flex-col justify-center ml-1">
                   <h3 className="text-md font-bold text-gray-600">
                     {complaint?.complaintType}
@@ -185,8 +183,9 @@ const HomeScreen = () => {
           </div>
         ))
       ) : (
-        <div className="nocomplant bg-gray-400 w-full h-10 mt-10">
-          <h1 className="text-2xl text-red-500">No complaints</h1>
+          <div className="nocomplant w-full mt-36 h-screen flex flex-col  items-center">
+            <FcEmptyFilter className="text-6xl"/>
+          <h1 className="text-lg">No complaints found</h1>
         </div>
       )}
     </div>

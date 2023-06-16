@@ -27,6 +27,12 @@ export const Suprvisor_Slice = createSlice({
             });
         },
 
+// -------------- Update Supervisor profile ---------------
+        UpdateProfile: (state, action) => {
+            state.pending = false;
+            state.SupervisorSiginData = action.payload;
+        },
+
 // supervisor logout 
         SupervisorLogout: (state, action) => {
             state.pending = false;
@@ -56,6 +62,7 @@ export const {
     ApiFetchingStart,
     SignInSuccess,
     ApiFetchingError,
-    SupervisorLogout
+    SupervisorLogout,
+    UpdateProfile
 } = Suprvisor_Slice.actions;
 export default Suprvisor_Slice.reducer;
