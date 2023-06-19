@@ -19,7 +19,7 @@ const citizenSchema = new mongoose.Schema(
       type: String,
       validate: [validator.isEmail, "Please provide a valid email"],
     },
-    wssc_code: { type: String, required: [true, "WSSC code is required"] },
+    WSSC_CODE: { type: String, required: [true, "WSSC code is required"] },
     address: { type: String },
     profile_image: { type: String },
   },

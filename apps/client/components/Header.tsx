@@ -9,12 +9,12 @@ import userdp from "../public/user.jpg";
 import type { RootState } from "../global_state/store";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import {
-  NovuProvider,
-  PopoverNotificationCenter,
-  NotificationBell,
-  IMessage,
-} from "@novu/notification-center";
+// import {
+//   NovuProvider,
+//   PopoverNotificationCenter,
+//   NotificationBell,
+//   IMessage,
+// } from "@novu/notification-center";
 
 const Header = () => {
   const navigate = useRouter();
@@ -22,16 +22,18 @@ const Header = () => {
   const notifications = useSelector(
     (state: RootState) => state.complaints.notifications
   );
+  // getting WSSC Info
+  const WSSC: any = useSelector((state: RootState) => state.users.WSSC);
 
   const [menuActive, setMenuActive] = useState(false);
   const [windowActive, setWindowActive] = useState(false);
 
-  function onNotificationClick(message: IMessage) {
-    // your logic to handle the notification click
-    if (message?.cta?.data?.url) {
-      window.location.href = message.cta.data.url;
-    }
-  }
+  // function onNotificationClick(message: IMessage) {
+  //   // your logic to handle the notification click
+  //   if (message?.cta?.data?.url) {
+  //     window.location.href = message.cta.data.url;
+  //   }
+  // }
 
   return (
     <>
@@ -42,12 +44,12 @@ const Header = () => {
           <div className="flex items-center justify-between max-w-5xl m-auto">
             <div className="flex items-center justify-center gap-2">
               <Link href="/">
-                <Image src="/wsscmlogo.png" height={40} width={40} alt="" />
+                <Image src={WSSC?.logo} height={40} width={40} alt="" />
               </Link>
-              <h2 className="text-lg text-primaryColor-500 font-bold">WSSCM</h2>
+                <h2 className="text-lg text-primaryColor-500 font-bold">{WSSC?.shortname }</h2>
             </div>
             <div className="flex items-center justify-center gap-4">
-              <NovuProvider
+              {/* <NovuProvider
                 subscriberId={UserInfo._id}
                 applicationIdentifier={"yhet1-MoYIOR"}
               >
@@ -59,7 +61,7 @@ const Header = () => {
                     <NotificationBell unseenCount={unseenCount} />
                   )}
                 </PopoverNotificationCenter>
-              </NovuProvider>
+              </NovuProvider> */}
               {/* show for mobile screen */}
               <Image
                 src={UserInfo?.profile_image ? UserInfo?.profile_image : userdp}

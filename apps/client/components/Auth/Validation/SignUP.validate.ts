@@ -19,4 +19,8 @@ export const SignUp_validate = Yup.object().shape({
     confirmPassword: Yup.string()
         .required("Confirm Password is required")
         .oneOf([Yup.ref("password")], "Password does not match"),
+    
+    wssc_code: Yup.string()
+        .required("Residential area is required")
+        .min(4, "Residential area must be 4 characters long")
 });

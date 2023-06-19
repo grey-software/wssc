@@ -3,9 +3,17 @@ import { WSSC_TYPES } from "../@types/WSSC'sSchema.type";
 
 
 const AdminSchema = new mongoose.Schema({
-    name: {
+    fullname: {
         type: String,
         required: [true, "please provide your organization name"]
+    },
+    shortname: {
+        type: String,
+        required: [true, "please provide short name"]
+    },
+    logo: {
+        type: String,
+        requird: [true, "provide logo link here"]
     },
     WSSC_CODE: {
         type: String,

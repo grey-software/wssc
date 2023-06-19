@@ -41,13 +41,15 @@ const SignUp = ({ setAuthState }: Prop) => {
 
   const onSubmit = async (data: UserSubmitForm) => {
     const { phone, username, password } = data;
-    const status = await RegisterUser(
+    console.log(data)
+    const res = await RegisterUser(
       { phone, name: username, password, wssc_code },
       dispatch
     );
-    if (status == 200) {
+    if (res?.status == 200) {
       setAuthState("Signin");
       reset();
+    
     }
   };
 
@@ -68,9 +70,7 @@ const SignUp = ({ setAuthState }: Prop) => {
               <input
                 type="text"
                 id="username"
-                {...register("username", {
-                  pattern: patternRule,
-                })}
+                {...register("username")}
                 className={`block py-1 px-0 w-full text-md text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primaryColor-500 peer ${
                   errors.username ? "focus:border-red-500" : ""
                 }`}
@@ -178,20 +178,32 @@ const SignUp = ({ setAuthState }: Prop) => {
               </div>
             </div>
             {/* select the one of the wssc according to the citizen location */}
-            <label htmlFor="underline_select" className="sr-only block">
-              Select your residential area
-            </label>
-            <select
-              id="underline_select"
-              className="block py-2 px-3 overflow-hidden  w-[70%] text-sm text-gray-400 shadow-b-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-              onChange={(e) => setWSSC(e.target.value)}
-            >
-              <option selected>Select your residential area </option>
-              <option value="wsscp25001">Peshawar</option>
-              <option value="wsscm23200">Mardan</option>
-              <option value="wssck26010">Kohat</option>
-              <option value="wsscs19090">Swat</option>
-            </select>
+            <div className="residentialArea">
+              <label htmlFor="underline_select" className="sr-only block">
+                Select your residential area
+              </label>
+              <select
+                id="underline_select"
+                {...register("wssc_code")}
+                className={`block py-2 px-2 overflow-hidden  w-[70%] text-sm text-gray-600 shadow-b-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer ${
+                  errors.wssc_code? "focus:border-red-500" : "" }`}
+                onChange={(e) => setWSSC(e.target.value)}
+              >
+                <option  value=""
+                >
+                  Select your residential area
+                </option>
+                <option value="wsscp25001">Peshawar</option>
+                <option value="wsscm23200">Mardan</option>
+                <option value="wssck26010">Kohat</option>
+                <option value="wsscs19200">Swat</option>
+                <option value="wssca22020">Abbottabad</option>
+                <option value="wsscabannu">Bannu</option>
+              </select>
+              <div className="text-sm text-red-500">
+                {errors.wssc_code?.message}
+              </div>
+            </div>
             {/* ---------------------- Submit form button ------------------ */}
             <div className="flex justify-center mt-10">
               <button

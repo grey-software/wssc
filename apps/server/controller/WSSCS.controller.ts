@@ -15,7 +15,7 @@ const SECRET_KEY: any = process.env.JWT_KEY;
 
 export const Register = async (req: Request, res: Response, next: NextFunction) => {
     console.log(req.body)
-    const { name, WSSC_CODE, password, isAdmin } = req.body;
+    const { fullname,shortname,logo, WSSC_CODE, password, isAdmin } = req.body;
 // checking whether there is same wssc organization registered or not
     // encrypt password by using bcrypt algorithm
     const salt: string = bcrypt.genSaltSync(10);
@@ -26,7 +26,7 @@ export const Register = async (req: Request, res: Response, next: NextFunction) 
     console.log(admin)
         if (!admin ) {
         
-        const RegisterWSSC: any = new AdminsModel({name: name, WSSC_CODE: WSSC_CODE, isAdmin: isAdmin, password: hashPassword})
+        const RegisterWSSC: any = new AdminsModel({fullname,shortname,logo, WSSC_CODE: WSSC_CODE, isAdmin: isAdmin, password: hashPassword})
             await RegisterWSSC.save();
         
         const { password, ...detail } = RegisterWSSC._doc;
@@ -81,7 +81,7 @@ export const SignIn = async (
                 message: "Password is incorrect",
             });
         // if the user credential is okay then we assign/send jwt token for authentication and authorization
-        const token = jwt.sign({ id: admin._id, name: admin.name, isAdmin: admin.isAdmin, WSSC_CODE:admin.WSSC_CODE }, SECRET_KEY)
+        const token = jwt.sign({ id: admin._id, name: admin.shortname, isAdmin: admin.isAdmin, WSSC_CODE:admin.WSSC_CODE }, SECRET_KEY)
         const { password, ...detail } = admin._doc;
 
         res.cookie("access_token", token, {
@@ -128,9 +128,9 @@ export const Statistics = async (
 ) => {
     try {
         
-        const users = await citizenModel.find(); // retrieve no of registered users
-        const supervisors = await SupervisorModel.find(); // retrieve no of superisors registered
-        const complaints = await ComplaintModel.find(); // retrieve no of registered complaints
+        const users = await citizenModel.find({ WSSC_CODE: req.user.WSSC_CODE}); // retrieve no of registered users
+        const supervisors = await SupervisorModel.find({ WSSC_CODE: req.user.WSSC_CODE }); // retrieve no of superisors registered
+        const complaints = await ComplaintModel.find({ WSSC_CODE: req.user.WSSC_CODE }); // retrieve no of registered complaints
 
         // find no of type of complaints registered
         const solidWasteComplaints = complaints.filter(complaint => complaint.complaintType === 'Solid waste').length;
@@ -177,3 +177,39 @@ export const Statistics = async (
         res.status(404).json({ status: 404, success: false, message: error });
     }
 };
+
+
+// update all complaints controller
+export const UpdateAllComplaints = async (req: Request,
+    res: Response,
+    next: NextFunction) => {
+   
+        try {
+            // Update all complaints matching the query
+            const updateResult: any = await ComplaintModel.updateMany({}, { $set: { WSSC_CODE: 'wsscm23200' } });
+
+            res.status(200).json({ message: 'Complaints updated successfully', updatedCount: updateResult.nModified });
+        } catch (error) {
+            res.status(500).json({ error: 'An error occurred while updating complaints' });
+        }
+
+
+    }
+
+    // shift all supervisors and users to wsscm
+export const SupervisorUsersShifting = async (req: Request,
+    res: Response,
+    next: NextFunction) => {
+
+    try {
+        // Update all complaints matching the query
+        const updateSupervisors: any = await SupervisorModel.updateMany({}, { $set: { WSSC_CODE: 'wsscm23200' } });
+        const updateUsers: any = await citizenModel.updateMany({}, { $set: { WSSC_CODE: 'wsscm23200' } });
+
+        res.status(200).json({ message: 'Shiftted all users and supervisors records successfully', supervisors: updateSupervisors.length, users: updateUsers.length });
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while updating complaints' });
+    }
+
+
+}

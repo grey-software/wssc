@@ -19,7 +19,7 @@ import { RootState } from "@/global_state/store";
 const Page: React.FC = ({ params }: any) => {
   const complaintType = decodeURI(params.complaint); // getting complaint type through params and then decoded to show properly
   // getting user data from redux store
-  const { name, _id, phone }: any = useSelector(
+  const { name, _id, phone, WSSC_CODE }: any = useSelector(
     (state: RootState) => state.users.UserInfo
   );
 
@@ -50,6 +50,7 @@ const Page: React.FC = ({ params }: any) => {
     const complaintData = {
       userName: name,
       userId: _id,
+      WSSC_CODE,
       phone: phone.toString(),
       complaintType,
       complaintAddress: address,

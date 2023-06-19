@@ -21,7 +21,7 @@ export const CreateComplaint = async (
   if (error) return res.send(error.details[0].message);
   const userId = req.body.userId;
   const citizenId = req.user.id;
-
+  console.log(userId == citizenId)
   if (userId == citizenId) {
     try {
       const CreateComplaint = new ComplaintModel(req.body);
@@ -253,7 +253,7 @@ export const GetAllComplaints = async (
     let allComplaints;
     let query = {}; // query variable is used to store the userType and will fetch all complaints according to the logged User
 
-    if (req.user.isAdmin) query = {};
+    if (req.user.isAdmin) query = {WSSC_CODE: req.user.WSSC_CODE};
     else if (req.user.isSupervisor) query = { supervisorId: userId };
     else query = { userId: userId };
 

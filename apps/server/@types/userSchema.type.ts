@@ -5,7 +5,7 @@ export interface ICitizen {
   email?: string;
   district?: string;
   tehsil?: string;
-  wssc_code?: string;
+  WSSC_CODE?: string;
   createdAt: NativeDate;
   updatedAt: NativeDate;
 }

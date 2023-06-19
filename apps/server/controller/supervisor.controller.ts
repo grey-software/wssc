@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { SupervisorModel } from "../Models/supervisor.schema";
 import { SupervisorTypes } from "../@types/supervisorSchema.type";
 import bycrypt from "bcryptjs";
+import { AdminsModel } from "../Models/WsscsAdmin.schema";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const SECRET_KEY: any = process.env.JWT_KEY;
@@ -13,7 +14,7 @@ export const RegisterSupervisor = async (
   res: Response,
   next: NextFunction
 ) => {
-  const WSSC_CODE = req.user.orgCode;
+  const WSSC_CODE = req.user.WSSC_CODE;
   const { name, phone, password } = req.body;
 
   // ENCRYPTING PASSWORD
@@ -78,7 +79,7 @@ export const SignInSupervisor = async (
         message: "User is not found!",
       });
     }
-
+  
     const verifyPassword: boolean = await bycrypt.compare(
       req.body.password,
       verifySupervisor.password
@@ -91,6 +92,14 @@ export const SignInSupervisor = async (
         message: "Password is incorrect",
       });
 
+    // Getting WSSC data which is associated with citizen
+    const WSSC: any = await AdminsModel.findOne({ WSSC_CODE: verifySupervisor?.WSSC_CODE });
+    const WSSC_DATA = {
+      fullname: WSSC.fullname,
+      shortname: WSSC.shortname,
+      logo: WSSC.logo
+    }
+    
     const token: string = jwt.sign(
       {
         id: verifySupervisor._id,
@@ -106,7 +115,7 @@ export const SignInSupervisor = async (
         httpOnly: true,
       })
       .status(200)
-      .json(supervisor);
+      .json({ success: true, status: 200, supervisor: supervisor, WSSC: WSSC_DATA });
   } catch (error) {
     next(error);
   }
@@ -197,11 +206,10 @@ export const GetAllSupervisors = async (
   res: Response,
   next: NextFunction
 ) => {
-  const orgCode = req.user.orgCode;
-  console.log(orgCode);
+ 
   try {
     const allSupervisors = await SupervisorModel.find({
-      WSSC_CODE: orgCode,
+      WSSC_CODE: req.user.WSSC_CODE,
       isDeleted: false,
     }).sort({ updatedAt: -1 });
 
