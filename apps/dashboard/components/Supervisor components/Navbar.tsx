@@ -61,7 +61,7 @@ const Navbar = () => {
           <Link href="/supervisor">
             <Image src={WSSC?.logo} height={40} width={40} alt="wssc_logo" />
           </Link>
-          <h2 className="text-lg text-primaryColor-500 font-bold">{ WSSC?.shortname}</h2>
+          <h2 className="text-lg text-primaryColor-500 font-bold">{ WSSC?.shortnamei}</h2>
         </div>
         {/* notification icon and batch of notify */}
         <div className="flex items-center justify-center gap-4">

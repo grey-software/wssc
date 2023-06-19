@@ -4,8 +4,8 @@ import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignIn_validate } from "./Validation/SignIn.validate";
 import { UserSubmitForm } from "../../@types/signup.types";
-import logo from "../../public/wsscmlogo.png";
 import Image from "next/image";
+import logo from "../../public/govt_logo.png";
 import { useDispatch, useStore } from "react-redux";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { SignIn } from "@/global_state/ApiCalls/authApiCalls";
@@ -45,9 +45,14 @@ const Signin = ({ setAuthState }: Prop) => {
         <div className="flex justify-center flex-col">
           <div className="flex flex-col items-center justify-center gap-4">
             <Image src={logo} className="w-40" alt="Wsscm-logo" priority />
-            <p className="text-md text-gray-500 font-semibold text-center">
-              Commited to a Clean and Green Mardan
-            </p>
+            <div className="title flex flex-col gap-1">
+              <p className="text-md text-gray-500 font-semibold text-center">
+                آپ کی آواز، ہمارا عزم
+              </p>
+              <p className="text-md text-gray-500 font-semibold text-center">
+                Your Voice, Our Commitment
+              </p>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-6">

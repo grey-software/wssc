@@ -4,7 +4,8 @@ import { useForm, ValidationRule } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUp_validate } from "./Validation/SignUP.validate";
 import { UserSubmitForm } from "../../@types/signup.types";
-import logo from "../../public/wsscmlogo.png";
+// import logo from "../../public/wsscmlogo.png";
+import logo from "../../public/govt_logo.png"
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
@@ -59,10 +60,15 @@ const SignUp = ({ setAuthState }: Prop) => {
       <div className="flex items-center justify-center  w-full px-0 md:px-20 lg:px-20 xl:px-20">
         <div className="flex justify-center flex-col w-full ">
           <div className="flex flex-col items-center justify-center gap-4">
-            <Image src={logo} className="w-40" alt="Wsscm-logo" priority />
-            <p className="text-md text-gray-500 font-semibold text-center">
-              Commited to a Clean and Green Mardan
-            </p>
+            <Image src={logo} className="w-44" alt="Wsscm-logo" priority />
+            <div className="title flex flex-col ">
+              <p className="text-md text-gray-500 font-semibold text-center">
+                آپ کی آواز، ہمارا عزم
+              </p>
+              <p className="text-md text-gray-500 font-semibold text-center">
+                Your Voice, Our Commitment
+              </p>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-3">
@@ -186,13 +192,11 @@ const SignUp = ({ setAuthState }: Prop) => {
                 id="underline_select"
                 {...register("wssc_code")}
                 className={`block py-2 px-2 overflow-hidden  w-[70%] text-sm text-gray-600 shadow-b-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer ${
-                  errors.wssc_code? "focus:border-red-500" : "" }`}
+                  errors.wssc_code ? "focus:border-red-500" : ""
+                }`}
                 onChange={(e) => setWSSC(e.target.value)}
               >
-                <option  value=""
-                >
-                  Select your residential area
-                </option>
+                <option value="">Select your residential area</option>
                 <option value="wsscp25001">Peshawar</option>
                 <option value="wsscm23200">Mardan</option>
                 <option value="wssck26010">Kohat</option>
