@@ -20,6 +20,7 @@ const ComplaintSchema = new mongoose.Schema(
     },
     complaintDes: { type: String },
     wsscStatement: { type: String },
+    WSSC_CODE: { type: String, required: [true, "WSSC code is required"] },
     status: {
       type: [
         {

@@ -6,10 +6,9 @@ const API = axios.create({ baseURL: "http://localhost:7000" });
 
 // Sign In Supervisor
 export const SupervisorSignIn = async (UserData: any, dispatch: any) => {
-    console.log(UserData);
     const { phone, password } = UserData;
     // SignIn start action
-    dispatch(ApiFetchingStart);
+    // dispatch(ApiFetchingStart);
     try {
         // calling api to check the credentials
         const res = await API.post(
@@ -18,7 +17,7 @@ export const SupervisorSignIn = async (UserData: any, dispatch: any) => {
             config
         );
         dispatch(SignInSuccess(res.data));
-        console.log(res);
+        console.log(res.data);
         return res;
     } catch (err: any) {
         console.log(err);

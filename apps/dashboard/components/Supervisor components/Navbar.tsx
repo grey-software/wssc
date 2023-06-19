@@ -7,12 +7,12 @@ import { SupervisorLogoutApi } from "@/app/GlobalState/Supervisor-ApiCalls/ApiCa
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-import {
-  NovuProvider,
-  PopoverNotificationCenter,
-  NotificationBell,
-  IMessage,
-} from "@novu/notification-center";
+// import {
+//   NovuProvider,
+//   PopoverNotificationCenter,
+//   NotificationBell,
+//   IMessage,
+// } from "@novu/notification-center";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/GlobalState/store";
 
@@ -21,16 +21,18 @@ const Navbar = () => {
   const navigate = useRouter();
   const [menuActive, setMenuActive] = useState(false);
   const [windowActive, setWindowActive] = useState(false);
+
   const { _id, profile_image }: any = useSelector(
     (state: RootState) => state.suprvisor.SupervisorSiginData
   );
 
-  function onNotificationClick(message: IMessage) {
-    // your logic to handle the notification click
-    if (message?.cta?.data?.url) {
-      window.location.href = message.cta.data.url;
-    }
-  }
+  const WSSC:any = useSelector((state: RootState)=> state.suprvisor.WSSC)
+  // function onNotificationClick(message: IMessage) {
+  //   // your logic to handle the notification click
+  //   if (message?.cta?.data?.url) {
+  //     window.location.href = message.cta.data.url;
+  //   }
+  // }
 
   // handle mthod deintiion
   const HandleClick = () => {
@@ -57,14 +59,14 @@ const Navbar = () => {
       <div className="flex items-center justify-between bg-gray-50 w-full px-3 py-2 border-1 shadow-md md:shadow-lg fixed top-0 border z-30">
         <div className="flex items-center justify-center gap-2">
           <Link href="/supervisor">
-            <Image src="/wsscmlogo.png" height={40} width={40} alt="" />
+            <Image src={WSSC?.logo} height={40} width={40} alt="wssc_logo" />
           </Link>
-          <h2 className="text-lg text-primaryColor-500 font-bold">WSSCM</h2>
+          <h2 className="text-lg text-primaryColor-500 font-bold">{ WSSC?.shortname}</h2>
         </div>
         {/* notification icon and batch of notify */}
         <div className="flex items-center justify-center gap-4">
           {/* notification batch */}
-          <NovuProvider
+          {/* <NovuProvider
             subscriberId={_id}
             applicationIdentifier={"yhet1-MoYIOR"}
           >
@@ -76,7 +78,7 @@ const Navbar = () => {
                 <NotificationBell unseenCount={unseenCount} />
               )}
             </PopoverNotificationCenter>
-          </NovuProvider>
+          </NovuProvider> */}
           {/* user image */}
           <Image
             src={profile_image ? profile_image : userdp}

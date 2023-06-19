@@ -10,7 +10,7 @@ export const login_validate = Yup.object().shape({
   password: Yup.string()
     .required("Password is required")
     .min(5, "Password must be at least 6 characters")
-    .max(12, "Password must not exceed 12 characters"),
+    .max(15, "Password must not exceed 12 characters"),
 });
 
 export const register_supervisor_validate = Yup.object().shape({

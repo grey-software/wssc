@@ -36,9 +36,10 @@ export const RegisterUser = async (
   try {
     const res = await API.post(
       "api/v1/auth/signup",
-      { name, phone, password, wssc_code },
+      { name, phone, password, WSSC_CODE:wssc_code },
       { withCredentials: true }
     );
+    console.log(res)
     dispatch(SignUpSuccess(res.data));
     return res.status;
   } catch (err: any) {
@@ -62,6 +63,7 @@ export const SignIn = async (UserData: user, dispatch: any) => {
   try {
     // calling api to check the credentials
     const res = await API.post("api/v1/auth/signin", { phone, password }, config);
+    console.log(res.data)
     dispatch(SignInSuccess(res.data));
   } catch (err: any) {
     if (err.response) {

@@ -10,12 +10,14 @@ import {
 } from "../Schema_validation/Auth_Validation";
 import dotenv from "dotenv";
 import { Novu } from "@novu/node";
+import { AdminsModel } from "../Models/WsscsAdmin.schema";
 
 dotenv.config();
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const SECRET_KEY: any = process.env.JWT_KEY;
 
+// eslint-disable-next-line turbo/no-undeclared-env-vars
 const novu = new Novu(`${process.env.NOVU_KEY}`);
 
 export const SignUp = async (
@@ -27,8 +29,9 @@ export const SignUp = async (
   const { error } = SignUp_validate(req.body);
   // below statement will call if there is data not valid
   if (error) return res.send(error.details[0].message);
+  console.log(req.body)
 
-  const { name, phone, password, wssc_code }: any = req.body;
+  const { name, phone, password, WSSC_CODE }: any = req.body;
   // encrypt password by using bcrypt algorithm
   const salt: string = bcrypt.genSaltSync(10);
   const hash: string = bcrypt.hashSync(password, salt);
@@ -45,7 +48,7 @@ export const SignUp = async (
       const createUser = new citizenModel({
         name: name,
         phone: phone,
-        wssc_code,
+        WSSC_CODE,
         password: hash,
       });
       await createUser.save();
@@ -99,13 +102,21 @@ export const SignIn = async (
         success: false,
         message: "Password is incorrect",
       });
+    
+    // Getting WSSC data which is associated with citizen
+    const WSSC: any = await AdminsModel.findOne({ WSSC_CODE: User?.WSSC_CODE });
+    const WSSC_DATA = {
+      fullname: WSSC.fullname,
+      shortname: WSSC.shortname,
+      logo: WSSC.logo
+    }
     // if the user credential is okay then we assign/send jwt token for authentication and authorization
     const token: string = jwt.sign(
       {
         id: User._id,
         name: User.name,
         phone: User.phone,
-        orgCode: User.wssc_code,
+        WSSC_CODE: User.WSSC_CODE,
       },
       SECRET_KEY
     );
@@ -117,7 +128,7 @@ export const SignIn = async (
         httpOnly: true,
       })
       .status(200)
-      .json(detail);
+      .json({success: true, status: 200, user:detail, WSSC: WSSC_DATA});
   } catch (error) {
     next(error);
   }

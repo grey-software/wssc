@@ -465,10 +465,11 @@ const Page = ({ params }: any) => {
                     {complaint?.ImageUrl && (
                       <Image
                         src={complaint?.ImageUrl}
-                        className="h-56 w-48"
+                        className="h-56 w-48 object-contain"
                         width={300}
                         height={100}
-                        alt="Complaint Picture"
+                          alt="Complaint Picture"
+                          
                       />
                     )}
                     {complaint?.VideoUrl && (

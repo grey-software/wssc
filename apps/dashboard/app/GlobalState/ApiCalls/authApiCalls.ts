@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SignInStart, SignInSuccess, SignInError } from "../UserSlice";
+import { SignInStart, SignInSuccess, SignInError, ApiRequestStart, ApiRequestError, SignOutUser } from "../UserSlice";
 import { config } from "../config";
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
@@ -18,6 +18,7 @@ export const SignIn = async (UserData: any, dispatch: any) => {
       config
     );
     dispatch(SignInSuccess(res.data));
+    return res;
   } catch (err: any) {
     console.log(err);
     if (err?.response?.status == 404) {
@@ -29,3 +30,18 @@ export const SignIn = async (UserData: any, dispatch: any) => {
     }
   }
 };
+
+// LOGOUT ADMIN 
+export const LOGOUT = async (dispatch: any) => {
+  dispatch(ApiRequestStart());
+
+  try {
+    const res = await API.get("api/v1/wssc/logout", config)
+    console.log(res);
+    dispatch(SignOutUser());
+    return res;
+  } catch (error) {
+    console.log(error)
+    dispatch(ApiRequestError("Something went wrong"))
+  }
+}

@@ -46,9 +46,13 @@ export const UserSlice = createSlice({
         duration: 3000,
       });
     },
+
+    // SignOutUser action to logout admin 
     SignOutUser: (state) => {
-      // state.SignInData = {};
+      state.SignInData = "";
+      state.pending = false;
     },
+
     ApiRequestStart: (state) => {
       state.pending = true;
     },

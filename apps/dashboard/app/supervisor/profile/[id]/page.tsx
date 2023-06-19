@@ -182,7 +182,7 @@ const ProfileCard = () => {
           Address
         </label>
         <div className="flex items-center justify-between font-semibold">
-          <h2 className="text-lg text-gray-500">Muhabbat abad, Mardan</h2>
+          <h2 className="text-lg text-gray-500">your address</h2>
           <BiEdit
             title="Update Your Address"
             className="text-gray-400 text-2xl cursor-pointer"

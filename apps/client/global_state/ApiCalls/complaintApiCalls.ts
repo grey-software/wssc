@@ -56,6 +56,7 @@ export const CreateComplaint = async (
     userName,
     complaintType,
     phone,
+    WSSC_CODE,
     complaintAddress,
     complaintDes,
     ImageUrl,
@@ -72,6 +73,7 @@ export const CreateComplaint = async (
         userName,
         complaintType,
         phone,
+        WSSC_CODE,
         complaintAddress,
         complaintDes,
         ImageUrl,
@@ -85,9 +87,11 @@ export const CreateComplaint = async (
   } catch (err: any) {
     if (err.response?.status == 400) {
       dispatch(NewComplaintError(err.response.data));
+      console.log(err)
       return err.response;
     } else if (err.response.status == 500) {
       dispatch(NewComplaintError(err.response.statusText));
+      console.log(err)
       return err.response;
     }
   }
