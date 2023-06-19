@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { BiUserCircle } from "react-icons/bi";
+import { BiLogOutCircle, BiUserCircle } from "react-icons/bi";
 import { FiShare2 } from "react-icons/fi";
 import { MdOutlinePrivacyTip } from "react-icons/md";
 import { AiOutlineFileProtect } from "react-icons/ai";
@@ -111,13 +111,18 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
           </button>
         </div>
 
-        <button
-          onClick={LogOut}
-          className="flex items-center gap-2 text-md -mt-4 font-semibold"
-        >
-          <TbLogout className="text-[24px] text-primaryColor-500" />
-          <span className="text-gray-700">Log out</span>
-        </button>
+        {/* Logout button */}
+        <div className="logout  w-full ">
+          <button
+            className="text-lg px-3 py-1 rounded-full flex justify-center items-center w-[80%] tracking-wide hover:bg-primaryColor-300 bg-gray-200 "
+            onClick={LogOut}
+          >
+            <span>
+              <BiLogOutCircle className="text-xl mr-3" />
+            </span>
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
 
       {sharePop && <ShareApp sharePop={sharePop} setSharePop={setsharePop} />}
