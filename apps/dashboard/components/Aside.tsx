@@ -12,7 +12,7 @@ import { MdSpaceDashboard, MdFeedback } from "react-icons/md";
 import { SiFiles } from "react-icons/si";
 import { HiUsers } from "react-icons/hi";
 import Link from "next/link";
-import {BiLogOutCircle} from "react-icons/bi"
+import { BiLogOutCircle } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { LOGOUT } from "@/app/GlobalState/ApiCalls/authApiCalls";
 
@@ -59,22 +59,20 @@ function Aside() {
     dispatch(setActiveTab(index));
   };
   // Logout method definition logout admin successfully
-  const LogOut = async() => {
+  const LogOut = async () => {
     try {
-      const res = await LOGOUT(dispatch)
+      const res = await LOGOUT(dispatch);
       if (res?.status === 200) {
-        navigate.push("/auth")
-         toast.success("Successfully Logged Out", {
-           duration: 2000,
-           position: "top-center",
-         });
+        navigate.push("/auth");
+        toast.success("Successfully Logged Out", {
+          duration: 2000,
+          position: "top-center",
+        });
       }
-      
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-   
-  }
+  };
 
   const { WSSC_CODE }: any = useSelector(
     (state: RootState) => state.User.SignInData
@@ -106,7 +104,7 @@ function Aside() {
           {/* logout button */}
           <div className="logout px-6 absolute bottom-28 w-full ">
             <button
-              className="text-lg px-3 py-1 rounded-full flex justify-center items-center w-full tracking-wide hover:bg-primaryColor-300 bg-gray-200"
+              className="text-lg px-3 py-1 rounded-full flex justify-center items-center w-full text-red-500 border border-red-500 tracking-wide  bg-white hover:text-white hover:bg-red-500 cursor-pointer transition-all"
               onClick={LogOut}
             >
               <span>

@@ -19,9 +19,9 @@ import { useRouter } from "next/navigation";
 const Header = () => {
   const navigate = useRouter();
   const { UserInfo }: any = useSelector((state: RootState) => state.users);
-  const notifications = useSelector(
-    (state: RootState) => state.complaints.notifications
-  );
+  // const notifications = useSelector(
+  //   (state: RootState) => state.complaints.notifications
+  // );
   // getting WSSC Info
   const WSSC: any = useSelector((state: RootState) => state.users.WSSC);
 
@@ -46,7 +46,9 @@ const Header = () => {
               <Link href="/">
                 <Image src={WSSC?.logo} height={40} width={40} alt="" />
               </Link>
-                <h2 className="text-lg text-primaryColor-500 font-bold">{WSSC?.shortname }</h2>
+              <h2 className="text-lg text-primaryColor-500 font-bold">
+                {WSSC?.shortname}
+              </h2>
             </div>
             <div className="flex items-center justify-center gap-4">
               {/* <NovuProvider

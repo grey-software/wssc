@@ -10,10 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/GlobalState/store";
 import { MdSupervisorAccount } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";
-import Link from "next/link";
 import { SupervisorSignIn } from "../GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
-
-
 
 const Auth = () => {
   const [admin, setadmin] = useState(true);
@@ -37,9 +34,8 @@ const Auth = () => {
           reset();
         }
       } catch (error) {
-         console.log(error)
+        console.log(error);
       }
-      
     } else {
       try {
         const res = await SupervisorSignIn(
