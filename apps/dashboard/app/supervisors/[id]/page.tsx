@@ -9,9 +9,7 @@ import { setActiveTab } from "@/app/GlobalState/TabSlice";
 import SingleComplaintSupervisor from "@/components/complaint/SingleComplaintSupervisor";
 import { GetSingleSupervisor } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
 import { FetchSupervisorComplaints } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
-import { AiFillStar } from "react-icons/ai";
-import Rating from "react-rating";
-
+import Ratings from "@/components/Rating";
 const page = ({ params }: any) => {
   const id = params.id;
   const dispatch = useDispatch();
@@ -180,16 +178,7 @@ const page = ({ params }: any) => {
                     <p className="text-lg font-bold text-primaryColor-500">
                       {totalRating.toFixed(1)}
                     </p>
-                    <Rating
-                      initialRating={totalRating}
-                      readonly
-                      fullSymbol={
-                        <AiFillStar className="text-initiatedColor text-2xl" />
-                      }
-                      emptySymbol={
-                        <AiFillStar className="text-gray-300 text-2xl" />
-                      }
-                    />
+                    <Ratings totalRating={totalRating} />
                   </span>
                 </div>
               </div>

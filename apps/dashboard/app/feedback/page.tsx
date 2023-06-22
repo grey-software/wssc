@@ -11,6 +11,7 @@ import { RootState } from "../GlobalState/store";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
 import { MdClose } from "react-icons/md";
 import Rating from "react-rating";
+import Ratings from "@/components/Rating";
 
 function Feedback() {
   const dispatch = useDispatch();
@@ -169,16 +170,7 @@ function Feedback() {
                   <div className="w-full border border-gray-200 mt-2"></div>
                   <div className="flex items-center gap-2 mt-2">
                     <span className="text-2xl">
-                      <Rating
-                        initialRating={totalRating}
-                        readonly
-                        fullSymbol={
-                          <AiFillStar className="text-initiatedColor mr-1" />
-                        }
-                        emptySymbol={
-                          <AiFillStar className="text-gray-300 mr-1" />
-                        }
-                      />
+                      <Ratings totalRating={totalRating} />
                     </span>
                     <span className="ml-14 text-lg font-bold text-primaryColor-500">
                       &#40;{totalRating.toFixed(1)}&#41;

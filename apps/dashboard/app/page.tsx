@@ -1,10 +1,8 @@
 "use client";
-import HomeScreen from "@/components/HomeScreen";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 import { RootState } from "./GlobalState/store";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import CardsPage from "@/components/MainPage/CardsPage";
 import ChartSection from "@/components/MainPage/ChartSection";
@@ -28,13 +26,12 @@ export default function Home() {
   const StatisticsApi = async () => {
     try {
       await Statistics(dispatch);
-     
     } catch (error) {
       console.log(error);
-       toast.error("Something went wrong to fetch statistics data", {
-         position: "top-right",
-         duration: 5000,
-       });
+      toast.error("Something went wrong to fetch statistics data", {
+        position: "top-right",
+        duration: 5000,
+      });
     }
   };
 
