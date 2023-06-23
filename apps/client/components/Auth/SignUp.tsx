@@ -198,7 +198,7 @@ const SignUp = ({ setAuthState }: Prop) => {
                 <option value="">Select your residential area</option>
                 <option value="wsscp25001">Peshawar</option>
                 <option value="wsscm23200">Mardan</option>
-                <option value="wssck26010">Kohat</option>
+                <option value="wssck026010">Kohat</option>
                 <option value="wsscs19200">Swat</option>
                 <option value="wssca22020">Abbottabad</option>
                 <option value="wsscabannu">Bannu</option>

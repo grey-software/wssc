@@ -24,6 +24,8 @@ const SupervisorSchema = new mongoose_1.default.Schema({
         type: String,
         required: [true, "Password is required!"],
     },
+    isDeleted: { type: Boolean, default: false },
+    profile_image: { type: String },
 }, { timestamps: true });
 exports.SupervisorModel = mongoose_1.default.models.Supervisors ||
     mongoose_1.default.model("supervisors", SupervisorSchema);

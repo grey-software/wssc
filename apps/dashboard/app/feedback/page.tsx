@@ -12,7 +12,7 @@ import { ColorRing, RotatingLines } from "react-loader-spinner";
 import { MdClose } from "react-icons/md";
 import Ratings from "@/components/Rating";
 
-function Feedback() {
+const Feedback = (): React.JSX.Element => {
   const dispatch = useDispatch();
   const navigate = useRouter();
   let one = 0;
@@ -222,6 +222,6 @@ function Feedback() {
       )}
     </>
   );
-}
+};
 
 export default Feedback;

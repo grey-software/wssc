@@ -7,6 +7,10 @@ exports.ComplaintModel = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const ComplaintSchema = new mongoose_1.default.Schema({
     userId: { type: String, required: [true, "CurrentUser_Id is required"] },
+    supervisorId: {
+        type: String,
+        default: "",
+    },
     userName: { type: String },
     phone: { type: String },
     complaintAddress: {
@@ -19,6 +23,7 @@ const ComplaintSchema = new mongoose_1.default.Schema({
     },
     complaintDes: { type: String },
     wsscStatement: { type: String },
+    WSSC_CODE: { type: String, required: [true, "WSSC code is required"] },
     status: {
         type: [
             {
@@ -37,6 +42,15 @@ const ComplaintSchema = new mongoose_1.default.Schema({
             rating: {
                 type: Number,
                 required: [true, "Rating is required in feedback"],
+            },
+            description: String,
+        },
+    },
+    response: {
+        type: {
+            ImageUrl: {
+                type: String,
+                // required: [true, "Image is required in responce"],
             },
             description: String,
         },

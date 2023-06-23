@@ -86,12 +86,15 @@ exports.GetUser = GetUser;
 const RetreiveAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Only Admin can retrieve all the users data
-        const allUsers = yield citizen_schema_1.citizenModel.find().sort({ _id: -1 });
+        const code = req.user.WSSC_CODE;
+        const allUsers = yield citizen_schema_1.citizenModel
+            .find({ WSSC_CODE: code })
+            .sort({ updatedAt: -1 });
         res.status(200).json({
             status: 200,
             success: true,
             TotalUsers: allUsers.length,
-            data: { allUsers },
+            data: allUsers,
         });
     }
     catch (error) {

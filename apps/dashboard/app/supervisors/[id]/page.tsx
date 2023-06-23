@@ -10,7 +10,8 @@ import SingleComplaintSupervisor from "@/components/complaint/SingleComplaintSup
 import { GetSingleSupervisor } from "@/GlobalState/ApiCalls/supervisorApiCalls";
 import { FetchSupervisorComplaints } from "@/GlobalState/ApiCalls/complaintApiCalls";
 import Ratings from "@/components/Rating";
-const page = ({ params }: any) => {
+import Image from "next/image";
+const Page = ({ params }: any) => {
   const id = params.id;
   const dispatch = useDispatch();
   const navigate = useRouter();
@@ -157,8 +158,10 @@ const page = ({ params }: any) => {
             {/* SUPERVISOR PROFILE CARD */}
             <div className="flex items-start justify-start">
               <div className="flex flex-col items-center p-10 rounded shadow-md border-[1px] border-gray-50">
-                <img
+                <Image
                   src="/user.jpg"
+                  height={128}
+                  width={128}
                   className="h-32 w-32 rounded-full"
                   alt={supervisor.name}
                 />
@@ -190,4 +193,4 @@ const page = ({ params }: any) => {
   );
 };
 
-export default page;
+export default Page;

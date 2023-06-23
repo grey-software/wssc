@@ -87,20 +87,20 @@ const CustomChart = () => {
   const data = [
     {
       name: "Closed",
-      uv: complaintStatus?.Closed,
+      uv: complaintStatus?.Closed || 0,
     },
     {
       name: "Resolved",
-      uv: complaintStatus?.Completed,
+      uv: complaintStatus?.Completed || 0,
     },
     {
       name: "In progress",
-      uv: complaintStatus?.InProgress,
+      uv: complaintStatus?.InProgress || 0,
     },
 
     {
       name: "Pending",
-      uv: complaintStatus?.Initiated,
+      uv: complaintStatus?.Initiated || 0,
     },
   ];
 

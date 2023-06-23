@@ -15,19 +15,19 @@ const ApexChart = () => {
   const series = [
     {
       name: "Solid waste",
-      data: [complaints?.solidWaste, 0, 0, 0],
+      data: [complaints?.solidWaste || 0, 0, 0, 0],
     },
     {
       name: "Water sanitation",
-      data: [complaints?.waterSanitation, 0, 0, 0],
+      data: [complaints?.waterSanitation || 0, 0, 0, 0],
     },
     {
       name: "Staff related",
-      data: [complaints?.Staff, 0, 0, 0],
+      data: [complaints?.Staff || 0, 0, 0, 0],
     },
     {
       name: "Other complaint",
-      data: [complaints?.Other, 0, 0, 0],
+      data: [complaints?.Other || 0, 0, 0, 0],
     },
   ];
 
