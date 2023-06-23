@@ -1,5 +1,5 @@
 "use client";
-import { RootState } from "@/app/GlobalState/store";
+import { RootState } from "@/GlobalState/store";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { useSelector } from "react-redux";
@@ -31,7 +31,7 @@ const ApexChart = () => {
     },
   ];
 
-  const options:any = {
+  const options: any = {
     chart: {
       type: "bar",
       height: 250,

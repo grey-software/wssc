@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUp_validate } from "./Validation/SignUP.validate";
 import { UserSubmitForm } from "../../@types/signup.types";
 // import logo from "../../public/wsscmlogo.png";
-import logo from "../../public/govt_logo.png"
+import logo from "../../public/govt_logo.png";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
@@ -42,7 +42,7 @@ const SignUp = ({ setAuthState }: Prop) => {
 
   const onSubmit = async (data: UserSubmitForm) => {
     const { phone, username, password } = data;
-    console.log(data)
+    console.log(data);
     const res = await RegisterUser(
       { phone, name: username, password, wssc_code },
       dispatch
@@ -50,7 +50,6 @@ const SignUp = ({ setAuthState }: Prop) => {
     if (res?.status == 200) {
       setAuthState("Signin");
       reset();
-    
     }
   };
 
@@ -58,7 +57,7 @@ const SignUp = ({ setAuthState }: Prop) => {
   return (
     <>
       <div className="flex items-center justify-center  w-full px-0 md:px-20 lg:px-20 xl:px-20">
-        <div className="flex justify-center flex-col w-full ">
+        <div className="flex justify-center flex-col w-[85vw] sm:w-[80vw] md:w-full lg:w-full xl:w-full ">
           <div className="flex flex-col items-center justify-center gap-4">
             <Image src={logo} className="w-44" alt="Wsscm-logo" priority />
             <div className="title flex flex-col ">

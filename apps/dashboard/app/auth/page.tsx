@@ -5,12 +5,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { SignIn } from "../../app/GlobalState/ApiCalls/authApiCalls";
+import { SignIn } from "../../GlobalState/ApiCalls/authApiCalls";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/GlobalState/store";
+import { RootState } from "@/GlobalState/store";
 import { MdSupervisorAccount } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";
-import { SupervisorSignIn } from "../GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
+import { SupervisorSignIn } from "../../GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
 
 const Auth = () => {
   const [admin, setadmin] = useState(true);

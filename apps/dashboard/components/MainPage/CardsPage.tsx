@@ -1,17 +1,15 @@
-import React from 'react'
+import React from "react";
 import { FaUsers } from "react-icons/fa";
 import { FcManager } from "react-icons/fc";
 import { AiFillFileAdd } from "react-icons/ai";
-import ChartNeedle from './ChatNeedle';
-import CountUp from "react-countup"
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/GlobalState/store';
-
-
+import ChartNeedle from "./ChatNeedle";
+import CountUp from "react-countup";
+import { useSelector } from "react-redux";
+import { RootState } from "@/GlobalState/store";
 
 const CardsPage = () => {
-  const data: any = useSelector((state: RootState) => state.statistics.data)
-console.log(data)
+  const data: any = useSelector((state: RootState) => state.statistics.data);
+  console.log(data);
 
   return (
     <div className="cards W-full flex justify-between">
@@ -102,6 +100,6 @@ console.log(data)
       </div>
     </div>
   );
-}
+};
 
-export default CardsPage
+export default CardsPage;

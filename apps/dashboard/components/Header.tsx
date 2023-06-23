@@ -4,8 +4,8 @@ import { items } from "@/public/projectdata/asideData";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { SignOutUser } from "@/app/GlobalState/UserSlice";
-import { RootState } from "@/app/GlobalState/store";
+import { SignOutUser } from "@/GlobalState/UserSlice";
+import { RootState } from "@/GlobalState/store";
 import Image from "next/image";
 // import logo from "../public/wsscmlogo.png";
 
@@ -38,7 +38,13 @@ const Header = () => {
       {WSSC_CODE ? (
         <div className="w-full flex justify-between items-center px-8 py-2 bg-slate-50 top-0 fixed border-b shadow z-50">
           <div className="flex items-center gap-2 pl-7">
-            <Image src={logo} className="h-9 w-10" width={40} height={36} alt="logo" />
+            <Image
+              src={logo}
+              className="h-9 w-10"
+              width={40}
+              height={36}
+              alt="logo"
+            />
             <h1 className="text-xl font-bold text-primaryColor-500">
               {fullname}
             </h1>

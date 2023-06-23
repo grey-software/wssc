@@ -15,7 +15,9 @@ export default function Home() {
           <HomeScreen />
         </>
       ) : (
-        <Authentication />
+        <div className={`${UserInfo?.phone && "grid-cols-3"}`}>
+          <Authentication />
+        </div>
       )}
     </>
   );
