@@ -3,11 +3,11 @@ import Image from "next/image";
 import dummyPic from "../../public/wsscmlogo.png";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { SupervisorComplaints } from "../../app/GlobalState/Supervisor-ApiCalls/ApiCalls/supervisorComplaintsApiCalls";
+import { SupervisorComplaints } from "../../GlobalState/Supervisor-ApiCalls/ApiCalls/supervisorComplaintsApiCalls";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/GlobalState/store";
-import {FcEmptyFilter} from "react-icons/fc"
+import { RootState } from "@/GlobalState/store";
+import { FcEmptyFilter } from "react-icons/fc";
 export const FiltersBtns = [
   {
     name: "All",
@@ -183,8 +183,8 @@ const HomeScreen = () => {
           </div>
         ))
       ) : (
-          <div className="nocomplant w-full mt-36 h-screen flex flex-col  items-center">
-            <FcEmptyFilter className="text-6xl"/>
+        <div className="nocomplant w-full mt-36 h-screen flex flex-col  items-center">
+          <FcEmptyFilter className="text-6xl" />
           <h1 className="text-lg">No complaints found</h1>
         </div>
       )}

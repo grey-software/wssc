@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { AiFillHome } from "react-icons/ai";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { setActiveTab } from "@/app/GlobalState/TabSlice";
+import { setActiveTab } from "@/GlobalState/TabSlice";
 import { register_supervisor_validate } from "@/components/Auth/login.validate";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,8 +13,8 @@ import {
   DeleteSupervisor,
   FetchAllSupervisors,
   RegisterSupervisor,
-} from "../GlobalState/ApiCalls/supervisorApiCalls";
-import { RootState } from "../GlobalState/store";
+} from "@/GlobalState/ApiCalls/supervisorApiCalls";
+import { RootState } from "@/GlobalState/store";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
 type Props = {};
 

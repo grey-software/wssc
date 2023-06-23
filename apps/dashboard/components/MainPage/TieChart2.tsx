@@ -1,9 +1,8 @@
-'use client';
-import { RootState } from "@/app/GlobalState/store";
+"use client";
+import { RootState } from "@/GlobalState/store";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { useSelector } from "react-redux";
-
 
 type Props = {
   complaints: any;
@@ -14,14 +13,24 @@ const TieChart2 = () => {
     (state: RootState) => state.statistics.complaints
   );
 
-  const series = [complaints?.solidWaste, complaints?.waterSanitation, complaints?.Staff, complaints?.Other];
+  const series = [
+    complaints?.solidWaste,
+    complaints?.waterSanitation,
+    complaints?.Staff,
+    complaints?.Other,
+  ];
   const options: any = {
     chart: {
       width: 380,
       type: "pie",
     },
-    labels: ["Solid waste", "Water sanitation", "Staff related", "Other complaint"],
-    
+    labels: [
+      "Solid waste",
+      "Water sanitation",
+      "Staff related",
+      "Other complaint",
+    ],
+
     responsive: [
       {
         breakpoint: 480,
@@ -35,7 +44,6 @@ const TieChart2 = () => {
         },
       },
     ],
-  
   };
 
   return (

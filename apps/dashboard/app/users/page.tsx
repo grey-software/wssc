@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import { AiFillHome } from "react-icons/ai";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { BsCaretLeftSquareFill, BsCaretRightSquareFill } from "react-icons/bs";
-import { setActiveTab } from "@/app/GlobalState/TabSlice";
-import { FetchUsers } from "../GlobalState/ApiCalls/userApiCalls";
-import { RootState } from "../GlobalState/store";
+import { setActiveTab } from "@/GlobalState/TabSlice";
+import { FetchUsers } from "@/GlobalState/ApiCalls/userApiCalls";
+import { RootState } from "@/GlobalState/store";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
 import { MdClose } from "react-icons/md";
 

@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { AiFillHome } from "react-icons/ai";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { RootState } from "@/app/GlobalState/store";
-import { setActiveTab } from "@/app/GlobalState/TabSlice";
+import { RootState } from "@/GlobalState/store";
+import { setActiveTab } from "@/GlobalState/TabSlice";
 import SingleComplaintSupervisor from "@/components/complaint/SingleComplaintSupervisor";
-import { GetSingleSupervisor } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
-import { FetchSupervisorComplaints } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
+import { GetSingleSupervisor } from "@/GlobalState/ApiCalls/supervisorApiCalls";
+import { FetchSupervisorComplaints } from "@/GlobalState/ApiCalls/complaintApiCalls";
 import Ratings from "@/components/Rating";
 const page = ({ params }: any) => {
   const id = params.id;

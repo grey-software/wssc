@@ -5,12 +5,11 @@ import { useRouter } from "next/navigation";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { AiFillStar } from "react-icons/ai";
 import { AiFillHome } from "react-icons/ai";
-import { setActiveTab } from "@/app/GlobalState/TabSlice";
-import { FetchAllComplaints } from "../GlobalState/ApiCalls/complaintApiCalls";
-import { RootState } from "../GlobalState/store";
+import { setActiveTab } from "@/GlobalState/TabSlice";
+import { FetchAllComplaints } from "@/GlobalState/ApiCalls/complaintApiCalls";
+import { RootState } from "@/GlobalState/store";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
 import { MdClose } from "react-icons/md";
-import Rating from "react-rating";
 import Ratings from "@/components/Rating";
 
 function Feedback() {

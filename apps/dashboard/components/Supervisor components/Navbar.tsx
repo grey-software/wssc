@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Link from "next/link";
 import userdp from "../../public/user.jpg";
-import { SupervisorLogoutApi } from "@/app/GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
+import { SupervisorLogoutApi } from "@/GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -14,7 +14,7 @@ import { toast } from "react-hot-toast";
 //   IMessage,
 // } from "@novu/notification-center";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/GlobalState/store";
+import { RootState } from "@/GlobalState/store";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const Navbar = () => {
     (state: RootState) => state.suprvisor.SupervisorSiginData
   );
 
-  const WSSC:any = useSelector((state: RootState)=> state.suprvisor.WSSC)
+  const WSSC: any = useSelector((state: RootState) => state.suprvisor.WSSC);
   // function onNotificationClick(message: IMessage) {
   //   // your logic to handle the notification click
   //   if (message?.cta?.data?.url) {
@@ -61,7 +61,9 @@ const Navbar = () => {
           <Link href="/supervisor">
             <Image src={WSSC?.logo} height={40} width={40} alt="wssc_logo" />
           </Link>
-          <h2 className="text-lg text-primaryColor-500 font-bold">{ WSSC?.shortnamei}</h2>
+          <h2 className="text-lg text-primaryColor-500 font-bold">
+            {WSSC?.shortnamei}
+          </h2>
         </div>
         {/* notification icon and batch of notify */}
         <div className="flex items-center justify-center gap-4">

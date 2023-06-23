@@ -3,12 +3,12 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
-import { RootState } from "../GlobalState/store";
+import { RootState } from "@/GlobalState/store";
 import HomeScreen from "@/components/Supervisor components/Homepage";
 
 const Page = () => {
   const navigate = useRouter();
-  const { phone }:any = useSelector(
+  const { phone }: any = useSelector(
     (state: RootState) => state.suprvisor.SupervisorSiginData
   );
   const { WSSC_CODE }: any = useSelector(

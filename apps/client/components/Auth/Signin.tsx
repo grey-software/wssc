@@ -42,7 +42,7 @@ const Signin = ({ setAuthState }: Prop) => {
   return (
     <>
       <div className="flex items-center justify-center w-full px-0 md:px-20 lg:px-20 xl:px-20">
-        <div className="flex justify-center flex-col">
+        <div className="flex justify-center flex-col w-[85vw] sm:w-[80vw] md:w-full lg:w-full xl:w-full">
           <div className="flex flex-col items-center justify-center gap-4">
             <Image src={logo} className="w-40" alt="Wsscm-logo" priority />
             <div className="title flex flex-col gap-1">

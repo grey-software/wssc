@@ -1,31 +1,30 @@
 "use client";
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { HiArrowLeft } from "react-icons/hi";
-import Avatar from "../../../../public/user.jpg"
+import Avatar from "../../../../public/user.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
 import { BiEdit } from "react-icons/bi";
 import { FaCamera } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { UpdateSupervisor } from "@/app/GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
-import { RootState } from "@/app/GlobalState/store";
+import { UpdateSupervisor } from "@/GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
+import { RootState } from "@/GlobalState/store";
 import { useRouter } from "next/navigation";
 const ProfileCard = () => {
-
-    const imageRef = useRef<HTMLInputElement>(null);
-    const [ProfilePhoto, setProfilePhoto] = useState();
-    const [loading, setloading] = useState(false);
-    // getting supervisor profile data
-     const { _id, profile_image, name, phone }: any = useSelector(
-       (state: RootState) => state.suprvisor.SupervisorSiginData
-     );
-    const dispatch = useDispatch();
-    const navigate = useRouter();
-// ------------ back button --------
-    const BackButton = () => {
-        navigate.back();
-    }
+  const imageRef = useRef<HTMLInputElement>(null);
+  const [ProfilePhoto, setProfilePhoto] = useState();
+  const [loading, setloading] = useState(false);
+  // getting supervisor profile data
+  const { _id, profile_image, name, phone }: any = useSelector(
+    (state: RootState) => state.suprvisor.SupervisorSiginData
+  );
+  const dispatch = useDispatch();
+  const navigate = useRouter();
+  // ------------ back button --------
+  const BackButton = () => {
+    navigate.back();
+  };
   // upload profile pic
   const UpdatePhoto = async (e: any) => {
     setloading(true);
@@ -50,23 +49,21 @@ const ProfileCard = () => {
         setProfilePhoto(photo.secure_url);
         const updatedpic: any = {
           profile_image: photo.secure_url,
-          };
-       // calling updateProfile apiCall to update userInfo
+        };
+        // calling updateProfile apiCall to update userInfo
         await UpdateSupervisor(dispatch, {
-           updatedpic,
+          updatedpic,
           suprvisorId: _id,
         });
-          
-          setloading(false);
-        
+
+        setloading(false);
       } catch (error) {
-          console.log(error);
-          setloading(false);
-          toast.error("something went wrong", {
-              position: "top-right",
-              duration: 3000,
-             
-          })
+        console.log(error);
+        setloading(false);
+        toast.error("something went wrong", {
+          position: "top-right",
+          duration: 3000,
+        });
       }
     }
   };
@@ -79,7 +76,10 @@ const ProfileCard = () => {
           href="/supervisor"
           className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all cursor-pointer"
         >
-          <HiArrowLeft className="text-[28px] text-primaryColor-500" onClick={BackButton} />
+          <HiArrowLeft
+            className="text-[28px] text-primaryColor-500"
+            onClick={BackButton}
+          />
         </Link>
         <h3 className="text-lg -ml-3 font-bold text-primaryColor-500">
           <span className=" text-headingColor-400 opacity-50 font-black">
@@ -133,9 +133,7 @@ const ProfileCard = () => {
             <FaCamera onClick={() => imageRef.current!.click()} />
           </span>
         )}
-        <h1 className="text-xl text-headingColor-400 font-bold">
-          {name}
-        </h1>
+        <h1 className="text-xl text-headingColor-400 font-bold">{name}</h1>
       </div>
       {/* Name */}
       <div className="flex flex-col gap-1 z-0 mt-10 mb-6 ml-8 mr-8">
@@ -159,7 +157,7 @@ const ProfileCard = () => {
           title="Phone Number can not be updated"
           className="flex items-center justify-between font-semibold"
         >
-                  <h2 className="text-lg text-gray-500">{phone}</h2>
+          <h2 className="text-lg text-gray-500">{phone}</h2>
           <BiEdit className="text-gray-400 text-2xl cursor-not-allowed" />
         </div>
       </div>

@@ -5,17 +5,17 @@ import { useRouter } from "next/navigation";
 import { AiFillStar } from "react-icons/ai";
 import { AiFillHome } from "react-icons/ai";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { RootState } from "@/app/GlobalState/store";
-import { setActiveTab } from "@/app/GlobalState/TabSlice";
+import { RootState } from "@/GlobalState/store";
+import { setActiveTab } from "@/GlobalState/TabSlice";
 import Image from "next/image";
-import { FetchAllSupervisors } from "@/app/GlobalState/ApiCalls/supervisorApiCalls";
+import { FetchAllSupervisors } from "@/GlobalState/ApiCalls/supervisorApiCalls";
 import {
   AssignComplaint,
   AddStatement,
-} from "@/app/GlobalState/ApiCalls/complaintApiCalls";
+} from "@/GlobalState/ApiCalls/complaintApiCalls";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
-import { API } from "@/app/GlobalState/ApiCalls/complaintApiCalls";
-import { config } from "@/app/GlobalState/config";
+import { API } from "@/GlobalState/ApiCalls/complaintApiCalls";
+import { config } from "@/GlobalState/config";
 import { toast } from "react-hot-toast";
 import { complaintTypes } from "@/@types/complaintTypes.types";
 

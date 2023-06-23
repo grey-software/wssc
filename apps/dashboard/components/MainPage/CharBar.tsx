@@ -1,4 +1,4 @@
-import { RootState } from "@/app/GlobalState/store";
+import { RootState } from "@/GlobalState/store";
 import React from "react";
 import { useSelector } from "react-redux";
 import {
@@ -12,10 +12,7 @@ import {
   Legend,
 } from "recharts";
 
-
-const colors = ["#F15025","#2EAB43", "#2E86AB", "#F2AD35" ];
-
-
+const colors = ["#F15025", "#2EAB43", "#2E86AB", "#F2AD35"];
 
 // const getIntroOfPage = (label: any, payload: any): React.JSX.Element => {
 //   if (label === "Closed") {
@@ -65,9 +62,8 @@ const colors = ["#F15025","#2EAB43", "#2E86AB", "#F2AD35" ];
 //          </p>
 //        </div>
 //      );
-      
+
 //   }
-  
 
 //   return <></>;
 // };
@@ -85,29 +81,26 @@ const colors = ["#F15025","#2EAB43", "#2E86AB", "#F2AD35" ];
 // };
 
 const CustomChart = () => {
-
-  const complaintStatus: any = useSelector((state: RootState) => state.statistics.complaintsStatus);
+  const complaintStatus: any = useSelector(
+    (state: RootState) => state.statistics.complaintsStatus
+  );
   const data = [
     {
       name: "Closed",
       uv: complaintStatus?.Closed,
-      
     },
     {
       name: "Resolved",
       uv: complaintStatus?.Completed,
-     
     },
     {
       name: "In progress",
       uv: complaintStatus?.InProgress,
-     
     },
 
     {
       name: "Pending",
       uv: complaintStatus?.Initiated,
-      
     },
   ];
 

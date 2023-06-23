@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 // import { items } from "@/public/projectdata/asideData";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setActiveTab } from "@/app/GlobalState/TabSlice";
-import { RootState } from "@/app/GlobalState/store";
+import { setActiveTab } from "@/GlobalState/TabSlice";
+import { RootState } from "@/GlobalState/store";
 // icons
 import { FaUserCircle, FaUsers } from "react-icons/fa";
 import { MdSpaceDashboard, MdFeedback } from "react-icons/md";
@@ -14,7 +14,7 @@ import { HiUsers } from "react-icons/hi";
 import Link from "next/link";
 import { BiLogOutCircle } from "react-icons/bi";
 import { toast } from "react-hot-toast";
-import { LOGOUT } from "@/app/GlobalState/ApiCalls/authApiCalls";
+import { LOGOUT } from "@/GlobalState/ApiCalls/authApiCalls";
 
 function Aside() {
   const navigate = useRouter();

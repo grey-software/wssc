@@ -1,12 +1,12 @@
 "use client";
 import { useSelector } from "react-redux";
-import { RootState } from "./GlobalState/store";
+import { RootState } from "@/GlobalState/store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import CardsPage from "@/components/MainPage/CardsPage";
 import ChartSection from "@/components/MainPage/ChartSection";
-import { Statistics } from "./GlobalState/ApiCalls/WSSC_API";
+import { Statistics } from "@/GlobalState/ApiCalls/WSSC_API";
 import { toast } from "react-hot-toast";
 
 export default function Home() {
