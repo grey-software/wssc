@@ -41,7 +41,7 @@ export const RegisterUser = async (
     );
     console.log(res)
     dispatch(SignUpSuccess(res.data));
-    return res.status;
+    return res;
   } catch (err: any) {
     if (err.response) {
       if (err.response.status == 400) {

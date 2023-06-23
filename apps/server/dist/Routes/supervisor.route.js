@@ -2,10 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const supervisor_controller_1 = require("../controller/supervisor.controller");
+const verifyToken_1 = require("../middleware/verifyToken");
 const Supervisor = (0, express_1.Router)();
-Supervisor.route("/register").post(supervisor_controller_1.RegisterSupervisor);
+Supervisor.route("/register").post(verifyToken_1.verifyAdmin, supervisor_controller_1.RegisterSupervisor);
 Supervisor.route("/signin").post(supervisor_controller_1.SignInSupervisor);
-Supervisor.route("/").get(supervisor_controller_1.GetAllSupervisors);
-Supervisor.route("/:id").get(supervisor_controller_1.GetSupervisor);
+Supervisor.route("/").get(verifyToken_1.verifyAdmin, supervisor_controller_1.GetAllSupervisors);
+Supervisor.route("/:id")
+    .get(verifyToken_1.verifySupervisor, supervisor_controller_1.GetSupervisor)
+    .patch(verifyToken_1.verifySupervisor, supervisor_controller_1.UpdateSupervisor)
+    .delete(verifyToken_1.verifyAdmin, supervisor_controller_1.DeleteSupervisor);
+Supervisor.post("/logout", supervisor_controller_1.Logout);
+// below is the general route defined to fetch all the record such as: no of users, complaints, supervisors along with no of complaint types registered
 exports.default = Supervisor;
 //# sourceMappingURL=supervisor.route.js.map

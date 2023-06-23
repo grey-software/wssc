@@ -29,16 +29,21 @@ const citizen_schema_1 = require("../Models/citizen.schema");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const Auth_Validation_1 = require("../Schema_validation/Auth_Validation");
 const dotenv_1 = __importDefault(require("dotenv"));
+const node_1 = require("@novu/node");
+const WsscsAdmin_schema_1 = require("../Models/WsscsAdmin.schema");
 dotenv_1.default.config();
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const SECRET_KEY = process.env.JWT_KEY;
+// eslint-disable-next-line turbo/no-undeclared-env-vars
+const novu = new node_1.Novu(`${process.env.NOVU_KEY}`);
 const SignUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     // first we need to validate the data before saving it in DB
     const { error } = (0, Auth_Validation_1.SignUp_validate)(req.body);
     // below statement will call if there is data not valid
     if (error)
         return res.send(error.details[0].message);
-    const { name, phone, password } = req.body;
+    console.log(req.body);
+    const { name, phone, password, WSSC_CODE } = req.body;
     // encrypt password by using bcrypt algorithm
     const salt = bcryptjs_1.default.genSaltSync(10);
     const hash = bcryptjs_1.default.hashSync(password, salt);
@@ -49,6 +54,7 @@ const SignUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             const createUser = new citizen_schema_1.citizenModel({
                 name: name,
                 phone: phone,
+                WSSC_CODE,
                 password: hash,
             });
             yield createUser.save();
@@ -91,15 +97,27 @@ const SignIn = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
                 success: false,
                 message: "Password is incorrect",
             });
+        // Getting WSSC data which is associated with citizen
+        const WSSC = yield WsscsAdmin_schema_1.AdminsModel.findOne({ WSSC_CODE: User === null || User === void 0 ? void 0 : User.WSSC_CODE });
+        const WSSC_DATA = {
+            fullname: WSSC.fullname,
+            shortname: WSSC.shortname,
+            logo: WSSC.logo
+        };
         // if the user credential is okay then we assign/send jwt token for authentication and authorization
-        const token = jsonwebtoken_1.default.sign({ id: User._id, name: User.name, phone: User.phone }, SECRET_KEY);
+        const token = jsonwebtoken_1.default.sign({
+            id: User._id,
+            name: User.name,
+            phone: User.phone,
+            WSSC_CODE: User.WSSC_CODE,
+        }, SECRET_KEY);
         const _a = User._doc, { password } = _a, detail = __rest(_a, ["password"]);
         res
             .cookie("access_token", token, {
             httpOnly: true,
         })
             .status(200)
-            .json(detail);
+            .json({ success: true, status: 200, user: detail, WSSC: WSSC_DATA });
     }
     catch (error) {
         next(error);

@@ -23,6 +23,7 @@ const SignUp_validate = (data) => {
             .max(15)
             .required(),
         profile_image: joi_1.default.string(),
+        WSSC_CODE: joi_1.default.string(),
     });
     const valid = schema.validate(data);
     return valid;

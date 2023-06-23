@@ -6,9 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminsModel = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const AdminSchema = new mongoose_1.default.Schema({
-    name: {
+    fullname: {
         type: String,
         required: [true, "please provide your organization name"]
+    },
+    shortname: {
+        type: String,
+        required: [true, "please provide short name"]
+    },
+    logo: {
+        type: String,
+        requird: [true, "provide logo link here"]
     },
     WSSC_CODE: {
         type: String,

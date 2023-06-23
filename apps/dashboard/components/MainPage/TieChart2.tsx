@@ -14,10 +14,10 @@ const TieChart2 = () => {
   );
 
   const series = [
-    complaints?.solidWaste,
-    complaints?.waterSanitation,
-    complaints?.Staff,
-    complaints?.Other,
+    complaints?.solidWaste || 0,
+    complaints?.waterSanitation || 0,
+    complaints?.Staff || 0,
+    complaints?.Other || 0,
   ];
   const options: any = {
     chart: {

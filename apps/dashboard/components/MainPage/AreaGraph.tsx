@@ -20,7 +20,7 @@ const AreaGraph = () => {
   const data = [
     {
       name: "June 2023",
-      complaints: complaints,
+      complaints: complaints || 0,
     },
     {
       name: "July 2023",

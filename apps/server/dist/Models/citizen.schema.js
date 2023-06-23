@@ -22,9 +22,9 @@ const citizenSchema = new mongoose_1.default.Schema({
         type: String,
         validate: [validator_1.default.isEmail, "Please provide a valid email"],
     },
+    WSSC_CODE: { type: String, required: [true, "WSSC code is required"] },
     address: { type: String },
     profile_image: { type: String },
-    isAdmin: { type: Boolean, default: false },
 }, { timestamps: true });
 exports.citizenModel = mongoose_1.default.model("citizens", citizenSchema);
 //# sourceMappingURL=citizen.schema.js.map

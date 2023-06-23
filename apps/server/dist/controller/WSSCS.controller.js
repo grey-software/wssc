@@ -23,17 +23,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdminLogout = exports.SignIn = exports.Register = void 0;
+exports.SupervisorUsersShifting = exports.UpdateAllComplaints = exports.Statistics = exports.AdminLogout = exports.SignIn = exports.Register = void 0;
 const WsscsAdmin_schema_1 = require("../Models/WsscsAdmin.schema");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const citizen_schema_1 = require("../Models/citizen.schema");
+const supervisor_schema_1 = require("../Models/supervisor.schema");
+const complaint_schema_1 = require("../Models/complaint.schema");
 dotenv_1.default.config();
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const SECRET_KEY = process.env.JWT_KEY;
 const Register = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
-    const { name, WSSC_CODE, password, isAdmin } = req.body;
+    const { fullname, shortname, logo, WSSC_CODE, password, isAdmin } = req.body;
     // checking whether there is same wssc organization registered or not
     // encrypt password by using bcrypt algorithm
     const salt = bcryptjs_1.default.genSaltSync(10);
@@ -43,7 +46,7 @@ const Register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
         const admin = yield WsscsAdmin_schema_1.AdminsModel.findOne({ WSSC_CODE: req.body.WSSC_CODE });
         console.log(admin);
         if (!admin) {
-            const RegisterWSSC = new WsscsAdmin_schema_1.AdminsModel({ name: name, WSSC_CODE: WSSC_CODE, isAdmin: isAdmin, password: hashPassword });
+            const RegisterWSSC = new WsscsAdmin_schema_1.AdminsModel({ fullname, shortname, logo, WSSC_CODE: WSSC_CODE, isAdmin: isAdmin, password: hashPassword });
             yield RegisterWSSC.save();
             const _a = RegisterWSSC._doc, { password } = _a, detail = __rest(_a, ["password"]);
             res.status(200).json(Object.assign({ success: true, status: 200 }, detail));
@@ -65,6 +68,7 @@ const SignIn = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
     // const { error } = SignIn_validate(req.body);
     // if (error) return res.send(error.details[0].message);
     try {
+        console.log("inside admin page");
         const admin = yield WsscsAdmin_schema_1.AdminsModel.findOne({ WSSC_CODE: req.body.WSSC_CODE });
         if (!admin)
             return res.status(404).json({
@@ -82,7 +86,7 @@ const SignIn = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
                 message: "Password is incorrect",
             });
         // if the user credential is okay then we assign/send jwt token for authentication and authorization
-        const token = jsonwebtoken_1.default.sign({ id: admin._id, name: admin.name, isAdmin: admin.isAdmin, orgCode: admin.WSSC_CODE }, SECRET_KEY);
+        const token = jsonwebtoken_1.default.sign({ id: admin._id, name: admin.shortname, isAdmin: admin.isAdmin, WSSC_CODE: admin.WSSC_CODE }, SECRET_KEY);
         const _b = admin._doc, { password } = _b, detail = __rest(_b, ["password"]);
         res.cookie("access_token", token, {
             httpOnly: true,
@@ -91,7 +95,7 @@ const SignIn = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             .json(detail);
     }
     catch (error) {
-        res.status(500).json({ success: false, status: 500, errorMessage: error });
+        res.status(500).json({ success: false, status: 500, error });
     }
 });
 exports.SignIn = SignIn;
@@ -118,4 +122,81 @@ const AdminLogout = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.AdminLogout = AdminLogout;
+// below controller is used to get the overall statistics on the basis of request/logged WSSC organization
+const Statistics = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield citizen_schema_1.citizenModel.find({ WSSC_CODE: req.user.WSSC_CODE }); // retrieve no of registered users
+        const supervisors = yield supervisor_schema_1.SupervisorModel.find({ WSSC_CODE: req.user.WSSC_CODE }); // retrieve no of superisors registered
+        const complaints = yield complaint_schema_1.ComplaintModel.find({ WSSC_CODE: req.user.WSSC_CODE }); // retrieve no of registered complaints
+        // find no of type of complaints registered
+        const solidWasteComplaints = complaints.filter(complaint => complaint.complaintType === 'Solid waste').length;
+        const waterSupplyComplaints = complaints.filter(complaint => complaint.complaintType === 'Water Supply').length;
+        const wasteWaterComplaints = complaints.filter(complaint => complaint.complaintType === 'Waste water').length;
+        const staffComplaints = complaints.filter(complaint => complaint.complaintType === 'Staff').length;
+        const otherComplaints = complaints.filter(complaint => complaint.complaintType === 'Other').length;
+        const waterSanitation = waterSupplyComplaints + wasteWaterComplaints;
+        ;
+        // -------- getting current status of each complaints --------------------
+        const lastStatusArray = complaints.map(complaint => {
+            const lastStatusIndex = complaint.status.length - 1;
+            const lastStatus = complaint.status[lastStatusIndex];
+            return lastStatus;
+        });
+        // ----- below filtering is used to get the current status of each complaint ----------
+        const initiatedStatus = lastStatusArray.filter(status => status.state === 'Initiated');
+        const inProgressStatus = lastStatusArray.filter(status => status.state === 'InProgress');
+        const completedStatus = lastStatusArray.filter(status => status.state === 'Completed');
+        const closedStatus = lastStatusArray.filter(status => status.state === 'Closed');
+        res.status(200).json({
+            status: 200,
+            success: true,
+            record: {
+                users: users.length,
+                supervisors: supervisors.length,
+                complaints: complaints.length,
+            },
+            complaints: {
+                solidWaste: solidWasteComplaints,
+                waterSanitation: waterSanitation,
+                Staff: staffComplaints,
+                Other: otherComplaints
+            },
+            complaintsStatus: {
+                Initiated: initiatedStatus.length,
+                InProgress: inProgressStatus.length,
+                Completed: completedStatus.length,
+                Closed: closedStatus.length,
+            }
+        });
+    }
+    catch (error) {
+        res.status(404).json({ status: 404, success: false, message: error });
+    }
+});
+exports.Statistics = Statistics;
+// update all complaints controller
+const UpdateAllComplaints = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // Update all complaints matching the query
+        const updateResult = yield complaint_schema_1.ComplaintModel.updateMany({}, { $set: { WSSC_CODE: 'wsscm23200' } });
+        res.status(200).json({ message: 'Complaints updated successfully', updatedCount: updateResult.nModified });
+    }
+    catch (error) {
+        res.status(500).json({ error: 'An error occurred while updating complaints' });
+    }
+});
+exports.UpdateAllComplaints = UpdateAllComplaints;
+// shift all supervisors and users to wsscm
+const SupervisorUsersShifting = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // Update all complaints matching the query
+        const updateSupervisors = yield supervisor_schema_1.SupervisorModel.updateMany({}, { $set: { WSSC_CODE: 'wsscm23200' } });
+        const updateUsers = yield citizen_schema_1.citizenModel.updateMany({}, { $set: { WSSC_CODE: 'wsscm23200' } });
+        res.status(200).json({ message: 'Shiftted all users and supervisors records successfully', supervisors: updateSupervisors.length, users: updateUsers.length });
+    }
+    catch (error) {
+        res.status(500).json({ error: 'An error occurred while updating complaints' });
+    }
+});
+exports.SupervisorUsersShifting = SupervisorUsersShifting;
 //# sourceMappingURL=WSSCS.controller.js.map
