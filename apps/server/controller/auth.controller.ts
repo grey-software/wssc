@@ -105,6 +105,7 @@ export const SignIn = async (
     
     // Getting WSSC data which is associated with citizen
     const WSSC: any = await AdminsModel.findOne({ WSSC_CODE: User?.WSSC_CODE });
+    console.log(WSSC)
     const WSSC_DATA = {
       fullname: WSSC.fullname,
       shortname: WSSC.shortname,

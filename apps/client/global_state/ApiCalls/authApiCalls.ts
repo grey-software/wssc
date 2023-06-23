@@ -18,11 +18,18 @@ import {
   DeleteAccountSuccess,
   DeleteAccountError
 } from "../ReduxSlices/UserSlice";
-import { config } from "./config";
+// import { config } from "./config";
 
-const API = axios.create({ baseURL: "http://localhost:7000" });
-// const API = axios.create({ baseURL: "https://fyp-wssc-backend-production.up.railway.app" });
-
+const token: any = localStorage.getItem("token");
+const config = {
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+};
+// const API = axios.create({ baseURL: "http://localhost:7000" });
+const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
+console.log(`token at api call side: ${config}`)
 
 // RegisterUser ApiCall
 export const RegisterUser = async (
