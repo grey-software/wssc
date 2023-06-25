@@ -1,3 +1,4 @@
+
 import axios, { AxiosError } from "axios";
 import {
   SignInStart,
@@ -20,16 +21,19 @@ import {
 } from "../ReduxSlices/UserSlice";
 // import { config } from "./config";
 
-const token: any = localStorage.getItem("token");
-const config = {
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  },
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+  const token: any = localStorage.getItem("token");
+  var config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
 };
 // const API = axios.create({ baseURL: "http://localhost:7000" });
 const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
-console.log(`token at api call side: ${config}`)
 
 // RegisterUser ApiCall
 export const RegisterUser = async (
