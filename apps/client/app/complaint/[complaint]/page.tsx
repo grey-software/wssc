@@ -299,8 +299,13 @@ const Page: React.FC = ({ params }: any) => {
               ref={imageRef}
               onChange={UploadAttachments}
               type="file"
-              capture="environment"
               name="image"
+              capture="environment"
+              onClick={(e) => {
+                const target = e.target as HTMLInputElement;
+                target.value = ""; // Reset the selected file
+                target.removeAttribute("capture"); // Remove the capture attribute to allow gallery selection
+              }}
             />
           </div>
 
@@ -310,9 +315,13 @@ const Page: React.FC = ({ params }: any) => {
               ref={videoRef}
               onChange={UploadAttachments}
               type="file"
-              capture="environment"
-              // onDurationChange={CheckingDuration()}
               name="video"
+              capture="environment"
+              onClick={(e) => {
+                const target = e.target as HTMLInputElement;
+                target.value = ""; // Reset the selected file
+                target.removeAttribute("capture"); // Remove the capture attribute to allow gallery selection
+              }}
             />
           </div>
           {/* ---------------------- END input sectons ------------------ */}
