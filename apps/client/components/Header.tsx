@@ -7,31 +7,31 @@ import userdp from "../public/user.jpg";
 import type { RootState } from "../global_state/store";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-// import {
-//   NovuProvider,
-//   PopoverNotificationCenter,
-//   NotificationBell,
-//   IMessage,
-// } from "@novu/notification-center";
+import {
+  NovuProvider,
+  PopoverNotificationCenter,
+  NotificationBell,
+  IMessage,
+} from "@novu/notification-center";
 
 const Header = () => {
   const navigate = useRouter();
   const { UserInfo }: any = useSelector((state: RootState) => state.users);
-  // const notifications = useSelector(
-  //   (state: RootState) => state.complaints.notifications
-  // );
+  const notifications = useSelector(
+    (state: RootState) => state.complaints.notifications
+  );
   // getting WSSC Info
   const WSSC: any = useSelector((state: RootState) => state.users.WSSC);
 
   const [menuActive, setMenuActive] = useState(false);
   const [windowActive, setWindowActive] = useState(false);
 
-  // function onNotificationClick(message: IMessage) {
-  //   // your logic to handle the notification click
-  //   if (message?.cta?.data?.url) {
-  //     window.location.href = message.cta.data.url;
-  //   }
-  // }
+  function onNotificationClick(message: IMessage) {
+    // your logic to handle the notification click
+    if (message?.cta?.data?.url) {
+      window.location.href = message.cta.data.url;
+    }
+  }
 
   return (
     <>
@@ -49,7 +49,7 @@ const Header = () => {
               </h2>
             </div>
             <div className="flex items-center justify-center gap-4">
-              {/* <NovuProvider
+              <NovuProvider
                 subscriberId={UserInfo._id}
                 applicationIdentifier={"yhet1-MoYIOR"}
               >
@@ -61,7 +61,7 @@ const Header = () => {
                     <NotificationBell unseenCount={unseenCount} />
                   )}
                 </PopoverNotificationCenter>
-              </NovuProvider> */}
+              </NovuProvider>
               {/* show for mobile screen */}
               <Image
                 src={UserInfo?.profile_image ? UserInfo?.profile_image : userdp}
