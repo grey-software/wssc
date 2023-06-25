@@ -55,10 +55,10 @@ export const RegisterUser = async (
   } catch (err: any) {
     if (err.response) {
       if (err.response.status == 400) {
-        dispatch(SignUpError(err.response.data));
+        dispatch(SignUpError("This phone number has already registered!"));
         return err.response.status;
       } else if (err.response.status == 500) {
-        dispatch(SignUpError(err.response.statusText));
+        dispatch(SignUpError("Server error, please try again"));
         return err.response.status;
       }
     }
