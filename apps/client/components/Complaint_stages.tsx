@@ -6,14 +6,17 @@ import {
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import FeedbackRating from "@/components/FeedbackRating";
+import Ratings from "./Rating";
 type Props = {
   stages: any;
   complaintId: any;
+  userfeedback: any;
 };
 
-function Complaint_stages({ stages, complaintId }: Props) {
+function Complaint_stages({ stages, complaintId, userfeedback }: Props) {
   const [feedback, setfeedback] = useState(false);
   console.log(stages);
+  const rates: number[] = [1, 2, 3, 4, 5];
 
   // current time for feedback
   const date = new Date();
@@ -71,7 +74,10 @@ function Complaint_stages({ stages, complaintId }: Props) {
                   </div>
                   <div className="flex flex-col mt-6">
                     <span className="text-gray-500">Comments:</span>
-                    <span>Your complaint is {stage.state}</span>
+                    <span>
+                      Your complaint is{" "}
+                      {stage.state == "Completed" ? "Resolved" : stage.state}
+                    </span>
                   </div>
                 </div>
 
@@ -115,15 +121,27 @@ function Complaint_stages({ stages, complaintId }: Props) {
                       </h3>
                     </div>
                     <div className="flex flex-col mt-4">
-                      <span className="text-gray-500 mb-1">
-                        Are you satisfied with our service:
-                      </span>
-                      <button
-                        onClick={() => setfeedback(!feedback)}
-                        className="w-1/2 py-1 px-2 bg-[#1A5980] text-white text-sm rounded-lg shadow-md"
-                      >
-                        Feedback
-                      </button>
+                      {stages[stages.length - 1].state == "Closed" ? (
+                        <span className="text-gray-500 mb-1">
+                          Your Feedback:
+                        </span>
+                      ) : (
+                        <span className="text-gray-500 mb-1">
+                          Are you satisfied with our service:
+                        </span>
+                      )}
+                      {stages[stages.length - 1].state == "Closed" ? (
+                        <>
+                          <Ratings totalRating={userfeedback.rating} />
+                        </>
+                      ) : (
+                        <button
+                          onClick={() => setfeedback(!feedback)}
+                          className="w-1/2 py-1 px-2 bg-[#1A5980] text-white text-sm rounded-lg shadow-md"
+                        >
+                          Feedback
+                        </button>
+                      )}
                     </div>
                   </div>
 

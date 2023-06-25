@@ -10,11 +10,11 @@ import { TbFilePlus } from "react-icons/tb";
 import { HiArrowLeft } from "react-icons/hi";
 import { BiVideo } from "react-icons/bi";
 import { useRouter } from "next/navigation";
-import Loading from "@/app/loading";
 import { CreateComplaint } from "@/global_state/ApiCalls/complaintApiCalls";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "@/global_state/store";
+import { Oval } from "react-loader-spinner";
 
 const Page: React.FC = ({ params }: any) => {
   const complaintType = decodeURI(params.complaint); // getting complaint type through params and then decoded to show properly
@@ -43,6 +43,8 @@ const Page: React.FC = ({ params }: any) => {
   let [ImageUrl, setImageUrl] = useState<string>();
   let [VideoUrl, setVideoUrl] = useState<string>();
   const [load, setload] = useState(false);
+  const [imgload, setimgload] = useState(false);
+  const [vidload, setvidload] = useState(false);
 
   // Submit Form
   const onSubmit = async (data: ComplainForm) => {
@@ -94,6 +96,7 @@ const Page: React.FC = ({ params }: any) => {
       try {
         let response;
         if (event.target.name === "image") {
+          setimgload(true);
           response = await fetch(
             "https://api.cloudinary.com/v1_1/dgpwe8xy6/image/upload",
             {
@@ -105,7 +108,9 @@ const Page: React.FC = ({ params }: any) => {
           console.log(imageData);
           setImage(fileUrl);
           setImageUrl(imageData.secure_url);
+          setimgload(false);
         } else {
+          setvidload(true);
           response = await fetch(
             "https://api.cloudinary.com/v1_1/dgpwe8xy6/video/upload",
             {
@@ -117,6 +122,7 @@ const Page: React.FC = ({ params }: any) => {
           console.log(videoData);
           setvideo(fileUrl);
           setVideoUrl(videoData.secure_url);
+          setvidload(false);
         }
       } catch (err) {
         console.log(err);
@@ -194,27 +200,67 @@ const Page: React.FC = ({ params }: any) => {
             className={`flex gap-3 w-full h-[6rem] p-[3px] overflow-hidden border-2 rounded-lg border-gray-300 outline-none
           `}
           >
-            {image && (
-              <div className="w-[120px] h-[120px] object-cover">
-                <Image
-                  className="rounded-md"
-                  src={image}
-                  width={100}
-                  height={100}
-                  alt="previewImage"
-                />
-              </div>
-            )}
+            <div className="w-[120px] h-[120px] object-cover">
+              {!imgload ? (
+                <>
+                  {image && (
+                    <Image
+                      className="rounded-md"
+                      src={image}
+                      width={100}
+                      height={100}
+                      alt="previewImage"
+                    />
+                  )}
+                </>
+              ) : (
+                <div className="flex flex-col w-full items-center justify-center">
+                  <Oval
+                    height={50}
+                    width={50}
+                    color="#4fa94d"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    ariaLabel="oval-loading"
+                    secondaryColor="#4fa94d"
+                    strokeWidth={2}
+                    strokeWidthSecondary={2}
+                  />
+                  <p className="text-sm">Image Uploading</p>
+                </div>
+              )}
+            </div>
 
-            {video && (
-              <div className="w-[120px] h-[120px] object-cover">
-                <video
-                  src={video}
-                  controls
-                  style={{ width: "120px", height: "120px" }}
-                />
-              </div>
-            )}
+            <div className="w-[120px] h-[120px] object-cover">
+              {!vidload ? (
+                <>
+                  {video && (
+                    <video
+                      src={video}
+                      controls
+                      style={{ width: "120px", height: "120px" }}
+                    />
+                  )}
+                </>
+              ) : (
+                <div className="flex flex-col w-full items-center justify-center">
+                  <Oval
+                    height={50}
+                    width={50}
+                    color="#4fa94d"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    ariaLabel="oval-loading"
+                    secondaryColor="#4fa94d"
+                    strokeWidth={2}
+                    strokeWidthSecondary={2}
+                  />
+                  <p className="text-sm">Video Uploading</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

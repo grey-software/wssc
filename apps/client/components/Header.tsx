@@ -71,7 +71,7 @@ const Header = () => {
                 alt="profileIcon"
                 onClick={() => setMenuActive(!menuActive)}
               />
-              {/* show for tablets and desktops */}
+              {/* show for tablets and desktops  */}
               <Image
                 src={UserInfo?.profile_image ? UserInfo?.profile_image : userdp}
                 width={32}

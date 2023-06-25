@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { HiArrowLeft } from "react-icons/hi";
 import user from "../../../public/user.jpg";
 import Image from "next/image";
@@ -176,7 +176,10 @@ const ProfileCard = () => {
             <h2 className="text-lg text-gray-500">
               0{UserInfo?.phone || "3319395175"}
             </h2>
-            <BiEdit className="text-gray-500 text-2xl cursor-not-allowed" />
+            <BiEdit
+              className="text-gray-500 text-2xl cursor-not-allowed"
+              title="Phone Number cannot be changed"
+            />
           </div>
         </div>
         {/* Email */}
