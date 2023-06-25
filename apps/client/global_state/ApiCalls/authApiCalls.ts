@@ -27,7 +27,7 @@ if (typeof window !== 'undefined') {
   var config = {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`, 
     },
   }
 
@@ -99,6 +99,7 @@ export const UpdateUserProfile = async (dispatch: any, updatedData: any, userId:
   try {
     const res = await API.patch(`api/v1/citizens/${userId}`, updatedData , config);
     dispatch(UpdateUserInfoSuccess(res.data.updateInfo));
+    console.log(res);
     return res.data;
   } catch (err: any) {
     console.log(err)
