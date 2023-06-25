@@ -5,8 +5,8 @@ import Notification from "@/components/Notification";
 import DesktopMenu from "@/components/DesktopMenu";
 
 export const metadata = {
-  title: "WSSCM",
-  description: "Water & Sanitation Services Company Mardan",
+  title: "WSSC-KPK",
+  description: "Water & Sanitation Services Company, KPK",
 };
 
 export default function RootLayout({
