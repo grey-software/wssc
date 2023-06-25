@@ -5,11 +5,8 @@ import Complaint_stages from "../../../../components/Complaint_stages";
 import { HiArrowLeft } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { complaintTypes } from "@/Types";
-<<<<<<< Updated upstream
-import axios from "axios";
-=======
 import Loader from "@/components/Loading";
->>>>>>> Stashed changes
+import axios from "axios";
 
 const Timeline = ({ params }: any) => {
   const token: any = localStorage.getItem("token");
