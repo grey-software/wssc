@@ -73,7 +73,7 @@ const Complaint = ({
       </div>
       <Image
         src={complaintPic}
-        className="h-36 w-32 rounded-md"
+        className="h-36 w-32 rounded-md object-cover"
         width={80}
         height={50}
         alt=""

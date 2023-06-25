@@ -78,7 +78,7 @@ const Page: React.FC = ({ params }: any) => {
   };
 
   const GoHomePage = () => {
-    Navigate.push("/");
+    Navigate.back();
   };
 
   // upload media attachments in optimized way
@@ -92,6 +92,7 @@ const Page: React.FC = ({ params }: any) => {
       data.append("upload_preset", "xguxdutu");
       data.append("cloud_name", "dgpwe8xy6");
       data.append("folder", "complaint");
+      data.append("quality", "auto:good"); // Set the desired quality level
 
       try {
         let response;

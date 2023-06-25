@@ -51,6 +51,7 @@ const ProfileCard = () => {
       data.append("upload_preset", "xguxdutu");
       data.append("cloud_name", "dgpwe8xy6");
       data.append("folder", "ProfilePhotos");
+      data.append("quality", "auto:good"); // Set the desired quality level
 
       try {
         const response = await fetch(
@@ -140,7 +141,6 @@ const ProfileCard = () => {
                 ref={imageRef}
                 onChange={UpdatePhoto}
                 type="file"
-                capture="environment"
                 name="image"
               />
               <FaCamera onClick={() => imageRef.current!.click()} />

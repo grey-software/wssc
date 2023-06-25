@@ -125,7 +125,7 @@ const Timeline = ({ params }: any) => {
             }`}
             width={80}
             height={50}
-            className="h-36 w-32 rounded-md"
+            className="h-36 w-32 rounded-md object-cover"
             alt=""
           />
           <div

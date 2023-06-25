@@ -41,15 +41,13 @@ export const RegisterUser = async (
   userData: user,
   dispatch: any
 ): Promise<any> => {
-  console.log(userData)
   const { name, phone, password, wssc_code } = userData;
   dispatch(SignUpStart());
 
   try {
     const res = await API.post(
       "api/v1/auth/signup",
-      { name, phone, password, WSSC_CODE:wssc_code },
-      { withCredentials: true }
+      { name, phone, password, WSSC_CODE:wssc_code }
     );
     console.log(res)
     dispatch(SignUpSuccess(res.data));
