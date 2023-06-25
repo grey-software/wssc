@@ -62,7 +62,7 @@ const Navbar = () => {
             <Image src={WSSC?.logo} height={40} width={40} alt="wssc_logo" />
           </Link>
           <h2 className="text-lg text-primaryColor-500 font-bold">
-            {WSSC?.shortnamei}
+            {WSSC?.shortname}
           </h2>
         </div>
         {/* notification icon and batch of notify */}

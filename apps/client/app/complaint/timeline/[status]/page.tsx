@@ -4,7 +4,6 @@ import Image from "next/image";
 import Complaint_stages from "../../../../components/Complaint_stages";
 import { HiArrowLeft } from "react-icons/hi";
 import { useRouter } from "next/navigation";
-// import { API } from "@/global_state/ApiCalls/complaintApiCalls";
 import { complaintTypes } from "@/Types";
 import axios from "axios";
 
