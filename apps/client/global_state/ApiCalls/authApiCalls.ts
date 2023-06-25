@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import {
   SignInStart,
   SignInSuccess,
@@ -18,11 +18,23 @@ import {
   DeleteAccountSuccess,
   DeleteAccountError
 } from "../ReduxSlices/UserSlice";
-import { config } from "./config";
+// import { config } from "./config";
 
-const API = axios.create({ baseURL: "http://localhost:7000" });
-// const API = axios.create({ baseURL: "https://fyp-wssc-backend-production.up.railway.app" });
 
+// const API = axios.create({ baseURL: "http://localhost:7000" });
+const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
+
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+  const token: any = localStorage.getItem("token");
+  var config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+};
 
 // RegisterUser ApiCall
 export const RegisterUser = async (
@@ -87,6 +99,7 @@ export const UpdateUserProfile = async (dispatch: any, updatedData: any, userId:
   // calling updateUser api endpoint to update userInfo:a
   try {
     const res = await API.patch(`api/v1/citizens/${userId}`, updatedData , config);
+    console.log(res);
     dispatch(UpdateUserInfoSuccess(res.data.updateInfo));
     return res.data;
   } catch (err: any) {

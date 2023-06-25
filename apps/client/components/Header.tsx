@@ -1,8 +1,6 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import { BsFillBellFill } from "react-icons/bs";
-import { GrFormClose } from "react-icons/gr";
 import ProfileMenu from "./ProfileMenu";
 import Link from "next/link";
 import userdp from "../public/user.jpg";

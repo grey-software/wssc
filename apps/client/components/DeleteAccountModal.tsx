@@ -1,11 +1,10 @@
 "use client";
 import {
-  ChangedPassword,
   UserAccountDelete,
 } from "@/global_state/ApiCalls/authApiCalls";
 import { RootState } from "@/global_state/store";
 import { useRouter } from "next/navigation";
-import React, { useRef } from "react";
+import React from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 

@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useReducer, useState } from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import garbage from "../../../../public/garbage.png";
 import { HiArrowLeft } from "react-icons/hi";
 import Link from "next/link";

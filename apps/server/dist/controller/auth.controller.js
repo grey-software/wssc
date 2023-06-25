@@ -99,6 +99,7 @@ const SignIn = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             });
         // Getting WSSC data which is associated with citizen
         const WSSC = yield WsscsAdmin_schema_1.AdminsModel.findOne({ WSSC_CODE: User === null || User === void 0 ? void 0 : User.WSSC_CODE });
+        console.log(WSSC);
         const WSSC_DATA = {
             fullname: WSSC.fullname,
             shortname: WSSC.shortname,

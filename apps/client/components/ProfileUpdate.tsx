@@ -1,6 +1,6 @@
+"use client";
 import { UpdateUserProfile } from "@/global_state/ApiCalls/authApiCalls";
 import React, { memo, useRef, useState } from "react";
-import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 interface Props {
   update: boolean;

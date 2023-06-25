@@ -4,11 +4,11 @@ import Image from "next/image";
 import Complaint_stages from "../../../../components/Complaint_stages";
 import { HiArrowLeft } from "react-icons/hi";
 import { useRouter } from "next/navigation";
-import { API } from "@/global_state/ApiCalls/complaintApiCalls";
-import { config } from "@/global_state/ApiCalls/config";
 import { complaintTypes } from "@/Types";
+import axios from "axios";
 
 const Timeline = ({ params }: any) => {
+  const token: any = localStorage.getItem("token");
   const complaintID = params.status;
   const navigate = useRouter();
   const [complaint, setComplaint] = useState<complaintTypes>();
@@ -16,7 +16,15 @@ const Timeline = ({ params }: any) => {
   // Fetching Single Complaint from Server
   const FetchSingleComplaint = async (): Promise<any> => {
     try {
-      const res = await API.get(`api/v1/complaints/${complaintID}`, config);
+      const res = await axios.get(
+        `https://fyp-backend-production-27a1.up.railway.app/api/v1/complaints/${complaintID}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(res.data.complaint);
       setComplaint(res.data.complaint);
       return res.data;
