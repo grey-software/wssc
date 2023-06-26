@@ -9,12 +9,12 @@ import { RootState } from "@/GlobalState/store";
 import Image from "next/image";
 // import logo from "../public/wsscmlogo.png";
 
-// import {
-//   NovuProvider,
-//   PopoverNotificationCenter,
-//   NotificationBell,
-//   IMessage,
-// } from "@novu/notification-center";
+import {
+  NovuProvider,
+  PopoverNotificationCenter,
+  NotificationBell,
+  IMessage,
+} from "@novu/notification-center";
 
 const Header = () => {
   const [search, setSearch] = useState("");
@@ -25,12 +25,12 @@ const Header = () => {
   const currentTab = items.find((x) => x.id === activeTab);
   const dispatch = useDispatch();
 
-  // function onNotificationClick(message: IMessage) {
-  //   // your logic to handle the notification click
-  //   if (message?.cta?.data?.url) {
-  //     window.location.href = message.cta.data.url;
-  //   }
-  // }
+  function onNotificationClick(message: IMessage) {
+    // your logic to handle the notification click
+    if (message?.cta?.data?.url) {
+      window.location.href = message.cta.data.url;
+    }
+  }
 
   // JSX SECTION
   return (
@@ -52,7 +52,7 @@ const Header = () => {
           {/* <h1 className="text-3xl font-semibold">{currentTab?.name}</h1> */}
           <div className="flex items-center justify-start gap-8">
             <div className="flex items-center gap-4 text-3xl text-primaryColor-500">
-              {/* <NovuProvider
+              <NovuProvider
                 subscriberId={WSSC_CODE}
                 applicationIdentifier={"yhet1-MoYIOR"}
               >
@@ -64,7 +64,7 @@ const Header = () => {
                     <NotificationBell unseenCount={unseenCount} />
                   )}
                 </PopoverNotificationCenter>
-              </NovuProvider> */}
+              </NovuProvider>
               <div onClick={() => dispatch(SignOutUser)}>
                 <FaUserCircle />
               </div>
