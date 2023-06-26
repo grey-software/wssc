@@ -39,13 +39,6 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
     navigate.push("/");
   };
 
-  const NotifyTost = () => {
-    toast.error("This feature is in Progress", {
-      position: "top-center",
-      style: { width: "auto", height: "auto" },
-      duration: 2000,
-    });
-  };
   // im writing this just for the purpose of checking
   return (
     <div className="container w-full h-screen bg-red-700">
@@ -53,7 +46,7 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
         <div className="flex flex-col gap-2 items-center -mt-6">
           <Image
             src={profile_image ? profile_image : user}
-            className="h-32 w-32 rounded-full border-1 border-gray-300 "
+            className="h-32 w-32 rounded-full border-1 border-gray-300 object-cover"
             width={128}
             height={128}
             alt=""

@@ -34,7 +34,7 @@ const Complaints = ({ params }: any) => {
     <div className="w-[365px] sm:w-[450px] md:w-full lg-full xl-w-full">
       {UserInfo?.phone ? (
         <>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between">
             <Link
               href="/"
               className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all cursor-pointer"
@@ -46,7 +46,7 @@ const Complaints = ({ params }: any) => {
             </h3>
             <div></div>
           </div>
-          <div className="flex items-center justify-between mt-8">
+          <div className="flex items-center justify-between mt-4">
             <div className="flex items-center gap-4">
               <label
                 htmlFor="complaint-stages"

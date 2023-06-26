@@ -134,7 +134,7 @@ const Page: React.FC = ({ params }: any) => {
   // ---------- JSX SECTION STARTED ---------
   return (
     <div className="w-[365px] sm:w-[450px] md:w-full lg-full xl-w-full">
-      <div className="flex items-center justify-between mb-4 ">
+      <div className="flex items-center justify-between">
         <span className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all cursor-pointer">
           <HiArrowLeft
             onClick={GoHomePage}
@@ -149,12 +149,12 @@ const Page: React.FC = ({ params }: any) => {
             {complaintType}
           </span>
         </h3>
-        <div></div>
+        <div className="w-[12%]"></div>
       </div>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 mt-6 rounded-3xl pt-6 pb-8 px-4"
+        className="flex flex-col gap-4 rounded-3xl pt-4 pb-8 px-4"
       >
         <div className="flex flex-col">
           <label className="text-gray-500 text-[18px]">

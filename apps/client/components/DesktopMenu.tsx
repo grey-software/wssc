@@ -19,7 +19,6 @@ import { LOGOUT } from "@/global_state/ApiCalls/authApiCalls";
 
 const DesktopMenu = () => {
   const user: any = useSelector((state: RootState) => state.users?.UserInfo);
-  console.log(user);
   const [sharePop, setsharePop] = useState(false);
   const dispatch = useDispatch();
   const navigate = useRouter();
