@@ -50,7 +50,7 @@ const DesktopMenu = () => {
               <h1 className="text-xl text-headingColor-400 font-bold">
                 {user?.name}
               </h1>
-              <span className="-mt-3">{user?.email}</span>
+              <span className="-mt-3 text-sm">{user?.email}</span>
               <Link href={`/profile/${user?._id}`}>
                 <button className="flex items-center text-sm font-semibold gap-2 px-2 bg-[#A4C9D1] rounded-md">
                   <span>Update</span>
@@ -114,7 +114,7 @@ const DesktopMenu = () => {
               onClick={LogOut}
               className="flex items-center gap-2  text-sm font-semibold px-4 py-2 hover:bg-gray-100 rounded-full transition-all w-40"
             >
-              <TbLogout className="text-[24px] text-primaryColor-500" />
+              <TbLogout className="text-[24px] text-red-500" />
               <span className="text-gray-700">Log out</span>
             </button>
           </div>

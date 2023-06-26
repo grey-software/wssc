@@ -7,38 +7,35 @@ import userdp from "../public/user.jpg";
 import type { RootState } from "../global_state/store";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-// import {
-//   NovuProvider,
-//   PopoverNotificationCenter,
-//   NotificationBell,
-//   IMessage,
-// } from "@novu/notification-center";
+import {
+  NovuProvider,
+  PopoverNotificationCenter,
+  NotificationBell,
+  IMessage,
+} from "@novu/notification-center";
 
 const Header = () => {
   const navigate = useRouter();
   const { UserInfo }: any = useSelector((state: RootState) => state.users);
-  // const notifications = useSelector(
-  //   (state: RootState) => state.complaints.notifications
-  // );
   // getting WSSC Info
   const WSSC: any = useSelector((state: RootState) => state.users.WSSC);
 
   const [menuActive, setMenuActive] = useState(false);
   const [windowActive, setWindowActive] = useState(false);
 
-  // function onNotificationClick(message: IMessage) {
-  //   // your logic to handle the notification click
-  //   if (message?.cta?.data?.url) {
-  //     window.location.href = message.cta.data.url;
-  //   }
-  // }
+  function onNotificationClick(message: IMessage) {
+    // your logic to handle the notification click
+    if (message?.cta?.data?.url) {
+      window.location.href = message.cta.data.url;
+    }
+  }
 
   return (
     <>
       {!UserInfo ? (
         ""
       ) : (
-        <div className="bg-gray-50 w-full px-3 py-2 border-1 shadow-md md:shadow-lg fixed top-0 border z-30">
+        <div className="bg-gray-50 w-screen px-3 py-2 border-1 shadow-md md:shadow-lg fixed top-0 border z-30">
           <div className="flex items-center justify-between max-w-5xl m-auto">
             <div className="flex items-center justify-center gap-2">
               <Link href="/">
@@ -49,7 +46,7 @@ const Header = () => {
               </h2>
             </div>
             <div className="flex items-center justify-center gap-4">
-              {/* <NovuProvider
+              <NovuProvider
                 subscriberId={UserInfo._id}
                 applicationIdentifier={"yhet1-MoYIOR"}
               >
@@ -61,7 +58,7 @@ const Header = () => {
                     <NotificationBell unseenCount={unseenCount} />
                   )}
                 </PopoverNotificationCenter>
-              </NovuProvider> */}
+              </NovuProvider>
               {/* show for mobile screen */}
               <Image
                 src={UserInfo?.profile_image ? UserInfo?.profile_image : userdp}
@@ -71,7 +68,7 @@ const Header = () => {
                 alt="profileIcon"
                 onClick={() => setMenuActive(!menuActive)}
               />
-              {/* show for tablets and desktops */}
+              {/* show for tablets and desktops  */}
               <Image
                 src={UserInfo?.profile_image ? UserInfo?.profile_image : userdp}
                 width={32}
@@ -82,59 +79,6 @@ const Header = () => {
               />
             </div>
           </div>
-          {/* Notification window */}
-          {/* <div
-            className={`flex flex-col z-50 absolute top-12 right-3 sm:right-3 md:right-3 lg:right-44 w-2/3 transform transition-transform p-4 border-2 border-gray-300 bg-white shadow rounded-lg ${
-              windowActive
-                ? "translate-x-0 sm:flex md:flex"
-                : "translate-x-[28rem] sm:hidden md:hidden lg:hidden xl:hidden"
-            }`}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-bold text-primaryColor-500">
-                Notifications
-              </span>
-              <GrFormClose
-                className="text-2xl"
-                onClick={() => setWindowActive(!windowActive)}
-              />
-            </div>
-            <div className="flex flex-col">
-              {notifications.map(({ id, type, status, time }) => (
-                <Link
-                  key={id}
-                  href={`/complaint/timeline/${id}`}
-                  onClick={() => setWindowActive(!windowActive)}
-                  className="flex items-center justify-between border-b-[1px] border-gray-400 py-2"
-                >
-                  <div className="flex flex-col">
-                    <p className="text-[10px] text-gray-500">
-                      ID: <span>{id}</span>
-                    </p>
-                    <span className="text-sm font-bold text-headingColor-400">
-                      {type}
-                    </span>
-                  </div>
-                  <div className="flex flex-col text-sm">
-                    <span className="font-bold text-gray-400 text-right text-[12px]">
-                      {time}
-                    </span>
-                    <span
-                      className={`font-bold  ${
-                        status === "Initiated" ? "text-initiatedColor" : ""
-                      }  ${
-                        status === "InProgress" ? "text-inprogessColor" : ""
-                      } ${
-                        status === "Completed" ? "text-completedColor" : ""
-                      } ${status === "Closed" ? "text-closedColor" : ""}`}
-                    >
-                      {status}
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div> */}
 
           {/* Profile Menu */}
           <div

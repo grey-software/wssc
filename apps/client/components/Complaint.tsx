@@ -68,14 +68,14 @@ const Complaint = ({
         </div>
         <div className="flex  gap-3 text-sm text-gray-600">
           <p>Address:</p>
-          <span>{address}</span>
+          <span className="w-24">{address}</span>
         </div>
       </div>
       <Image
         src={complaintPic}
-        className="h-36 w-32 rounded-md"
         width={80}
         height={50}
+        className="h-36 w-32 rounded-md"
         alt=""
       />
       <div

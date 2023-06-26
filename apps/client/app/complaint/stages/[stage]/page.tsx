@@ -8,6 +8,7 @@ import { RootState } from "@/global_state/store";
 import Complaint from "@/components/Complaint";
 import { useDispatch } from "react-redux";
 import { complaintTypes } from "@/Types";
+import Loader from "@/components/Loading";
 import { FetchAllComplaints } from "@/global_state/ApiCalls/complaintApiCalls";
 
 const Complaints = ({ params }: any) => {
@@ -15,6 +16,9 @@ const Complaints = ({ params }: any) => {
   const dispatch = useDispatch();
   const [states, setStates] = useState(statesValue);
   if (states === "Resolved") setStates("Closed");
+  const { loading, error } = useSelector(
+    (state: RootState) => state.complaints
+  );
 
   useEffect(() => {
     FetchAllComplaints(dispatch);
@@ -30,7 +34,7 @@ const Complaints = ({ params }: any) => {
     <div className="w-[365px] sm:w-[450px] md:w-full lg-full xl-w-full">
       {UserInfo?.phone ? (
         <>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between">
             <Link
               href="/"
               className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all cursor-pointer"
@@ -42,7 +46,7 @@ const Complaints = ({ params }: any) => {
             </h3>
             <div></div>
           </div>
-          <div className="flex items-center justify-between mt-8">
+          <div className="flex items-center justify-between mt-4">
             <div className="flex items-center gap-4">
               <label
                 htmlFor="complaint-stages"
@@ -70,78 +74,81 @@ const Complaints = ({ params }: any) => {
               </span>
             </div>
           </div>
-
-          <div className="flex flex-col gap-3 mt-4">
-            {complaintsAll.map(
-              (
-                {
-                  complaintType,
-                  _id,
-                  status,
-                  createdAt,
-                  complaintAddress,
-                  ImageUrl,
-                }: complaintTypes,
-                index
-              ) => (
-                <>
-                  {/* show all the complaints */}
-                  {states === "AllComplaints" ? (
-                    <div key={index}>
-                      <Complaint
-                        type={complaintType}
-                        status={status}
-                        complaintID={_id}
-                        submitedOn={createdAt}
-                        address={complaintAddress}
-                        garbage={garbage}
-                        ImageUrl={ImageUrl}
-                      />
-                    </div>
-                  ) : (
-                    <>
-                      {/* filter complaints based on provided filter */}
-                      {states === status[status.length - 1]?.state ? (
-                        <div key={index}>
-                          <Complaint
-                            type={complaintType}
-                            status={status}
-                            complaintID={_id}
-                            submitedOn={createdAt}
-                            address={complaintAddress}
-                            garbage={garbage}
-                            ImageUrl={ImageUrl}
-                          />
-                        </div>
-                      ) : (
-                        <>
-                          {/* show only pending complaints: initiated an inProgress */}
-                          {states === "Pending" &&
-                          (status[status.length - 1]?.state === "Initiated" ||
-                            status[status.length - 1]?.state ===
-                              "InProgress") ? (
-                            <div key={index}>
-                              <Complaint
-                                type={complaintType}
-                                status={status}
-                                complaintID={_id}
-                                submitedOn={createdAt}
-                                address={complaintAddress}
-                                garbage={garbage}
-                                ImageUrl={ImageUrl}
-                              />
-                            </div>
-                          ) : (
-                            ""
-                          )}
-                        </>
-                      )}
-                    </>
-                  )}
-                </>
-              )
-            )}
-          </div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="flex flex-col gap-3 mt-4">
+              {complaintsAll.map(
+                (
+                  {
+                    complaintType,
+                    _id,
+                    status,
+                    createdAt,
+                    complaintAddress,
+                    ImageUrl,
+                  }: complaintTypes,
+                  index
+                ) => (
+                  <>
+                    {/* show all the complaints */}
+                    {states === "AllComplaints" ? (
+                      <div key={index}>
+                        <Complaint
+                          type={complaintType}
+                          status={status}
+                          complaintID={_id}
+                          submitedOn={createdAt}
+                          address={complaintAddress}
+                          garbage={garbage}
+                          ImageUrl={ImageUrl}
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        {/* filter complaints based on provided filter */}
+                        {states === status[status.length - 1]?.state ? (
+                          <div key={index}>
+                            <Complaint
+                              type={complaintType}
+                              status={status}
+                              complaintID={_id}
+                              submitedOn={createdAt}
+                              address={complaintAddress}
+                              garbage={garbage}
+                              ImageUrl={ImageUrl}
+                            />
+                          </div>
+                        ) : (
+                          <>
+                            {/* show only pending complaints: initiated an inProgress */}
+                            {states === "Pending" &&
+                            (status[status.length - 1]?.state === "Initiated" ||
+                              status[status.length - 1]?.state ===
+                                "InProgress") ? (
+                              <div key={index}>
+                                <Complaint
+                                  type={complaintType}
+                                  status={status}
+                                  complaintID={_id}
+                                  submitedOn={createdAt}
+                                  address={complaintAddress}
+                                  garbage={garbage}
+                                  ImageUrl={ImageUrl}
+                                />
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                )
+              )}
+            </div>
+          )}
         </>
       ) : (
         ""

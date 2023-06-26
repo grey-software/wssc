@@ -7,12 +7,12 @@ import { SupervisorLogoutApi } from "@/GlobalState/Supervisor-ApiCalls/ApiCalls/
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-// import {
-//   NovuProvider,
-//   PopoverNotificationCenter,
-//   NotificationBell,
-//   IMessage,
-// } from "@novu/notification-center";
+import {
+  NovuProvider,
+  PopoverNotificationCenter,
+  NotificationBell,
+  IMessage,
+} from "@novu/notification-center";
 import { useSelector } from "react-redux";
 import { RootState } from "@/GlobalState/store";
 
@@ -27,12 +27,12 @@ const Navbar = () => {
   );
 
   const WSSC: any = useSelector((state: RootState) => state.suprvisor.WSSC);
-  // function onNotificationClick(message: IMessage) {
-  //   // your logic to handle the notification click
-  //   if (message?.cta?.data?.url) {
-  //     window.location.href = message.cta.data.url;
-  //   }
-  // }
+  function onNotificationClick(message: IMessage) {
+    // your logic to handle the notification click
+    if (message?.cta?.data?.url) {
+      window.location.href = message.cta.data.url;
+    }
+  }
 
   // handle mthod deintiion
   const HandleClick = () => {
@@ -56,7 +56,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="flex items-center justify-between bg-gray-50 w-full px-3 py-2 border-1 shadow-md md:shadow-lg fixed top-0 border z-30">
+      <div className="flex items-center justify-between bg-gray-50 w-screen px-3 py-2 border-1 shadow-md md:shadow-lg fixed top-0 border z-30">
         <div className="flex items-center justify-center gap-2">
           <Link href="/supervisor">
             <Image src={WSSC?.logo} height={40} width={40} alt="wssc_logo" />
@@ -68,7 +68,7 @@ const Navbar = () => {
         {/* notification icon and batch of notify */}
         <div className="flex items-center justify-center gap-4">
           {/* notification batch */}
-          {/* <NovuProvider
+          <NovuProvider
             subscriberId={_id}
             applicationIdentifier={"yhet1-MoYIOR"}
           >
@@ -80,7 +80,7 @@ const Navbar = () => {
                 <NotificationBell unseenCount={unseenCount} />
               )}
             </PopoverNotificationCenter>
-          </NovuProvider> */}
+          </NovuProvider>
           {/* user image */}
           <Image
             src={profile_image ? profile_image : userdp}
