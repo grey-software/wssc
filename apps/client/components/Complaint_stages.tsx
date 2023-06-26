@@ -231,7 +231,7 @@ function Complaint_stages({ stages, complaintId, userfeedback }: Props) {
                       stage.state === "Completed" ? "bg-completedColor" : ""
                     } ${stage.state === "Closed" ? "bg-closedColor" : ""}`}
                   ></div>
-                </VerticalTimelineElement>
+                </VerticalTimelineElement> 
               )}
             </>
           ))}
