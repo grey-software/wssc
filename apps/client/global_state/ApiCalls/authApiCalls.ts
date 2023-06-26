@@ -41,15 +41,13 @@ export const RegisterUser = async (
   userData: user,
   dispatch: any
 ): Promise<any> => {
-  console.log(userData)
   const { name, phone, password, wssc_code } = userData;
   dispatch(SignUpStart());
 
   try {
     const res = await API.post(
       "api/v1/auth/signup",
-      { name, phone, password, WSSC_CODE:wssc_code },
-      { withCredentials: true }
+      { name, phone, password, WSSC_CODE:wssc_code }
     );
     console.log(res)
     dispatch(SignUpSuccess(res.data));
@@ -57,10 +55,10 @@ export const RegisterUser = async (
   } catch (err: any) {
     if (err.response) {
       if (err.response.status == 400) {
-        dispatch(SignUpError(err.response.data));
+        dispatch(SignUpError("This phone number has already registered!"));
         return err.response.status;
       } else if (err.response.status == 500) {
-        dispatch(SignUpError(err.response.statusText));
+        dispatch(SignUpError("Server error, please try again"));
         return err.response.status;
       }
     }

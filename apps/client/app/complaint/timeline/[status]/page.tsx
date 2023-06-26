@@ -5,8 +5,8 @@ import Complaint_stages from "../../../../components/Complaint_stages";
 import { HiArrowLeft } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { complaintTypes } from "@/Types";
-import axios from "axios";
 import Loader from "@/components/Loading";
+import axios from "axios";
 
 const Timeline = ({ params }: any) => {
   const token: any = localStorage.getItem("token");
@@ -125,7 +125,7 @@ const Timeline = ({ params }: any) => {
             }`}
             width={80}
             height={50}
-            className="h-36 w-32 rounded-md"
+            className="h-36 w-32 rounded-md object-cover"
             alt=""
           />
           <div

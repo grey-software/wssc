@@ -21,16 +21,17 @@ export const CreateComplaint = async (
   if (error) return res.send(error.details[0].message);
   const userId = req.body.userId;
   const citizenId = req.user.id;
-  console.log(userId == citizenId)
+  console.log(userId == citizenId);
   if (userId == citizenId) {
     try {
       const CreateComplaint = new ComplaintModel(req.body);
       await CreateComplaint.save();
 
+      console.log("code" + CreateComplaint.WSSC_CODE);
       // SENDING NOTIFICATION TO ADMING
       await novu.trigger("complaint-status-updated", {
         to: {
-          subscriberId: `wsscp25001`,
+          subscriberId: CreateComplaint.WSSC_CODE,
         },
         payload: {
           id: CreateComplaint?._id,
@@ -253,7 +254,7 @@ export const GetAllComplaints = async (
     let allComplaints;
     let query = {}; // query variable is used to store the userType and will fetch all complaints according to the logged User
 
-    if (req.user.isAdmin) query = {WSSC_CODE: req.user.WSSC_CODE};
+    if (req.user.isAdmin) query = { WSSC_CODE: req.user.WSSC_CODE };
     else if (req.user.isSupervisor) query = { supervisorId: userId };
     else query = { userId: userId };
 
@@ -385,10 +386,10 @@ export const CitizenFeedback = async (
           message: "Your complaint Assign to you is now closed 🎉",
         },
       });
-
+      console.log(complaint.WSSC_CODE);
       await novu.trigger("complaint-status-updated", {
         to: {
-          subscriberId: "wsscp25001",
+          subscriberId: complaint.WSSC_CODE,
         },
         payload: {
           id: complaintId,

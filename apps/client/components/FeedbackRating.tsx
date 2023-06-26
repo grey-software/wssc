@@ -5,7 +5,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { MdStar, MdStarBorder } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { CreateFeedback } from "@/global_state/ApiCalls/complaintApiCalls";
-
+import { useRouter } from "next/navigation";
 interface Props {
   feedback: boolean;
   setfeedback: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +15,7 @@ const FeedbackRating = ({ feedback, setfeedback, complaintId }: Props) => {
   const dispatch = useDispatch();
   const [rating, setRating] = useState<number>(-1);
   const [description, setDescription] = useState<string>("");
+  const navigate = useRouter();
 
   const rates: number[] = [1, 2, 3, 4, 5];
   const RatingInWords: string[] = [
@@ -25,29 +26,31 @@ const FeedbackRating = ({ feedback, setfeedback, complaintId }: Props) => {
     "Very Good",
     "Excellent",
   ];
-  //  const words: string[] = [
-  //    "",
-  //    "بہت برا",
-  //    "برا",
-  //    " اچھا",
-  //    "بہت اچھا",
-  //    "بہترین",
-  //  ];
 
   const handleRatingClick = (value: number) => {
     setRating(value);
   };
 
   // handle feedback
-  const handleFeedback = () => {
+  const handleFeedback = async () => {
     if (rating > 0) {
-      CreateFeedback(complaintId, { rating, description }, dispatch);
-      toast.success("Thanks for your Feedback", {
-        position: "top-center",
-        style: { width: "auto", height: "auto" },
-        duration: 3000,
-      });
-      setfeedback(!feedback);
+      try {
+         await CreateFeedback(complaintId, { rating, description }, dispatch);
+         toast.success("Thanks for your Feedback", {
+           position: "top-center",
+           style: { width: "auto", height: "auto" },
+           duration: 3000,
+         });
+        setfeedback(!feedback);
+        navigate.push(`/complaint/timeline/${complaintId}`);
+        
+      } catch (error) {
+         toast.error("Something Went wrong, please try again", {
+           position: "top-center",
+           style: { width: "auto", height: "auto" },
+           duration: 3000,
+         });
+      }
     } else {
       toast.error("Your rating help us Improve our service", {
         position: "top-center",
@@ -57,6 +60,7 @@ const FeedbackRating = ({ feedback, setfeedback, complaintId }: Props) => {
     }
   };
 
+  // JSX SECTION
   return (
     <>
       <div className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center w-screen h-[100vh] backdrop-blur-sm transition-all">

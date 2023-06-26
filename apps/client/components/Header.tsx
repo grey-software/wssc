@@ -17,6 +17,9 @@ import {
 const Header = () => {
   const navigate = useRouter();
   const { UserInfo }: any = useSelector((state: RootState) => state.users);
+  const notifications = useSelector(
+    (state: RootState) => state.complaints.notifications
+  );
   // getting WSSC Info
   const WSSC: any = useSelector((state: RootState) => state.users.WSSC);
 
@@ -35,7 +38,7 @@ const Header = () => {
       {!UserInfo ? (
         ""
       ) : (
-        <div className="bg-gray-50 w-screen px-3 py-2 border-1 shadow-md md:shadow-lg fixed top-0 border z-30">
+        <div className="bg-gray-50 w-full px-3 py-2 border-1 shadow-md md:shadow-lg fixed top-0 border z-30">
           <div className="flex items-center justify-between max-w-5xl m-auto">
             <div className="flex items-center justify-center gap-2">
               <Link href="/">

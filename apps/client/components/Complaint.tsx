@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import DefaultPic from "../public/assets/complaintDefaultPic.png";
@@ -73,9 +74,9 @@ const Complaint = ({
       </div>
       <Image
         src={complaintPic}
+        className="h-36 w-32 rounded-md object-cover"
         width={80}
         height={50}
-        className="h-36 w-32 rounded-md"
         alt=""
       />
       <div

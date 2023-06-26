@@ -47,6 +47,7 @@ const SignUp = ({ setAuthState }: Prop) => {
       { phone, name: username, password, wssc_code },
       dispatch
     );
+    console.log(res)
     if (res?.status == 200) {
       setAuthState("Signin");
       reset();

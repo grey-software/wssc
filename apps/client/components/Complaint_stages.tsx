@@ -85,9 +85,9 @@ function Complaint_stages({ stages, complaintId, userfeedback }: Props) {
                         </h3>
                       </div>
                       <div className="flex flex-col mt-6">
-                        <span className="text-gray-500">Comments:</span>
+                        <span className="text-gray-500">Remarks:</span>
                         <span>
-                          Your complaint is{" "}
+                          Your complaint is
                           {stage.state == "Completed"
                             ? "Resolved"
                             : stage.state}
@@ -214,9 +214,9 @@ function Complaint_stages({ stages, complaintId, userfeedback }: Props) {
                       </h3>
                     </div>
                     <div className="flex flex-col mt-6">
-                      <span className="text-gray-500">Comments:</span>
+                      <span className="text-gray-500">Remarks:</span>
                       <span>
-                        Your complaint is{" "}
+                        Your complaint is
                         {stage.state == "Completed" ? "Resolved" : stage.state}
                       </span>
                     </div>
@@ -231,7 +231,7 @@ function Complaint_stages({ stages, complaintId, userfeedback }: Props) {
                       stage.state === "Completed" ? "bg-completedColor" : ""
                     } ${stage.state === "Closed" ? "bg-closedColor" : ""}`}
                   ></div>
-                </VerticalTimelineElement>
+                </VerticalTimelineElement> 
               )}
             </>
           ))}
