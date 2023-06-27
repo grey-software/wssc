@@ -1,8 +1,18 @@
 import axios from "axios";
-import { config } from "../config";
 import { ApiRequestError, ApiRequestStart, ApiRequestSuccess } from "../WSSC_Slice";
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
+
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+  const token: any = localStorage.getItem("adminToken");
+  var config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }
+};
 
 // Sign In Admin
 export const Statistics = async (dispatch:any) => {

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { config } from "../config";
 
 import {
   ApiRequestStart,
@@ -9,6 +8,16 @@ import {
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
 
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+  const token: any = localStorage.getItem("adminToken");
+  var config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }
+};
 // GET ALL USERS
 export const FetchUsers = async (dispatch: any): Promise<any> => {
   dispatch(ApiRequestStart());

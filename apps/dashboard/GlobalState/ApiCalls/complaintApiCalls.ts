@@ -8,10 +8,20 @@ import {
   AddStatementSuccess,
   GetSupervisorComplaintsSuccess,
 } from "../complatintSlice";
-import { config } from "../config";
 import { GetSingleSupervisorSuccess } from "../supervisorSlice";
 
 export const API = axios.create({ baseURL: "http://localhost:7000" });
+
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+  const token: any = localStorage.getItem("adminToken");
+  var config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }
+};
 
 // ASSIGN COMPLAINT
 export const AssignComplaint = async (

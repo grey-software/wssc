@@ -1,9 +1,18 @@
 import axios from "axios";
-import { config } from "../../config";
 import { ApiFetchingError, ApiFetchingStart, SignInSuccess, SupervisorLogout, UpdateProfile } from "./supervisorSlice/AuthSlice";
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
 
+if (typeof window !== 'undefined') {
+    // Perform localStorage action
+    const token: any = localStorage.getItem("supervisorToken");
+    var config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+    }
+};
 // Sign In Supervisor
 export const SupervisorSignIn = async (UserData: any, dispatch: any) => {
     const { phone, password } = UserData;
@@ -50,8 +59,6 @@ export const UpdateSupervisor = async (dispatch: any, data:any ) => {
     }
 }
 
-
-
 // supervisor logout
 export const SupervisorLogoutApi = async (dispatch: any) => {
     // SignIn start action
@@ -63,7 +70,6 @@ export const SupervisorLogoutApi = async (dispatch: any) => {
             config
         );
         dispatch(SupervisorLogout("logout successfully"));
-        console.log(res.data);
         return res.data;
     } catch (err: any) {
         console.log(err);
