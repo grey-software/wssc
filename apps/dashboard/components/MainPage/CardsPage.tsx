@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { FaUsers } from "react-icons/fa";
 import { FcManager } from "react-icons/fc";

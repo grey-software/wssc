@@ -22,7 +22,7 @@ export default function RootLayout({
         {/* React-Toast notification */}
         <Notification />
         <Navbar />
-        <main className=" ">{children}</main>
+        <main >{children}</main>
       </Providers>
     </section>
   );

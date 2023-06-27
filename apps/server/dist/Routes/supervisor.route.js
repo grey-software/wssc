@@ -12,6 +12,5 @@ Supervisor.route("/:id")
     .patch(verifyToken_1.verifySupervisor, supervisor_controller_1.UpdateSupervisor)
     .delete(verifyToken_1.verifyAdmin, supervisor_controller_1.DeleteSupervisor);
 Supervisor.post("/logout", supervisor_controller_1.Logout);
-// below is the general route defined to fetch all the record such as: no of users, complaints, supervisors along with no of complaint types registered
 exports.default = Supervisor;
 //# sourceMappingURL=supervisor.route.js.map
