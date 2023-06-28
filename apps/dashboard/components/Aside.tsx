@@ -11,7 +11,6 @@ import { FaUserCircle, FaUsers } from "react-icons/fa";
 import { MdSpaceDashboard, MdFeedback } from "react-icons/md";
 import { SiFiles } from "react-icons/si";
 import { HiUsers } from "react-icons/hi";
-import Link from "next/link";
 import { BiLogOutCircle } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { LOGOUT } from "@/GlobalState/ApiCalls/authApiCalls";

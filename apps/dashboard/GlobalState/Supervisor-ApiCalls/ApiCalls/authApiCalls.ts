@@ -1,7 +1,8 @@
 import axios from "axios";
 import { ApiFetchingError, ApiFetchingStart, SignInSuccess, SupervisorLogout, UpdateProfile } from "./supervisorSlice/AuthSlice";
 
-const API = axios.create({ baseURL: "http://localhost:7000" });
+// const API = axios.create({ baseURL: "http://localhost:7000" });
+const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
 
 if (typeof window !== 'undefined') {
     // Perform localStorage action
@@ -23,7 +24,7 @@ export const SupervisorSignIn = async (UserData: any, dispatch: any) => {
         const res = await API.post(
             "api/v1/supervisors/signin",
             { phone, password },
-            config
+
         );
         dispatch(SignInSuccess(res.data));
         console.log(res.data);

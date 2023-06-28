@@ -14,7 +14,7 @@ const SingleComplaintSupervisor = ({ complaint, index }) => {
         <div className="flex items-center gap-4 text-md">
           <span className="px-2 py-[2px] bg-gray-300 font-bold rounded-full">
             {index + 1}
-          </span>{" "}
+          </span>
           <div className="flex items-center gap-2">
             <span className="font-semibold">Type</span>
             <span className="bg-feedbackColor px-2 py-1 rounded text-white">

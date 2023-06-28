@@ -3,7 +3,6 @@
 import { supervisorTypes } from "@/@types/supervisorTypes";
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
-import { FaSellcast } from "react-icons/fa";
 
 const supervisorSlice = createSlice({
   name: "supervisor",

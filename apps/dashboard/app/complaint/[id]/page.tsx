@@ -15,11 +15,17 @@ import {
 } from "@/GlobalState/ApiCalls/complaintApiCalls";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
 import { API } from "@/GlobalState/ApiCalls/complaintApiCalls";
-import { config } from "@/GlobalState/config";
 import { toast } from "react-hot-toast";
 import { complaintTypes } from "@/@types/complaintTypes.types";
 
 const Page = ({ params }: any) => {
+  const token: any = localStorage.getItem("adminToken");
+  var config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
   const id = params.id;
   const dispatch = useDispatch();
   const navigate = useRouter();

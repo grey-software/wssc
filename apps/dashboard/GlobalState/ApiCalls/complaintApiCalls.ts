@@ -10,7 +10,8 @@ import {
 } from "../complatintSlice";
 import { GetSingleSupervisorSuccess } from "../supervisorSlice";
 
-export const API = axios.create({ baseURL: "http://localhost:7000" });
+// export const API = axios.create({ baseURL: "http://localhost:7000" });
+export const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
 
 if (typeof window !== 'undefined') {
   // Perform localStorage action

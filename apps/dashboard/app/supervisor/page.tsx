@@ -26,7 +26,7 @@ const Page = () => {
     }
   }, [WSSC_CODE, phone, navigate]);
 
-  return phone ? <HomeScreen /> : null;
+  return phone && <HomeScreen />;
 };
 
 export default Page;

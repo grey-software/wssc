@@ -1,7 +1,8 @@
 import axios from "axios";
 import { ApiRequestError, ApiRequestStart, ApiRequestSuccess } from "../WSSC_Slice";
 
-const API = axios.create({ baseURL: "http://localhost:7000" });
+// const API = axios.create({ baseURL: "http://localhost:7000" });
+const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
 
 if (typeof window !== 'undefined') {
   // Perform localStorage action
