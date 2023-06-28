@@ -145,24 +145,3 @@ export const FetchSingleComplaint = async (complaintId: any): Promise<any> => {
   }
 };
 
-
-// Suprvisor Response API Called to update the complaint Status
-export const SupervisorComplaintResponse = async (data: any) => {
-  const { complaintId, ImageUrl, description } = data;
-  
-  console.log(`id: ${complaintId} | image: ${ImageUrl} | desc: ${description}`)
-  try {
-    const res = await API.patch(`api/v1/complaints/response/${complaintId}`, { ImageUrl, description }, config);
-    console.log(res.data)
-    return res.data;
-  } catch (err: any) {
-    console.log(err);
-    if (err.response) {
-      if (err.response.status == 404) {
-        return err.response.status;
-      } else {
-        return err.response.status;
-      }
-    }
-  }
-}

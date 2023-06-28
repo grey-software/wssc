@@ -23,7 +23,7 @@ export const SupervisorSignIn = async (UserData: any, dispatch: any) => {
         // calling api to check the credentials
         const res = await API.post(
             "api/v1/supervisors/signin",
-            { phone, password },
+            { phone, password }
 
         );
         dispatch(SignInSuccess(res.data));

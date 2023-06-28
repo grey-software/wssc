@@ -11,6 +11,8 @@ import { GetSingleSupervisor } from "@/GlobalState/ApiCalls/supervisorApiCalls";
 import { FetchSupervisorComplaints } from "@/GlobalState/ApiCalls/complaintApiCalls";
 import Ratings from "@/components/Rating";
 import Image from "next/image";
+
+
 const Page = ({ params }: any) => {
   const id = params.id;
   const dispatch = useDispatch();

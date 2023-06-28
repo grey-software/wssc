@@ -50,11 +50,9 @@ const Page = ({ params }: any) => {
       const res = await API.get(`api/v1/complaints/${complaintId}`, config);
       console.log(res.data.complaint);
       if (res.data.complaint) {
-        setTimeout(() => setPending(false), 1000);
         setComplaint(res.data.complaint);
       }
-      // setLoading(false);
-      return res.data.complaint;
+      setPending(false);
     } catch (err: any) {
       setError(true);
       if (err.response?.status == 401) {
@@ -63,14 +61,12 @@ const Page = ({ params }: any) => {
           style: { width: "auto", height: "auto" },
           duration: 3000,
         });
-        return err.response;
       } else if (err.response.status == 500) {
         toast.error("500, Something went wrong", {
           position: "top-center",
           style: { width: "auto", height: "auto" },
           duration: 3000,
         });
-        return err.response;
       }
     }
   };

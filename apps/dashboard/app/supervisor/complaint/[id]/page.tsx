@@ -8,7 +8,7 @@ import defaultPic from "../../../../public/complaintDefaultPic.png";
 import {
   FetchSingleComplaint,
   SupervisorComplaintResponse,
-} from "@/GlobalState/ApiCalls/complaintApiCalls";
+} from "@/GlobalState/Supervisor-ApiCalls/ApiCalls/supervisorComplaintsApiCalls";
 import { useRouter } from "next/navigation";
 import { MdDone } from "react-icons/md";
 import { HiArrowLeft } from "react-icons/hi";
