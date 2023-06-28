@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UpdateSupervisor } from "@/GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
 import { RootState } from "@/GlobalState/store";
 import { useRouter } from "next/navigation";
+
 const ProfileCard = () => {
   const imageRef = useRef<HTMLInputElement>(null);
   const [ProfilePhoto, setProfilePhoto] = useState();
@@ -70,7 +71,7 @@ const ProfileCard = () => {
 
   // JSX Section
   return (
-    <div className=" mt-20 ml-3 flex flex-col justify-center w-[365px] sm:w-[450px] md:w-full  lg-full xl-w-full">
+    <div className=" mt-20 ml-3 flex flex-col justify-center w-[365px] sm:w-[450px] md:w-full">
       <div className="flex items-center justify-between mb-2">
         <Link
           href="/supervisor"

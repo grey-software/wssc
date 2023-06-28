@@ -75,7 +75,7 @@ const HomeScreen = () => {
 
   // JSX section
   return (
-    <div className="container w-screen h-screen pt-2 -mt-20 bg-slate-50">
+    <div className="container w-screen h-screen pt-2 -mt-24 bg-slate-50">
       <div className="complaints-record  flex  items-center  overflow-hidden border border-gray-300 shadow-sm shadow-gray-200 rounded-sm mx-2 mt-20">
         {FiltersBtns.map((e, index) => (
           <span
