@@ -8,6 +8,8 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/GlobalState/store";
 import { FcEmptyFilter } from "react-icons/fc";
+import Loader from "@/app/loading";
+
 export const FiltersBtns = [
   {
     name: "All",
@@ -32,6 +34,7 @@ export const FiltersBtns = [
 ];
 
 const HomeScreen = () => {
+  const [loading, setloading] = useState(false);
   // retreiving complaints from store
   const allcomplaints = useSelector(
     (state: RootState) => state.supervisorComplaints.SupervisorComplaints
@@ -60,11 +63,14 @@ const HomeScreen = () => {
 
   // FetchSupervisorComplaints method definition to fetch all complaints that are assigned to supervisor
   const FetchSupervisorComplaints = async () => {
+    setloading(true);
     try {
       const allcomplaints = await SupervisorComplaints(dispatch);
       setcomplaints(allcomplaints);
+      setloading(false);
     } catch (error) {
       console.log(error);
+      setloading(false);
     }
   };
   // used useEffect to call supervisor_assigned_complaints API to fetch and retrieve the data accordingly
@@ -101,92 +107,96 @@ const HomeScreen = () => {
 
       {/* --- Displaying all complaints ---- */}
 
-      {complaints.length != 0 ? (
-        complaints.map((complaint: any, index: any) => (
-          <div key={index}>
-            <Link href={`/supervisor/complaint/${complaint?._id}`}>
-              <div className="flex items-center justify-between rounded-lg border-2 bg-white border-gray-200 mb-2 mx-2 p-2 px-4 shadow-md relative overflow-hidden">
-                <div className="flex flex-col justify-center ml-1">
-                  <h3 className="text-md font-bold text-gray-600">
-                    {complaint?.complaintType}
-                  </h3>
-                  <div className="flex items-center gap-3 text-sm text-gray-600">
-                    <p>Status:</p>
-                    <span
-                      className={`font-bold ${
-                        complaint?.status[complaint?.status.length - 1]
-                          ?.state === "Initiated"
-                          ? "text-initiatedColor"
-                          : ""
-                      }  ${
-                        complaint?.status[complaint?.status.length - 1]
-                          ?.state === "InProgress"
-                          ? "text-inprogessColor"
-                          : ""
-                      } ${
-                        complaint?.status[complaint?.status.length - 1]
-                          ?.state === "Completed"
-                          ? "text-completedColor"
-                          : ""
-                      } ${
-                        complaint?.status[complaint?.status.length - 1]
-                          ?.state === "Closed"
-                          ? "text-closedColor"
-                          : ""
-                      }`}
-                    >
-                      {complaint?.status[complaint?.status.length - 1]?.state}
-                    </span>
-                  </div>
+      {!loading ? (
+        complaints.length != 0 ? (
+          complaints.map((complaint: any, index: any) => (
+            <div key={index}>
+              <Link href={`/supervisor/complaint/${complaint?._id}`}>
+                <div className="flex items-center justify-between rounded-lg border-2 bg-white border-gray-200 mb-2 mx-2 p-2 px-4 shadow-md active:shadow-none active:scale-[0.97] transition-all relative overflow-hidden">
+                  <div className="flex flex-col justify-center ml-1">
+                    <h3 className="text-md font-bold text-gray-600">
+                      {complaint?.complaintType}
+                    </h3>
+                    <div className="flex items-center gap-3 text-sm text-gray-600">
+                      <p>Status:</p>
+                      <span
+                        className={`font-bold ${
+                          complaint?.status[complaint?.status.length - 1]
+                            ?.state === "Initiated"
+                            ? "text-initiatedColor"
+                            : ""
+                        }  ${
+                          complaint?.status[complaint?.status.length - 1]
+                            ?.state === "InProgress"
+                            ? "text-inprogessColor"
+                            : ""
+                        } ${
+                          complaint?.status[complaint?.status.length - 1]
+                            ?.state === "Completed"
+                            ? "text-completedColor"
+                            : ""
+                        } ${
+                          complaint?.status[complaint?.status.length - 1]
+                            ?.state === "Closed"
+                            ? "text-closedColor"
+                            : ""
+                        }`}
+                      >
+                        {complaint?.status[complaint?.status.length - 1]?.state}
+                      </span>
+                    </div>
 
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <p>Submited On:</p>
-                    <span>{complaint?.updatedAt.split("T")[0]}</span>
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <p>Submited On:</p>
+                      <span>{complaint?.updatedAt.split("T")[0]}</span>
+                    </div>
+                    <div className="flex  gap-3 text-sm text-gray-600">
+                      <p>Address:</p>
+                      <span>{complaint?.complaintAddress}</span>
+                    </div>
                   </div>
-                  <div className="flex  gap-3 text-sm text-gray-600">
-                    <p>Address:</p>
-                    <span>{complaint?.complaintAddress}</span>
-                  </div>
+                  <Image
+                    src={complaint?.ImageUrl ? complaint?.ImageUrl : dummyPic}
+                    className="h-[10vh] w-[30%] object-cover rounded-md"
+                    width={60}
+                    height={40}
+                    alt=""
+                  />
+                  <div
+                    className={`h-[100%] w-2 top-0 left-0 absolute ${
+                      complaint?.status[complaint?.status.length - 1]?.state ===
+                      "Initiated"
+                        ? "bg-initiatedColor"
+                        : ""
+                    }  ${
+                      complaint?.status[complaint?.status.length - 1]?.state ===
+                      "InProgress"
+                        ? "bg-inprogessColor"
+                        : ""
+                    } ${
+                      complaint?.status[complaint?.status.length - 1]?.state ===
+                      "Completed"
+                        ? "bg-completedColor"
+                        : ""
+                    } ${
+                      complaint?.status[complaint?.status.length - 1]?.state ===
+                      "Closed"
+                        ? "bg-closedColor"
+                        : ""
+                    }`}
+                  ></div>
                 </div>
-                <Image
-                  src={complaint?.ImageUrl ? complaint?.ImageUrl : dummyPic}
-                  className="h-[10vh] w-[30%] object-cover rounded-md"
-                  width={60}
-                  height={40}
-                  alt=""
-                />
-                <div
-                  className={`h-[100%] w-2 top-0 left-0 absolute ${
-                    complaint?.status[complaint?.status.length - 1]?.state ===
-                    "Initiated"
-                      ? "bg-initiatedColor"
-                      : ""
-                  }  ${
-                    complaint?.status[complaint?.status.length - 1]?.state ===
-                    "InProgress"
-                      ? "bg-inprogessColor"
-                      : ""
-                  } ${
-                    complaint?.status[complaint?.status.length - 1]?.state ===
-                    "Completed"
-                      ? "bg-completedColor"
-                      : ""
-                  } ${
-                    complaint?.status[complaint?.status.length - 1]?.state ===
-                    "Closed"
-                      ? "bg-closedColor"
-                      : ""
-                  }`}
-                ></div>
-              </div>
-            </Link>
+              </Link>
+            </div>
+          ))
+        ) : (
+          <div className="nocomplant w-full mt-36 h-screen flex flex-col  items-center">
+            <FcEmptyFilter className="text-6xl" />
+            <h1 className="text-lg">No complaints found</h1>
           </div>
-        ))
+        )
       ) : (
-        <div className="nocomplant w-full mt-36 h-screen flex flex-col  items-center">
-          <FcEmptyFilter className="text-6xl" />
-          <h1 className="text-lg">No complaints found</h1>
-        </div>
+        <Loader />
       )}
     </div>
   );

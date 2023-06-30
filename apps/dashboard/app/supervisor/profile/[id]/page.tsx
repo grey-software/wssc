@@ -128,7 +128,6 @@ const ProfileCard = () => {
               ref={imageRef}
               onChange={UpdatePhoto}
               type="file"
-              capture="environment"
               name="image"
             />
             <FaCamera onClick={() => imageRef.current!.click()} />

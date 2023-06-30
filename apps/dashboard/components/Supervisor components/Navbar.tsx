@@ -56,7 +56,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="flex items-center justify-between bg-gray-50 w-screen px-3 py-2 border-1 shadow-md md:shadow-lg fixed top-0 border z-30">
+      <div className="flex items-center justify-between bg-gray-50 w-full px-3 py-2 border-1 shadow-md md:shadow-lg fixed top-0 border z-30">
         <div className="flex items-center justify-center gap-2">
           <Link href="/supervisor">
             <Image src={WSSC?.logo} height={40} width={40} alt="wssc_logo" />
