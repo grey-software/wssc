@@ -1,10 +1,20 @@
-"use client";
+'use client'
 import React from 'react'
-// import CustomChart from './CharBar';
-// import TieChart2 from './TieChart2';
-// import AreaGraph from './AreaGraph';
-// import ComplaintStage from './ComplaintStage';
+import CustomChart from './CharBar';
+import TieChart2 from './TieChart2';
+import AreaGraph from './AreaGraph';
+import ComplaintStage from './ComplaintStage';
+import dynamic from "next/dynamic";
 
+const TieChart = dynamic(() => import("./TieChart2"), {
+  ssr: false,
+});
+const Area_Graph = dynamic(() => import("./AreaGraph"), {
+  ssr: false,
+});
+const ComplaintsChart = dynamic(() => import('./ComplaintStage'), {
+ssr: false,
+});
 
 const ChartSection = () => {
   return (
@@ -15,7 +25,7 @@ const ChartSection = () => {
           <h3 className="text-md text-center text-gray-700 font-semibold mb-2">
             complaints stages
           </h3>
-          {/* <CustomChart /> */}
+          <CustomChart />
           {/* abbreviation */}
           <div className="abbr mt-2 flex flex-wrap justify-center items-center gap-3">
             <div className="sw flex justify-center items-center gap-1">
@@ -48,7 +58,7 @@ const ChartSection = () => {
           <h3 className="text-sm mt-4 text-center text-gray-700 font-semibold mb-5">
             Percentage of registered complaints
           </h3>
-          {/* <TieChart2 /> */}
+          <TieChart />
         </div>
         {/* complaint stage */}
         <div className="tieChart border border-gray-200 bg-slate-50 rounded-md shadow-sm">
@@ -57,6 +67,7 @@ const ChartSection = () => {
             Monthly basis complaints record
           </h3>
           {/* <ComplaintStage /> */}
+          <ComplaintsChart/>
         </div>
       </div>
 
@@ -66,7 +77,7 @@ const ChartSection = () => {
         <h3 className="text-sm text-center text-gray-700 font-semibold mb-5">
           Area Graph of complaints on monthly basis
         </h3>
-        {/* <AreaGraph /> */}
+        <Area_Graph />
       </div>
     </>
   );

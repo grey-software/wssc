@@ -48,7 +48,6 @@ const Page = ({ params }: any) => {
     setPending(true);
     try {
       const res = await API.get(`api/v1/complaints/${complaintId}`, config);
-      console.log(res.data.complaint);
       if (res.data.complaint) {
         setComplaint(res.data.complaint);
       }
