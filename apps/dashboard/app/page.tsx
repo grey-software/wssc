@@ -59,7 +59,7 @@ const Home = () => {
 // JSX SECTION
   return (
     <>
-        {WSSC_CODE && (
+        {WSSC_CODE &&  (
       <div className="container w-full h-auto overflow-x-hidden">
         {/* if the admin has loggedIn successfully then render these compnents */}
             <CardsPage />

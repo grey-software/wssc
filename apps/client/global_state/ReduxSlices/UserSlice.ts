@@ -53,7 +53,7 @@ export const UserSlice = createSlice({
     },
     SignUpSuccess: (state) => {
       state.pending = false;
-      toast.success("Signed in successfully", {
+      toast.success("Your account registered successfully", {
         position: "top-center",
         style: { width: "auto", height: "auto" },
         duration: 3000,

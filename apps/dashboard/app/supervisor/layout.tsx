@@ -9,6 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "supervisor",
+  description: "Supervisors to manage their activities"
 };
 
 export default function RootLayout({
@@ -17,12 +18,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className={`-ml-[280px] -mt-14 ${inter.className}`}>
+    <section
+      className={`-ml-[280px] -mr-10 -mt-20 overflow-x-hidden ${inter.className}`}
+    >
       <Providers>
         {/* React-Toast notification */}
         <Notification />
         <Navbar />
-        <main >{children}</main>
+        <main>{children}</main>
       </Providers>
     </section>
   );

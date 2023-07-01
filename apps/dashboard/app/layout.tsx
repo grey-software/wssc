@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "WSSC-Dashboard",
-  description: "Dashboard for WSSC complaints management",
+  description: "Dashboard for WSSC company",
 };
 
 export default function RootLayout({
