@@ -1,5 +1,4 @@
 import axios from "axios";
-import { config } from "../config";
 
 import {
   ApiRequestStart,
@@ -7,15 +6,27 @@ import {
   ApiRequestError,
 } from "../UserSlice";
 
-const API = axios.create({ baseURL: "http://localhost:7000" });
+// const API = axios.create({ baseURL: "http://localhost:7000" });
+const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
 
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+  const token: any = localStorage.getItem("adminToken");
+  var config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }
+};
 // GET ALL USERS
 export const FetchUsers = async (dispatch: any): Promise<any> => {
   dispatch(ApiRequestStart());
   try {
     const res = await API.get(`api/v1/citizens`, config);
-    console.log(res.data.data);
+    console.log(res.data);
     dispatch(GetUsersSuccess(res.data.data));
+    return res.data;
   } catch (error: any) {
     if (error.response.status == 404) {
       dispatch(ApiRequestError(error.response.status));

@@ -10,6 +10,7 @@ import { FetchUsers } from "@/GlobalState/ApiCalls/userApiCalls";
 import { RootState } from "@/GlobalState/store";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
 import { MdClose } from "react-icons/md";
+import Image from "next/image";
 
 function Users() {
   const dispatch = useDispatch();
@@ -25,9 +26,9 @@ function Users() {
     FetchUsers(dispatch);
   }, []);
 
-  const users = useSelector((state: RootState) => state.User.users);
+  const users:any = useSelector((state: RootState) => state.User.users);
 
-  const user = users.find((u) => u?._id == userId);
+  const user:any = users.find((u:any) => u?._id == userId);
 
   const selectPagehandler = (selectedPage: any) => {
     if (
@@ -251,7 +252,7 @@ function Users() {
             >
               <div className="flex items-start justify-start">
                 <div className="flex flex-col items-center p-10 rounded-md shadow-2xl bg-white border-[1px] border-gray-200">
-                  <img
+                  <Image
                     src={user?.profile_image || "/user.jpg"}
                     className="h-32 w-32 rounded-full"
                     alt={user?.name}

@@ -1,3 +1,4 @@
+"use client";
 import { FaUserCircle, FaUsers } from "react-icons/fa";
 import { MdSpaceDashboard, MdFeedback } from "react-icons/md";
 import { SiFiles } from "react-icons/si";

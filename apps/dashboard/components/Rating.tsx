@@ -1,5 +1,5 @@
+"use client";
 import React from "react";
-import Rating from "react-rating";
 import { AiFillStar } from "react-icons/ai";
 import { BsStarHalf } from "react-icons/bs";
 

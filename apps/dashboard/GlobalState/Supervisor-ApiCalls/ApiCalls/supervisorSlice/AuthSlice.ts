@@ -21,7 +21,7 @@ export const Suprvisor_Slice = createSlice({
             state.pending = false;
             state.SupervisorSiginData = action.payload.supervisor;
             state.WSSC = action.payload.WSSC;
-          
+            localStorage.setItem("supervisorToken", action.payload.supervisorToken);
             toast.success("Signed in successfully", {
                 position: "top-center",
                 style: { width: "auto", height: "auto" },
@@ -39,6 +39,7 @@ export const Suprvisor_Slice = createSlice({
         SupervisorLogout: (state, action) => {
             state.pending = false;
             state.SupervisorSiginData = {};
+            localStorage.removeItem("supervisorToken");
                 toast.success("Logout Successfully", {
                     position: "top-center",
                     style: { width: "auto", height: "auto" },

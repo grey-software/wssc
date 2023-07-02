@@ -1,3 +1,4 @@
+"use client";
 import { RootState } from "@/GlobalState/store";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -8,77 +9,11 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
-  Legend,
+  
 } from "recharts";
 
 const colors = ["#F15025", "#2EAB43", "#2E86AB", "#F2AD35"];
 
-// const getIntroOfPage = (label: any, payload: any): React.JSX.Element => {
-//   if (label === "Closed") {
-//     return (
-//       <div className="style bg-red-600 p-2 border-1 border-white bg-transparent rounded-sm shadow-sm">
-//         <p className="type text-[12px]">Stage: closed</p>
-//         <hr />
-//         <p className="text-[11px]">
-//           <span className="text-bold">{payload[0].value}</span>
-//           {` complaints are closed`}
-//         </p>
-//       </div>
-//     );
-//   }
-//   if (label === "Completed") {
-//     return (
-//       <div className="style bg-blue-500 p-2 border-1 border-white bg-transparent rounded-sm shadow-sm">
-//         <p className="type text-[12px]">Stage: In Progress</p>
-//         <hr />
-//         <p className="text-[11px]">
-//           <span className="text-bold">{payload[0].value}</span>
-//           {` complaints are in progress`}
-//         </p>
-//       </div>
-//     );
-//   }
-//   if (label === "InProgress") {
-//       return (
-//         <div className=" bg-orange-500 p-2 border-1 border-white bg-transparent rounded-sm shadow-sm">
-//           <p className="type text-[12px]">Stage: Pending</p>
-//           <hr />
-//           <p className="text-[11px]">
-//             <span className="text-bold">{payload[0].value}</span>
-//             {` complaints are in pending`}
-//           </p>
-//         </div>
-//       );
-//   }
-//   if (label === "Pending") {
-//      return (
-//        <div className=" bg-yellow-500 p-2 border-1 border-white bg-transparent rounded-sm shadow-sm">
-//          <p className="type text-[12px]">Stage: Delay</p>
-//          <hr />
-//          <p className="text-[11px]">
-//            <span className="text-bold">{payload[0].value}</span>
-//            {` complaints are Delayed`}
-//          </p>
-//        </div>
-//      );
-
-//   }
-
-//   return <></>;
-// };
-
-// const CustomTooltip = ({ active, payload, label }: any) => {
-//   if (active && payload && payload.length) {
-//     return (
-//       <div className="custom-tooltip text-white w-36 h-auto bg-transparent">
-//         <p className="intro text-sm">{getIntroOfPage(label, payload)}</p>
-//       </div>
-//     );
-//   }
-
-//   return null;
-// };
 
 const CustomChart = () => {
   const complaintStatus: any = useSelector(

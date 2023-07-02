@@ -9,7 +9,8 @@ import ChartSection from "@/components/MainPage/ChartSection";
 import { Statistics } from "@/GlobalState/ApiCalls/WSSC_API";
 import { toast } from "react-hot-toast";
 
-export default function Home() {
+const Home = () => {
+
   const navigate = useRouter();
   const dispatch = useDispatch();
 
@@ -53,20 +54,20 @@ export default function Home() {
       // calling an api to fetch statistics of wssc
       StatisticsApi();
     }
-  }, [WSSC_CODE, phone]);
+  }, [ WSSC_CODE, navigate, phone]);
 
+// JSX SECTION
   return (
     <>
+        {WSSC_CODE &&  (
       <div className="container w-full h-auto overflow-x-hidden">
-        {/* card section */}
         {/* if the admin has loggedIn successfully then render these compnents */}
-        {WSSC_CODE && (
-          <>
             <CardsPage />
             <ChartSection />
-          </>
-        )}
       </div>
+        )}
     </>
   );
 }
+
+export default Home;

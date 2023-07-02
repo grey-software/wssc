@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import ProfileMenu from "./ProfileMenu";
 import Link from "next/link";
 import userdp from "../public/user.jpg";
-import type { RootState } from "../global_state/store";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { RootState } from "@/global_state/store";
 import {
   NovuProvider,
   PopoverNotificationCenter,

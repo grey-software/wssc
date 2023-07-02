@@ -2,7 +2,8 @@
 import React from "react";
 import { HiArrowLeft } from "react-icons/hi";
 import Link from "next/link";
-const page = () => {
+
+const Page = () => {
   return (
     <div className="relative w-[365px] sm:w-[450px] md:w-full lg-full xl-w-full">
       <div className="flex items-center justify-between mb-2">
@@ -17,10 +18,10 @@ const page = () => {
             Terms and Conditions
           </span>
         </h3>
-        <div className="w-11"></div>
+        <div className="w-11"> terms and Conditions</div>
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;

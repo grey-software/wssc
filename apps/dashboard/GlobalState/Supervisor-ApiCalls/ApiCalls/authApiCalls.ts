@@ -1,9 +1,19 @@
 import axios from "axios";
-import { config } from "../../config";
 import { ApiFetchingError, ApiFetchingStart, SignInSuccess, SupervisorLogout, UpdateProfile } from "./supervisorSlice/AuthSlice";
 
-const API = axios.create({ baseURL: "http://localhost:7000" });
+// const API = axios.create({ baseURL: "http://localhost:7000" });
+const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
 
+if (typeof window !== 'undefined') {
+    // Perform localStorage action
+    const token: any = localStorage.getItem("supervisorToken");
+    var config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+    }
+};
 // Sign In Supervisor
 export const SupervisorSignIn = async (UserData: any, dispatch: any) => {
     const { phone, password } = UserData;
@@ -13,8 +23,8 @@ export const SupervisorSignIn = async (UserData: any, dispatch: any) => {
         // calling api to check the credentials
         const res = await API.post(
             "api/v1/supervisors/signin",
-            { phone, password },
-            config
+            { phone, password }
+
         );
         dispatch(SignInSuccess(res.data));
         console.log(res.data);
@@ -50,8 +60,6 @@ export const UpdateSupervisor = async (dispatch: any, data:any ) => {
     }
 }
 
-
-
 // supervisor logout
 export const SupervisorLogoutApi = async (dispatch: any) => {
     // SignIn start action
@@ -63,7 +71,6 @@ export const SupervisorLogoutApi = async (dispatch: any) => {
             config
         );
         dispatch(SupervisorLogout("logout successfully"));
-        console.log(res.data);
         return res.data;
     } catch (err: any) {
         console.log(err);

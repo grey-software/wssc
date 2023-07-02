@@ -29,10 +29,11 @@ const CreateComplaint = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
         try {
             const CreateComplaint = new complaint_schema_1.ComplaintModel(req.body);
             yield CreateComplaint.save();
+            console.log("code" + CreateComplaint.WSSC_CODE);
             // SENDING NOTIFICATION TO ADMING
             yield novu.trigger("complaint-status-updated", {
                 to: {
-                    subscriberId: `wsscp25001`,
+                    subscriberId: CreateComplaint.WSSC_CODE,
                 },
                 payload: {
                     id: CreateComplaint === null || CreateComplaint === void 0 ? void 0 : CreateComplaint._id,
@@ -331,9 +332,10 @@ const CitizenFeedback = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
                     message: "Your complaint Assign to you is now closed 🎉",
                 },
             });
+            console.log(complaint.WSSC_CODE);
             yield novu.trigger("complaint-status-updated", {
                 to: {
-                    subscriberId: "wsscp25001",
+                    subscriberId: complaint.WSSC_CODE,
                 },
                 payload: {
                     id: complaintId,

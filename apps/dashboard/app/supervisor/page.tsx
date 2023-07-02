@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
@@ -8,6 +8,7 @@ import HomeScreen from "@/components/Supervisor components/Homepage";
 
 const Page = () => {
   const navigate = useRouter();
+
   const { phone }: any = useSelector(
     (state: RootState) => state.suprvisor.SupervisorSiginData
   );
@@ -26,7 +27,7 @@ const Page = () => {
     }
   }, [WSSC_CODE, phone, navigate]);
 
-  return phone ? <HomeScreen /> : null;
+  return phone && <HomeScreen />;
 };
 
 export default Page;

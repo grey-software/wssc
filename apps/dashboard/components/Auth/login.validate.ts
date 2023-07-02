@@ -1,3 +1,4 @@
+"use client";
 import * as Yup from "yup";
 
 export const login_validate = Yup.object().shape({
@@ -12,6 +13,7 @@ export const login_validate = Yup.object().shape({
     .min(5, "Password must be at least 6 characters")
     .max(15, "Password must not exceed 12 characters"),
 });
+
 
 export const register_supervisor_validate = Yup.object().shape({
   name: Yup.string()

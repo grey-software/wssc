@@ -1,3 +1,4 @@
+"use client";
 import { RootState } from "@/GlobalState/store";
 import React, { PureComponent } from "react";
 import { useSelector } from "react-redux";

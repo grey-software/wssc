@@ -1,8 +1,20 @@
 import axios from "axios";
 import { SignInStart, SignInSuccess, SignInError, ApiRequestStart, ApiRequestError, SignOutUser } from "../UserSlice";
-import { config } from "../config";
 
-const API = axios.create({ baseURL: "http://localhost:7000" });
+// const API = axios.create({ baseURL: "http://localhost:7000" });
+const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
+
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+  const token: any = localStorage.getItem("adminToken");
+  var config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+};
 
 // Sign In Admin
 export const SignIn = async (UserData: any, dispatch: any) => {
@@ -18,6 +30,7 @@ export const SignIn = async (UserData: any, dispatch: any) => {
       config
     );
     dispatch(SignInSuccess(res.data));
+    console.log(res.data)
     return res;
   } catch (err: any) {
     console.log(err);
