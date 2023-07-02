@@ -11,14 +11,15 @@ import { RootState } from "@/GlobalState/store";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
 import { MdClose } from "react-icons/md";
 import Image from "next/image";
+import { user } from "@/GlobalState/UserSlice";
 
 function Users() {
   const dispatch = useDispatch();
   const navigate = useRouter();
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
-  const [userId, setUserId] = useState<string>();
   const [modal, setModal] = useState<boolean>(false);
+  const [userid, setUserId] = useState("");
   const { pending, error }: any = useSelector((state: RootState) => state.User);
   const [success, setSuccess] = useState(error);
 
@@ -26,10 +27,8 @@ function Users() {
     FetchUsers(dispatch);
   }, []);
 
-  const users:any = useSelector((state: RootState) => state.User.users);
-
-  const user:any = users.find((u:any) => u?._id == userId);
-
+  const users: any = useSelector((state: RootState) => state.User.users);
+  const user = users.find((u: any) => u?._id == userid);
   const selectPagehandler = (selectedPage: any) => {
     if (
       selectedPage >= 1 &&
@@ -42,6 +41,11 @@ function Users() {
   const { WSSC_CODE }: any = useSelector(
     (state: RootState) => state.User.SignInData
   );
+
+  const clickHandler = (id: any) => {
+    setUserId(id);
+    setModal(true);
+  };
 
   return (
     <>
@@ -181,10 +185,7 @@ function Users() {
 
                               <td className="px-6 py-4">
                                 <button
-                                  onClick={() => {
-                                    setModal(true);
-                                    setUserId(_id);
-                                  }}
+                                  onClick={() => clickHandler(_id)}
                                   className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 hover:bg-gray-50 border-completedColor hover:text-completedColor"
                                 >
                                   View
@@ -206,7 +207,7 @@ function Users() {
             )}
           </div>
           {users?.length > 10 && !pending && (
-            <div className="flex items-center justify-center w-full -mt-4">
+            <div className="flex items-center justify-center w-full">
               <div className="flex items-center gap-2 text-2xl">
                 <span
                   className={
@@ -256,6 +257,8 @@ function Users() {
                     src={user?.profile_image || "/user.jpg"}
                     className="h-32 w-32 rounded-full"
                     alt={user?.name}
+                    height={100}
+                    width={100}
                   />
                   <h1 className="mt-2 text-center text-xl font-bold">
                     {user?.name}
