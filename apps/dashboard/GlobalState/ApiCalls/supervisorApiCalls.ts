@@ -31,7 +31,6 @@ export const GetSingleSupervisor = async (
   dispatch(ApiRequestStart());
   try {
     const res = await API.get(`api/v1/supervisors/${supervisorId}`, config);
-    console.log(res.data);
     dispatch(GetSingleSupervisorSuccess(res.data.data));
   } catch (error: any) {
     if (error.response) {
@@ -47,7 +46,7 @@ export const GetSingleSupervisor = async (
 };
 
 // REGISTER SUPEVISOR
-export const RegisterSupervisor = async (
+export const RegisterSupervisor:any = async (
   userData: any,
   dispatch: any
 ): Promise<any> => {
@@ -58,8 +57,7 @@ export const RegisterSupervisor = async (
   try {
     const res = await API.post(
       "api/v1/supervisors/register",
-      { name, phone, password },
-      { withCredentials: true }
+      { name, phone, password }, config,
     );
     console.log(res.data);
     dispatch(RegisterNewSupervisor(res.data));
@@ -86,7 +84,6 @@ export const DeleteSupervisor = async (
   try {
     const res = await API.delete(`api/v1/supervisors/${supervisorId}`, config);
     dispatch(DeleteSupervisorSuccess());
-    console.log(res);
     return res.data;
   } catch (err: any) {
     if (err.response) {
@@ -99,13 +96,15 @@ export const DeleteSupervisor = async (
     }
   }
 };
-
+// Update Supervisor
+export const UpdateSupervisor = async () => {
+  
+}
 // GET ALL SUPERVISORS
 export const FetchAllSupervisors = async (dispatch: any): Promise<any> => {
   dispatch(ApiRequestStart());
   try {
     const res = await API.get("api/v1/supervisors", config);
-    console.log(res.data.data);
     dispatch(GetSupervisorsSuccess(res.data.data));
   } catch (error: any) {
     if (error.response) {

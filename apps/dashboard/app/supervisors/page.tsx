@@ -52,17 +52,23 @@ function Supervisors({}: Props) {
 
   const onSubmit = async (data: any) => {
     console.log(data);
-
-    // CALLING API FUNCTION
-    RegisterSupervisor(data, dispatch);
-
-    // AFTER CALLING API RESET FORM AND CLOSE MODAL
-    reset();
-    setModal(false);
+   try {
+     // CALLING API FUNCTION
+    const res = await RegisterSupervisor(data, dispatch);
+     if (res == 200) {
+       //AFTER CALLING API RESET FORM AND CLOSE MODAL
+       reset();
+       setModal(false);
+     }
+   
+   } catch (error) {
+       console.log(error);
+   }
+   
   };
 
-  const DeleteUpervisor = () => {
-    const status = DeleteSupervisor(deleteId, dispatch);
+  const DeleteUpervisor = async() => {
+    const status = await DeleteSupervisor(deleteId, dispatch);
     setDeleteModal(!deleteModal);
     console.log(status);
     // if (status != 200)

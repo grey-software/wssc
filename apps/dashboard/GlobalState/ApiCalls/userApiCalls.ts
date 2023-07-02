@@ -24,8 +24,9 @@ export const FetchUsers = async (dispatch: any): Promise<any> => {
   dispatch(ApiRequestStart());
   try {
     const res = await API.get(`api/v1/citizens`, config);
-    console.log(res.data.data);
+    console.log(res.data);
     dispatch(GetUsersSuccess(res.data.data));
+    return res.data;
   } catch (error: any) {
     if (error.response.status == 404) {
       dispatch(ApiRequestError(error.response.status));
