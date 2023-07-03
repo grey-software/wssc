@@ -65,8 +65,8 @@ const Header = () => {
               {/* show for mobile screen */}
               <Image
                 src={UserInfo?.profile_image ? UserInfo?.profile_image : userdp}
-                width={32}
-                height={32}
+                width={50}
+                height={50}
                 className={`block sm:block md:hidden lg:hidden xl:hidden w-8 h-8 rounded-full object-cover cursor-pointer`}
                 alt="profileIcon"
                 onClick={() => setMenuActive(!menuActive)}
@@ -74,8 +74,8 @@ const Header = () => {
               {/* show for tablets and desktops  */}
               <Image
                 src={UserInfo?.profile_image ? UserInfo?.profile_image : userdp}
-                width={32}
-                height={32}
+                width={50}
+                height={50}
                 className={`hidden sm:hidden md:block lg:block xl:block w-8 h-8 rounded-full object-cover cursor-pointer`}
                 alt="profileIcon"
                 onClick={() => navigate.push(`profile/${UserInfo._id}`)}

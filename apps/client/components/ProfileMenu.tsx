@@ -57,7 +57,7 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
               className="flex items-center gap-2 px-2 bg-[#A4C9D1] rounded-md"
               onClick={() => setMenuActive(!menuActive)}
             >
-              <span>Edit</span>
+              <span>Update</span>
               <FaEdit />
             </button>
           </Link>

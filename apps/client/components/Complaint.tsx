@@ -61,22 +61,24 @@ const Complaint = ({
         </div>
         <div className="flex items-center gap-3 text-sm text-gray-600">
           <p>Compliant ID:</p>
-          <span className="uppercase">{complaintID.slice(-8)}</span>
+          <span className="uppercase text-black">{complaintID.slice(-8)}</span>
         </div>
         <div className="flex items-center gap-3 text-sm text-gray-600">
           <p>Submited On:</p>
-          <span>{submitedOn.split("T")[0]}</span>
+          <span className="text-black">{submitedOn.split("T")[0]}</span>
         </div>
         <div className="flex  gap-3 text-sm text-gray-600">
           <p>Address:</p>
-          <span className="w-24">{address}</span>
+          <span className="w-24 sm:w-auto md:w-auto lg:w-auto xl:w-auto text-black">
+            {address}
+          </span>
         </div>
       </div>
       <Image
         src={complaintPic}
         className="h-36 w-32 rounded-md object-cover"
-        width={80}
-        height={50}
+        width={500}
+        height={500}
         alt=""
       />
       <div

@@ -14,6 +14,7 @@ const Timeline = ({ params }: any) => {
   const navigate = useRouter();
   const [complaint, setComplaint] = useState<complaintTypes>();
   const [loading, setLoading] = useState<boolean>();
+  const [showImage, setShowImage] = useState<boolean>();
 
   // Fetching Single Complaint from Server
   const FetchSingleComplaint = async (): Promise<any> => {
@@ -118,14 +119,15 @@ const Timeline = ({ params }: any) => {
             </div>
           </div>
           <Image
+            onClick={() => setShowImage(true)}
             src={`${
               complaint?.ImageUrl
                 ? complaint?.ImageUrl
                 : "/assets/complaintDefaultPic.png"
             }`}
-            width={80}
-            height={50}
-            className="h-36 w-32 rounded-md object-cover"
+            width={500}
+            height={500}
+            className="h-36 w-32 rounded-md object-cover cursor-pointer"
             alt=""
           />
           <div
@@ -159,6 +161,25 @@ const Timeline = ({ params }: any) => {
           complaintId={complaint?._id}
           userfeedback={complaint?.feedback}
         />
+      )}
+
+      {showImage && (
+        <div
+          className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center h-screen w-screen bg-gray-400 bg-opacity-70 z-20 cursor-pointer"
+          onClick={() => setShowImage(false)}
+        >
+          <Image
+            src={`${
+              complaint?.ImageUrl
+                ? complaint?.ImageUrl
+                : "/assets/complaintDefaultPic.png"
+            }`}
+            width={500}
+            height={500}
+            className="absolute h-[75%] w-auto mx-2 rounded-md object-contain z-50"
+            alt=""
+          />
+        </div>
       )}
     </div>
   );
