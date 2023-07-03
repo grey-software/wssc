@@ -414,7 +414,7 @@ function Supervisors({}: Props) {
                   <div>
                     <label
                       htmlFor="name"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      className="block mb-2 text-sm font-medium text-gray-900 "
                     >
                       Supervisor Name
                     </label>
@@ -427,7 +427,7 @@ function Supervisors({}: Props) {
              outline-none
              block w-full p-2
              focus:border-primaryColor-500
-             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  
+             
              ${errors.name ? "focus:border-red-500" : ""}
              `}
                       placeholder="John Doe"
@@ -453,7 +453,7 @@ function Supervisors({}: Props) {
              outline-none
              block w-full p-2 
              focus:border-primaryColor-500
-             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  
+             
              ${errors.phone ? "focus:border-red-500" : ""}
              `}
                       placeholder="03*********"
@@ -479,7 +479,7 @@ function Supervisors({}: Props) {
                  outline-none
                  block w-full p-2
                  focus:border-primaryColor-500
-                 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  
+                 
                  ${errors.password ? "focus:border-red-500" : ""}
                  `}
                     />
