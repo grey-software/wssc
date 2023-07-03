@@ -27,7 +27,7 @@ function ShareApp({ sharePop, setSharePop }: Props) {
     });
   };
   return (
-    <div className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center w-screen h-screen bg-slate-200 bg-opacity-50 transition-all z-40">
+    <div className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center w-screen h-screen bg-slate-200 bg-opacity-50 transition-all z-50">
       <div className="flex flex-col gap-12 shadow-2xl bg-white px-5 py-5 rounded-md  z-50">
         {/* closing btn */}
         <div className="flex items-center justify-between font-semibold">

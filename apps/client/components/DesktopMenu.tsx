@@ -6,7 +6,7 @@ import { FiShare2 } from "react-icons/fi";
 import { MdOutlinePrivacyTip } from "react-icons/md";
 import { AiOutlineFileProtect } from "react-icons/ai";
 import { TbFileStack } from "react-icons/tb";
-import { TbLogout } from "react-icons/tb";
+import { BiLogOutCircle } from "react-icons/bi";
 import { FaEdit } from "react-icons/fa";
 import { MdOutlineContactPhone } from "react-icons/md";
 import ShareApp from "./ShareApp";
@@ -41,8 +41,9 @@ const DesktopMenu = () => {
                 <Image
                   src={user?.profile_image || user}
                   className="h-28 w-28 rounded-full border-1 border-gray-300 "
-                  width={128}
-                  height={128}
+                  width={200}
+                  height={200}
+                  loading="lazy"
                   alt=""
                 />
               )}
@@ -113,7 +114,7 @@ const DesktopMenu = () => {
               onClick={LogOut}
               className="flex items-center gap-2  text-sm font-semibold px-4 py-2 hover:bg-gray-100 rounded-full transition-all w-40"
             >
-              <TbLogout className="text-[24px] text-red-500" />
+              <BiLogOutCircle className="text-[24px] text-red-500" />
               <span className="text-gray-700">Log out</span>
             </button>
           </div>
