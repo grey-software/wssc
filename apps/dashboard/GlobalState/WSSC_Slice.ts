@@ -25,6 +25,14 @@ export const StatisticSlice = createSlice({
             state.complaintsStatus = action.payload.complaintsStatus;
             state.OrganizationRating = action.payload.ratingAverages;
         },
+
+        // Cleaned organization statistics
+        ClearStatisticsRecord: (state) => {
+            state.data = {},
+            state.complaints = {},
+            state.complaintsStatus = {},
+            state.OrganizationRating = {}
+        },
         
         ApiRequestError: (state) => {
             state.loading = false
@@ -34,6 +42,6 @@ export const StatisticSlice = createSlice({
     }
 })
 
-export const { ApiRequestStart, ApiRequestError, ApiRequestSuccess } = StatisticSlice.actions;
+export const { ApiRequestStart, ApiRequestError, ApiRequestSuccess, ClearStatisticsRecord } = StatisticSlice.actions;
 
 export default StatisticSlice.reducer;

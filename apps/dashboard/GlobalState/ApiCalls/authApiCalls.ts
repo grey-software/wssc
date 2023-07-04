@@ -1,5 +1,6 @@
 import axios from "axios";
 import { SignInStart, SignInSuccess, SignInError, ApiRequestStart, ApiRequestError, SignOutUser } from "../UserSlice";
+import { ClearStatisticsRecord } from "../WSSC_Slice";
 
 // const API = axios.create({ baseURL: "http://localhost:7000" });
 const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
@@ -50,6 +51,7 @@ export const LOGOUT = async (dispatch: any) => {
     const res = await API.get("api/v1/wssc/logout")
     console.log(res);
     dispatch(SignOutUser());
+    dispatch(ClearStatisticsRecord())
     return res;
   } catch (error) {
     console.log(error)
