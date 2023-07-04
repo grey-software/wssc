@@ -28,13 +28,15 @@ function Supervisors({}: Props) {
   const [updateId, setUpdateId] = useState<string>("");
   const [deleteId, setDeleteId] = useState<string>("");
 
+  // getting token from store
+  const token: any = useSelector((state: RootState) => state.User.adminToken);
   const { loading, error } = useSelector(
     (state: RootState) => state.Supervisor
   );
   const [success, setSuccess] = useState(error);
 
   useEffect(() => {
-    FetchAllSupervisors(dispatch);
+    FetchAllSupervisors(dispatch, token);
   }, []);
 
   const supervisors = useSelector(
@@ -52,23 +54,21 @@ function Supervisors({}: Props) {
 
   const onSubmit = async (data: any) => {
     console.log(data);
-   try {
-     // CALLING API FUNCTION
-    const res = await RegisterSupervisor(data, dispatch);
-     if (res == 200) {
-       //AFTER CALLING API RESET FORM AND CLOSE MODAL
-       reset();
-       setModal(false);
-     }
-   
-   } catch (error) {
-       console.log(error);
-   }
-   
+    try {
+      // CALLING API FUNCTION
+      const res = await RegisterSupervisor(data, dispatch);
+      if (res == 200) {
+        //AFTER CALLING API RESET FORM AND CLOSE MODAL
+        reset();
+        setModal(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const DeleteUpervisor = async() => {
-    const status = await DeleteSupervisor(deleteId, dispatch);
+  const DeleteUpervisor = async () => {
+    const status = await DeleteSupervisor(deleteId, dispatch, token);
     setDeleteModal(!deleteModal);
     console.log(status);
     // if (status != 200)

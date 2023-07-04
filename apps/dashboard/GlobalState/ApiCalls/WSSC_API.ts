@@ -16,12 +16,17 @@ if (typeof window !== 'undefined') {
 };
 
 // Sign In Admin
-export const Statistics = async (dispatch:any) => {
+export const Statistics = async (dispatch: any, token:any) => {
   
    dispatch(ApiRequestStart())
 
    try {
-       const res = await API.get('api/v1/wssc/statistics', config);
+     const res = await API.get('api/v1/wssc/statistics', {
+       headers: {
+         "Content-Type": "application/json",
+         Authorization: `Bearer ${token}`,
+       },
+});
      console.log(res.data)
      dispatch(ApiRequestSuccess(res.data))
        return res.data;

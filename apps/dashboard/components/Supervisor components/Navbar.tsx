@@ -25,9 +25,13 @@ const Navbar = () => {
   const { _id, profile_image }: any = useSelector(
     (state: RootState) => state.suprvisor.SupervisorSiginData
   );
+  // getting supervisorToken from store
+  const token: any = useSelector(
+    (state: RootState) => state.suprvisor.supervisorToken
+  );
 
   const WSSC: any = useSelector((state: RootState) => state.suprvisor.WSSC);
-  
+
   function onNotificationClick(message: IMessage) {
     // your logic to handle the notification click
     if (message?.cta?.data?.url) {
@@ -38,7 +42,7 @@ const Navbar = () => {
   // logout method definition
   const Logout = async () => {
     try {
-      const res = await SupervisorLogoutApi(dispatch);
+      const res = await SupervisorLogoutApi(dispatch, token);
       console.log(res);
       if (res.status == 200) {
         navigate.push("/auth");
@@ -68,7 +72,10 @@ const Navbar = () => {
                 <p className="hover:text-green-500 cursor-pointer">Profile</p>
               </Link>
 
-              <p onClick={Logout} className="hover:text-green-500 cursor-pointer">
+              <p
+                onClick={Logout}
+                className="hover:text-green-500 cursor-pointer"
+              >
                 Logout
               </p>
             </div>
@@ -112,7 +119,7 @@ const Navbar = () => {
               >
                 <p className="hover:text-green-500">Profile</p>
               </Link>
-             
+
               <p onClick={Logout} className="hover:text-green-500">
                 Logout
               </p>

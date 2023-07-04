@@ -12,25 +12,31 @@ import {
 // const API = axios.create({ baseURL: "http://localhost:7000" });
 const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
 
-if (typeof window !== 'undefined') {
-  // Perform localStorage action
-  const token: any = localStorage.getItem("adminToken");
-  var config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }
-};
+// if (typeof window !== 'undefined') {
+//   // Perform localStorage action
+//   const token: any = localStorage.getItem("adminToken");
+//   var config = {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//   }
+// };
 
 // GET SINGLE SUPERVISOR
 export const GetSingleSupervisor = async (
   dispatch: any,
-  supervisorId: any
+  supervisorId: any,
+  token:any
 ): Promise<any> => {
   dispatch(ApiRequestStart());
   try {
-    const res = await API.get(`api/v1/supervisors/${supervisorId}`, config);
+    const res = await API.get(`api/v1/supervisors/${supervisorId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+});
     dispatch(GetSingleSupervisorSuccess(res.data.data));
   } catch (error: any) {
     if (error.response) {
@@ -48,7 +54,8 @@ export const GetSingleSupervisor = async (
 // REGISTER SUPEVISOR
 export const RegisterSupervisor:any = async (
   userData: any,
-  dispatch: any
+  dispatch: any,
+  token:any
 ): Promise<any> => {
   console.log(userData);
   const { name, phone, password } = userData;
@@ -57,7 +64,12 @@ export const RegisterSupervisor:any = async (
   try {
     const res = await API.post(
       "api/v1/supervisors/register",
-      { name, phone, password }, config,
+      { name, phone, password }, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+},
     );
     console.log(res.data);
     dispatch(RegisterNewSupervisor(res.data));
@@ -78,11 +90,17 @@ export const RegisterSupervisor:any = async (
 // DELETE SUPERVISOR
 export const DeleteSupervisor = async (
   supervisorId: any,
-  dispatch: any
+  dispatch: any,
+  token:any
 ): Promise<any> => {
   dispatch(ApiRequestStart());
   try {
-    const res = await API.delete(`api/v1/supervisors/${supervisorId}`, config);
+    const res = await API.delete(`api/v1/supervisors/${supervisorId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+} );
     dispatch(DeleteSupervisorSuccess());
     return res.data;
   } catch (err: any) {
@@ -101,10 +119,15 @@ export const UpdateSupervisor = async () => {
   
 }
 // GET ALL SUPERVISORS
-export const FetchAllSupervisors = async (dispatch: any): Promise<any> => {
+export const FetchAllSupervisors = async (dispatch: any, token:any): Promise<any> => {
   dispatch(ApiRequestStart());
   try {
-    const res = await API.get("api/v1/supervisors", config);
+    const res = await API.get("api/v1/supervisors", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+});
     dispatch(GetSupervisorsSuccess(res.data.data));
   } catch (error: any) {
     if (error.response) {

@@ -18,6 +18,8 @@ const Page = ({ params }: any) => {
   const dispatch = useDispatch();
   const navigate = useRouter();
   const [state, setState] = useState<string>("AllComplaints");
+  // getting token from store
+  const token: any = useSelector((state: RootState) => state.User.adminToken);
   let one = 0;
   let two = 0;
   let three = 0;
@@ -26,8 +28,8 @@ const Page = ({ params }: any) => {
   let totalFeedbacks = 0;
 
   useEffect(() => {
-    GetSingleSupervisor(dispatch, id);
-    FetchSupervisorComplaints(id, dispatch);
+    GetSingleSupervisor(dispatch, id, token);
+    FetchSupervisorComplaints(id, dispatch, token);
   }, []);
 
   const supervisor: any = useSelector(

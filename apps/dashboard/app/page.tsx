@@ -17,6 +17,10 @@ const Home = () => {
   const { WSSC_CODE }: any = useSelector(
     (state: RootState) => state.User.SignInData
   );
+// getting token from store
+   const token:any = useSelector(
+     (state: RootState) => state.User.adminToken
+   );
 
   // getting supervisor data from global store
   const { phone }: any = useSelector(
@@ -26,7 +30,7 @@ const Home = () => {
   // A method definition to fetch all records/statistics that are associated with logged wssc organization
   const StatisticsApi = async () => {
     try {
-      await Statistics(dispatch);
+      await Statistics(dispatch, token);
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong to fetch statistics data", {

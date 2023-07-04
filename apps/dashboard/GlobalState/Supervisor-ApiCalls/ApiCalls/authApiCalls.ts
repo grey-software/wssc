@@ -45,10 +45,15 @@ export const SupervisorSignIn = async (UserData: any, dispatch: any) => {
 };
 
 // ----- update supervisor profile ------------
-export const UpdateSupervisor = async (dispatch: any, data:any ) => {
+export const UpdateSupervisor = async (dispatch: any, data: any, token:any ) => {
     dispatch(ApiFetchingStart);
     try {
-        const res = await API.patch(`api/v1/supervisors/${data.suprvisorId}`, { profile_image: data.updatedpic.profile_image }, config);
+        const res = await API.patch(`api/v1/supervisors/${data.suprvisorId}`, { profile_image: data.updatedpic.profile_image }, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+});
         dispatch(UpdateProfile(res.data.data))
         return res.status;
     } catch (err: any) {
@@ -61,14 +66,19 @@ export const UpdateSupervisor = async (dispatch: any, data:any ) => {
 }
 
 // supervisor logout
-export const SupervisorLogoutApi = async (dispatch: any) => {
+export const SupervisorLogoutApi = async (dispatch: any, token:any) => {
     // SignIn start action
     dispatch(ApiFetchingStart);
     try {
         // calling api to check the credentials
         const res = await API.post(
             "api/v1/supervisors/logout",
-            config
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+}
         );
         dispatch(SupervisorLogout("logout successfully"));
         return res.data;

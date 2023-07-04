@@ -21,13 +21,14 @@ const Feedback = (): React.JSX.Element => {
   let four = 0;
   let five = 0;
   let totalFeedbacks = 0;
-
+  // getting token from store
+  const token: any = useSelector((state: RootState) => state.User.adminToken);
   const { loading, error }: any = useSelector(
     (state: RootState) => state.Complaint
   );
   const [success, setSuccess] = useState(error);
   useEffect(() => {
-    FetchAllComplaints(dispatch);
+    FetchAllComplaints(dispatch, token);
   }, []);
 
   const complaints = useSelector(

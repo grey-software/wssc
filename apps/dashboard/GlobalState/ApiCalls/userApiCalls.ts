@@ -11,21 +11,26 @@ const API = axios.create({
   baseURL: "https://fyp-backend-production-27a1.up.railway.app/",
 });
 
-if (typeof window !== "undefined") {
-  // Perform localStorage action
-  const token: any = localStorage.getItem("adminToken");
-  var config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-}
+// if (typeof window !== "undefined") {
+//   // Perform localStorage action
+//   const token: any = localStorage.getItem("adminToken");
+//   var config = {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//   };
+// }
 // GET ALL USERS
-export const FetchUsers = async (dispatch: any): Promise<any> => {
+export const FetchUsers = async (dispatch: any, token:any): Promise<any> => {
   dispatch(ApiRequestStart());
   try {
-    const res = await API.get(`api/v1/citizens`, config);
+    const res = await API.get(`api/v1/citizens`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+});
     console.log(res.data);
     dispatch(GetUsersSuccess(res.data.data.allUsers));
     return res.data;

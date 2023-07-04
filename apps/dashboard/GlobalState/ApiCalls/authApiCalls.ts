@@ -4,17 +4,16 @@ import { SignInStart, SignInSuccess, SignInError, ApiRequestStart, ApiRequestErr
 // const API = axios.create({ baseURL: "http://localhost:7000" });
 const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
 
-if (typeof window !== 'undefined') {
-  // Perform localStorage action
-  const token: any = localStorage.getItem("adminToken");
-  var config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }
-
-};
+// if (typeof window !== 'undefined') {
+//   // Perform localStorage action
+//   const token: any = localStorage.getItem("adminToken");
+//   var config = {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//   }
+// };
 
 // Sign In Admin
 export const SignIn = async (UserData: any, dispatch: any) => {
@@ -26,8 +25,7 @@ export const SignIn = async (UserData: any, dispatch: any) => {
     // calling api to check the credentials
     const res = await API.post(
       "api/v1/wssc/signin",
-      { WSSC_CODE, password },
-      config
+      { WSSC_CODE, password }
     );
     dispatch(SignInSuccess(res.data));
     console.log(res.data)
@@ -49,7 +47,7 @@ export const LOGOUT = async (dispatch: any) => {
   dispatch(ApiRequestStart());
 
   try {
-    const res = await API.get("api/v1/wssc/logout", config)
+    const res = await API.get("api/v1/wssc/logout")
     console.log(res);
     dispatch(SignOutUser());
     return res;
