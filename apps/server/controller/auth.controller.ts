@@ -29,7 +29,7 @@ export const SignUp = async (
   const { error } = SignUp_validate(req.body);
   // below statement will call if there is data not valid
   if (error) return res.send(error.details[0].message);
-  console.log(req.body)
+  console.log(req.body);
 
   const { name, phone, password, WSSC_CODE }: any = req.body;
   // encrypt password by using bcrypt algorithm
@@ -55,7 +55,7 @@ export const SignUp = async (
 
       res.status(200).json(createUser);
     } else {
-      res.status(400).send("This phone number has already registered!");
+      res.status(400).send("This phone number is already registered!");
     }
   } catch (err) {
     // next(err);
@@ -102,15 +102,15 @@ export const SignIn = async (
         success: false,
         message: "Password is incorrect",
       });
-    
+
     // Getting WSSC data which is associated with citizen
     const WSSC: any = await AdminsModel.findOne({ WSSC_CODE: User?.WSSC_CODE });
-    console.log(WSSC)
+    console.log(WSSC);
     const WSSC_DATA = {
       fullname: WSSC.fullname,
       shortname: WSSC.shortname,
-      logo: WSSC.logo
-    }
+      logo: WSSC.logo,
+    };
     // if the user credential is okay then we assign/send jwt token for authentication and authorization
     const token: string = jwt.sign(
       {
@@ -129,7 +129,7 @@ export const SignIn = async (
         httpOnly: true,
       })
       .status(200)
-      .json({success: true, status: 200, user:detail, WSSC: WSSC_DATA});
+      .json({ success: true, status: 200, user: detail, WSSC: WSSC_DATA });
   } catch (error) {
     next(error);
   }

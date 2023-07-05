@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/global_state/store";
 import { LOGOUT } from "@/global_state/ApiCalls/authApiCalls";
+import userpic from "../public/user.jpg";
 
 const DesktopMenu = () => {
   const user: any = useSelector((state: RootState) => state.users?.UserInfo);
@@ -30,23 +31,21 @@ const DesktopMenu = () => {
     navigate.push("/");
   };
 
-  // im writing this just for the purpose of checking
   return (
     <>
       {user && (
         <div className="container w-full py-3 mt-[70px] hidden sm:hidden md:flex lg:flex xl:flex border-2 border-gray-200 rounded-md  bg-white">
           <div className="flex flex-col justify-between gap-8 px-6">
             <div className="flex flex-col gap-3 mt-4">
-              {user?.profile_image && (
-                <Image
-                  src={user?.profile_image || user}
-                  className="h-28 w-28 rounded-full border-1 border-gray-300 "
-                  width={200}
-                  height={200}
-                  loading="lazy"
-                  alt=""
-                />
-              )}
+              <Image
+                src={user?.profile_image ? user.profile_image : userpic}
+                className="h-28 w-28 rounded-full border-1 border-gray-300 object-cover"
+                width={200}
+                height={200}
+                loading="lazy"
+                alt=""
+              />
+
               <h1 className="text-xl text-headingColor-400 font-bold">
                 {user?.name}
               </h1>

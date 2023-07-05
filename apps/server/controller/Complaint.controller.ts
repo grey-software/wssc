@@ -35,7 +35,7 @@ export const CreateComplaint = async (
         },
         payload: {
           id: CreateComplaint?._id,
-          message: "A New Complaint is filed, Refresh Complaint page to show",
+          message: "A new complaint is filed, refresh complaint page to show",
         },
       });
 
