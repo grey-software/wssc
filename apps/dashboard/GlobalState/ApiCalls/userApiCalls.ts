@@ -6,10 +6,10 @@ import {
   ApiRequestError,
 } from "../UserSlice";
 
-const API = axios.create({ baseURL: "http://localhost:7000" });
-// const API = axios.create({
-//   baseURL: "https://fyp-backend-production-27a1.up.railway.app/",
-// });
+// const API = axios.create({ baseURL: "http://localhost:7000" });
+const API = axios.create({
+  baseURL: "https://fyp-backend-production-27a1.up.railway.app/",
+});
 
 // GET ALL USERS
 export const FetchUsers = async (dispatch: any, token:any): Promise<any> => {
