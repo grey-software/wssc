@@ -22,9 +22,6 @@ function Users() {
   const { pending, error, adminToken }: any = useSelector((state: RootState) => state.User);
   const [success, setSuccess] = useState(error);
 
-  useEffect(() => {
-    FetchUsers(dispatch, adminToken);
-  }, []);
 
   const users: any = useSelector((state: RootState) => state.User.users);
   const user = users.find((u: any) => u?._id == userid);
@@ -46,6 +43,15 @@ function Users() {
     setModal(true);
   };
 
+  useEffect(() => {
+    const FetchingCitizens = async () => {
+      await FetchUsers(dispatch, adminToken);
+    }
+
+    FetchingCitizens();
+  }, []);
+
+  // JSX SECTION
   return (
     <>
       {WSSC_CODE && (
