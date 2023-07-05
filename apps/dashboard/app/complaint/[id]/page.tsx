@@ -19,13 +19,6 @@ import { toast } from "react-hot-toast";
 import { complaintTypes } from "@/@types/complaintTypes.types";
 
 const Page = ({ params }: any) => {
-  const token: any = localStorage.getItem("adminToken");
-  var config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
   const id = params.id;
   const dispatch = useDispatch();
   const navigate = useRouter();
@@ -36,10 +29,11 @@ const Page = ({ params }: any) => {
   const [pending, setPending] = useState(true);
   const [error, setError] = useState<boolean>(false);
   const loading = useSelector((state: RootState) => state.Complaint.loading);
-
   const supervisors = useSelector(
     (state: RootState) => state.Supervisor.supervisorsAll
   );
+  // getting token from store
+  const token: any = useSelector((state: RootState) => state.User.adminToken);
 
   const rates: number[] = [1, 2, 3, 4, 5];
 
@@ -47,7 +41,12 @@ const Page = ({ params }: any) => {
   const FetchComplaint = async (complaintId: any): Promise<any> => {
     setPending(true);
     try {
-      const res = await API.get(`api/v1/complaints/${complaintId}`, config);
+      const res = await API.get(`api/v1/complaints/${complaintId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (res.data.complaint) {
         setComplaint(res.data.complaint);
       }
@@ -78,7 +77,7 @@ const Page = ({ params }: any) => {
 
   useEffect(() => {
     FetchComplaint(id);
-    FetchAllSupervisors(dispatch);
+    FetchAllSupervisors(dispatch, token);
   }, []);
 
   const handleAssign = async () => {
@@ -92,7 +91,7 @@ const Page = ({ params }: any) => {
     }
 
     try {
-      const res: any = await AssignComplaint(dispatch, supervisorId, id);
+      const res: any = await AssignComplaint(dispatch, supervisorId, id, token);
       if (res.status == 200) {
         await FetchComplaint(id);
       } else {
@@ -120,7 +119,7 @@ const Page = ({ params }: any) => {
       return;
     }
 
-    AddStatement(complaint?._id, wsscStatement, dispatch);
+    AddStatement(complaint?._id, wsscStatement, dispatch, token);
     complaint && setComplaint({ ...complaint, wsscStatement: wsscStatement });
   };
 

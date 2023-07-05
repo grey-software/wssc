@@ -39,6 +39,8 @@ const HomeScreen = () => {
   const allcomplaints = useSelector(
     (state: RootState) => state.supervisorComplaints.SupervisorComplaints
   );
+// getting supervisorToken from store
+  const token: any = useSelector((state: RootState) => state.suprvisor.supervisorToken);
 
   const dispatch = useDispatch();
   const [complaints, setcomplaints] = useState<any[]>(allcomplaints);
@@ -65,7 +67,7 @@ const HomeScreen = () => {
   const FetchSupervisorComplaints = async () => {
     setloading(true);
     try {
-      const allcomplaints = await SupervisorComplaints(dispatch);
+      const allcomplaints = await SupervisorComplaints(dispatch, token);
       setcomplaints(allcomplaints);
       setloading(false);
     } catch (error) {

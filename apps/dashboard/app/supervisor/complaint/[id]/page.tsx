@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import { MdDone } from "react-icons/md";
 import { HiArrowLeft } from "react-icons/hi";
 import Loader from "@/app/loading";
+import { useSelector } from "react-redux";
+import { RootState } from "@/GlobalState/store";
 
 const Page = ({ params }: any) => {
   const navigate = useRouter();
@@ -26,6 +28,11 @@ const Page = ({ params }: any) => {
   const [complaintDes, setcomplaintDes] = useState("");
   const DescRef = useRef<HTMLTextAreaElement>(null);
   const [loading, setloading] = useState(false);
+
+  // getting supervisorToken from store
+  const token: any = useSelector(
+    (state: RootState) => state.suprvisor.supervisorToken
+  );
 
   // SubmiResponse method definition express supervisor response on complaint resolution
   const SubmitResponse = async () => {
@@ -54,7 +61,7 @@ const Page = ({ params }: any) => {
       };
 
       // Call Supervisor response API to update the complaint status
-      const res = await SupervisorComplaintResponse(response);
+      const res = await SupervisorComplaintResponse(response, token);
       if (res.status == 200) {
         toast.success("Response submitted Successfully", {
           position: "top-center",
@@ -65,7 +72,6 @@ const Page = ({ params }: any) => {
     } catch (error) {
       console.log(error);
     }
-
   };
 
   // upload media attachments in optimized way
@@ -118,7 +124,7 @@ const Page = ({ params }: any) => {
   const FetchComplaint = async () => {
     setloading(true);
     try {
-      const res = await FetchSingleComplaint(params.id);
+      const res = await FetchSingleComplaint(params.id, token);
       if (res.status == 200) {
         console.log(res.complaint);
         setcomplaint(res.complaint);

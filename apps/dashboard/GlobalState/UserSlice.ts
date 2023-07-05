@@ -19,6 +19,7 @@ export const UserSlice = createSlice({
     error: false,
     SignInData: {},
     users: <user[]>(<unknown>[]),
+    adminToken: "",
   },
   reducers: {
     SignInStart: (state) => {
@@ -27,7 +28,7 @@ export const UserSlice = createSlice({
     SignInSuccess: (state, action) => {
       state.pending = false;
       state.SignInData = action.payload.detail;
-      localStorage.setItem("adminToken", action.payload.adminToken);
+      state.adminToken = action.payload.adminToken;
       toast.success("Signed in successfully", {
         position: "top-center",
         style: { width: "auto", height: "auto" },
@@ -48,7 +49,7 @@ export const UserSlice = createSlice({
     SignOutUser: (state) => {
       state.SignInData = "";
       state.pending = false;
-      localStorage.removeItem("adminToken");
+      state.adminToken = "";
     },
 
     ApiRequestStart: (state) => {

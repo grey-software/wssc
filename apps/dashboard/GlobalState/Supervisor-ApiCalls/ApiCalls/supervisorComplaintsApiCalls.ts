@@ -16,14 +16,19 @@ if (typeof window !== 'undefined') {
 };
 
 // Sign In Supervisor
-export const SupervisorComplaints = async ( dispatch: any) => {
+export const SupervisorComplaints = async ( dispatch: any, token:any) => {
     // SignIn start action
     dispatch(ApiRequestStart());
     try {
         // calling api to check the credentials
         const res = await API.get(
             "api/v1/complaints",
-            config
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+}
         );
         dispatch(SupervisorAllComplaintsSuccess(res.data.allComplaints));
         return res.data.allComplaints;
@@ -41,10 +46,15 @@ export const SupervisorComplaints = async ( dispatch: any) => {
 
 
 // fetch single complaint
-export const FetchSingleComplaint = async (complaintId: any): Promise<any> => {
+export const FetchSingleComplaint = async (complaintId: any, token:any): Promise<any> => {
     console.log(complaintId)
     try {
-        const res = await API.get(`api/v1/complaints/${complaintId}`, config);
+        const res = await API.get(`api/v1/complaints/${complaintId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+});
         return res.data;
     } catch (err: any) {
         console.log(err);
@@ -60,11 +70,16 @@ export const FetchSingleComplaint = async (complaintId: any): Promise<any> => {
 
 
 // Suprvisor Response API Called to update the complaint Status
-export const SupervisorComplaintResponse = async (data: any) => {
+export const SupervisorComplaintResponse = async (data: any, token:any) => {
     const { complaintId, ImageUrl, description } = data;
 
     try {
-        const res = await API.patch(`api/v1/complaints/response/${complaintId}`, { ImageUrl, description }, config);
+        const res = await API.patch(`api/v1/complaints/response/${complaintId}`, { ImageUrl, description }, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+});
         console.log(res.data)
         return res.data;
     } catch (err: any) {

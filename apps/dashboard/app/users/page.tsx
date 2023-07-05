@@ -11,7 +11,6 @@ import { RootState } from "@/GlobalState/store";
 import { ColorRing, RotatingLines } from "react-loader-spinner";
 import { MdClose } from "react-icons/md";
 import Image from "next/image";
-import { user } from "@/GlobalState/UserSlice";
 
 function Users() {
   const dispatch = useDispatch();
@@ -20,12 +19,9 @@ function Users() {
   const [search, setSearch] = useState<string>("");
   const [modal, setModal] = useState<boolean>(false);
   const [userid, setUserId] = useState("");
-  const { pending, error }: any = useSelector((state: RootState) => state.User);
+  const { pending, error, adminToken }: any = useSelector((state: RootState) => state.User);
   const [success, setSuccess] = useState(error);
 
-  useEffect(() => {
-    FetchUsers(dispatch);
-  }, []);
 
   const users: any = useSelector((state: RootState) => state.User.users);
   const user = users.find((u: any) => u?._id == userid);
@@ -47,6 +43,15 @@ function Users() {
     setModal(true);
   };
 
+  useEffect(() => {
+    const FetchingCitizens = async () => {
+      await FetchUsers(dispatch, adminToken);
+    }
+
+    FetchingCitizens();
+  }, []);
+
+  // JSX SECTION
   return (
     <>
       {WSSC_CODE && (

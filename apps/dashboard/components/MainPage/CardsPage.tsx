@@ -5,13 +5,14 @@ import { FcManager } from "react-icons/fc";
 import { AiFillFileAdd } from "react-icons/ai";
 import ChartNeedle from "./ChatNeedle";
 import CountUp from "react-countup";
+import { MdStar, MdStarBorder } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { RootState } from "@/GlobalState/store";
 
 const CardsPage = () => {
-  const data: any = useSelector((state: RootState) => state.statistics.data);
-  console.log(data);
+  const {data, OrganizationRating}: any = useSelector((state: RootState) => state.statistics);
 
+  
   return (
     <div className="cards W-full flex justify-between">
       {/* user cards */}
@@ -39,7 +40,7 @@ const CardsPage = () => {
           <div className="name flex flex-col gap-3">
             <p className="text-sm">Supervisors</p>
             <h2 className="text-blue-600 font-bold text-3xl">
-              0<CountUp start={0} end={data?.supervisors} duration={3} />
+              <CountUp start={0} end={data?.supervisors} duration={3} />
             </h2>
           </div>
           <div className="ICONS text-5xl text-blue-600">
@@ -77,26 +78,20 @@ const CardsPage = () => {
           <ChartNeedle />
         </div>
         {/* footer */}
-        <div className="botm p-2 text-sm text-white font-semibold tracking-wide text-center bg-yellow-300 bg-opacity-6">
-          <h5>WSSC Rating</h5>
+        <div className="botm p-2 text-sm text-white font-semibold tracking-wide text-center bg-yellow-400 bg-opacity-6">
+          <h5>WSSC Performance</h5>
         </div>
         {/* rating %age */}
-        <div className="percent w-full justify-between  flex absolute top-2  text-[16px] font-extrabold text-yellow-400">
-          <div className=" w-auto ml-2 "> 4.7 💛</div>
-          <div className=" w-auto mr-2">93.5%</div>
-
-          {/* <div className=" flex gap-1  ">
-            <div className="bg-yellow-400 w-3 h-3 rounded-full"></div> 20-40%
+        <div className="percent w-full justify-between  flex absolute top-2  text-[14px] font-extrabold text-yellow-400">
+          <div className=" w-auto ml-2 flex justify-center items-center">
+            {OrganizationRating?.totalRating}
+            <span className="text-lg">
+              <MdStar />
+            </span>
           </div>
-          <div className=" flex gap-1  ">
-            <div className="bg-pink-400 w-3 h-3 rounded-full"></div> 40-60%
+          <div className=" w-auto mr-2">
+            {OrganizationRating?.OrgPercentage}%
           </div>
-          <div className=" flex gap-1 ">
-            <div className="bg-blue-600 w-3 h-3 rounded-full"></div> 60-80%
-          </div>
-          <div className=" flex gap-1">
-            <div className="bg-green-500 w-3 h-3 rounded-full"></div> 80-100%
-          </div>  */}
         </div>
       </div>
     </div>

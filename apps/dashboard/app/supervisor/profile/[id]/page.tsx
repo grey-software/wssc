@@ -20,6 +20,11 @@ const ProfileCard = () => {
   const { _id, profile_image, name, phone }: any = useSelector(
     (state: RootState) => state.suprvisor.SupervisorSiginData
   );
+  // getting supervisorToken from store
+  const token: any = useSelector(
+    (state: RootState) => state.suprvisor.supervisorToken
+  );
+
   const dispatch = useDispatch();
   const navigate = useRouter();
   // ------------ back button --------
@@ -56,7 +61,7 @@ const ProfileCard = () => {
         await UpdateSupervisor(dispatch, {
           updatedpic,
           suprvisorId: _id,
-        });
+        }, token);
 
         setloading(false);
       } catch (error) {

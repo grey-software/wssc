@@ -20,9 +20,11 @@ const Page = () => {
   const [state, setState] = useState<string>("AllComplaints");
   const { loading, error } = useSelector((state: RootState) => state.Complaint);
   const [success, setSuccess] = useState(error);
+  // getting token from store
+  const token: any = useSelector((state: RootState) => state.User.adminToken);
 
   useEffect(() => {
-    FetchAllComplaints(dispatch);
+    FetchAllComplaints(dispatch, token);
   }, []);
 
   const complaints = useSelector(

@@ -28,13 +28,15 @@ function Supervisors({}: Props) {
   const [updateId, setUpdateId] = useState<string>("");
   const [deleteId, setDeleteId] = useState<string>("");
 
+  // getting token from store
+  const token: any = useSelector((state: RootState) => state.User.adminToken);
   const { loading, error } = useSelector(
     (state: RootState) => state.Supervisor
   );
   const [success, setSuccess] = useState(error);
 
   useEffect(() => {
-    FetchAllSupervisors(dispatch);
+    FetchAllSupervisors(dispatch, token);
   }, []);
 
   const supervisors = useSelector(
@@ -52,23 +54,21 @@ function Supervisors({}: Props) {
 
   const onSubmit = async (data: any) => {
     console.log(data);
-   try {
-     // CALLING API FUNCTION
-    const res = await RegisterSupervisor(data, dispatch);
-     if (res == 200) {
-       //AFTER CALLING API RESET FORM AND CLOSE MODAL
-       reset();
-       setModal(false);
-     }
-   
-   } catch (error) {
-       console.log(error);
-   }
-   
+    try {
+      // CALLING API FUNCTION
+      const res = await RegisterSupervisor(data, dispatch);
+      if (res == 200) {
+        //AFTER CALLING API RESET FORM AND CLOSE MODAL
+        reset();
+        setModal(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const DeleteUpervisor = async() => {
-    const status = await DeleteSupervisor(deleteId, dispatch);
+  const DeleteUpervisor = async () => {
+    const status = await DeleteSupervisor(deleteId, dispatch, token);
     setDeleteModal(!deleteModal);
     console.log(status);
     // if (status != 200)
@@ -414,7 +414,7 @@ function Supervisors({}: Props) {
                   <div>
                     <label
                       htmlFor="name"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      className="block mb-2 text-sm font-medium text-gray-900 "
                     >
                       Supervisor Name
                     </label>
@@ -427,7 +427,7 @@ function Supervisors({}: Props) {
              outline-none
              block w-full p-2
              focus:border-primaryColor-500
-             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  
+             
              ${errors.name ? "focus:border-red-500" : ""}
              `}
                       placeholder="John Doe"
@@ -453,7 +453,7 @@ function Supervisors({}: Props) {
              outline-none
              block w-full p-2 
              focus:border-primaryColor-500
-             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  
+             
              ${errors.phone ? "focus:border-red-500" : ""}
              `}
                       placeholder="03*********"
@@ -479,7 +479,7 @@ function Supervisors({}: Props) {
                  outline-none
                  block w-full p-2
                  focus:border-primaryColor-500
-                 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  
+                 
                  ${errors.password ? "focus:border-red-500" : ""}
                  `}
                     />
