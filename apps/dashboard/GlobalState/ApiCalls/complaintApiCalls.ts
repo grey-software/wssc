@@ -16,7 +16,7 @@ import { GetSingleSupervisorSuccess } from "../supervisorSlice";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const BASE_API: any = process.env.NODE_ENV == "development" ? "http://localhost:7000" : "https://fyp-backend-production-27a1.up.railway.app/";
-const API = axios.create({ baseURL: BASE_API });
+export const API = axios.create({ baseURL: BASE_API });
 
 // ASSIGN COMPLAINT
 export const AssignComplaint = async (
