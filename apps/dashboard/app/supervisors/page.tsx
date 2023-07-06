@@ -56,7 +56,7 @@ function Supervisors({}: Props) {
     console.log(data);
     try {
       // CALLING API FUNCTION
-      const res = await RegisterSupervisor(data, dispatch);
+      const res = await RegisterSupervisor(data, dispatch, token);
       if (res == 200) {
         //AFTER CALLING API RESET FORM AND CLOSE MODAL
         reset();
@@ -112,7 +112,7 @@ function Supervisors({}: Props) {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setModal(true)}
-                className="font-medium text-white bg-inprogessColor py-1 px-3 rounded-lg hover:shadow-lg transition-all"
+                className="font-medium text-white hover:text-inprogessColor hover:bg-gray-50 border-2 border-inprogessColor bg-inprogessColor py-1 px-3 rounded-lg hover:shadow-md transition-all"
               >
                 Add Supervisor
               </button>
