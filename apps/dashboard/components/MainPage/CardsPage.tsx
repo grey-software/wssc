@@ -84,13 +84,13 @@ const CardsPage = () => {
         {/* rating %age */}
         <div className="percent w-full justify-between  flex absolute top-2  text-[14px] font-extrabold text-yellow-400">
           <div className=" w-auto ml-2 flex justify-center items-center">
-            {OrganizationRating?.totalRating.toFixed(1)}
+            {OrganizationRating?.totalRating?.toFixed(1)}
             <span className="text-[17px]">
               <MdStar />
             </span>
           </div>
           <div className=" w-auto mr-2">
-            {OrganizationRating?.OrgPercentage.toFixed(1)}%
+            {OrganizationRating?.OrgPercentage?.toFixed(1)}%
           </div>
         </div>
       </div>
