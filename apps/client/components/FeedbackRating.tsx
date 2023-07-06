@@ -6,6 +6,7 @@ import { MdStar, MdStarBorder } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { CreateFeedback } from "@/global_state/ApiCalls/complaintApiCalls";
 import { useRouter } from "next/navigation";
+import { RootState } from "@/global_state/store";
 interface Props {
   feedback: boolean;
   setfeedback: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,6 +17,10 @@ const FeedbackRating = ({ feedback, setfeedback, complaintId }: Props) => {
   const [rating, setRating] = useState<number>(-1);
   const [description, setDescription] = useState<string>("");
   const navigate = useRouter();
+  // get citizen token from persist storage to send in every request in order to make sure proper authorization
+  const CitizenToken: any = useSelector(
+    (state: RootState) => state.users.token
+  );
 
   const rates: number[] = [1, 2, 3, 4, 5];
   const RatingInWords: string[] = [
@@ -35,21 +40,20 @@ const FeedbackRating = ({ feedback, setfeedback, complaintId }: Props) => {
   const handleFeedback = async () => {
     if (rating > 0) {
       try {
-         await CreateFeedback(complaintId, { rating, description }, dispatch);
-         toast.success("Thanks for your Feedback", {
-           position: "top-center",
-           style: { width: "auto", height: "auto" },
-           duration: 3000,
-         });
+        await CreateFeedback(complaintId, { rating, description }, dispatch, CitizenToken);
+        toast.success("Thanks for your Feedback", {
+          position: "top-center",
+          style: { width: "auto", height: "auto" },
+          duration: 3000,
+        });
         setfeedback(!feedback);
         navigate.push(`/complaint/timeline/${complaintId}`);
-        
       } catch (error) {
-         toast.error("Something Went wrong, please try again", {
-           position: "top-center",
-           style: { width: "auto", height: "auto" },
-           duration: 3000,
-         });
+        toast.error("Something Went wrong, please try again", {
+          position: "top-center",
+          style: { width: "auto", height: "auto" },
+          duration: 3000,
+        });
       }
     } else {
       toast.error("Your rating help us Improve our service", {

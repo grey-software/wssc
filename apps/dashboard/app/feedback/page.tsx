@@ -46,7 +46,6 @@ const Feedback = (): React.JSX.Element => {
 
   complaints &&
     complaints.forEach((complaint, index) => {
-      console.log(complaint?.feedback?.rating);
       if (complaint.feedback) {
         totalFeedbacks += 1;
       }
@@ -62,9 +61,6 @@ const Feedback = (): React.JSX.Element => {
 
   let totalRating = 0;
   if (rate != 0) totalRating = rate / totalFeedbacks;
-
-  console.log(totalFeedbacks);
-  console.log(totalRating);
 
   const { WSSC_CODE }: any = useSelector(
     (state: RootState) => state.User.SignInData

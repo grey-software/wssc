@@ -15,6 +15,11 @@ const PasswordChangeModel = ({ SetChangePass, changePass, userId }: Props) => {
   const ConfirmPssRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const { pending }: any = useSelector((state: RootState) => state.users);
+  // get citizen token from persist storage to send in every request in order to make sure proper authorization
+  const CitizenToken: any = useSelector(
+    (state: RootState) => state.users.token
+  );
+
   // update password method definition
   const UpdatedPassword = async (e: any) => {
     e.preventDefault();
@@ -32,7 +37,7 @@ const PasswordChangeModel = ({ SetChangePass, changePass, userId }: Props) => {
         password: password,
       };
       // calling changePassword api method to change password
-      const res = await ChangedPassword(dispatch, updatedPass, userId);
+      const res = await ChangedPassword(dispatch, updatedPass, userId, CitizenToken);
       if (res.status == 200) {
         toast.success("Password changed successfully", {
           position: "top-center",

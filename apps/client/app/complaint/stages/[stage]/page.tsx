@@ -19,9 +19,13 @@ const Complaints = ({ params }: any) => {
   const { loading, error } = useSelector(
     (state: RootState) => state.complaints
   );
+  // get citizen token from persist storage to send in every request in order to make sure proper authorization
+  const CitizenToken: any = useSelector(
+    (state: RootState) => state.users.token
+  );
 
   useEffect(() => {
-    FetchAllComplaints(dispatch);
+    FetchAllComplaints(dispatch, CitizenToken);
   }, []);
 
   const complaintsAll = useSelector((state: RootState) => {

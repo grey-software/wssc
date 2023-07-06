@@ -15,7 +15,7 @@ import {
   RegisterSupervisor,
 } from "@/GlobalState/ApiCalls/supervisorApiCalls";
 import { RootState } from "@/GlobalState/store";
-import { ColorRing, RotatingLines } from "react-loader-spinner";
+import { ColorRing } from "react-loader-spinner";
 type Props = {};
 
 function Supervisors({}: Props) {
@@ -178,9 +178,7 @@ function Supervisors({}: Props) {
                         <th scope="col" className="px-6 py-3">
                           Phone
                         </th>
-                        <th scope="col" className="px-6 py-3">
-                          Asigned Complaints
-                        </th>
+
                         <th scope="col" className="px-6 py-3">
                           WSSC_CODE
                         </th>
@@ -225,11 +223,6 @@ function Supervisors({}: Props) {
                               {name}
                             </td>
                             <td className="px-6 py-4">{phone}</td>
-                            <td className="px-6 py-4">
-                              {assignComplaints
-                                ? assignComplaints.length
-                                : "NILL"}
-                            </td>
                             <td className="px-6 py-4 uppercase">{WSSC_CODE}</td>
 
                             <td className="px-6 py-4 flex items-center gap-2">

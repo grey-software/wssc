@@ -27,6 +27,11 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
   const { name, profile_image, _id }: any = useSelector(
     (state: RootState) => state.users.UserInfo
   );
+  // get citizen token from persist storage to send in every request in order to make sure proper authorization
+  const CitizenToken: any = useSelector(
+    (state: RootState) => state.users.token
+  );
+
   const [sharePop, setsharePop] = useState(false);
   const dispatch = useDispatch();
   const navigate = useRouter();
@@ -34,7 +39,7 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
   //Logout Method def to logOut user
   const LogOut = () => {
     // calling LOGOUT apicall method to logout user
-    LOGOUT(dispatch);
+    LOGOUT(dispatch, CitizenToken);
     setMenuActive(!menuActive);
     navigate.push("/");
   };

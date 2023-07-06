@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileMenu from "./ProfileMenu";
 import Link from "next/link";
 import userdp from "../public/user.jpg";
@@ -25,7 +25,9 @@ const Header = () => {
 
   const [menuActive, setMenuActive] = useState(false);
   const [windowActive, setWindowActive] = useState(false);
+const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
+  // Notification function method display notification on the basis of complaints stage change
   function onNotificationClick(message: IMessage) {
     // your logic to handle the notification click
     if (message?.cta?.data?.url) {
@@ -33,6 +35,20 @@ const Header = () => {
     }
   }
 
+  // useEffect hook has used for the purpose to get the screen width, with the help we display organization short and fullname on the basisi of device screen
+    useEffect(() => {
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, []);
+  
+  // JSX SECTION
   return (
     <>
       {!UserInfo ? (
@@ -45,7 +61,8 @@ const Header = () => {
                 <Image src={WSSC?.logo} height={40} width={40} alt="" />
               </Link>
               <h2 className="text-lg text-primaryColor-500 font-bold">
-                {WSSC?.shortname}
+                {/* {WSSC?.shortname} */}
+                {windowWidth < 560 ? WSSC?.shortname : WSSC?.fullname}
               </h2>
             </div>
             <div className="flex items-center justify-center gap-4">

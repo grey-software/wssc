@@ -22,11 +22,15 @@ const DeleteAccountModal = ({
   const dispatch = useDispatch();
   const { pending }: any = useSelector((state: RootState) => state.users);
   const navigate = useRouter();
+  // get citizen token from persist storage to send in every request in order to make sure proper authorization
+  const CitizenToken: any = useSelector(
+    (state: RootState) => state.users.token
+  );
   // Delete Account method definition
   const DeleteUserAccount = async (e: any) => {
     e.preventDefault();
 
-    const res = await UserAccountDelete(dispatch, userId);
+    const res = await UserAccountDelete(dispatch, userId, CitizenToken);
     if (res.status == 200) {
       navigate.push("/");
       toast.success("Account deleted successfully", {

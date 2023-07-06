@@ -16,10 +16,10 @@ import {
 } from "@novu/notification-center";
 
 const Header = () => {
-  const [search, setSearch] = useState("");
   const { WSSC_CODE, fullname, logo }: any = useSelector(
     (state: RootState) => state.User.SignInData
   );
+  console.log(WSSC_CODE);
   const activeTab = useSelector((state: RootState) => state.Tab.index);
   const dispatch = useDispatch();
 
