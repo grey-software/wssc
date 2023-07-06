@@ -17,22 +17,23 @@ import { ComplainForm } from "@/@types/complainForm.types";
 const API = axios.create({
   baseURL: "https://fyp-backend-production-27a1.up.railway.app/",
 });
-if (typeof window !== "undefined") {
-  // Perform localStorage action
-  const token: any = localStorage.getItem("token");
-  var config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-}
+// if (typeof window !== "undefined") {
+//   // Perform localStorage action
+//   const token: any = localStorage.getItem("token");
+//   var config = {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//   };
+// }
 
 // Citizen feedback
 export const CreateFeedback = async (
   complaintId: any,
   feedback: any,
-  dispatch: any
+  dispatch: any,
+  token:any
 ): Promise<any> => {
   dispatch(FeedbackStart());
   try {
@@ -40,7 +41,12 @@ export const CreateFeedback = async (
     const res = await API.patch(
       `api/v1/complaints/feedback/${complaintId}`,
       feedback,
-      config
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     console.log(res);
     dispatch(FeedbackSuccess());
@@ -61,7 +67,8 @@ export const CreateFeedback = async (
 // Creating New Complaint
 export const CreateComplaint = async (
   newComplaint: any,
-  dispatch: any
+  dispatch: any,
+  token:any
 ): Promise<any> => {
   const {
     userId,
@@ -91,7 +98,12 @@ export const CreateComplaint = async (
         ImageUrl,
         VideoUrl,
       },
-      config
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     console.log(`this is complaintApi console: ${res.data}`);
     dispatch(NewComplaintSuccess(res.data.CreateComplaint));
@@ -110,10 +122,15 @@ export const CreateComplaint = async (
 };
 
 // Fetching Complaints from Server
-export const FetchAllComplaints = async (dispatch: any): Promise<any> => {
+export const FetchAllComplaints = async (dispatch: any, token:any): Promise<any> => {
   dispatch(GetComplaintsStart());
   try {
-    const res = await API.get(`api/v1/complaints`, config);
+    const res = await API.get(`api/v1/complaints`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     dispatch(GetComplaintsSuccess(res.data.allComplaints));
     return res.data;
   } catch (err: any) {

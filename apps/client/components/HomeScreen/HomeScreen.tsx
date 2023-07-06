@@ -11,8 +11,6 @@ import { RootState, store } from "@/global_state/store";
 
 const HomeScreen = () => {
   const navigate = useRouter();
-  const dispatch = useDispatch();
-  const user: any = useSelector((state: RootState) => state.users.UserInfo);
   const handleClick = (stage: string) => {
     navigate.push(`/complaint/stages/${stage}`);
   };

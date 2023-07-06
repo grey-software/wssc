@@ -31,7 +31,6 @@ export const UserSlice = createSlice({
       state.UserInfo = action.payload.user;
       state.WSSC = action.payload.WSSC;
       state.token = action.payload.token;
-      localStorage.setItem("token", action.payload.token);
       toast.success("Signed in successfully", {
         position: "top-center",
         style: { width: "auto", height: "auto" },
@@ -108,7 +107,7 @@ export const UserSlice = createSlice({
     LogOutUser: (state, action) => {
       state.UserInfo = null;
       state.WSSC = null;
-      localStorage.removeItem("token");
+      state.token = "";
       toast.success(action.payload, {
         position: "top-center",
         style: { width: "auto", height: "auto" },
@@ -123,6 +122,8 @@ export const UserSlice = createSlice({
     DeleteAccountSuccess: (state) => {
       state.pending = false;
       state.UserInfo = null;
+      state.WSSC = null;
+      state.token = "";
     },
     DeleteAccountError: (state, action) => {
       state.error = true;

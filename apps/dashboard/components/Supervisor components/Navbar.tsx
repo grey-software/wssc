@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import userdp from "../../public/user.jpg";
 import { SupervisorLogoutApi } from "@/GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
@@ -21,7 +21,7 @@ const Navbar = () => {
   const navigate = useRouter();
   const [menuActive, setMenuActive] = useState(false);
   const [windowActive, setWindowActive] = useState(false);
-
+const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const { _id, profile_image }: any = useSelector(
     (state: RootState) => state.suprvisor.SupervisorSiginData
   );
@@ -51,6 +51,20 @@ const Navbar = () => {
       console.log(error);
     }
   };
+  // useEffect hook has used for the purpose to get the screen width, with the help we display organization short and fullname on the basisi of device screen
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  
+  // JSX SECTION
   return (
     <>
       <div className="container w-screen flex justify-center fixed top-0 z-30">
@@ -60,7 +74,8 @@ const Navbar = () => {
               <Image src={WSSC?.logo} height={40} width={40} alt="wssc_logo" />
             </Link>
             <h2 className="text-lg text-primaryColor-500 font-bold">
-              {WSSC?.shortname}
+              {/* {WSSC?.shortname} */}
+              {windowWidth < 560 ? WSSC?.shortname : WSSC?.fullname}
             </h2>
           </div>
 
@@ -132,3 +147,7 @@ const Navbar = () => {
 };
 
 export default Navbar;
+function setWindowWidth(innerWidth: number) {
+  throw new Error("Function not implemented.");
+}
+

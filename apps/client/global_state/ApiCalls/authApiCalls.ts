@@ -24,17 +24,17 @@ import {
 // const API = axios.create({ baseURL: "http://localhost:7000" });
 const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
 
-if (typeof window !== 'undefined') {
-  // Perform localStorage action
-  const token: any = localStorage.getItem("token");
-  var config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }
+// if (typeof window !== 'undefined') {
+//   // Perform localStorage action
+//   const token: any = localStorage.getItem("token");
+//   var config = {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//   }
 
-};
+// };
 
 // RegisterUser ApiCall
 export const RegisterUser = async (
@@ -49,7 +49,6 @@ export const RegisterUser = async (
       "api/v1/auth/signup",
       { name, phone, password, WSSC_CODE: wssc_code }
     );
-    console.log(res)
     dispatch(SignUpSuccess(res.data));
     return res;
   } catch (err: any) {
@@ -72,7 +71,7 @@ export const SignIn = async (UserData: user, dispatch: any) => {
   dispatch(SignInStart());
   try {
     // calling api to check the credentials
-    const res = await API.post("api/v1/auth/signin", { phone, password }, config);
+    const res = await API.post("api/v1/auth/signin", { phone, password });
     console.log(res.data)
     dispatch(SignInSuccess(res.data));
   } catch (err: any) {
@@ -89,14 +88,19 @@ export const SignIn = async (UserData: user, dispatch: any) => {
 };
 
 // Update UserInfo
-export const UpdateUserProfile = async (dispatch: any, updatedData: any, userId:any): Promise<any> => {
+export const UpdateUserProfile = async (dispatch: any, updatedData: any, userId:any, token:any): Promise<any> => {
   console.log(updatedData);
   console.log(userId)
   dispatch(UpdateUserInfoStart());
 
   // calling updateUser api endpoint to update userInfo:a
   try {
-    const res = await API.patch(`api/v1/citizens/${userId}`, updatedData , config);
+    const res = await API.patch(`api/v1/citizens/${userId}`, updatedData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log(res);
     dispatch(UpdateUserInfoSuccess(res.data.updateInfo));
     return res.data;
@@ -115,12 +119,17 @@ export const UpdateUserProfile = async (dispatch: any, updatedData: any, userId:
 }
 
 // change Password api call
-export const ChangedPassword = async(dispatch:any, updatedPassword: any, userId: any): Promise<any> => {
+export const ChangedPassword = async(dispatch:any, updatedPassword: any, userId: any, token:any): Promise<any> => {
   
   dispatch(ChangingPasswordStart());
   // calling password endpoint api
   try {
-    const res = await API.patch(`api/v1/citizens/changepassword/${userId}`, updatedPassword, config);
+    const res = await API.patch(`api/v1/citizens/changepassword/${userId}`, updatedPassword, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log(res.data)
     dispatch(ChangingPasswordSuccess())
     return res.data;
@@ -140,9 +149,14 @@ export const ChangedPassword = async(dispatch:any, updatedPassword: any, userId:
 }
 
 // LOGOUT APICALL
-export const LOGOUT = async (dispatch: any) => {
+export const LOGOUT = async (dispatch: any, token:any) => {
   try {
-    const res = await API.get("api/v1/auth/logout");
+    const res = await API.get("api/v1/auth/logout", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     dispatch(LogOutUser("Logged out successfully"))
 
   } catch (err) {
@@ -151,10 +165,15 @@ export const LOGOUT = async (dispatch: any) => {
 }
 
 // User account delete API CALL
-export const UserAccountDelete = async (dispatch: any, userId: any): Promise<any> => {
+export const UserAccountDelete = async (dispatch: any, userId: any, token:any): Promise<any> => {
   dispatch(DeleteAccountStart());
   try {
-    const res = await API.delete(`api/v1/citizens/${userId}`, config);
+    const res = await API.delete(`api/v1/citizens/${userId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log(res.data);
     dispatch(DeleteAccountSuccess())
     return res.data;

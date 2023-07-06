@@ -30,7 +30,10 @@ const ProfileCard = () => {
   const { UserInfo, pending }: any = useSelector(
     (state: RootState) => state.users
   );
-
+  // get citizen token from persist storage to send in every request in order to make sure proper authorization
+  const CitizenToken: any = useSelector(
+    (state: RootState) => state.users.token
+  );
   const InProgress = () => {
     SetdeleteAccount(true);
   };
@@ -67,7 +70,7 @@ const ProfileCard = () => {
           profile_image: photo.secure_url,
         };
         // calling updateProfile apiCall to update userInfo
-        const res = await UpdateUserProfile(dispatch, updatedpic, UserInfo._id);
+        const res = await UpdateUserProfile(dispatch, updatedpic, UserInfo._id, CitizenToken);
         console.log(res.status);
         if (res.status == 200 && pending == false) {
           setloading(false);

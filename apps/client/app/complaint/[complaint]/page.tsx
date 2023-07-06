@@ -24,6 +24,11 @@ const Page: React.FC = ({ params }: any) => {
   );
 
   const { loading } = useSelector((state: RootState) => state.complaints); // loading state
+  // get citizen token from persist storage to send in every request in order to make sure proper authorization
+  const CitizenToken: any = useSelector(
+    (state: RootState) => state.users.token
+  );
+
   const Navigate = useRouter();
   const dispatch = useDispatch();
 
@@ -63,7 +68,7 @@ const Page: React.FC = ({ params }: any) => {
     // Calling API
     try {
       setload(true);
-      const res = await CreateComplaint(complaintData, dispatch);
+      const res = await CreateComplaint(complaintData, dispatch, CitizenToken);
       if (res && res.status === 200) {
         Navigate.push(`/complaint/timeline/${res.CreateComplaint._id}`);
         setload(false);

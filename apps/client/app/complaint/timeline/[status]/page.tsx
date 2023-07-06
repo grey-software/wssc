@@ -7,15 +7,19 @@ import { useRouter } from "next/navigation";
 import { complaintTypes } from "@/Types";
 import Loader from "@/components/Loading";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "@/global_state/store";
 
 const Timeline = ({ params }: any) => {
-  const token: any = localStorage.getItem("token");
   const complaintID = params.status;
   const navigate = useRouter();
   const [complaint, setComplaint] = useState<complaintTypes>();
   const [loading, setLoading] = useState<boolean>();
   const [showImage, setShowImage] = useState<boolean>();
-
+  // get citizen token from persist storage to send in every request in order to make sure proper authorization
+  const CitizenToken: any = useSelector(
+    (state: RootState) => state.users.token
+  );
   // Fetching Single Complaint from Server
   const FetchSingleComplaint = async (): Promise<any> => {
     setLoading(true);
@@ -25,7 +29,7 @@ const Timeline = ({ params }: any) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${CitizenToken}`,
           },
         }
       );

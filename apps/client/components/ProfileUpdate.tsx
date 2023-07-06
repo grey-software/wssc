@@ -1,6 +1,8 @@
 "use client";
 import { UpdateUserProfile } from "@/global_state/ApiCalls/authApiCalls";
+import { RootState } from "@/global_state/store";
 import React, { memo, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 interface Props {
   update: boolean;
@@ -24,6 +26,10 @@ const ProfileUpdate = ({
   const [input, setInput] = useState(updateValue);
   const updatRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
+  // get citizen token from persist storage to send in every request in order to make sure proper authorization
+  const CitizenToken: any = useSelector(
+    (state: RootState) => state.users.token
+  );
 
   const UpdatedProfile = (event: any): void => {
     event.preventDefault();
@@ -45,7 +51,7 @@ const ProfileUpdate = ({
     }
 
     // calling API method to update UserInfo
-    UpdateUserProfile(dispatch, updateData, userId);
+    UpdateUserProfile(dispatch, updateData, userId, CitizenToken);
     // console.log("updateProfile method successfully")
     setUpdateValue(updatRef.current?.value);
     setUpdate(!update);

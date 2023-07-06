@@ -23,11 +23,15 @@ const DesktopMenu = () => {
   const [sharePop, setsharePop] = useState(false);
   const dispatch = useDispatch();
   const navigate = useRouter();
+  // get citizen token from persist storage to send in every request in order to make sure proper authorization
+  const CitizenToken: any = useSelector(
+    (state: RootState) => state.users.token
+  );
 
   //Logout Method def to logOut user
   const LogOut = () => {
     // calling LOGOUT apicall method to logout user
-    LOGOUT(dispatch);
+    LOGOUT(dispatch, CitizenToken);
     navigate.push("/");
   };
 
