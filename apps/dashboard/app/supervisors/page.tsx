@@ -163,7 +163,7 @@ function Supervisors({}: Props) {
             ) : (
               <>
                 {supervisors.length > 0 ? (
-                  <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                       <tr>
                         <th scope="col" className="px-6 py-3">
@@ -188,7 +188,7 @@ function Supervisors({}: Props) {
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody  className="text-center">
                       {supervisors?.map(
                         (
                           {
@@ -225,7 +225,7 @@ function Supervisors({}: Props) {
                             <td className="px-6 py-4">{phone}</td>
                             <td className="px-6 py-4 uppercase">{WSSC_CODE}</td>
 
-                            <td className="px-6 py-4 flex items-center gap-2">
+                            <td className="px-6 py-4 flex items-center gap-2 justify-center">
                               <button
                                 onClick={() =>
                                   navigate.push(`/supervisors/${_id}`)

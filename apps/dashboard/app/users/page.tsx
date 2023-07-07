@@ -129,7 +129,7 @@ function Users() {
             ) : (
               <>
                 {users.length > 0 ? (
-                  <table className="w-full text-sm text-left text-gray-500">
+                  <table className="w-full text-sm text-center text-gray-500">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                       <tr>
                         <th scope="col" className="px-6 py-3">
@@ -156,7 +156,7 @@ function Users() {
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="text-center">
                       {users
                         .slice(page * 10 - 10, page * 10)
                         .map(

@@ -14,7 +14,7 @@ import {
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const BASE_API: any = process.env.NODE_ENV == "development" ? "http://localhost:7000" : "https://fyp-backend-production-27a1.up.railway.app/";
-const API = axios.create({ baseURL: BASE_API });
+export const API = axios.create({ baseURL: BASE_API });
 
 // Citizen feedback
 export const CreateFeedback = async (
@@ -25,7 +25,6 @@ export const CreateFeedback = async (
 ): Promise<any> => {
   dispatch(FeedbackStart());
   try {
-    console.log(feedback);
     const res = await API.patch(
       `api/v1/complaints/feedback/${complaintId}`,
       feedback,
