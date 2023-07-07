@@ -47,7 +47,7 @@ const FeedbackRating = ({ feedback, setfeedback, complaintId }: Props) => {
           duration: 3000,
         });
         setfeedback(!feedback);
-        navigate.push(`/complaint/timeline/${complaintId}`);
+        navigate.push(`/complaint/timeline/${complaintId}`);        
       } catch (error) {
         toast.error("Something Went wrong, please try again", {
           position: "top-center",

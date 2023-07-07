@@ -6,9 +6,10 @@ import { HiArrowLeft } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { complaintTypes } from "@/Types";
 import Loader from "@/components/Loading";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "@/global_state/store";
+import { API } from "@/global_state/ApiCalls/complaintApiCalls";
+
 
 const Timeline = ({ params }: any) => {
   const complaintID = params.status;
@@ -24,8 +25,8 @@ const Timeline = ({ params }: any) => {
   const FetchSingleComplaint = async (): Promise<any> => {
     setLoading(true);
     try {
-      const res = await axios.get(
-        `https://fyp-backend-production-27a1.up.railway.app/api/v1/complaints/${complaintID}`,
+      const res = await API.get(
+        `api/v1/complaints/${complaintID}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -33,7 +34,6 @@ const Timeline = ({ params }: any) => {
           },
         }
       );
-      console.log(res.data.complaint);
       setComplaint(res.data.complaint);
       setLoading(false);
       return res.data;
@@ -51,9 +51,6 @@ const Timeline = ({ params }: any) => {
   useEffect(() => {
     FetchSingleComplaint();
   }, []);
-
-  console.log(complaint?.feedback);
-  console.log(complaint?.status);
 
   const back = () => {
     navigate.push("/complaint/stages/AllComplaints");
