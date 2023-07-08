@@ -117,19 +117,13 @@ function Supervisors({}: Props) {
                 Add Supervisor
               </button>
               {supervisors.length > 0 && (
-                <div className="flex items-center border-2 border-gray-300 rounded-full">
-                  <input
-                    type="text"
-                    placeholder={`Search in ${supervisors?.length} supervisors`}
-                    className="text-sm rounded-l-full outline-none py-1 px-4 w-52 "
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                  <div className="border-[1px] border-gray-300 h-8"></div>
-                  <button className="py-1 px-4 rounded-r-full transition-all text-white bg-feedbackColor cursor-pointer">
-                    Search
-                  </button>
-                </div>
+                <input
+                  type="text"
+                  placeholder={`Search in ${supervisors?.length} Supervisors`}
+                  className="text-sm rounded-full outline-none py-2 px-4 w-64 border-2 border-gray-400 focus:border-primaryColor-500"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
               )}
             </div>
           </div>
@@ -188,74 +182,76 @@ function Supervisors({}: Props) {
                         </th>
                       </tr>
                     </thead>
-                    <tbody  className="text-center">
-                      {supervisors?.map(
-                        (
-                          {
-                            _id,
-                            name,
-                            phone,
-                            WSSC_CODE,
-                            assignComplaints,
-                          }: any,
-                          index: any
-                        ) => (
-                          <tr
-                            key={index}
-                            className="cursor-pointer bg-white border-b  hover:bg-gray-50 "
-                          >
-                            <th
-                              scope="row"
-                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
+                    <tbody className="text-center">
+                      {supervisors
+                        ?.filter((supervisor: any) => {
+                          return search === ""
+                            ? supervisor
+                            : supervisor?.phone.toString()?.includes(search);
+                        })
+                        ?.map(
+                          (
+                            { _id, name, phone, WSSC_CODE }: any,
+                            index: any
+                          ) => (
+                            <tr
+                              key={index}
+                              className="cursor-pointer bg-white border-b  hover:bg-gray-50 "
                             >
-                              {index + 1}
-                            </th>
-                            <td
-                              scope="row"
-                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
-                            >
-                              {_id.slice(-8)}
-                            </td>
-                            <td
-                              scope="row"
-                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                            >
-                              {name}
-                            </td>
-                            <td className="px-6 py-4">{phone}</td>
-                            <td className="px-6 py-4 uppercase">{WSSC_CODE}</td>
+                              <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
+                              >
+                                {index + 1}
+                              </th>
+                              <td
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
+                              >
+                                {_id.slice(-8)}
+                              </td>
+                              <td
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                              >
+                                {name}
+                              </td>
+                              <td className="px-6 py-4">{phone}</td>
+                              <td className="px-6 py-4 uppercase">
+                                {WSSC_CODE}
+                              </td>
 
-                            <td className="px-6 py-4 flex items-center gap-2 justify-center">
-                              <button
-                                onClick={() =>
-                                  navigate.push(`/supervisors/${_id}`)
-                                }
-                                className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 hover:bg-gray-50 border-completedColor hover:text-completedColor"
-                              >
-                                View
-                              </button>
-                              <button
-                                onClick={() => {
-                                  setUpdateModal(true);
-                                  setUpdateId(_id);
-                                }}
-                                className="font-bold text-[12px] uppercase text-white bg-inprogessColor py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 border-inprogessColor hover:text-inprogessColor hover:bg-gray-50"
-                              >
-                                Update
-                              </button>
-                              <button
-                                onClick={() => {
-                                  setDeleteModal(true);
-                                  setDeleteId(_id);
-                                }}
-                                className="font-bold text-[12px] uppercase text-white bg-closedColor py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 border-closedColor hover:bg-gray-50  hover:text-closedColor"
-                              >
-                                Remove
-                              </button>
-                            </td>
-                          </tr>
-                        )
-                      )}
+                              <td className="px-6 py-4 flex items-center gap-2 justify-center">
+                                <button
+                                  onClick={() =>
+                                    navigate.push(`/supervisors/${_id}`)
+                                  }
+                                  className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 hover:bg-gray-50 border-completedColor hover:text-completedColor"
+                                >
+                                  View
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    setUpdateModal(true);
+                                    setUpdateId(_id);
+                                  }}
+                                  className="font-bold text-[12px] uppercase text-white bg-inprogessColor py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 border-inprogessColor hover:text-inprogessColor hover:bg-gray-50"
+                                >
+                                  Update
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    setDeleteModal(true);
+                                    setDeleteId(_id);
+                                  }}
+                                  className="font-bold text-[12px] uppercase text-white bg-closedColor py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 border-closedColor hover:bg-gray-50  hover:text-closedColor"
+                                >
+                                  Remove
+                                </button>
+                              </td>
+                            </tr>
+                          )
+                        )}
                     </tbody>
                   </table>
                 ) : (

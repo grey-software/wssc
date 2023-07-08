@@ -19,11 +19,14 @@ function Users() {
   const [search, setSearch] = useState<string>("");
   const [modal, setModal] = useState<boolean>(false);
   const [userid, setUserId] = useState("");
-  const { pending, error, adminToken }: any = useSelector((state: RootState) => state.User);
+  const { pending, error, adminToken }: any = useSelector(
+    (state: RootState) => state.User
+  );
   const [success, setSuccess] = useState(error);
 
-
   const users: any = useSelector((state: RootState) => state.User.users);
+
+  console.log(users);
   const user = users.find((u: any) => u?._id == userid);
 
   // pagination
@@ -48,7 +51,7 @@ function Users() {
   useEffect(() => {
     const FetchingCitizens = async () => {
       await FetchUsers(dispatch, adminToken);
-    }
+    };
 
     FetchingCitizens();
   }, []);
@@ -81,19 +84,13 @@ function Users() {
               </span>
             </div>
             {users.length > 0 && (
-              <div className="flex items-center border-2 border-gray-300 rounded-full">
-                <input
-                  type="text"
-                  placeholder={`Search in ${users?.length} Users`}
-                  className="text-sm rounded-l-full outline-none py-1 px-4 w-52 "
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-                <div className="border-[1px] border-gray-300 h-8"></div>
-                <button className="py-1 px-4 rounded-r-full transition-all text-white bg-feedbackColor cursor-pointer">
-                  Search
-                </button>
-              </div>
+              <input
+                type="text"
+                placeholder={`Search in ${users?.length} Users`}
+                className="text-sm rounded-full outline-none py-2 px-4 w-64 border-2 border-gray-400 focus:border-primaryColor-500"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
             )}
           </div>
 
@@ -158,6 +155,11 @@ function Users() {
                     </thead>
                     <tbody className="text-center">
                       {users
+                        .filter((user: any) => {
+                          return search === ""
+                            ? user
+                            : user?.phone.toString()?.includes(search);
+                        })
                         .slice(page * 10 - 10, page * 10)
                         .map(
                           (
