@@ -16,6 +16,8 @@ import {
 } from "@/GlobalState/ApiCalls/supervisorApiCalls";
 import { RootState } from "@/GlobalState/store";
 import { ColorRing } from "react-loader-spinner";
+import { BsCaretLeftSquareFill, BsCaretRightSquareFill } from "react-icons/bs";
+
 type Props = {};
 
 function Supervisors({}: Props) {
@@ -27,6 +29,7 @@ function Supervisors({}: Props) {
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [updateId, setUpdateId] = useState<string>("");
   const [deleteId, setDeleteId] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
 
   // getting token from store
   const token: any = useSelector((state: RootState) => state.User.adminToken);
@@ -77,6 +80,16 @@ function Supervisors({}: Props) {
     //     style: { width: "auto", height: "auto" },
     //     duration: 3000,
     //   });
+  };
+
+  // pagination
+  const selectPagehandler = (selectedPage: any) => {
+    if (
+      selectedPage >= 1 &&
+      selectedPage <= Math.ceil(supervisors.length / 8) &&
+      selectedPage !== page
+    )
+      setPage(selectedPage);
   };
 
   const { WSSC_CODE }: any = useSelector(
@@ -140,8 +153,8 @@ function Supervisors({}: Props) {
           )}
 
           <div
-            className={`overflow-x-auto shadow-md sm:rounded-lg py-1 ${
-              loading && "flex items-center justify-center h-[75vh]"
+            className={`overflow-x-auto shadow-md sm:rounded-lg h-[75vh] py-1 ${
+              loading && "flex items-center justify-center"
             }`}
           >
             {loading ? (
@@ -157,7 +170,7 @@ function Supervisors({}: Props) {
             ) : (
               <>
                 {supervisors.length > 0 ? (
-                  <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+                  <table className="w-full text-sm text-center text-gray-500">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                       <tr>
                         <th scope="col" className="px-6 py-3">
@@ -189,6 +202,7 @@ function Supervisors({}: Props) {
                             ? supervisor
                             : supervisor?.phone.toString()?.includes(search);
                         })
+                        .slice(page * 8 - 8, page * 8)
                         ?.map(
                           (
                             { _id, name, phone, WSSC_CODE }: any,
@@ -272,7 +286,48 @@ function Supervisors({}: Props) {
               </>
             )}
           </div>
-
+          {supervisors?.length > 8 && !loading && (
+            <div className="flex items-center justify-center w-full">
+              <div className="flex items-center gap-2 text-2xl">
+                <span
+                  className={
+                    page > 1
+                      ? "hover:text-primaryColor-500 transition-all cursor-pointer text-gray-700"
+                      : "opacity-0"
+                  }
+                  onClick={() => selectPagehandler(page - 1)}
+                >
+                  <BsCaretLeftSquareFill />
+                </span>
+                {supervisors.length > 8 &&
+                  [...Array(Math.ceil(supervisors?.length / 8))].map(
+                    (_, index) => (
+                      <span
+                        key={index}
+                        className={
+                          page === index + 1
+                            ? "bg-primaryColor-300 text-sm font-semibold  rounded-md px-2 py-1 cursor-pointer"
+                            : "bg-transparent text-sm rounded-md px-2 py-1  cursor-pointer"
+                        }
+                        onClick={() => selectPagehandler(index + 1)}
+                      >
+                        {index + 1}
+                      </span>
+                    )
+                  )}
+                <span
+                  className={
+                    page < Math.ceil(supervisors?.length / 8)
+                      ? "hover:text-primaryColor-500 transition-all cursor-pointer text-gray-700"
+                      : "opacity-0"
+                  }
+                  onClick={() => selectPagehandler(page + 1)}
+                >
+                  <BsCaretRightSquareFill />
+                </span>
+              </div>
+            </div>
+          )}
           {/* ADD SUPERVISOR MODAL */}
           {modal && (
             <div className="absolute mt-10 h-[80vh] w-full flex items-center justify-center backdrop-blur-sm">

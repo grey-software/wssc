@@ -33,7 +33,7 @@ function Users() {
   const selectPagehandler = (selectedPage: any) => {
     if (
       selectedPage >= 1 &&
-      selectedPage <= Math.ceil(users.length / 10) &&
+      selectedPage <= Math.ceil(users.length / 8) &&
       selectedPage !== page
     )
       setPage(selectedPage);
@@ -160,7 +160,7 @@ function Users() {
                             ? user
                             : user?.phone.toString()?.includes(search);
                         })
-                        .slice(page * 10 - 10, page * 10)
+                        .slice(page * 8 - 8, page * 8)
                         .map(
                           (
                             { _id, name, phone, address, email }: any,
@@ -215,7 +215,7 @@ function Users() {
               </>
             )}
           </div>
-          {users?.length > 10 && !pending && (
+          {users?.length > 8 && !pending && (
             <div className="flex items-center justify-center w-full">
               <div className="flex items-center gap-2 text-2xl">
                 <span
@@ -228,8 +228,8 @@ function Users() {
                 >
                   <BsCaretLeftSquareFill />
                 </span>
-                {users.length > 10 &&
-                  [...Array(Math.ceil(users?.length / 10))].map((_, index) => (
+                {users.length > 8 &&
+                  [...Array(Math.ceil(users?.length / 8))].map((_, index) => (
                     <span
                       key={index}
                       className={
@@ -244,7 +244,7 @@ function Users() {
                   ))}
                 <span
                   className={
-                    page < Math.ceil(users?.length / 10)
+                    page < Math.ceil(users?.length / 8)
                       ? "hover:text-primaryColor-500 transition-all cursor-pointer text-gray-700"
                       : "opacity-0"
                   }
