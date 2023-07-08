@@ -19,18 +19,21 @@ function Users() {
   const [search, setSearch] = useState<string>("");
   const [modal, setModal] = useState<boolean>(false);
   const [userid, setUserId] = useState("");
-  const { pending, error, adminToken }: any = useSelector((state: RootState) => state.User);
+  const { pending, error, adminToken }: any = useSelector(
+    (state: RootState) => state.User
+  );
   const [success, setSuccess] = useState(error);
 
-
   const users: any = useSelector((state: RootState) => state.User.users);
+
+  console.log(users);
   const user = users.find((u: any) => u?._id == userid);
 
   // pagination
   const selectPagehandler = (selectedPage: any) => {
     if (
       selectedPage >= 1 &&
-      selectedPage <= Math.ceil(users.length / 10) &&
+      selectedPage <= Math.ceil(users.length / 8) &&
       selectedPage !== page
     )
       setPage(selectedPage);
@@ -48,7 +51,7 @@ function Users() {
   useEffect(() => {
     const FetchingCitizens = async () => {
       await FetchUsers(dispatch, adminToken);
-    }
+    };
 
     FetchingCitizens();
   }, []);
@@ -81,19 +84,13 @@ function Users() {
               </span>
             </div>
             {users.length > 0 && (
-              <div className="flex items-center border-2 border-gray-300 rounded-full">
-                <input
-                  type="text"
-                  placeholder={`Search in ${users?.length} Users`}
-                  className="text-sm rounded-l-full outline-none py-1 px-4 w-52 "
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-                <div className="border-[1px] border-gray-300 h-8"></div>
-                <button className="py-1 px-4 rounded-r-full transition-all text-white bg-feedbackColor cursor-pointer">
-                  Search
-                </button>
-              </div>
+              <input
+                type="text"
+                placeholder={`Search in ${users?.length} Users`}
+                className="text-sm rounded-full outline-none py-2 px-4 w-64 border-2 border-gray-400 focus:border-primaryColor-500"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
             )}
           </div>
 
@@ -158,7 +155,12 @@ function Users() {
                     </thead>
                     <tbody className="text-center">
                       {users
-                        .slice(page * 10 - 10, page * 10)
+                        .filter((user: any) => {
+                          return search === ""
+                            ? user
+                            : user?.phone.toString()?.includes(search);
+                        })
+                        .slice(page * 8 - 8, page * 8)
                         .map(
                           (
                             { _id, name, phone, address, email }: any,
@@ -213,7 +215,7 @@ function Users() {
               </>
             )}
           </div>
-          {users?.length > 10 && !pending && (
+          {users?.length > 8 && !pending && (
             <div className="flex items-center justify-center w-full">
               <div className="flex items-center gap-2 text-2xl">
                 <span
@@ -226,8 +228,8 @@ function Users() {
                 >
                   <BsCaretLeftSquareFill />
                 </span>
-                {users.length > 10 &&
-                  [...Array(Math.ceil(users?.length / 10))].map((_, index) => (
+                {users.length > 8 &&
+                  [...Array(Math.ceil(users?.length / 8))].map((_, index) => (
                     <span
                       key={index}
                       className={
@@ -242,7 +244,7 @@ function Users() {
                   ))}
                 <span
                   className={
-                    page < Math.ceil(users?.length / 10)
+                    page < Math.ceil(users?.length / 8)
                       ? "hover:text-primaryColor-500 transition-all cursor-pointer text-gray-700"
                       : "opacity-0"
                   }

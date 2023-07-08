@@ -16,6 +16,8 @@ import {
 } from "@/GlobalState/ApiCalls/supervisorApiCalls";
 import { RootState } from "@/GlobalState/store";
 import { ColorRing } from "react-loader-spinner";
+import { BsCaretLeftSquareFill, BsCaretRightSquareFill } from "react-icons/bs";
+
 type Props = {};
 
 function Supervisors({}: Props) {
@@ -27,6 +29,7 @@ function Supervisors({}: Props) {
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [updateId, setUpdateId] = useState<string>("");
   const [deleteId, setDeleteId] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
 
   // getting token from store
   const token: any = useSelector((state: RootState) => state.User.adminToken);
@@ -79,6 +82,16 @@ function Supervisors({}: Props) {
     //   });
   };
 
+  // pagination
+  const selectPagehandler = (selectedPage: any) => {
+    if (
+      selectedPage >= 1 &&
+      selectedPage <= Math.ceil(supervisors.length / 8) &&
+      selectedPage !== page
+    )
+      setPage(selectedPage);
+  };
+
   const { WSSC_CODE }: any = useSelector(
     (state: RootState) => state.User.SignInData
   );
@@ -117,19 +130,13 @@ function Supervisors({}: Props) {
                 Add Supervisor
               </button>
               {supervisors.length > 0 && (
-                <div className="flex items-center border-2 border-gray-300 rounded-full">
-                  <input
-                    type="text"
-                    placeholder={`Search in ${supervisors?.length} supervisors`}
-                    className="text-sm rounded-l-full outline-none py-1 px-4 w-52 "
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                  <div className="border-[1px] border-gray-300 h-8"></div>
-                  <button className="py-1 px-4 rounded-r-full transition-all text-white bg-feedbackColor cursor-pointer">
-                    Search
-                  </button>
-                </div>
+                <input
+                  type="text"
+                  placeholder={`Search in ${supervisors?.length} Supervisors`}
+                  className="text-sm rounded-full outline-none py-2 px-4 w-64 border-2 border-gray-400 focus:border-primaryColor-500"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
               )}
             </div>
           </div>
@@ -146,8 +153,8 @@ function Supervisors({}: Props) {
           )}
 
           <div
-            className={`overflow-x-auto shadow-md sm:rounded-lg py-1 ${
-              loading && "flex items-center justify-center h-[75vh]"
+            className={`overflow-x-auto shadow-md sm:rounded-lg h-[75vh] py-1 ${
+              loading && "flex items-center justify-center"
             }`}
           >
             {loading ? (
@@ -163,7 +170,7 @@ function Supervisors({}: Props) {
             ) : (
               <>
                 {supervisors.length > 0 ? (
-                  <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+                  <table className="w-full text-sm text-center text-gray-500">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                       <tr>
                         <th scope="col" className="px-6 py-3">
@@ -188,74 +195,77 @@ function Supervisors({}: Props) {
                         </th>
                       </tr>
                     </thead>
-                    <tbody  className="text-center">
-                      {supervisors?.map(
-                        (
-                          {
-                            _id,
-                            name,
-                            phone,
-                            WSSC_CODE,
-                            assignComplaints,
-                          }: any,
-                          index: any
-                        ) => (
-                          <tr
-                            key={index}
-                            className="cursor-pointer bg-white border-b  hover:bg-gray-50 "
-                          >
-                            <th
-                              scope="row"
-                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
+                    <tbody className="text-center">
+                      {supervisors
+                        ?.filter((supervisor: any) => {
+                          return search === ""
+                            ? supervisor
+                            : supervisor?.phone.toString()?.includes(search);
+                        })
+                        .slice(page * 8 - 8, page * 8)
+                        ?.map(
+                          (
+                            { _id, name, phone, WSSC_CODE }: any,
+                            index: any
+                          ) => (
+                            <tr
+                              key={index}
+                              className="cursor-pointer bg-white border-b  hover:bg-gray-50 "
                             >
-                              {index + 1}
-                            </th>
-                            <td
-                              scope="row"
-                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
-                            >
-                              {_id.slice(-8)}
-                            </td>
-                            <td
-                              scope="row"
-                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                            >
-                              {name}
-                            </td>
-                            <td className="px-6 py-4">{phone}</td>
-                            <td className="px-6 py-4 uppercase">{WSSC_CODE}</td>
+                              <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
+                              >
+                                {index + 1}
+                              </th>
+                              <td
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap uppercase"
+                              >
+                                {_id.slice(-8)}
+                              </td>
+                              <td
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                              >
+                                {name}
+                              </td>
+                              <td className="px-6 py-4">{phone}</td>
+                              <td className="px-6 py-4 uppercase">
+                                {WSSC_CODE}
+                              </td>
 
-                            <td className="px-6 py-4 flex items-center gap-2 justify-center">
-                              <button
-                                onClick={() =>
-                                  navigate.push(`/supervisors/${_id}`)
-                                }
-                                className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 hover:bg-gray-50 border-completedColor hover:text-completedColor"
-                              >
-                                View
-                              </button>
-                              <button
-                                onClick={() => {
-                                  setUpdateModal(true);
-                                  setUpdateId(_id);
-                                }}
-                                className="font-bold text-[12px] uppercase text-white bg-inprogessColor py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 border-inprogessColor hover:text-inprogessColor hover:bg-gray-50"
-                              >
-                                Update
-                              </button>
-                              <button
-                                onClick={() => {
-                                  setDeleteModal(true);
-                                  setDeleteId(_id);
-                                }}
-                                className="font-bold text-[12px] uppercase text-white bg-closedColor py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 border-closedColor hover:bg-gray-50  hover:text-closedColor"
-                              >
-                                Remove
-                              </button>
-                            </td>
-                          </tr>
-                        )
-                      )}
+                              <td className="px-6 py-4 flex items-center gap-2 justify-center">
+                                <button
+                                  onClick={() =>
+                                    navigate.push(`/supervisors/${_id}`)
+                                  }
+                                  className="font-bold text-[12px] uppercase text-white bg-primaryColor-500  py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 hover:bg-gray-50 border-completedColor hover:text-completedColor"
+                                >
+                                  View
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    setUpdateModal(true);
+                                    setUpdateId(_id);
+                                  }}
+                                  className="font-bold text-[12px] uppercase text-white bg-inprogessColor py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 border-inprogessColor hover:text-inprogessColor hover:bg-gray-50"
+                                >
+                                  Update
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    setDeleteModal(true);
+                                    setDeleteId(_id);
+                                  }}
+                                  className="font-bold text-[12px] uppercase text-white bg-closedColor py-1 px-3 rounded-lg hover:shadow-lg transition-all border-2 border-closedColor hover:bg-gray-50  hover:text-closedColor"
+                                >
+                                  Remove
+                                </button>
+                              </td>
+                            </tr>
+                          )
+                        )}
                     </tbody>
                   </table>
                 ) : (
@@ -276,7 +286,48 @@ function Supervisors({}: Props) {
               </>
             )}
           </div>
-
+          {supervisors?.length > 8 && !loading && (
+            <div className="flex items-center justify-center w-full">
+              <div className="flex items-center gap-2 text-2xl">
+                <span
+                  className={
+                    page > 1
+                      ? "hover:text-primaryColor-500 transition-all cursor-pointer text-gray-700"
+                      : "opacity-0"
+                  }
+                  onClick={() => selectPagehandler(page - 1)}
+                >
+                  <BsCaretLeftSquareFill />
+                </span>
+                {supervisors.length > 8 &&
+                  [...Array(Math.ceil(supervisors?.length / 8))].map(
+                    (_, index) => (
+                      <span
+                        key={index}
+                        className={
+                          page === index + 1
+                            ? "bg-primaryColor-300 text-sm font-semibold  rounded-md px-2 py-1 cursor-pointer"
+                            : "bg-transparent text-sm rounded-md px-2 py-1  cursor-pointer"
+                        }
+                        onClick={() => selectPagehandler(index + 1)}
+                      >
+                        {index + 1}
+                      </span>
+                    )
+                  )}
+                <span
+                  className={
+                    page < Math.ceil(supervisors?.length / 8)
+                      ? "hover:text-primaryColor-500 transition-all cursor-pointer text-gray-700"
+                      : "opacity-0"
+                  }
+                  onClick={() => selectPagehandler(page + 1)}
+                >
+                  <BsCaretRightSquareFill />
+                </span>
+              </div>
+            </div>
+          )}
           {/* ADD SUPERVISOR MODAL */}
           {modal && (
             <div className="absolute mt-10 h-[80vh] w-full flex items-center justify-center backdrop-blur-sm">

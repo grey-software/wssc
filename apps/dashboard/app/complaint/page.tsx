@@ -98,19 +98,15 @@ const Page = () => {
                 <option value="Completed">Completed</option>
                 <option value="Closed">Closed</option>
               </select>
-              <div className="flex items-center border-2 border-gray-300 rounded-full">
+              {complaints && (
                 <input
                   type="text"
-                  placeholder="Search here               "
-                  className="text-sm rounded-l-full outline-none py-1 px-4 w-52 "
+                  placeholder={`Search in ${complaints?.length} Complaints`}
+                  className="text-sm rounded-full outline-none py-2 px-4 w-64 border-2 border-gray-400 focus:border-primaryColor-500"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
-                <div className="border-[1px] border-gray-300 h-8"></div>
-                <button className="py-1 px-4 rounded-r-full transition-all text-white bg-feedbackColor cursor-pointer">
-                  Search
-                </button>
-              </div>
+              )}
             </div>
           </div>
           {success ||
@@ -180,6 +176,11 @@ const Page = () => {
                     </thead>
                     <tbody>
                       {filteredComplaints
+                        .filter((complaint: any) => {
+                          return search === ""
+                            ? complaint
+                            : complaint?.phone?.includes(search);
+                        })
                         ?.slice(page * 8 - 8, page * 8)
                         .map((complaint, index) => (
                           <>
