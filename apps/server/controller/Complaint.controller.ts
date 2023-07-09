@@ -176,73 +176,6 @@ export const AssignComplaint = async (req: Request, res: Response) => {
   }
 };
 
-export const UpdateComplaint = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const complaintId = req.params.id;
-  try {
-    // To check if the current user is admin, Only admin can update the complaint
-    if (req.user.isAdmin) {
-      const complaint:
-        | (IComplaint & {
-            _id: Types.ObjectId;
-            _doc: any;
-          })
-        | null = await ComplaintModel.findById(complaintId);
-      let status;
-      let statusLength = complaint?.status.length;
-      // pushing the next status based on the previous status
-      if (statusLength == 1) {
-        status = {
-          state: "InProgress",
-          updateAt: new Date().toLocaleDateString(),
-        };
-      } else if (statusLength == 2) {
-        status = {
-          state: "Completed",
-          updateAt: new Date().toLocaleDateString(),
-        };
-      } else {
-        status = { state: "Closed", updateAt: new Date().toLocaleDateString() };
-      }
-      const updated = await ComplaintModel.findByIdAndUpdate(complaintId, {
-        $addToSet: { status: status },
-      });
-
-      // Sending Notification to user
-      const response = await novu.trigger("complaint-status-updated", {
-        to: {
-          subscriberId: complaint?.userId,
-        },
-        payload: {
-          // for now only this string will go to frontend, will modify it once we have connected frontend and backend
-          status: "Complaint Status updated Updated",
-        },
-      });
-      res.status(200).json({
-        status: 200,
-        success: true,
-        message: "Status updated successfully",
-        data: response.data,
-      });
-    } else {
-      res.status(303).json({
-        status: 303,
-        success: false,
-        message: "You are not authorized to update complaint",
-      });
-    }
-  } catch (error: any) {
-    res.status(400).json({
-      status: 400,
-      success: false,
-      message: error.message,
-    });
-  }
-};
-
 // Get All complaints
 export const GetAllComplaints = async (
   req: Request,
@@ -454,7 +387,7 @@ export const SupervisorResponse = async (
         },
         payload: {
           id: complaintId,
-          message: "Your complaint is Resolved, Please give your Feedback",
+          message: "Your complaint is Resolved, Please provide your Feedback",
         },
       });
 

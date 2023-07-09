@@ -203,10 +203,10 @@ const Page: React.FC = ({ params }: any) => {
             <span className=" ml-2 font-serif">تصویر / ویڈیو</span>
           </label>
           <div
-            className={`flex gap-3 w-full h-[6rem] p-[3px] overflow-hidden border-2 rounded-lg border-gray-300 outline-none
+            className={`flex gap-3 w-full h-[140px] p-2 overflow-hidden border-2 rounded-lg border-gray-300 outline-none
           `}
           >
-            <div className="w-[120px] h-[120px] object-cover">
+            <div className="w-[120px] h-36 object-cover">
               {!imgload ? (
                 <>
                   {image && (
@@ -233,19 +233,19 @@ const Page: React.FC = ({ params }: any) => {
                     strokeWidth={2}
                     strokeWidthSecondary={2}
                   />
-                  <p className="text-sm">Image Uploading</p>
+                  <p className="text-sm">Uploading...</p>
                 </div>
               )}
             </div>
 
-            <div className="w-[120px] h-[120px] object-cover">
+            <div className="w-[120px] h-36 object-cover">
               {!vidload ? (
                 <>
                   {video && (
                     <video
                       src={video}
                       controls
-                      style={{ width: "120px", height: "120px" }}
+                      style={{ width: "120px", height: "144px" }}
                     />
                   )}
                 </>
@@ -263,7 +263,7 @@ const Page: React.FC = ({ params }: any) => {
                     strokeWidth={2}
                     strokeWidthSecondary={2}
                   />
-                  <p className="text-sm">Video Uploading</p>
+                  <p className="text-sm">Uploading...</p>
                 </div>
               )}
             </div>
