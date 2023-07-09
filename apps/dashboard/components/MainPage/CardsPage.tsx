@@ -8,6 +8,7 @@ import CountUp from "react-countup";
 import { MdStar, MdStarBorder } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { RootState } from "@/GlobalState/store";
+import Link from "next/link";
 
 const CardsPage = () => {
   const {data, OrganizationRating}: any = useSelector((state: RootState) => state.statistics);
@@ -29,9 +30,11 @@ const CardsPage = () => {
           </div>
         </div>
         {/* footer */}
-        <div className="botm absolute bottom-0 w-full p-2 text-sm text-white text-center bg-orange-500 opacity-90">
-          <h5>Registered users</h5>
-        </div>
+        <Link href="/users">
+          <div className="botm absolute hover:bg-orange-600 hover:text-md bottom-0 w-full p-2 text-sm text-white text-center bg-orange-500 opacity-90">
+            <h5>Registered users</h5>
+          </div>
+        </Link>
       </div>
 
       {/* supervisor  card */}
@@ -48,9 +51,11 @@ const CardsPage = () => {
           </div>
         </div>
         {/* footer */}
-        <div className="botm absolute w-full bottom-0 p-2 text-sm text-white text-center bg-blue-600 opacity-90">
-          <h5>Active supervisors</h5>
-        </div>
+        <Link href="/supervisors">
+          <div className="botm absolute md:text-md hover:bg-blue-700 w-full bottom-0 p-2 text-sm text-white text-center bg-blue-600 opacity-90">
+            <h5>Active supervisors</h5>
+          </div>
+        </Link>
       </div>
 
       {/* complaints card */}
@@ -67,9 +72,11 @@ const CardsPage = () => {
           </div>
         </div>
         {/* footer */}
-        <div className="botm absolute w-full bottom-0 p-2 text-sm text-white text-center bg-primaryColor-500 opacity-90">
-          <h5>Registered complaints</h5>
-        </div>
+        <Link href="/complaint">
+          <div className="botm  hover:bg-green-600 absolute w-full bottom-0 p-2 text-sm text-white text-center bg-primaryColor-500 opacity-90">
+            <h5>Registered complaints</h5>
+          </div>
+        </Link>
       </div>
 
       {/* chartNeedle */}
@@ -78,9 +85,11 @@ const CardsPage = () => {
           <ChartNeedle />
         </div>
         {/* footer */}
-        <div className="botm p-2 text-sm text-white font-semibold tracking-wide text-center bg-yellow-400 bg-opacity-6">
-          <h5>WSSC Performance</h5>
-        </div>
+        <Link href="/feedback">
+          <div className=" cursor-pointer hover:bg-yellow-500  p-2 text-sm text-white font-semibold tracking-wide text-center bg-yellow-400 bg-opacity-6">
+            <h5>WSSC Performance</h5>
+          </div>
+        </Link>
         {/* rating %age */}
         <div className="percent w-full justify-between  flex absolute top-2  text-[14px] font-extrabold text-yellow-400">
           <div className=" w-auto ml-2 flex justify-center items-center">

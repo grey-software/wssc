@@ -80,39 +80,41 @@ function Aside() {
   return (
     <>
       {WSSC_CODE ? (
-        <aside className="h-screen w-[250px] fixed shadow bg-slate-50 border-r">
-          <ul className="mt-10 w-full">
-            {items.map((item, index) => (
-              <li
-                key={index}
-                onClick={() => clickHander(item.to, index)}
-                className={`mx-6 my-4 px-2 py-1 flex items-center rounded-full cursor-pointer transition-all ${
-                  activeTab.index === index
-                    ? "bg-primaryColor-300 hover:bg-primaryColor-300 font-semibold tracking-wide text-feedbackColor border-primaryColor-300"
-                    : "hover:bg-gray-200"
-                }`}
-              >
-                <div className={`flex items-center justify-start ml-6`}>
-                  <span className="text-xl">{item.icon}</span>
-                  <span className="text-lg ml-4">{item.name}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
+        <div className="container hidden md:flex ">
+          <aside className="h-screen w-[250px] fixed shadow bg-slate-50 border-r">
+            <ul className="mt-10 w-full">
+              {items.map((item, index) => (
+                <li
+                  key={index}
+                  onClick={() => clickHander(item.to, index)}
+                  className={`mx-6 my-4 px-2 py-1 flex items-center  rounded-full cursor-pointer transition-all ${
+                    activeTab.index === index
+                      ? "bg-primaryColor-300 hover:bg-primaryColor-300 font-semibold tracking-wide text-feedbackColor border-primaryColor-300"
+                      : "hover:bg-gray-200 bg-slate-100 "
+                  }`}
+                >
+                  <div className={`flex items-center justify-start ml-6`}>
+                    <span className="text-xl">{item.icon}</span>
+                    <span className="text-lg ml-4">{item.name}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
 
-          {/* logout button */}
-          <div className="logout px-6 absolute bottom-28 w-full ">
-            <button
-              className="text-lg px-3 py-1 rounded-full flex justify-center items-center w-full text-red-500 border border-red-500 tracking-wide  bg-white hover:text-white hover:bg-red-500 cursor-pointer transition-all"
-              onClick={LogOut}
-            >
-              <span>
-                <BiLogOutCircle className="text-xl mr-3" />
-              </span>
-              <span>Logout</span>
-            </button>
-          </div>
-        </aside>
+            {/* logout button */}
+            <div className="logout px-6 absolute bottom-28 w-full ">
+              <button
+                className="text-lg px-3 py-1 rounded-full flex justify-center items-center w-full text-red-500 border border-red-500 tracking-wide  bg-white hover:text-white hover:bg-red-500 cursor-pointer transition-all"
+                onClick={LogOut}
+              >
+                <span>
+                  <BiLogOutCircle className="text-xl mr-3" />
+                </span>
+                <span>Logout</span>
+              </button>
+            </div>
+          </aside>
+        </div>
       ) : (
         ""
       )}

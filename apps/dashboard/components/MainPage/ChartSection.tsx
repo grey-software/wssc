@@ -1,9 +1,6 @@
 'use client'
 import React from 'react'
 import CustomChart from './CharBar';
-import TieChart2 from './TieChart2';
-import AreaGraph from './AreaGraph';
-import ComplaintStage from './ComplaintStage';
 import dynamic from "next/dynamic";
 
 const TieChart = dynamic(() => import("./TieChart2"), {

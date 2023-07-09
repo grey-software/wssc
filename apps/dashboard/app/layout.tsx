@@ -4,12 +4,13 @@ import Notification from "../components/Notification";
 import Aside from "../components/Aside";
 import Header from "../components/Header";
 import { Providers } from "../GlobalState/Provider";
+import DesktopScreenMsg from "@/components/DesktopScreenMsg";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "WSSC-Dashboard",
-  description: "Dashboard for WSSC company",
+  description: "Dashboard for WSSC companies",
 };
 
 export default function RootLayout({

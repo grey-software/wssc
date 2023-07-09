@@ -17,7 +17,7 @@ const AreaGraph = () => {
   const { complaints }: any = useSelector(
     (state: RootState) => state.statistics.data
   );
-  //  data
+  // D
   const data = [
     {
       name: "June 2023",
@@ -25,7 +25,7 @@ const AreaGraph = () => {
     },
     {
       name: "July 2023",
-      complaints: 0,
+      complaints: 15,
     },
     {
       name: "August 2023",
