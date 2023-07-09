@@ -15,6 +15,7 @@ import { HiArrowLeft } from "react-icons/hi";
 import Loader from "@/app/loading";
 import { useSelector } from "react-redux";
 import { RootState } from "@/GlobalState/store";
+import { Oval } from "react-loader-spinner";
 
 const Page = ({ params }: any) => {
   const navigate = useRouter();
@@ -30,6 +31,7 @@ const Page = ({ params }: any) => {
   const [loading, setloading] = useState(false);
   const [showpic, setShowPic] = useState<boolean>(false);
   const [modalPic, setModalPic] = useState<string>("");
+  const [imgload, setimgload] = useState<boolean>(false);
 
   // getting supervisorToken from store
   const token: any = useSelector(
@@ -92,6 +94,7 @@ const Page = ({ params }: any) => {
       try {
         let response;
         if (event.target.name === "image") {
+          setimgload(true);
           response = await fetch(
             "https://api.cloudinary.com/v1_1/dgpwe8xy6/image/upload",
             {
@@ -103,6 +106,7 @@ const Page = ({ params }: any) => {
           console.log(imageData);
           setImage(fileUrl);
           setImageUrl(imageData.secure_url);
+          setimgload(false);
         } else {
           response = await fetch(
             "https://api.cloudinary.com/v1_1/dgpwe8xy6/video/upload",
@@ -252,7 +256,7 @@ const Page = ({ params }: any) => {
               <div className="attachment">
                 <p>Attached media</p>
                 <div className="media  flex gap-2 justify-around md:justify-between border border-gray-200 p-2 md:p-1 rounded-md">
-                  <div className="pic w-[36vw] md:w-[20vw] md:h-[25vh] h-36 text-white">
+                  <div className="pic w-[36vw] md:w-[20vw] md:h-[25vh] h-[140px] text-white">
                     <Image
                       src={
                         complaint?.ImageUrl ? complaint?.ImageUrl : defaultPic
@@ -309,21 +313,35 @@ const Page = ({ params }: any) => {
                 </div>
                 <div className="media  flex gap-2 justify-around md:justify-between border border-gray-200 p-2 md:p-1 rounded-md">
                   <div className="pic  w-[36vw] md:w-[20vw] md:h-[25vh] h-36 text-white ">
-                    <Image
-                      src={
-                        complaint?.response?.ImageUrl
-                          ? complaint?.response?.ImageUrl
-                          : defaultPic
-                      }
-                      alt=""
-                      width={500}
-                      height={500}
-                      onClick={() => {
-                        setModalPic(complaint.response.ImageUrl);
-                        setShowPic(true);
-                      }}
-                      className="object-cover h-36 w-32 rounded-md md:w-[20vw] md:h-[25vh]"
-                    />
+                    {!imgload ? (
+                      <Image
+                        src={complaint?.response?.ImageUrl}
+                        alt=""
+                        width={500}
+                        height={500}
+                        onClick={() => {
+                          setModalPic(complaint.response.ImageUrl);
+                          setShowPic(true);
+                        }}
+                        className="object-cover h-36 w-32 rounded-md md:w-[20vw] md:h-[25vh]"
+                      />
+                    ) : (
+                      <div className="flex flex-col w-full items-center justify-center">
+                        <Oval
+                          height={50}
+                          width={50}
+                          color="#4fa94d"
+                          wrapperStyle={{}}
+                          wrapperClass=""
+                          visible={true}
+                          ariaLabel="oval-loading"
+                          secondaryColor="#4fa94d"
+                          strokeWidth={2}
+                          strokeWidthSecondary={2}
+                        />
+                        <p className="text-sm">Uploading...</p>
+                      </div>
+                    )}
                   </div>
                   {/* video */}
                   <div className="video  w-[36vw] md:w-[20vw] md:h-[25vh] h-36 text-white ">
@@ -375,27 +393,45 @@ const Page = ({ params }: any) => {
                     <span className=" ml-2 font-serif">تصویر / ویڈیو</span>
                   </label>
                   <div
-                    className={`flex gap-3 w-full h-[7rem] p-[3px]  overflow-hidden border-2 rounded-lg border-gray-300 outline-none bg-white
+                    className={`flex gap-3 w-full h-40  overflow-hidden border-2 rounded-lg border-gray-300 outline-none bg-white p-2
           `}
                   >
-                    {image && (
-                      <div className="w-[160px] h-[105px] object-cover">
-                        <Image
-                          className="rounded-sm object-cover w-full h-full"
-                          src={image}
-                          width={100}
-                          height={100}
-                          alt="previewImage"
+                    {!imgload ? (
+                      <>
+                        {image && (
+                          <Image
+                            className="rounded-md object-cover w-[120px] h-36"
+                            src={image}
+                            width={100}
+                            height={100}
+                            alt="previewImage"
+                          />
+                        )}
+                      </>
+                    ) : (
+                      <div className="flex flex-col w-full items-center justify-center">
+                        <Oval
+                          height={50}
+                          width={50}
+                          color="#4fa94d"
+                          wrapperStyle={{}}
+                          wrapperClass=""
+                          visible={true}
+                          ariaLabel="oval-loading"
+                          secondaryColor="#4fa94d"
+                          strokeWidth={2}
+                          strokeWidthSecondary={2}
                         />
+                        <p className="text-sm">Uploading...</p>
                       </div>
                     )}
 
                     {video && (
-                      <div className="w-[120px] h-[120px] border border-orange-400 object-cover">
+                      <div className="w-[120px] h-36 border border-orange-400 object-cover">
                         <video
                           src={video}
                           controls
-                          style={{ width: "120px", height: "120px" }}
+                          style={{ width: "120px", height: "144px" }}
                         />
                       </div>
                     )}
