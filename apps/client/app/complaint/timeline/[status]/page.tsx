@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/global_state/store";
 import { API } from "@/global_state/ApiCalls/complaintApiCalls";
 
-
 const Timeline = ({ params }: any) => {
   const complaintID = params.status;
   const navigate = useRouter();
@@ -25,15 +24,12 @@ const Timeline = ({ params }: any) => {
   const FetchSingleComplaint = async (): Promise<any> => {
     setLoading(true);
     try {
-      const res = await API.get(
-        `api/v1/complaints/${complaintID}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${CitizenToken}`,
-          },
-        }
-      );
+      const res = await API.get(`api/v1/complaints/${complaintID}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${CitizenToken}`,
+        },
+      });
       setComplaint(res.data.complaint);
       setLoading(false);
       return res.data;
@@ -164,24 +160,35 @@ const Timeline = ({ params }: any) => {
         />
       )}
 
+      {/* MODAL SHOW IMAGE */}
+      {/* OVERLAY */}
       {showImage && (
         <div
-          className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center h-screen w-screen bg-gray-400 bg-opacity-70 z-20 cursor-pointer"
           onClick={() => setShowImage(false)}
-        >
-          <Image
-            src={`${
-              complaint?.ImageUrl
-                ? complaint?.ImageUrl
-                : "/assets/complaintDefaultPic.png"
-            }`}
-            width={500}
-            height={500}
-            className="absolute h-[75%] w-auto mx-2 rounded-md object-contain z-50"
-            alt=""
-          />
-        </div>
+          className="fixed top-0 left-0 h-screen w-screen bg-slate-300 bg-opacity-75 z-30"
+        ></div>
       )}
+
+      {/* SHOW IMAGE */}
+      <div
+        className={`${
+          showImage ? "opacity-100 scale-100" : "opacity-0 scale-0"
+        } fixed m-2 top-[10%] h-fit flex items-center justify-center z-50`}
+      >
+        <Image
+          src={`${
+            complaint?.ImageUrl
+              ? complaint?.ImageUrl
+              : "/assets/complaintDefaultPic.png"
+          }`}
+          width={1000}
+          height={1000}
+          className={`${
+            showImage ? "scale-100" : "scale-0"
+          } h-[75vh] w-auto mx-2 rounded-lg object-contain transition-all`}
+          alt=""
+        />
+      </div>
     </div>
   );
 };

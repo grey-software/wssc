@@ -25,10 +25,13 @@ const Page = ({ params }: any) => {
   const [wsscStatement, setWsscStatement] = useState<string>("");
   const [supervisorId, setSupervisorId] = useState<string>("");
   const [complaint, setComplaint] = useState<complaintTypes>();
+  const [showpic, setShowPic] = useState<boolean>(false);
+  const [modalPic, setModalPic] = useState<string>();
 
   const [pending, setPending] = useState(true);
   const [error, setError] = useState<boolean>(false);
   const loading = useSelector((state: RootState) => state.Complaint.loading);
+
   const supervisors = useSelector(
     (state: RootState) => state.Supervisor.supervisorsAll
   );
@@ -390,17 +393,17 @@ const Page = ({ params }: any) => {
                 </div>
 
                 {/* Supervisor details */}
-                <div
-                  onClick={() =>
-                    navigate.push(`/supervisors/${supervisor._id}`)
-                  }
-                  className="cursor-pointer shadow-md p-5 rounded-md border-2 border-gray-50"
-                >
+                <div className="shadow-md p-5 rounded-md border-2 border-gray-50">
                   <h1 className="mb-1 font-bold text-md">Supervisor Details</h1>
                   <div className="w-full border-[1px] border-gray-300"></div>
                   {complaint?.supervisorId != "" ? (
                     <div className="grid grid-cols-2 gap-4 mt-4">
-                      <div className="flex items-start gap-2">
+                      <div
+                        onClick={() =>
+                          navigate.push(`/supervisors/${supervisor._id}`)
+                        }
+                        className="flex items-start gap-2 cursor-pointer"
+                      >
                         <span className="font-semibold">Name</span>
                         <span>{supervisor?.name}</span>
                       </div>
@@ -428,11 +431,15 @@ const Page = ({ params }: any) => {
                               <>
                                 {complaint?.response?.ImageUrl && (
                                   <Image
+                                    onClick={() => {
+                                      setModalPic(complaint.response.ImageUrl);
+                                      setShowPic(true);
+                                    }}
                                     src={complaint?.response?.ImageUrl}
-                                    className="h-36 w-32"
+                                    className="h-36 w-32 cursor-pointer"
                                     width={300}
                                     height={100}
-                                    alt="Complaint Picture"
+                                    alt="Complaint-Picture"
                                   />
                                 )}
                                 {complaint?.response?.VideoUrl && (
@@ -472,8 +479,12 @@ const Page = ({ params }: any) => {
                       <>
                         {complaint?.ImageUrl && (
                           <Image
+                            onClick={() => {
+                              setModalPic(complaint?.ImageUrl);
+                              setShowPic(true);
+                            }}
                             src={complaint?.ImageUrl}
-                            className="h-56 w-48 object-contain"
+                            className="h-56 w-48 object-contain rounded-md cursor-pointer"
                             width={300}
                             height={100}
                             alt="Complaint Picture"
@@ -494,6 +505,32 @@ const Page = ({ params }: any) => {
                 </div>
               </>
             )}
+          </div>
+
+          {/* MODAL SHOW IMAGE */}
+          {/* OVERLAY */}
+          {showpic && (
+            <div
+              onClick={() => setShowPic(false)}
+              className="fixed top-0 left-0 h-screen w-screen bg-slate-300 bg-opacity-75 z-30"
+            ></div>
+          )}
+
+          {/* SHOW IMAGE */}
+          <div
+            className={`${
+              showpic ? "opacity-100 scale-100" : "opacity-0 scale-0"
+            } fixed m-2 top-[10%] left-[25%] right-[25%] h-fit flex items-center justify-center z-50`}
+          >
+            <Image
+              src={`${modalPic ? modalPic : "/assets/complaintDefaultPic.png"}`}
+              width={1000}
+              height={1000}
+              className={`${
+                showpic ? "scale-100" : "scale-0"
+              } h-[75vh] w-auto mx-2 rounded-lg object-contain transition-all`}
+              alt=""
+            />
           </div>
         </div>
       )}
