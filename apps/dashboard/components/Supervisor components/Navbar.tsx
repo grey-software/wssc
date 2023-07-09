@@ -20,8 +20,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useRouter();
   const [menuActive, setMenuActive] = useState(false);
-  const [windowActive, setWindowActive] = useState(false);
-const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const { _id, profile_image }: any = useSelector(
     (state: RootState) => state.suprvisor.SupervisorSiginData
   );
@@ -63,7 +62,7 @@ const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  
+
   // JSX SECTION
   return (
     <>
@@ -131,11 +130,12 @@ const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
                 onClick={() => {
                   setMenuActive(false);
                 }}
+                className="mb-6 active:text-primaryColor-500 hover:text-primaryColor-500"
               >
-                <p className="hover:text-green-500">Profile</p>
+                <p>Profile</p>
               </Link>
-
-              <p onClick={Logout} className="hover:text-green-500">
+              <div className="h-[1px] w-full bg-gray-500"></div>
+              <p onClick={Logout} className="text-red-500 hover:text-green-500">
                 Logout
               </p>
             </div>
@@ -150,4 +150,3 @@ export default Navbar;
 function setWindowWidth(innerWidth: number) {
   throw new Error("Function not implemented.");
 }
-

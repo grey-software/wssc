@@ -28,6 +28,8 @@ const Page = ({ params }: any) => {
   const [complaintDes, setcomplaintDes] = useState("");
   const DescRef = useRef<HTMLTextAreaElement>(null);
   const [loading, setloading] = useState(false);
+  const [showpic, setShowPic] = useState<boolean>(false);
+  const [modalPic, setModalPic] = useState<string>("");
 
   // getting supervisorToken from store
   const token: any = useSelector(
@@ -215,14 +217,26 @@ const Page = ({ params }: any) => {
                   {complaint?.updatedAt.split("T")[0]}
                 </p>
               </div>
-              {/* adming description */}
+
+              {/* complaint description */}
               <div className="desc flex flex-col">
-                <h5 className="text-gray-500">Description</h5>
+                <h5 className="text-gray-500">Address</h5>
 
                 <p className="border border-gray-200 p-2 rounded-md bg-white">
-                  {complaint?.complaintDes}
+                  {complaint?.complaintAddress}
                 </p>
               </div>
+
+              {/* complaint description */}
+              {complaint?.complaintDes && (
+                <div className="desc flex flex-col">
+                  <h5 className="text-gray-500">Description</h5>
+
+                  <p className="border border-gray-200 p-2 rounded-md bg-white">
+                    {complaint?.complaintDes}
+                  </p>
+                </div>
+              )}
 
               {/* admin statement */}
               {complaint?.wsscStatement && (
@@ -238,15 +252,19 @@ const Page = ({ params }: any) => {
               <div className="attachment">
                 <p>Attached media</p>
                 <div className="media  flex gap-2 justify-around md:justify-between border border-gray-200 p-2 md:p-1 rounded-md">
-                  <div className="pic w-[36vw] md:w-[20vw] md:h-[25vh] h-[14vh] text-white ">
+                  <div className="pic w-[36vw] md:w-[20vw] md:h-[25vh] h-36 text-white">
                     <Image
                       src={
                         complaint?.ImageUrl ? complaint?.ImageUrl : defaultPic
                       }
                       alt=""
-                      width={40}
-                      height={40}
-                      className="object-cover w-[36vw] md:w-[20vw] md:h-[25vh] h-[14vh]"
+                      width={500}
+                      height={500}
+                      onClick={() => {
+                        setModalPic(complaint.ImageUrl);
+                        setShowPic(true);
+                      }}
+                      className="object-cover h-36 w-32 rounded-md md:w-[20vw] md:h-[25vh]"
                     />
                   </div>
                   {/* video */}
@@ -255,15 +273,15 @@ const Page = ({ params }: any) => {
                       <video
                         src={complaint.VideoUrl}
                         controls
-                        className="object-cover w-[36vw] md:w-[20vw] md:h-[25vh] h-[14vh]"
+                        className="object-cover h-36 w-32 rounded-md md:w-[20vw] md:h-[25vh]"
                       />
                     ) : (
                       <Image
                         src={defaultPic}
                         alt=""
-                        width={40}
-                        height={40}
-                        className="object-cover  w-[36vw] md:w-[20vw] md:h-[25vh] h-[14vh]"
+                        width={500}
+                        height={500}
+                        className="object-cover h-36 w-32 rounded-md md:w-[20vw] md:h-[25vh]"
                       />
                     )}
                   </div>
@@ -290,7 +308,7 @@ const Page = ({ params }: any) => {
                   </p>
                 </div>
                 <div className="media  flex gap-2 justify-around md:justify-between border border-gray-200 p-2 md:p-1 rounded-md">
-                  <div className="pic  w-[36vw] md:w-[20vw] md:h-[25vh] h-[14vh] text-white ">
+                  <div className="pic  w-[36vw] md:w-[20vw] md:h-[25vh] h-36 text-white ">
                     <Image
                       src={
                         complaint?.response?.ImageUrl
@@ -298,26 +316,30 @@ const Page = ({ params }: any) => {
                           : defaultPic
                       }
                       alt=""
-                      width={40}
-                      height={40}
-                      className="object-contain   w-[36vw] md:w-[20vw] md:h-[25vh] h-[14vh]"
+                      width={500}
+                      height={500}
+                      onClick={() => {
+                        setModalPic(complaint.response.ImageUrl);
+                        setShowPic(true);
+                      }}
+                      className="object-cover h-36 w-32 rounded-md md:w-[20vw] md:h-[25vh]"
                     />
                   </div>
                   {/* video */}
-                  <div className="video  w-[36vw] md:w-[20vw] md:h-[25vh] h-[14vh] text-white ">
+                  <div className="video  w-[36vw] md:w-[20vw] md:h-[25vh] h-36 text-white ">
                     {complaint?.response?.VideoUrl ? (
                       <video
                         src={complaint.response.VideoUrl}
                         controls
-                        className="object-contain   w-[36vw] md:w-[20vw] md:h-[25vh] h-[14vh]"
+                        className="object-cover h-36 w-32 rounded-md md:w-[20vw] md:h-[25vh]"
                       />
                     ) : (
                       <Image
                         src={defaultPic}
                         alt=""
-                        width={40}
-                        height={40}
-                        className="object-cover  w-[36vw] md:w-[20vw] md:h-[25vh] h-[14vh]"
+                        width={500}
+                        height={500}
+                        className="object-cover h-36 w-32 rounded-md md:w-[20vw] md:h-[25vh]"
                       />
                     )}
                   </div>
@@ -464,6 +486,32 @@ const Page = ({ params }: any) => {
         ) : (
           <Loader />
         )}
+      </div>
+
+      {/* MODAL SHOW IMAGE */}
+      {/* OVERLAY */}
+      {showpic && (
+        <div
+          onClick={() => setShowPic(false)}
+          className="fixed top-0 left-0 h-screen w-screen bg-slate-300 bg-opacity-75 z-30"
+        ></div>
+      )}
+
+      {/* SHOW IMAGE */}
+      <div
+        className={`${
+          showpic ? "opacity-100 scale-100" : "opacity-0 scale-0"
+        } fixed m-2 top-[10%] h-fit flex items-center justify-center z-50`}
+      >
+        <Image
+          src={`${modalPic ? modalPic : "/assets/complaintDefaultPic.png"}`}
+          width={1000}
+          height={1000}
+          className={`${
+            showpic ? "scale-100" : "scale-0"
+          } h-[75vh] w-auto mx-2 rounded-lg object-contain transition-all`}
+          alt=""
+        />
       </div>
     </div>
   );
