@@ -29,7 +29,7 @@ const CustomChart = () => {
       uv: complaintStatus?.Completed || 0,
     },
     {
-      name: "In progress",
+      name: "In Progress",
       uv: complaintStatus?.InProgress || 0,
     },
 

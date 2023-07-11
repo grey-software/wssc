@@ -35,7 +35,7 @@ const Header = () => {
     <div>
       {WSSC_CODE ? (
         <div className="w-full hidden md:flex justify-between items-center px-8 py-2 bg-slate-50 top-0 fixed border-b shadow z-50">
-          <div className="flex items-center gap-2 pl-7">
+          <div className="flex items-center gap-2 pl-2">
             <Image
               src={logo}
               className="h-9 w-10"

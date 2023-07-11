@@ -20,7 +20,7 @@ const CardsPage = () => {
       <div className="card w-[20%] relative bg-gray-50 border-gray-400 rounded-md shadow-md overflow-hidden">
         <div className="wrapper p-3 flex justify-between items-center">
           <div className="name flex flex-col gap-3">
-            <p className="text-sm">All Users</p>
+            {/* <p className="text-sm">All Users</p> */}
             <h2 className="text-orange-400 font-bold text-3xl">
               0<CountUp start={0} end={data?.users} duration={3} />
             </h2>
@@ -31,8 +31,8 @@ const CardsPage = () => {
         </div>
         {/* footer */}
         <Link href="/users">
-          <div className="botm absolute hover:bg-orange-600 hover:text-md bottom-0 w-full p-2 text-sm text-white text-center bg-orange-500 opacity-90">
-            <h5>Registered users</h5>
+          <div className="botm absolute hover:bg-orange-600 hover:text-md bottom-0 w-full p-2 text-md text-white text-center bg-orange-500 opacity-90">
+            <h5>Registered Users</h5>
           </div>
         </Link>
       </div>
@@ -41,7 +41,7 @@ const CardsPage = () => {
       <div className="card w-[20%] relative bg-gray-50 border-gray-400 rounded-md shadow-md overflow-hidden">
         <div className="wrapper p-3 flex justify-between items-center">
           <div className="name flex flex-col gap-3">
-            <p className="text-sm">Supervisors</p>
+            {/* <p className="text-sm">Supervisors</p> */}
             <h2 className="text-blue-600 font-bold text-3xl">
               <CountUp start={0} end={data?.supervisors} duration={3} />
             </h2>
@@ -52,8 +52,8 @@ const CardsPage = () => {
         </div>
         {/* footer */}
         <Link href="/supervisors">
-          <div className="botm absolute md:text-md hover:bg-blue-700 w-full bottom-0 p-2 text-sm text-white text-center bg-blue-600 opacity-90">
-            <h5>Active supervisors</h5>
+          <div className="botm absolute md:text-md hover:bg-blue-700 w-full bottom-0 p-2 text-md text-white text-center bg-blue-600 opacity-90">
+            <h4>Active Supervisors</h4>
           </div>
         </Link>
       </div>
@@ -62,7 +62,7 @@ const CardsPage = () => {
       <div className="card w-[20%] relative bg-gray-50 border-gray-400 rounded-md shadow-md overflow-hidden">
         <div className="wrapper p-3 flex justify-between items-center">
           <div className="name flex flex-col gap-3">
-            <p className="text-sm">Complaints</p>
+            {/* <p className="text-sm">Complaints</p> */}
             <h2 className="text-green-500 font-bold text-3xl">
               <CountUp start={0} end={data?.complaints} duration={3} />
             </h2>
@@ -73,8 +73,8 @@ const CardsPage = () => {
         </div>
         {/* footer */}
         <Link href="/complaint">
-          <div className="botm  hover:bg-green-600 absolute w-full bottom-0 p-2 text-sm text-white text-center bg-primaryColor-500 opacity-90">
-            <h5>Registered complaints</h5>
+          <div className="botm  hover:bg-green-600 absolute w-full bottom-0 p-2 text-md text-white text-center bg-primaryColor-500 opacity-90">
+            <h5>Registered Complaints</h5>
           </div>
         </Link>
       </div>
@@ -86,7 +86,7 @@ const CardsPage = () => {
         </div>
         {/* footer */}
         <Link href="/feedback">
-          <div className=" cursor-pointer hover:bg-yellow-500  p-2 text-sm text-white font-semibold tracking-wide text-center bg-yellow-400 bg-opacity-6">
+          <div className=" cursor-pointer hover:bg-yellow-500  p-2 text-md text-white tracking-wide text-center bg-yellow-400 bg-opacity-6">
             <h5>WSSC Performance</h5>
           </div>
         </Link>
