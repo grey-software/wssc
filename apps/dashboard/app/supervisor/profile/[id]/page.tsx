@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { UpdateSupervisor } from "@/GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
 import { RootState } from "@/GlobalState/store";
 import { useRouter } from "next/navigation";
+import { FetchSupervisorComplaints } from "@/GlobalState/ApiCalls/complaintApiCalls";
+import Ratings from "@/components/Rating";
 
 const ProfileCard = () => {
   const imageRef = useRef<HTMLInputElement>(null);
@@ -27,6 +29,10 @@ const ProfileCard = () => {
 
   const dispatch = useDispatch();
   const navigate = useRouter();
+
+  useEffect(() => {
+    FetchSupervisorComplaints(_id, dispatch, token);
+  });
   // ------------ back button --------
   const BackButton = () => {
     navigate.back();
@@ -58,10 +64,14 @@ const ProfileCard = () => {
           profile_image: photo.secure_url,
         };
         // calling updateProfile apiCall to update userInfo
-        await UpdateSupervisor(dispatch, {
-          updatedpic,
-          suprvisorId: _id,
-        }, token);
+        await UpdateSupervisor(
+          dispatch,
+          {
+            updatedpic,
+            suprvisorId: _id,
+          },
+          token
+        );
 
         setloading(false);
       } catch (error) {
@@ -75,6 +85,36 @@ const ProfileCard = () => {
     }
   };
 
+  // ratig logic
+  let one = 0;
+  let two = 0;
+  let three = 0;
+  let four = 0;
+  let five = 0;
+  let totalFeedbacks = 0;
+
+  const complaints: any = useSelector(
+    (state: RootState) => state.Complaint.supervisorComplaints
+  );
+
+  complaints &&
+    complaints.forEach((complaint: any, index: any) => {
+      console.log(complaint?.feedback?.rating);
+      if (complaint.feedback) {
+        totalFeedbacks += 1;
+      }
+
+      if (complaint?.feedback?.rating == 1) one += 1;
+      if (complaint?.feedback?.rating == 2) two += 1;
+      if (complaint?.feedback?.rating == 3) three += 1;
+      if (complaint?.feedback?.rating == 4) four += 1;
+      if (complaint?.feedback?.rating == 5) five += 1;
+    });
+
+  let rate = one * 1 + two * 2 + three * 3 + four * 4 + five * 5;
+
+  let totalRating = 0;
+  if (rate != 0) totalRating = rate / totalFeedbacks;
   // JSX Section
   return (
     <div className="container w-screen flex justify-center overflow-x-hidden mt-20 ">
@@ -89,8 +129,8 @@ const ProfileCard = () => {
               onClick={BackButton}
             />
           </Link>
-          <h3 className="text-lg -ml-3 font-bold text-primaryColor-500">
-            <span className=" text-headingColor-400 opacity-50 font-black">
+          <h3 className="text-lg -ml-3">
+            <span className=" text-headingColor-400 opacity-50 font-bold">
               Profile Card
             </span>
           </h3>
@@ -168,31 +208,17 @@ const ProfileCard = () => {
             <BiEdit className="text-gray-400 text-2xl cursor-not-allowed" />
           </div>
         </div>
-        {/* Email */}
-        <div className="flex flex-col gap-1 z-0 mt-4 mb-6 ml-8 mr-8">
-          <label htmlFor="Name" className="text-sm text-gray-400">
-            Email
+        {/* Rating */}
+        <div className="flex items-center justify-between z-0 mt-4 mb-6 ml-8 mr-8">
+          <label htmlFor="Name" className="text-md text-gray-600 font-semibold">
+            Performance
           </label>
-          <div className="flex items-center justify-between font-semibold">
-            <h2 className="text-md text-gray-500">example@gmail.com</h2>
-            <BiEdit
-              title="Update Your Email"
-              className="text-gray-400 text-2xl cursor-pointer"
-            />
-          </div>
-        </div>
-        {/* Your Address */}
-        <div className="flex flex-col gap-1 z-0 mt-4 mb-6 ml-8 mr-8">
-          <label htmlFor="Name" className="text-sm text-gray-400">
-            Address
-          </label>
-          <div className="flex items-center justify-between font-semibold">
-            <h2 className="text-md text-gray-500">your address</h2>
-            <BiEdit
-              title="Update Your Address"
-              className="text-gray-400 text-2xl cursor-pointer"
-            />
-          </div>
+          <span className="flex items-center gap-2">
+            <Ratings totalRating={totalRating} />
+            <p className="text-lg font-bold text-primaryColor-500">
+              {totalRating.toFixed(1)}
+            </p>
+          </span>
         </div>
       </div>
     </div>
