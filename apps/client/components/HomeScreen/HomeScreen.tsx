@@ -21,14 +21,14 @@ const HomeScreen = () => {
           onClick={() => handleClick("Pending")}
           className="p-[6px] sm:p-2 md:p-2 lg:p-2 pending cursor-pointer hover:bg-gray-100 flex flex-col justify-center items-center border-r border-gray-300  flex-1 "
         >
-          <h3 className="font-bold">02</h3>
+          {/* <h3 className="font-bold">02</h3> */}
           <p className="text-sm">Pending complaints</p>
         </span>
         <span
           onClick={() => handleClick("Resolved")}
           className="p-2 all-complaints cursor-pointer hover:bg-gray-200  flex flex-col justify-center items-center border-r border-gray-300 flex-1"
         >
-          <h3 className="font-bold">03</h3>
+          {/* <h3 className="font-bold">03</h3> */}
           <p className="text-sm">Resolved complaints</p>
         </span>
 
