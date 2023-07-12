@@ -11,11 +11,11 @@ import { RootState, store } from "@/global_state/store";
 
 const HomeScreen = () => {
   const navigate = useRouter();
-  const handleClick = (stage: string) => {
+  const handleClick = (stage: string) => { 
     navigate.push(`/complaint/stages/${stage}`);
   };
   return (
-    <div className="w-[365px] sm:w-[450px] md:w-full lg-full xl-w-full">
+    <div className="w-[365px] sm:w-[450px] md:w-full lg-full xl-w- full">
       <div className="bg-gray-50 flex justify-center items-center mx-4 overflow-hidden border border-green-500 shadow-md shadow-gray-200 rounded-full">
         <span
           onClick={() => handleClick("Pending")}
