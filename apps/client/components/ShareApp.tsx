@@ -40,31 +40,31 @@ function ShareApp({ sharePop, setSharePop }: Props) {
 
         <div className="wrapper relative flex justify-around space-x-4 items-center w-auto">
           {/* facebook site */}
-          <FacebookShareButton url={"https://fyp-front-end.vercel.app/"}>
+          <FacebookShareButton url={"https://fyp-wsscm-system.vercel.app/"}>
             <FaFacebook className="text-3xl text-blue-500" />
           </FacebookShareButton>
 
           {/* LinkedIn */}
-          <LinkedinShareButton url={"https://fyp-front-end.vercel.app/"}>
+          <LinkedinShareButton url={"https://fyp-wsscm-system.vercel.app/"}>
             <FaLinkedin className="text-3xl text-blue-700" />
           </LinkedinShareButton>
           {/* whatsapp */}
-          <WhatsappShareButton url={"https://fyp-front-end.vercel.app/"}>
+          <WhatsappShareButton url={"https://fyp-wsscm-system.vercel.app/"}>
             <FaWhatsapp className="text-4xl text-green-500" />
           </WhatsappShareButton>
           {/* Twitter */}
           <TwitterShareButton
-            url={"https://fyp-front-end.vercel.app/"}
-            title={"WSSCM"}
+            url={"https://fyp-wsscm-system.vercel.app/"}
+            title={"WSSCs"}
           >
             <FaTwitter className="text-3xl text-blue-400" />
           </TwitterShareButton>
           {/* email */}
           <EmailShareButton
-            url={"https://fyp-front-end.vercel.app/"}
+            url={"https://fyp-wsscm-system.vercel.app/"}
             subject={"WSSCM official app"}
             body={
-              "This is a wsscm official app through you can easily file any type of complaint which are related to WSSCM"
+              "This is a wssc official app through you can easily file any type of complaint which are related to WSSC"
             }
           >
             <HiMail className="text-4xl text-red-500" />
@@ -73,13 +73,13 @@ function ShareApp({ sharePop, setSharePop }: Props) {
         <div className="flex items-center justify-between">
           <input
             className="text-sm w-[80%] overflow-hidden px-1 py-1 border-[1px] border-gray-400 rounded-md"
-            defaultValue={"https://fyp-front-end.vercel.app/"}
+            defaultValue={"https://fyp-wsscm-system.vercel.app/"}
           />
           <button
             className="text-sm px-2 py-1 bg-primaryColor-500 text-white rounded-md"
             onClick={() => {
               navigator.clipboard.writeText(
-                "https://fyp-front-end.vercel.app/"
+                "https://fyp-wsscm-system.vercel.app/"
               );
               CopiedToast();
             }}

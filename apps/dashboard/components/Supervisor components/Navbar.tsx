@@ -74,7 +74,7 @@ const Navbar = () => {
             </Link>
             <h2 className="text-lg text-primaryColor-500 font-bold">
               {/* {WSSC?.shortname} */}
-              {windowWidth < 560 ? WSSC?.shortname : WSSC?.fullname}
+              {windowWidth < 600 ? WSSC?.shortname : WSSC?.fullname}
             </h2>
           </div>
 

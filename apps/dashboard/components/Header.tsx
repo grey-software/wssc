@@ -34,8 +34,8 @@ const Header = () => {
   return (
     <div>
       {WSSC_CODE ? (
-        <div className="w-full flex justify-between items-center px-8 py-2 bg-slate-50 top-0 fixed border-b shadow z-50">
-          <div className="flex items-center gap-2 pl-7">
+        <div className="w-full hidden md:flex justify-between items-center px-10 py-2 bg-slate-50 top-0 fixed border-b shadow z-50">
+          <div className="flex items-center gap-2 pl-2">
             <Image
               src={logo}
               className="h-9 w-10"
@@ -49,7 +49,7 @@ const Header = () => {
           </div>
           {/* <h1 className="text-3xl font-semibold">{currentTab?.name}</h1> */}
           <div className="flex items-center justify-start gap-8">
-            <div className="flex items-center gap-4 text-3xl text-primaryColor-500">
+            <div className="flex items-center gap-2 text-3xl text-primaryColor-500">
               <NovuProvider
                 subscriberId={WSSC_CODE}
                 applicationIdentifier={"yhet1-MoYIOR"}
@@ -63,8 +63,9 @@ const Header = () => {
                   )}
                 </PopoverNotificationCenter>
               </NovuProvider>
-              <div onClick={() => dispatch(SignOutUser)}>
-                <FaUserCircle />
+              <div className="flex items-center gap-[2px] text-lg">
+                <Image src="/govt_logo.png" height={50} width={50} alt="" />
+                <span className="font-semibold">Govt. Kpk</span>
               </div>
             </div>
           </div>

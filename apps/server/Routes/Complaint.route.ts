@@ -2,7 +2,6 @@ import { Router } from "express";
 import {
   CreateComplaint,
   GetComplaint,
-  UpdateComplaint,
   GetAllComplaints,
   DeleteAllcomplaints,
   CitizenFeedback,

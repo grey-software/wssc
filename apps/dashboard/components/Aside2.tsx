@@ -15,7 +15,7 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 import { LOGOUT } from "@/GlobalState/ApiCalls/authApiCalls";
 
-function Aside() {
+function Aside2() {
   const navigate = useRouter();
   const activeTab = useSelector((state: RootState) => state.Tab);
   const dispatch = useDispatch();
@@ -89,11 +89,13 @@ function Aside() {
                   onClick={() => clickHander(item.to, index)}
                   className={`mx-6 my-4 px-2 py-1 flex items-center  rounded-full cursor-pointer transition-all ${
                     activeTab.index === index
-                      ? "bg-primaryColor-300 hover:bg-primaryColor-300 font-semibold tracking-wide text-feedbackColor border-primaryColor-300"
-                      : "hover:bg-gray-200 bg-slate-100 "
+                      ? "text-green-500  font-semibold tracking-wide border-primaryColor-300"
+                      : " text-gray-500"
                   }`}
                 >
-                  <div className={`flex items-center justify-start ml-6`}>
+                  <div
+                    className={`flex items-center justify-start ml-6 transition-all hover:text-gray-700`}
+                  >
                     <span className="text-xl">{item.icon}</span>
                     <span className="text-lg ml-4">{item.name}</span>
                   </div>
@@ -122,4 +124,4 @@ function Aside() {
   );
 }
 
-export default Aside;
+export default Aside2;

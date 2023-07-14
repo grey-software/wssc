@@ -17,7 +17,7 @@ const AreaGraph = () => {
   const { complaints }: any = useSelector(
     (state: RootState) => state.statistics.data
   );
-  //  data
+  // D
   const data = [
     {
       name: "June 2023",

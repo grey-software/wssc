@@ -335,7 +335,7 @@ const Page = ({ params }: any) => {
 
                 {/* User details */}
                 <div className="shadow-md p-5 rounded-md border-2 border-gray-50">
-                  <h1 className="mb-1 font-bold text-md">User Details</h1>
+                  <h1 className="mb-1 font-bold text-md">Citizen Details</h1>
                   <div className="w-full border-[1px] border-gray-300"></div>
                   <div className="grid grid-cols-2 gap-4 mt-4">
                     <div className="flex items-start gap-2">
