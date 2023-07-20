@@ -29,13 +29,10 @@ const citizen_schema_1 = require("../Models/citizen.schema");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const Auth_Validation_1 = require("../Schema_validation/Auth_Validation");
 const dotenv_1 = __importDefault(require("dotenv"));
-const node_1 = require("@novu/node");
 const WsscsAdmin_schema_1 = require("../Models/WsscsAdmin.schema");
 dotenv_1.default.config();
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const SECRET_KEY = process.env.JWT_KEY;
-// eslint-disable-next-line turbo/no-undeclared-env-vars
-const novu = new node_1.Novu(`${process.env.NOVU_KEY}`);
 const SignUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     // first we need to validate the data before saving it in DB
     const { error } = (0, Auth_Validation_1.SignUp_validate)(req.body);
@@ -54,8 +51,8 @@ const SignUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             const createUser = new citizen_schema_1.citizenModel({
                 name: name,
                 phone: phone,
-                WSSC_CODE,
                 password: hash,
+                WSSC_CODE: WSSC_CODE
             });
             yield createUser.save();
             res.status(200).json(createUser);
@@ -66,7 +63,7 @@ const SignUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
     }
     catch (err) {
         // next(err);
-        return res.status(500).json({
+        res.status(500).json({
             status: 500,
             success: false,
             message: err,
@@ -80,6 +77,7 @@ const SignIn = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
     const { error } = (0, Auth_Validation_1.SignIn_validate)(req.body);
     if (error)
         return res.send(error.details[0].message);
+    console.log(req.body);
     try {
         const User = yield citizen_schema_1.citizenModel.findOne({ phone: req.body.phone });
         if (!User)
@@ -101,9 +99,9 @@ const SignIn = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         const WSSC = yield WsscsAdmin_schema_1.AdminsModel.findOne({ WSSC_CODE: User === null || User === void 0 ? void 0 : User.WSSC_CODE });
         console.log(WSSC);
         const WSSC_DATA = {
-            fullname: WSSC.fullname,
-            shortname: WSSC.shortname,
-            logo: WSSC.logo
+            fullname: WSSC === null || WSSC === void 0 ? void 0 : WSSC.fullname,
+            shortname: WSSC === null || WSSC === void 0 ? void 0 : WSSC.shortname,
+            logo: WSSC === null || WSSC === void 0 ? void 0 : WSSC.logo
         };
         // if the user credential is okay then we assign/send jwt token for authentication and authorization
         const token = jsonwebtoken_1.default.sign({
@@ -113,12 +111,12 @@ const SignIn = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             WSSC_CODE: User.WSSC_CODE,
         }, SECRET_KEY);
         const _a = User._doc, { password } = _a, detail = __rest(_a, ["password"]);
-        res
-            .cookie("access_token", token, {
-            httpOnly: true,
-        })
-            .status(200)
-            .json({ success: true, status: 200, user: detail, WSSC: WSSC_DATA });
+        // res
+        //   .cookie("access_token", token, {
+        //     httpOnly: true,
+        //   })
+        res.status(200)
+            .json({ success: true, status: 200, user: detail, WSSC: WSSC_DATA, token: token });
     }
     catch (error) {
         next(error);
@@ -129,7 +127,7 @@ exports.SignIn = SignIn;
 const Logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         res
-            .clearCookie("access_token", {
+            .clearCookie("wssc_token", {
             sameSite: "none",
         })
             .status(200)

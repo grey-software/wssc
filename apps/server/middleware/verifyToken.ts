@@ -9,7 +9,8 @@ const JWT: any = process.env.JWT_KEY;
 
 // ----- verify citizen token -------------
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-  const token: any = req.cookies.access_token;
+  // const token: any = req.cookies.access_token;
+  const token: any = req.headers.authorization.split(" ")[1];
   if (!token) return next(createError(401, "You are not authenticated!"));
 
   try {
@@ -59,7 +60,7 @@ export const verifyAdmin = (req: Request, res: Response, next: NextFunction) => 
 export const verifySupervisor = (req: Request, res: Response, next: NextFunction) => {
   try {
     verifyToken(req, res, () => {
-      if (req.user.isSupervisor ||req.user.isAdmin) {
+      if (req.user.isSupervisor || req.user.isAdmin) {
         next();
       } else {
         return res

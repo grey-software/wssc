@@ -86,13 +86,13 @@ const SignIn = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
                 message: "Password is incorrect",
             });
         // if the user credential is okay then we assign/send jwt token for authentication and authorization
-        const token = jsonwebtoken_1.default.sign({ id: admin._id, name: admin.shortname, isAdmin: admin.isAdmin, WSSC_CODE: admin.WSSC_CODE }, SECRET_KEY);
+        const adminToken = jsonwebtoken_1.default.sign({ id: admin._id, name: admin.shortname, isAdmin: admin.isAdmin, WSSC_CODE: admin.WSSC_CODE }, SECRET_KEY);
         const _b = admin._doc, { password } = _b, detail = __rest(_b, ["password"]);
-        res.cookie("access_token", token, {
-            httpOnly: true,
-        })
-            .status(200)
-            .json(detail);
+        // res.cookie("access_token", token, {
+        //     httpOnly: true,
+        // })
+        res.status(200)
+            .json({ detail, adminToken });
     }
     catch (error) {
         res.status(500).json({ success: false, status: 500, error });
@@ -126,7 +126,7 @@ exports.AdminLogout = AdminLogout;
 const Statistics = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield citizen_schema_1.citizenModel.find({ WSSC_CODE: req.user.WSSC_CODE }); // retrieve no of registered users
-        const supervisors = yield supervisor_schema_1.SupervisorModel.find({ WSSC_CODE: req.user.WSSC_CODE }); // retrieve no of superisors registered
+        const supervisors = yield supervisor_schema_1.SupervisorModel.find({ WSSC_CODE: req.user.WSSC_CODE, isDeleted: false }); // retrieve no of superisors registered
         const complaints = yield complaint_schema_1.ComplaintModel.find({ WSSC_CODE: req.user.WSSC_CODE }); // retrieve no of registered complaints
         // find no of type of complaints registered
         const solidWasteComplaints = complaints.filter(complaint => complaint.complaintType === 'Solid waste').length;
@@ -147,6 +147,36 @@ const Statistics = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         const inProgressStatus = lastStatusArray.filter(status => status.state === 'InProgress');
         const completedStatus = lastStatusArray.filter(status => status.state === 'Completed');
         const closedStatus = lastStatusArray.filter(status => status.state === 'Closed');
+        // ---------- below is the code to get overall organization performance percentage and rating on the basis of complaints submitted by citizens
+        let one = 0;
+        let two = 0;
+        let three = 0;
+        let four = 0;
+        let five = 0;
+        let totalFeedbacks = 0;
+        complaints &&
+            complaints.forEach((complaint, index) => {
+                var _a, _b, _c, _d, _e, _f;
+                console.log((_a = complaint === null || complaint === void 0 ? void 0 : complaint.feedback) === null || _a === void 0 ? void 0 : _a.rating);
+                if (complaint.feedback) {
+                    totalFeedbacks += 1;
+                }
+                if (((_b = complaint === null || complaint === void 0 ? void 0 : complaint.feedback) === null || _b === void 0 ? void 0 : _b.rating) == 1)
+                    one += 1;
+                if (((_c = complaint === null || complaint === void 0 ? void 0 : complaint.feedback) === null || _c === void 0 ? void 0 : _c.rating) == 2)
+                    two += 1;
+                if (((_d = complaint === null || complaint === void 0 ? void 0 : complaint.feedback) === null || _d === void 0 ? void 0 : _d.rating) == 3)
+                    three += 1;
+                if (((_e = complaint === null || complaint === void 0 ? void 0 : complaint.feedback) === null || _e === void 0 ? void 0 : _e.rating) == 4)
+                    four += 1;
+                if (((_f = complaint === null || complaint === void 0 ? void 0 : complaint.feedback) === null || _f === void 0 ? void 0 : _f.rating) == 5)
+                    five += 1;
+            });
+        let rate = one * 1 + two * 2 + three * 3 + four * 4 + five * 5;
+        let totalRating = 0;
+        if (rate != 0)
+            totalRating = rate / totalFeedbacks;
+        const OrgPercentage = (totalRating / 5.00) * 100;
         res.status(200).json({
             status: 200,
             success: true,
@@ -166,7 +196,8 @@ const Statistics = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 InProgress: inProgressStatus.length,
                 Completed: completedStatus.length,
                 Closed: closedStatus.length,
-            }
+            },
+            ratingAverages: { totalRating, OrgPercentage }
         });
     }
     catch (error) {

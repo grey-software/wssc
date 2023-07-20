@@ -21,6 +21,6 @@ Supervisor.route("/:id")
   .patch(verifySupervisor, UpdateSupervisor)
   .delete(verifyAdmin, DeleteSupervisor);
 
-  Supervisor.post("/logout", Logout)
+Supervisor.post("/logout", Logout)
 
 export default Supervisor;

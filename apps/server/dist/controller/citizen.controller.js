@@ -94,7 +94,7 @@ const RetreiveAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, f
             status: 200,
             success: true,
             TotalUsers: allUsers.length,
-            data: allUsers,
+            data: { allUsers },
         });
     }
     catch (error) {
@@ -151,8 +151,6 @@ const ChangePassword = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         // encrypt password by using bcrypt algorithm
         const salt = bcryptjs_1.default.genSaltSync(10);
         const HashedPassword = bcryptjs_1.default.hashSync(req.body.password, salt);
-        console.log(HashedPassword);
-        console.log(req.body.password);
         try {
             yield citizen_schema_1.citizenModel.findByIdAndUpdate(userId, { password: HashedPassword }, {
                 new: true,

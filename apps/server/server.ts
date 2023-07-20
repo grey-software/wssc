@@ -36,13 +36,14 @@ mongoose
     console.log(err);
   });
 
-//-------- MIDDLEWARES ---------
-app.use(
-  cors({
-    origin: ["https://fyp-wsscm-system.vercel.app","http://localhost:3000", "http://localhost:3001"],
-    credentials: true,
-  })
-);
+
+const corsOptions = {
+  origin: ['https://fyp-wsscm-system.vercel.app', 'https://wssc-govt-kpk.vercel.app', 'http://localhost:3000', 'http://localhost:3001'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 app.use(helmet());
 app.use(morgan("tiny"));
 app.use(cookieParser());
