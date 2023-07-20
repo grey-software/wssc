@@ -5,12 +5,12 @@ import {
   GetAllComplaints,
   DeleteAllcomplaints,
   CitizenFeedback,
-  AssignComplaint,
-  GetSupervisorComplaints,
   AddStatement,
   SupervisorResponse,
+  GetSupervisorComplaints,
+  AssignComplaint,
 } from "../controller/Complaint.controller";
-import { verifyAdmin, verifyToken } from "../middleware/verifyToken";
+import { verifyAdmin, verifyToken, verifyUser } from "../middleware/verifyToken";
 
 const ComplaintRouter: Router = Router();
 

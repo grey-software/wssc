@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SupervisorResponse = exports.CitizenFeedback = exports.DeleteAllcomplaints = exports.GetSupervisorComplaints = exports.GetAllComplaints = exports.UpdateComplaint = exports.AssignComplaint = exports.AddStatement = exports.GetComplaint = exports.CreateComplaint = void 0;
+exports.SupervisorResponse = exports.CitizenFeedback = exports.DeleteAllcomplaints = exports.GetSupervisorComplaints = exports.GetAllComplaints = exports.AssignComplaint = exports.AddStatement = exports.GetComplaint = exports.CreateComplaint = void 0;
 const complaint_schema_1 = require("../Models/complaint.schema");
 const Complaint_Validation_1 = require("../Schema_validation/Complaint_Validation");
 const node_1 = require("@novu/node");
@@ -29,7 +29,6 @@ const CreateComplaint = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
         try {
             const CreateComplaint = new complaint_schema_1.ComplaintModel(req.body);
             yield CreateComplaint.save();
-            console.log("code" + CreateComplaint.WSSC_CODE);
             // SENDING NOTIFICATION TO ADMING
             yield novu.trigger("complaint-status-updated", {
                 to: {
@@ -37,7 +36,7 @@ const CreateComplaint = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
                 },
                 payload: {
                     id: CreateComplaint === null || CreateComplaint === void 0 ? void 0 : CreateComplaint._id,
-                    message: "A New Complaint is filed, Refresh Complaint page to show",
+                    message: "A new complaint is filed, refresh complaint page to show",
                 },
             });
             res.status(200).json({ status: 200, success: true, CreateComplaint });
@@ -122,7 +121,7 @@ const AssignComplaint = (req, res) => __awaiter(void 0, void 0, void 0, function
             },
             payload: {
                 id: complaintId,
-                message: "Your Complaint is being processed",
+                message: "Your complaint is being processed",
             },
         });
         yield novu.trigger("complaint-status-updated", {
@@ -131,7 +130,7 @@ const AssignComplaint = (req, res) => __awaiter(void 0, void 0, void 0, function
             },
             payload: {
                 id: complaintId,
-                message: "A New Complaint is Assigned to You, Refresh Complaints page to see",
+                message: "A new complaint is assigned to you, refresh complaints page to see",
             },
         });
         res.status(200).json({
@@ -156,67 +155,6 @@ const AssignComplaint = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.AssignComplaint = AssignComplaint;
-const UpdateComplaint = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const complaintId = req.params.id;
-    try {
-        // To check if the current user is admin, Only admin can update the complaint
-        if (req.user.isAdmin) {
-            const complaint = yield complaint_schema_1.ComplaintModel.findById(complaintId);
-            let status;
-            let statusLength = complaint === null || complaint === void 0 ? void 0 : complaint.status.length;
-            // pushing the next status based on the previous status
-            if (statusLength == 1) {
-                status = {
-                    state: "InProgress",
-                    updateAt: new Date().toLocaleDateString(),
-                };
-            }
-            else if (statusLength == 2) {
-                status = {
-                    state: "Completed",
-                    updateAt: new Date().toLocaleDateString(),
-                };
-            }
-            else {
-                status = { state: "Closed", updateAt: new Date().toLocaleDateString() };
-            }
-            const updated = yield complaint_schema_1.ComplaintModel.findByIdAndUpdate(complaintId, {
-                $addToSet: { status: status },
-            });
-            // Sending Notification to user
-            const response = yield novu.trigger("complaint-status-updated", {
-                to: {
-                    subscriberId: complaint === null || complaint === void 0 ? void 0 : complaint.userId,
-                },
-                payload: {
-                    // for now only this string will go to frontend, will modify it once we have connected frontend and backend
-                    status: "Complaint Status updated Updated",
-                },
-            });
-            res.status(200).json({
-                status: 200,
-                success: true,
-                message: "Status updated successfully",
-                data: response.data,
-            });
-        }
-        else {
-            res.status(303).json({
-                status: 303,
-                success: false,
-                message: "You are not authorized to update complaint",
-            });
-        }
-    }
-    catch (error) {
-        res.status(400).json({
-            status: 400,
-            success: false,
-            message: error.message,
-        });
-    }
-});
-exports.UpdateComplaint = UpdateComplaint;
 // Get All complaints
 const GetAllComplaints = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.user.id;
@@ -293,6 +231,136 @@ const DeleteAllcomplaints = (req, res, next) => __awaiter(void 0, void 0, void 0
 });
 exports.DeleteAllcomplaints = DeleteAllcomplaints;
 // CITIZEN FEEDBACK
+// export const CitizenFeedback = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   const LoggedId = req.user.id;
+//   const complaintId = req.params.id;
+//   const { rating, description } = req.body;
+//   let feedback = {
+//     rating: rating,
+//     description: description,
+//   };
+//   try {
+//     let updated:any;
+//     const complaint:
+//       | (IComplaint & {
+//           _id: Types.ObjectId;
+//           _doc: any;
+//         })
+//       | null = await ComplaintModel.findById(complaintId);
+//     if (complaint.userId == LoggedId) {
+//       // only first time citizen feedback can be save in database
+//       if (!complaint.feedback) {
+//         updated = await ComplaintModel.findByIdAndUpdate(
+//           complaintId,
+//           { $set: { feedback } },
+//           { new: true }
+//         );
+//       }
+// // if the citizen feedback rating is greater than or equal to 3 out of 5, it means he is satisfied with service
+//       if (rating > 2) {
+//         let status = {
+//           state: "Closed",
+//           updateAt: new Date().toLocaleDateString(),
+//         };
+//       await ComplaintModel.findByIdAndUpdate(complaintId, {
+//         $addToSet: { status: status },
+//       });
+//       // SENDING NOTIFICAITON TO CITIZEN ABOUT SUCCESSFULLY CLOSED COMPLAINT
+//       await novu.trigger("complaint-status-updated", {
+//         to: {
+//           subscriberId: updated.userId,
+//         },
+//         payload: {
+//           id: complaintId,
+//           message: "Your complaint is now closed",
+//         },
+//       });
+//      // SENDING NOTIFICAITON TO SUPERVISOR ABOUT HIS/HER GOOD SERVICES AND SUCCESSFULLY CLOSED COMPLAINT
+//       await novu.trigger("complaint-status-updated", {
+//         to: {
+//           subscriberId: updated.supervisorId,
+//         },
+//         payload: {
+//           id: complaintId,
+//           message: "A complaint assigned to you is now closed 🎉",
+//         },
+//       });
+//      // SENDING NOTIFICAITON TO WSSC ORGANIZATION ABOUT COMPLAINT UPDATES
+//       await novu.trigger("complaint-status-updated", {
+//         to: {
+//           subscriberId: updated.WSSC_CODE,
+//         },
+//         payload: {
+//           id: complaintId,
+//           message:
+//             "A citizen provided Feedback on a complaint, visit Feedbacks to see",
+//         },
+//       });
+//       } else {
+//         // if the citizen feedback rating is less 3, it means that service is not satisfactory then the complaint will be rollback to the InProgress stage
+//          updated = await ComplaintModel.findByIdAndUpdate(
+//           complaintId,
+//           {
+//             $pop: { status: 1 }, // Remove the last element from the 'status' array
+//             $unset: { response: 1 } // Remove the 'response' field
+//           },
+//           { new: true }
+//         );
+//         // SENDING NOTIFICAITON TO CITIZEN ABOUT HIS/HER COMPLAINT ROLLBACK
+//         await novu.trigger("complaint-status-updated", {
+//           to: {
+//             subscriberId: updated.userId,
+//           },
+//           payload: {
+//             id: complaintId,
+//             message: "Your complaint is rollback to the In progress stage again",
+//           },
+//         });
+//      // SENDING NOTIFICAITON TO SUPERVISOR ABOUT HIS/HER POOR SERVICES AND RESPONSE
+//         await novu.trigger("complaint-status-updated", {
+//           to: {
+//             subscriberId: updated.supervisorId,
+//           },
+//           payload: {
+//             id: complaintId,
+//             message: "A complaint assigned to you is rollback to the In progress stage again 🎉",
+//           },
+//         });
+//     // SENDING NOTIFICAITON TO WSSC ORGANIZATION ABOUT POOR SERVICES
+//         await novu.trigger("complaint-status-updated", {
+//           to: {
+//             subscriberId: updated.WSSC_CODE,
+//           },
+//           payload: {
+//             id: complaintId,
+//             message:
+//               "A citizen is unsatisfied with services, Feedback has been provided, check it out",
+//           },
+//         });
+//       }
+//       res.status(200).json({
+//         status: 200,
+//         success: true,
+//         message: "Feedback Provided successfully",
+//         data: updated,
+//       });
+//     } else {
+//       res.status(401).json({
+//         status: 401,
+//         success: false,
+//         message: "You are not authorized to provide feedback on this complaint",
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     res.status(404).json({ status: 404, success: false, message: error });
+//   }
+// };
+// ----------------- OPTIMIZED CITIZEN FEEDBACK CONTROLLER ----------
 const CitizenFeedback = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const LoggedId = req.user.id;
     const complaintId = req.params.id;
@@ -302,46 +370,47 @@ const CitizenFeedback = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
         description: description,
     };
     try {
+        let updated;
         const complaint = yield complaint_schema_1.ComplaintModel.findById(complaintId);
         if (complaint.userId == LoggedId) {
-            const updated = yield complaint_schema_1.ComplaintModel.findByIdAndUpdate(complaintId, { $set: { feedback } }, { new: true });
-            console.log(updated);
-            let status = {
-                state: "Closed",
-                updateAt: new Date().toLocaleDateString(),
-            };
-            yield complaint_schema_1.ComplaintModel.findByIdAndUpdate(complaintId, {
-                $addToSet: { status: status },
-            });
-            // SENDING NOTIFICAITON TO CITIZEN
-            yield novu.trigger("complaint-status-updated", {
-                to: {
-                    subscriberId: updated.userId,
-                },
-                payload: {
-                    id: complaintId,
-                    message: "Your Complaint is Closed",
-                },
-            });
-            yield novu.trigger("complaint-status-updated", {
-                to: {
-                    subscriberId: updated.supervisorId,
-                },
-                payload: {
-                    id: complaintId,
-                    message: "Your complaint Assign to you is now closed 🎉",
-                },
-            });
-            console.log(complaint.WSSC_CODE);
-            yield novu.trigger("complaint-status-updated", {
-                to: {
-                    subscriberId: complaint.WSSC_CODE,
-                },
-                payload: {
-                    id: complaintId,
-                    message: "A citizen provided Feedback on complaint, Visit Feedbacks to see",
-                },
-            });
+            // only first time citizen feedback can be save in database
+            if (!complaint.feedback) {
+                updated = yield complaint_schema_1.ComplaintModel.findByIdAndUpdate(complaintId, { $set: { feedback } }, { new: true });
+            }
+            // if the citizen feedback rating is greater than or equal to 3 out of 5, it means he is satisfied with service
+            if (rating > 2) {
+                let status = {
+                    state: "Closed",
+                    updateAt: new Date().toLocaleDateString(),
+                };
+                yield complaint_schema_1.ComplaintModel.findByIdAndUpdate(complaintId, {
+                    $addToSet: { status: status },
+                });
+            }
+            else {
+                // if the citizen feedback rating is less 3, it means that service is not satisfactory then the complaint will be rollback to the InProgress stage
+                updated = yield complaint_schema_1.ComplaintModel.findByIdAndUpdate(complaintId, {
+                    $pop: { status: 1 },
+                    $unset: { response: 1 } // Remove the 'response' field
+                }, { new: true });
+            }
+            // SENDING NOTIFICATION ON THE BASIS OF CITIZEN FEEDBACK
+            const isSatisfied = rating > 2;
+            // Prepare the notification message based on satisfaction level
+            const complaintMessage = isSatisfied ? "now closed" : "rollback to the In progress stage again";
+            // Prepare the notifications to be sent
+            const notifications = [
+                { subscriberId: updated.userId, message: `Your complaint is ${complaintMessage}` },
+                { subscriberId: updated.supervisorId, message: `A complaint assigned to you is ${complaintMessage} 🎉` },
+                { subscriberId: updated.WSSC_CODE, message: `A citizen provided Feedback on a complaint, visit Feedbacks to see` },
+            ];
+            // Trigger the notifications
+            yield Promise.all(notifications.map((notification) => __awaiter(void 0, void 0, void 0, function* () {
+                yield novu.trigger("complaint-status-updated", {
+                    to: { subscriberId: notification.subscriberId },
+                    payload: { id: complaintId, message: notification.message },
+                });
+            })));
             res.status(200).json({
                 status: 200,
                 success: true,
@@ -363,7 +432,7 @@ const CitizenFeedback = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.CitizenFeedback = CitizenFeedback;
-// SUPERVISOR RESPONSE
+// SUPERVISOR RESPONSE CONTROLLER
 const SupervisorResponse = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const LoggedId = req.user.id;
     const complaintId = req.params.id;

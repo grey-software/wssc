@@ -12,7 +12,8 @@ dotenv_1.default.config();
 const JWT = process.env.JWT_KEY;
 // ----- verify citizen token -------------
 const verifyToken = (req, res, next) => {
-    const token = req.cookies.access_token;
+    // const token: any = req.cookies.access_token;
+    const token = req.headers.authorization.split(" ")[1];
     if (!token)
         return next((0, HandleError_1.createError)(401, "You are not authenticated!"));
     try {

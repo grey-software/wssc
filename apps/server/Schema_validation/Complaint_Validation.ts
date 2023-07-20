@@ -17,8 +17,9 @@ export const ComplaintValidation = (
     phone: Joi.string()
       .pattern(new RegExp("^[0-9]*$"))
       .message("Only Numbers are allowed in phone Numbers"),
-    WSSC_CODE: Joi.string(),
+    
     complaintType: Joi.string(),
+    WSSC_CODE: Joi.string(),
 
     complaintAddress: Joi.string()
       .min(6)

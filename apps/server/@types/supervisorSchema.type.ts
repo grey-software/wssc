@@ -3,8 +3,6 @@ export interface SupervisorTypes {
   name: string;
   password: string;
   phone: number;
-  isDeleted: boolean;
-  profile_image: string;
   createdAt: NativeDate;
   updatedAt: NativeDate;
 }

@@ -96,18 +96,18 @@ const SignInSupervisor = (req, res, next) => __awaiter(void 0, void 0, void 0, f
             shortname: WSSC.shortname,
             logo: WSSC.logo
         };
-        const token = jsonwebtoken_1.default.sign({
+        const supervisorToken = jsonwebtoken_1.default.sign({
             id: verifySupervisor._id,
             isSupervisor: true,
             WSSC_CODE: verifySupervisor.WSSC_CODE,
         }, SECRET_KEY);
         const _b = verifySupervisor._doc, { password } = _b, supervisor = __rest(_b, ["password"]);
-        res
-            .cookie("access_token", token, {
-            httpOnly: true,
-        })
-            .status(200)
-            .json({ success: true, status: 200, supervisor: supervisor, WSSC: WSSC_DATA });
+        // res
+        //   .cookie("access_token", supervisorToken, {
+        //     httpOnly: true,
+        //   })
+        res.status(200)
+            .json({ success: true, status: 200, supervisor: supervisor, WSSC: WSSC_DATA, supervisorToken });
     }
     catch (error) {
         next(error);
@@ -140,7 +140,7 @@ const UpdateSupervisor = (req, res) => __awaiter(void 0, void 0, void 0, functio
         res.status(200).json({
             status: 200,
             success: true,
-            message: "Supervisor information Updated Successfully",
+            message: "Supervisor info Updated Successfully",
             data: supervisor,
         });
     }
@@ -160,11 +160,7 @@ const DeleteSupervisor = (req, res) => __awaiter(void 0, void 0, void 0, functio
         yield supervisor_schema_1.SupervisorModel.findByIdAndUpdate(supervisorId, {
             $set: { isDeleted: true },
         });
-        res
-            .clearCookie("access_token", {
-            sameSite: "none",
-        })
-            .status(200)
+        res.status(200)
             .json({
             status: 200,
             success: true,
@@ -203,11 +199,7 @@ exports.GetAllSupervisors = GetAllSupervisors;
 const Logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log("inside try section");
-        res
-            .clearCookie("access_token", {
-            sameSite: "none",
-        })
-            .status(200)
+        res.status(200)
             .json({
             status: 200,
             success: true,

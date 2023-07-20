@@ -1,15 +1,15 @@
 export interface IComplaint {
   userId: string;
+  supervisorId: string,
   userName: string;
-  supervisorId?: string;
-  WSSC_CODE?: string;
   phone: string;
+  WSSC_CODE?: string;
   complaintAddress: string;
   complaintType: string;
   complaintDes?: string;
-  feedback?: any;
-  response?: any;
   ImageUrl?: string;
   VideoUrl?: string;
   status: Object[];
+  feedback: any;
+  response: any;
 }

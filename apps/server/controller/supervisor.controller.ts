@@ -24,8 +24,8 @@ export const RegisterSupervisor = async (
   try {
     const verifySupervisor:
       | (SupervisorTypes & {
-          _id: any;
-        })
+        _id: any;
+      })
       | null = await SupervisorModel.findOne({ phone });
 
     if (!verifySupervisor) {
@@ -66,9 +66,9 @@ export const SignInSupervisor = async (
   try {
     const verifySupervisor:
       | (SupervisorTypes & {
-          _id: any;
-          _doc: any;
-        })
+        _id: any;
+        _doc: any;
+      })
       | null = await SupervisorModel.findOne({ phone });
 
     // CHECKING IF THE SUPERVISOR EXISTS
@@ -79,7 +79,7 @@ export const SignInSupervisor = async (
         message: "User is not found!",
       });
     }
-  
+
     const verifyPassword: boolean = await bycrypt.compare(
       req.body.password,
       verifySupervisor.password
@@ -99,8 +99,8 @@ export const SignInSupervisor = async (
       shortname: WSSC.shortname,
       logo: WSSC.logo
     }
-    
-    const token: string = jwt.sign(
+
+    const supervisorToken: string = jwt.sign(
       {
         id: verifySupervisor._id,
         isSupervisor: true,
@@ -110,12 +110,12 @@ export const SignInSupervisor = async (
     );
 
     const { password, ...supervisor } = verifySupervisor._doc;
-    res
-      .cookie("access_token", token, {
-        httpOnly: true,
-      })
-      .status(200)
-      .json({ success: true, status: 200, supervisor: supervisor, WSSC: WSSC_DATA });
+    // res
+    //   .cookie("access_token", supervisorToken, {
+    //     httpOnly: true,
+    //   })
+      res.status(200)
+      .json({ success: true, status: 200, supervisor: supervisor, WSSC: WSSC_DATA, supervisorToken });
   } catch (error) {
     next(error);
   }
@@ -131,9 +131,9 @@ export const GetSupervisor = async (
   try {
     const supervisor:
       | (SupervisorTypes & {
-          _id: any;
-          _doc: any;
-        })
+        _id: any;
+        _doc: any;
+      })
       | null = await SupervisorModel.findById(userId);
 
     res.status(200).json({
@@ -161,7 +161,7 @@ export const UpdateSupervisor = async (req: Request, res: Response) => {
     res.status(200).json({
       status: 200,
       success: true,
-      message: "Supervisor information Updated Successfully",
+      message: "Supervisor info Updated Successfully",
       data: supervisor,
     });
   } catch (error) {
@@ -181,11 +181,7 @@ export const DeleteSupervisor = async (req: Request, res: Response) => {
     await SupervisorModel.findByIdAndUpdate(supervisorId, {
       $set: { isDeleted: true },
     });
-    res
-      .clearCookie("access_token", {
-        sameSite: "none",
-      })
-      .status(200)
+    res.status(200)
       .json({
         status: 200,
         success: true,
@@ -206,7 +202,7 @@ export const GetAllSupervisors = async (
   res: Response,
   next: NextFunction
 ) => {
- 
+
   try {
     const allSupervisors = await SupervisorModel.find({
       WSSC_CODE: req.user.WSSC_CODE,
@@ -233,11 +229,7 @@ export const Logout = async (
 ) => {
   try {
     console.log("inside try section")
-    res
-      .clearCookie("access_token", {
-        sameSite: "none",
-      })
-      .status(200)
+    res.status(200)
       .json({
         status: 200,
         success: true,
