@@ -11,3 +11,12 @@ export interface complaintTypes {
   status: any;
   createdAt: string;
 }
+
+export {};
+
+declare global {
+  interface Window {
+    recaptchaVerifier: any; // 👈️ turn off type checking
+    confirmationResult: any;
+  }
+}

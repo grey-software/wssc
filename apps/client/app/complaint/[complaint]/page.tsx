@@ -68,6 +68,7 @@ const Page: React.FC = ({ params }: any) => {
     // Calling API
     try {
       setload(true);
+      
       const res = await CreateComplaint(complaintData, dispatch, CitizenToken);
       if (res && res.status === 200) {
         Navigate.push(`/complaint/timeline/${res.CreateComplaint._id}`);
